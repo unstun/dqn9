@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fig. 2 – Autonomous UGV Platform</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    font-family: 'Source Sans 3', 'Arial', sans-serif;
+  }
+
+  .canvas {
+    position: relative;
+    width: 580px;
+    height: 360px;
+  }
+
+  .box {
+    position: absolute;
+    border-radius: 12px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  .box-label {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 6px 4px;
+    line-height: 1.15;
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* Robot */
+  .box-robot {
+    left: 4px; top: 4px;
+    width: 220px; height: 352px;
+    border: 2.5px solid #7986cb;
+  }
+  .box-robot .box-label {
+    font-size: 12.5px; font-weight: 800;
+    background: #5c6bc0;
+    padding: 7px 6px 5px;
+  }
+  .box-robot img {
+    max-width: 190px; max-height: 294px;
+    object-fit: contain; margin-top: 4px;
+  }
+
+  /* Sub boxes */
+  .box-sub {
+    width: 190px; height: 102px;
+  }
+  .box-sub img {
+    max-width: 160px; max-height: 62px;
+    object-fit: contain; margin-top: 3px;
+  }
+
+  .box-lidar   { right: 4px; top: 4px;    border: 2.5px solid #66bb6a; }
+  .box-jetson  { right: 4px; top: 129px;  border: 2.5px solid #ffa726; }
+  .box-chassis { right: 4px; top: 254px;  border: 2.5px solid #42a5f5; }
+
+  .box-lidar   .box-label { background: #43a047; }
+  .box-jetson  .box-label { background: #ef6c00; }
+  .box-chassis .box-label { background: #1e88e5; }
+
+  .connectors {
+    position: absolute; left: 0; top: 0;
+    width: 580px; height: 360px;
+    pointer-events: none; z-index: 3;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="box box-robot">
+    <div class="box-label">Autonomous UGV Platform</div>
+    <img src="fig_platform_robot.png" alt="UGV">
+  </div>
+
+  <svg class="connectors" viewBox="0 0 580 360" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="ag" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+        <polygon points="0,0.5 8,3.5 0,6.5" fill="#43a047"/>
+      </marker>
+      <marker id="ao" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+        <polygon points="0,0.5 8,3.5 0,6.5" fill="#ef6c00"/>
+      </marker>
+      <marker id="ab" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+        <polygon points="0,0.5 8,3.5 0,6.5" fill="#1e88e5"/>
+      </marker>
+    </defs>
+
+    <!-- (a) upward arc to LiDAR -->
+    <path d="M 226,65 C 290,15 330,10 385,55"
+          stroke="#43a047" stroke-width="2.5" fill="none"
+          marker-end="url(#ag)"/>
+
+    <!-- (b) gentle curve to Jetson -->
+    <path d="M 226,180 C 280,170 330,175 385,180"
+          stroke="#ef6c00" stroke-width="2.5" fill="none"
+          marker-end="url(#ao)"/>
+
+    <!-- (c) downward arc to Chassis -->
+    <path d="M 226,300 C 290,355 330,355 385,305"
+          stroke="#1e88e5" stroke-width="2.5" fill="none"
+          marker-end="url(#ab)"/>
+  </svg>
+
+  <div class="box box-sub box-lidar">
+    <div class="box-label">(a) Livox Mid-360 LiDAR</div>
+    <img src="fig_platform_lidar.png" alt="LiDAR">
+  </div>
+  <div class="box box-sub box-jetson">
+    <div class="box-label">(b) Jetson AGX Orin</div>
+    <img src="fig_platform_jetson.png" alt="Jetson">
+  </div>
+  <div class="box box-sub box-chassis">
+    <div class="box-label">(c) Ackermann Chassis</div>
+    <img src="fig_platform_chassis.png" alt="Chassis">
+  </div>
+
+</div>
+</body>
+</html>

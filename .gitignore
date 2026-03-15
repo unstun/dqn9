@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtualenvs
+.venv/
+venv/
+
+# Outputs / experiment runs
+runs/
+paperruns/
+
+# Paper compiled artifacts (source .tex is tracked)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.spl
+paper/*.pdf
+paper/*.synctex.gz
+
+# Misc
+*.log
+tmp.md
+.claude/
