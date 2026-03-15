@@ -18,7 +18,7 @@ import sys
 HOST = "117.50.216.203"
 USER = "ubuntu"
 PASSWD = "g7TXK26Q85Jp493f"
-REMOTE_PROJ = "$HOME/DQN8"
+REMOTE_PROJ = "$HOME/DQN9"
 CONDA = "$HOME/miniconda3/bin/conda"
 ENV = "ros2py310"
 
@@ -61,7 +61,7 @@ def main():
 
     # Step 4: Quick module import test
     print("\n=== Step 4: Module import test ===")
-    run(f"{CONDA} run --cwd {REMOTE_PROJ} -n {ENV} python -c \"from amr_dqn.modules import CoordAttention, NoisyLinear, FADC, DeformConv2dBlock, IQNHead; print('All modules imported OK')\"")
+    run(f"{CONDA} run --cwd {REMOTE_PROJ} -n {ENV} python -c \"from ugv_dqn.modules import CoordAttention, NoisyLinear, FADC, DeformConv2dBlock, IQNHead; print('All modules imported OK')\"")
 
     # Step 5: Launch 5 screen sessions
     print("\n=== Step 5: Launching 5 training jobs ===")

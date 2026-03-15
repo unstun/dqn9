@@ -1,16 +1,16 @@
-# DQN8 — DQN/DDQN Path Planning for Autonomous Mobile Robots
+# DQN9 — DQN/DDQN Path Planning for Autonomous Mobile Robots
 
 基于深度强化学习（DQN/DDQN/PDDQN）的移动机器人路径规划，支持森林环境（程序化生成）和真实地图环境（PGM栅格）。
 
 ## 目录结构
 
 ```text
-DQN8/
+DQN9/
 ├── train.py / infer.py          # 顶层入口（薄包装器）
 ├── benchmark.py / config.py     # 辅助入口
 ├── visualize_forest.py          # 森林地图可视化
 │
-├── amr_dqn/                     # 核心 Python 包
+├── ugv_dqn/                     # 核心 Python 包
 │   ├── agents.py                #   DQN/DDQN/PDDQN 智能体
 │   ├── env.py                   #   Gymnasium 环境（AMRGridEnv + AMRBicycleEnv）
 │   ├── networks.py              #   Q 网络（MLP + CNN）

@@ -1,6 +1,6 @@
 # Run commands + parameter guide
 
-This repo exposes two CLIs (wrappers for `amr_dqn/cli/*`):
+This repo exposes two CLIs (wrappers for `ugv_dqn/cli/*`):
 
 - `conda run -n ros2py310 python train.py ...`
 - `conda run -n ros2py310 python infer.py ...`
@@ -88,7 +88,7 @@ conda run -n ros2py310 python infer.py --envs forest_b --out outputs_forest_base
 # Training Pipeline (V9)
 
 本节描述 V9（`repro_20260223_v9_raw_replay_soft_shield`）的完整训练流程。
-代码入口：`amr_dqn/cli/train.py` → `train_one()`。
+代码入口：`ugv_dqn/cli/train.py` → `train_one()`。
 
 ## 总览
 
@@ -467,9 +467,9 @@ These affect the environment observation vector and therefore model checkpoint c
 
 ## C) Code-level hyperparameters (not CLI flags yet)
 
-The DQN/DDQN hyperparameters are defined in `amr_dqn/agents.py` as `AgentConfig`. To change them:
+The DQN/DDQN hyperparameters are defined in `ugv_dqn/agents.py` as `AgentConfig`. To change them:
 
-1) Edit `amr_dqn/agents.py` (`AgentConfig` defaults), then retrain.
+1) Edit `ugv_dqn/agents.py` (`AgentConfig` defaults), then retrain.
 2) Keep training + inference consistent (a checkpoint trained with one config may not load if you later change network sizes).
 
 Key fields (defaults shown):

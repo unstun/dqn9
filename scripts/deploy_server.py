@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deploy DQN8 project to remote server and run ablation experiments."""
+"""Deploy DQN9 project to remote server and run ablation experiments."""
 import paramiko
 import sys
 import time
@@ -49,7 +49,7 @@ def main():
 
     # Step 3: Upload project
     print("\n=== Step 3: Upload project ===")
-    run_cmd(ssh, "mkdir -p /root/DQN8/runs")
+    run_cmd(ssh, "mkdir -p /root/DQN9/runs")
 
     ssh.close()
     print("\n=== Upload via rsync ===")
@@ -59,11 +59,11 @@ def main():
         "rsync", "-avz", "--progress",
         "--exclude", "runs/", "--exclude", "__pycache__/",
         "--exclude", "*.pyc", "--exclude", ".git/",
-        "--exclude", "DQN8_Papers/", "--exclude", "paperdqn8.3/",
+        "--exclude", "DQN9_Papers/", "--exclude", "paperdqn8.3/",
         "--exclude", "*.pptx",
         "-e", f"ssh -o StrictHostKeyChecking=no",
-        "/home/sun/phdproject/dqn/DQN8/",
-        f"{USER}@{HOST}:/root/DQN8/"
+        "/home/sun/phdproject/dqn/DQN9/",
+        f"{USER}@{HOST}:/root/DQN9/"
     ]
     print(f"rsync command: {' '.join(rsync_cmd[:5])}...")
 
@@ -76,7 +76,7 @@ def main():
 
     # Use tar + pipe approach
     import os
-    proj_dir = "/home/sun/phdproject/dqn/DQN8"
+    proj_dir = "/home/sun/phdproject/dqn/DQN9"
 
     # Create local tarball excluding large dirs
     print("Creating tarball...")
@@ -84,7 +84,7 @@ def main():
     os.system(
         f"cd {proj_dir} && tar czf {tar_path} "
         f"--exclude='runs' --exclude='__pycache__' --exclude='*.pyc' "
-        f"--exclude='.git' --exclude='DQN8_Papers' --exclude='paperdqn8.3' "
+        f"--exclude='.git' --exclude='DQN9_Papers' --exclude='paperdqn8.3' "
         f"--exclude='*.pptx' --exclude='wandb' "
         f"."
     )
@@ -99,7 +99,7 @@ def main():
     print("Upload complete!")
 
     # Extract on server
-    run_cmd(ssh2, "mkdir -p /root/DQN8 && cd /root/DQN8 && tar xzf /tmp/dqn8_deploy.tar.gz")
+    run_cmd(ssh2, "mkdir -p /root/DQN9 && cd /root/DQN9 && tar xzf /tmp/dqn8_deploy.tar.gz")
 
     # Step 4: Install Python dependencies
     print("\n=== Step 4: Install dependencies ===")
@@ -108,28 +108,28 @@ def main():
 
     # Step 5: Verify CUDA
     print("\n=== Step 5: Verify setup ===")
-    run_cmd(ssh2, f"{conda} run --cwd /root/DQN8 -n ros2py310 python -m amr_dqn.cli.train --self-check")
+    run_cmd(ssh2, f"{conda} run --cwd /root/DQN9 -n ros2py310 python -m ugv_dqn.cli.train --self-check")
 
     # Step 6: Launch ablation experiments
     print("\n=== Step 6: Launch ablation training ===")
-    run_cmd(ssh2, "mkdir -p /root/DQN8/runs")
+    run_cmd(ssh2, "mkdir -p /root/DQN9/runs")
 
     # Launch both training jobs
     run_cmd(ssh2, f"""
-{conda} run --cwd /root/DQN8 -n ros2py310 python -m amr_dqn.cli.train --profile ablation_20260311_cnn_drop_edt > /root/DQN8/runs/ablation_drop_edt.log 2>&1 &
+{conda} run --cwd /root/DQN9 -n ros2py310 python -m ugv_dqn.cli.train --profile ablation_20260311_cnn_drop_edt > /root/DQN9/runs/ablation_drop_edt.log 2>&1 &
 echo "drop_edt PID=$!"
 """)
 
     run_cmd(ssh2, f"""
-{conda} run --cwd /root/DQN8 -n ros2py310 python -m amr_dqn.cli.train --profile ablation_20260311_cnn_keep_edt > /root/DQN8/runs/ablation_keep_edt.log 2>&1 &
+{conda} run --cwd /root/DQN9 -n ros2py310 python -m ugv_dqn.cli.train --profile ablation_20260311_cnn_keep_edt > /root/DQN9/runs/ablation_keep_edt.log 2>&1 &
 echo "keep_edt PID=$!"
 """)
 
     time.sleep(3)
-    run_cmd(ssh2, "ps aux | grep 'amr_dqn.cli.train' | grep -v grep")
+    run_cmd(ssh2, "ps aux | grep 'ugv_dqn.cli.train' | grep -v grep")
 
     print("\n=== DEPLOYMENT COMPLETE ===")
-    print("Monitor: ssh ubuntu@117.50.216.203 'tail -f /root/DQN8/runs/ablation_*.log'")
+    print("Monitor: ssh ubuntu@117.50.216.203 'tail -f /root/DQN9/runs/ablation_*.log'")
 
     ssh2.close()
 

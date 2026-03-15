@@ -4,7 +4,7 @@
 # Each chunk: 7 runs (last chunk: 8 runs to reach 50 total)
 set -euo pipefail
 
-PROJ="$HOME/DQN8"
+PROJ="$HOME/DQN9"
 CONDA="$HOME/miniconda3/bin/conda"
 ENV="ros2py310"
 LOG_DIR="$PROJ/runs/mpc_comparison_logs"

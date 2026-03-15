@@ -58,13 +58,13 @@
 - CNN 分支产出 64×3×3 = 576 维特征
 - 与 11 维标量拼接后进入 3 层 256 单元的 MLP 头（`hidden_layers=3`）
 - 输出 35 个动作的 Q 值
-- 源码位置：`amr_dqn/networks.py:92`
+- 源码位置：`ugv_dqn/networks.py:92`
 
 ---
 
 ## 3. 动作空间（35 离散动作）
 
-7 个转向角速率 × 5 个加速度的网格组合（`amr_dqn/env.py:327`）：
+7 个转向角速率 × 5 个加速度的网格组合（`ugv_dqn/env.py:327`）：
 
 - **转向角速率**: `[-δ̇_max, -⅔δ̇_max, -⅓δ̇_max, 0, ⅓δ̇_max, ⅔δ̇_max, δ̇_max]`（δ̇_max = 60°/s）
 - **加速度**: `[-a_max, -0.5a_max, 0, 0.5a_max, a_max]`（a_max = 1.5 m/s²）
@@ -81,7 +81,7 @@
 | 积分步长 | dt = 0.05 s |
 | 碰撞检测 | 双圆轮廓（r=0.436m） |
 
-后轴中心自行车模型，单步欧拉积分。源码位置：`amr_dqn/env.py:314`
+后轴中心自行车模型，单步欧拉积分。源码位置：`ugv_dqn/env.py:314`
 
 ---
 
@@ -97,14 +97,14 @@
 | τ (target update) | 0 (hard) | 0 (hard) | **0.01 (soft)** |
 | 目标网络更新 | 每 1000 步整体复制 | 每 1000 步整体复制 | **每步 Polyak 平滑** |
 
-### Double DQN 逻辑（`amr_dqn/agents.py:439`）
+### Double DQN 逻辑（`ugv_dqn/agents.py:439`）
 
 ```
 a* = argmax Q_online(s', a')       # online 网络选动作
 target = r + γ^n · Q_target(s', a*) # target 网络评估
 ```
 
-### Polyak 软更新（`amr_dqn/agents.py:496`）
+### Polyak 软更新（`ugv_dqn/agents.py:496`）
 
 ```
 θ_target ← (1 - 0.01) · θ_target + 0.01 · θ_online  （每个训练步）
@@ -178,7 +178,7 @@ target = r + γ^n · Q_target(s', a*) # target 网络评估
 - 然后用 pure-pursuit 风格的评分函数选择跟踪动作
 - 仍非直接执行 A* 步骤，而是评分选最优离散动作
 
-### 奖励函数（`amr_dqn/env.py:1291`）
+### 奖励函数（`ugv_dqn/env.py:1291`）
 
 | 分量 | 公式 | 默认系数 | 说明 |
 |------|------|---------|------|
@@ -213,7 +213,7 @@ L = L_TD(Huber) + λ_margin · L_margin(demo) + λ_CE · L_CE(demo)
 - demo 转移受保护（DQfD safeguard：demo 槽位不被非 demo 数据覆盖）
 - 存储字段：`(obs, action, reward, next_obs, done, next_action_mask, demo, n_steps)`
 - 支持 n-step returns（默认 `n_step=1`，即标准 1-step TD；n>1 时在 episode 内累积折扣回报）
-- 源码位置：`amr_dqn/replay_buffer.py`
+- 源码位置：`ugv_dqn/replay_buffer.py`
 
 ### 超参数默认值
 
@@ -256,7 +256,7 @@ L = L_TD(Huber) + λ_margin · L_margin(demo) + λ_CE · L_CE(demo)
 └──────────────────────────────────────────────────┘
 ```
 
-### 动作选择管线详解（`amr_dqn/forest_policy.py`）
+### 动作选择管线详解（`ugv_dqn/forest_policy.py`）
 
 训练与推理共享同一管线，唯一区别：
 
@@ -273,7 +273,7 @@ L = L_TD(Huber) + λ_margin · L_margin(demo) + λ_CE · L_CE(demo)
 5. 全失败 → 全动作 admissible_mask + masked argmax Q
 6. 仍无 → `_fallback_action_short_rollout()` 启发式
 
-### 可行性检查（`admissible_action_mask`，`amr_dqn/env.py:1953`）
+### 可行性检查（`admissible_action_mask`，`ugv_dqn/env.py:1953`）
 
 - 对每个动作做 horizon=15 步恒定控制量 rollout
 - 检查：(1) 无碰撞 (2) 障碍物距离 ≥ min_od_m (3) cost-to-goal 减少 ≥ min_progress_m
