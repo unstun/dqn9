@@ -1,7 +1,7 @@
-"""Epsilon-decay schedules for exploration.
+"""探索用 epsilon 衰减策略。
 
-- linear_epsilon()    Linear decay from eps_start -> eps_final over decay_episodes.
-- adaptive_epsilon()  Sigmoid decay (paper Eq. 15): smooth transition with configurable steepness.
+- linear_epsilon()    线性衰减，从 eps_start 到 eps_final，跨越 decay_episodes 个回合。
+- adaptive_epsilon()  Sigmoid 衰减（论文公式 15）：可配置陡度的平滑过渡。
 """
 
 from __future__ import annotations
@@ -18,9 +18,9 @@ def linear_epsilon(episode: int, *, eps_start: float, eps_final: float, decay_ep
 
 
 def adaptive_epsilon(episode: int, *, eps_start: float, eps_final: float, eps_decay: float) -> float:
-    """Adaptive epsilon schedule (paper Eq. 15).
+    """自适应 epsilon 策略（论文公式 15）。
 
-    Eq. (15) in the paper:
+    论文公式 (15)：
         eps_k = eps_f + (eps_i - eps_f) / (1 + exp(k / eps_d))
     """
     if eps_decay <= 0:

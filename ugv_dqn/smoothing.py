@@ -1,8 +1,8 @@
-"""Path smoothing via Chaikin corner-cutting.
+"""基于 Chaikin 角切割的路径平滑。
 
-Repeatedly replaces each segment (p0, p1) with two new points at 25%/75%
-along the segment, preserving start and end points.  Used to post-process
-DQN paths and classical planner outputs before KPI evaluation.
+对每个线段 (p0, p1) 反复用沿线段 25%/75% 处的两个新点替换，
+保留起点和终点。用于在 KPI 评估前对 DQN 路径和经典规划器
+输出进行后处理。
 """
 
 from __future__ import annotations
@@ -11,14 +11,14 @@ import numpy as np
 
 
 def chaikin_smooth(points_xy: np.ndarray, *, iterations: int = 2) -> np.ndarray:
-    """Chaikin corner-cutting algorithm for polyline smoothing.
+    """Chaikin 角切割算法，用于折线平滑。
 
     Args:
-        points_xy: (N, 2) array.
-        iterations: number of refinement iterations.
+        points_xy: (N, 2) 数组。
+        iterations: 细化迭代次数。
 
     Returns:
-        (M, 2) array of smoothed points.
+        (M, 2) 平滑后的点数组。
     """
     pts = np.asarray(points_xy, dtype=np.float32)
     if pts.ndim != 2 or pts.shape[1] != 2:

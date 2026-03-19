@@ -1,0 +1,4 @@
+Environment,Algorithm,success_rate,avg_path_length,path_time_s,avg_curvature_1_m,planning_time_s,tracking_time_s,num_corners,inference_time_s,max_corner_deg,planning_cost,composite_score
+Env. (realmap_a),CNN-DDQN+Duel,1.0,9.6001,5.48,0.135317,0.28529,0.0,0,0.28529,2,9.743,0.0
+Env. (realmap_a),RRT*,1.0,9.6544,6.36,0.207708,1.05663,0.53368,0,1.59032,3,10.45,0.914
+Env. (realmap_a),LO-HA*,0.8,8.8703,5.6375,0.161714,3.66779,0.36668,0,4.03447,2,13.609,0.415

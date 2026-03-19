@@ -1,11 +1,11 @@
-"""Uniform experience-replay buffer with DQfD demo-preservation.
+"""均匀经验回放缓冲区，支持 DQfD 示范数据保护。
 
-Stores (obs, action, reward, next_obs, done, next_action_mask, demo_flag, n_steps)
-in pre-allocated numpy arrays for cache-friendly random sampling.
+将 (obs, action, reward, next_obs, done, next_action_mask, demo_flag, n_steps)
+存储在预分配的 numpy 数组中，以实现缓存友好的随机采样。
 
-DQfD safeguard: when the buffer is full and a non-demo transition would overwrite a
-demo slot, the buffer scans forward to find a non-demo slot instead.  This keeps
-expert demonstrations available throughout training for the margin/CE losses.
+DQfD 保护机制：当缓冲区已满且非示范 transition 将覆盖示范槽位时，
+缓冲区会向前扫描找到一个非示范槽位进行覆写。这确保了专家示范数据
+在整个训练过程中始终可用于 margin/CE 损失计算。
 """
 
 from __future__ import annotations
@@ -62,11 +62,11 @@ class ReplayBuffer:
         n_steps: int = 1,
     ) -> None:
         i = self._idx
-        # DQfD-style safeguard: preserve demonstration transitions so they
-        # remain available for supervised losses throughout long trainings.
+        # DQfD 式保护机制：保留示范 transition，使其在长时间训练中
+        # 始终可用于监督损失计算。
         #
-        # If the buffer is full and we'd overwrite a demo transition with a
-        # non-demo transition, search for the next non-demo slot to overwrite.
+        # 若缓冲区已满且即将用非示范 transition 覆盖示范槽位，
+        # 则向前搜索下一个非示范槽位进行覆写。
         if self._size >= self.capacity and (not bool(demo)) and float(self._demos[i]) > 0.5:
             j = int(i)
             for _ in range(int(self.capacity)):

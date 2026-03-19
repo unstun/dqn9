@@ -1,17 +1,17 @@
-"""DQN-family reinforcement-learning agents for AMR path planning.
+"""用于 UGV 路径规划的 DQN 系列强化学习智能体。
 
-Provides
---------
-- AgentConfig          Frozen dataclass of all hyper-parameters (gamma, lr, eps, DQfD margins ...)
-- parse_rl_algo()      Canonical name resolution: "mlp-dqn" / "cnn-ddqn" / legacy aliases
-- DQNFamilyAgent       Unified agent supporting DQN, Double-DQN (DDQN) and Polyak-DDQN (PDDQN),
-                       with MLP or CNN Q-networks, n-step returns, action masking, and
-                       DQfD-style expert margin + behaviour-cloning losses.
+提供
+----
+- AgentConfig          所有超参数的冻结数据类（gamma、lr、eps、DQfD margin 等）
+- parse_rl_algo()      规范名称解析："mlp-dqn" / "cnn-ddqn" / 旧版别名
+- DQNFamilyAgent       统一智能体，支持 DQN、Double-DQN (DDQN) 和 Polyak-DDQN (PDDQN)，
+                       可选 MLP 或 CNN Q 网络、n-step 回报、动作掩码，以及
+                       DQfD 风格的专家 margin + 行为克隆损失。
 
-Data flow
----------
-env.step() -> agent.observe() -> replay_buffer -> agent.update() -> Q-network gradients
-                                                   ^ optional DQfD demo loss
+数据流
+------
+env.step() -> agent.observe() -> replay_buffer -> agent.update() -> Q 网络梯度
+                                                   ^ 可选 DQfD 演示损失
 """
 
 from __future__ import annotations
@@ -33,17 +33,17 @@ from ugv_dqn.schedules import linear_epsilon
 
 @dataclass(frozen=True)
 class AgentConfig:
-    # Forest (dt=0.05s, long horizon) needs a higher discount factor; gamma=0.9 makes
-    # the terminal reward effectively vanish after a few dozen steps.
+    # Forest 环境（dt=0.05s，长时间跨度）需要更高的折扣因子；gamma=0.9 会使
+    # 终端奖励在几十步后基本消失。
     gamma: float = 0.995
     n_step: int = 1
     learning_rate: float = 5e-4
     replay_capacity: int = 100_000
     batch_size: int = 128
     target_update_steps: int = 1000
-    # When >0, use Polyak (soft) target updates at every training step:
+    # 当 >0 时，每个训练步使用 Polyak（软）目标更新：
     #   target = (1 - tau) * target + tau * online
-    # When 0, use periodic hard updates every `target_update_steps`.
+    # 当 =0 时，每隔 `target_update_steps` 步进行硬更新。
     target_update_tau: float = 0.0
     grad_clip_norm: float = 10.0
 
@@ -54,23 +54,23 @@ class AgentConfig:
     hidden_layers: int = 3
     hidden_dim: int = 256
 
-    # Dueling DQN (Wang et al., 2016): split Q into V(s) + A(s,a) - mean(A).
+    # Dueling DQN (Wang et al., 2016)：将 Q 拆分为 V(s) + A(s,a) - mean(A)。
     dueling: bool = False
-    # Spatial multi-head self-attention on CNN feature maps.
+    # 在 CNN 特征图上使用空间多头自注意力。
     mha: bool = False
     mha_heads: int = 4
 
-    # Ablation modules (CNN only)
+    # 消融模块（仅 CNN）
     coord_attn: bool = False    # Coordinate Attention (Hou et al., CVPR 2021)
     noisy: bool = False         # NoisyNet (Fortunato et al., ICLR 2018)
-    noisy_reset_interval: int = 4  # resample noise every N update steps
-    fadc: bool = False          # Frequency-Adaptive Dilated Conv (Chen et al., CVPR 2024)
-    deform: bool = False        # Deformable Conv v2 (via torchvision)
+    noisy_reset_interval: int = 4  # 每 N 个更新步重新采样噪声
+    fadc: bool = False          # 频率自适应膨胀卷积 (Chen et al., CVPR 2024)
+    deform: bool = False        # 可变形卷积 v2（通过 torchvision）
     iqn: bool = False           # Implicit Quantile Networks (Dabney et al., ICML 2018)
-    iqn_cos: int = 64           # IQN cosine embedding dimension
-    iqn_quantiles: int = 8      # IQN number of quantile samples
+    iqn_cos: int = 64           # IQN 余弦嵌入维度
+    iqn_quantiles: int = 8      # IQN 分位数采样数量
 
-    # Expert margin loss (DQfD-style) for forest stabilization.
+    # 专家 margin 损失（DQfD 风格），用于 forest 环境稳定训练。
     demo_margin: float = 0.8
     demo_lambda: float = 1.0
     demo_ce_lambda: float = 1.0
@@ -81,7 +81,7 @@ AlgoBase = Literal["dqn", "ddqn"]
 
 
 def parse_rl_algo(algo: str) -> tuple[str, AlgoArch, AlgoBase, bool]:
-    """Return (canonical_name, arch, base_algo, is_legacy_alias)."""
+    """返回 (canonical_name, arch, base_algo, is_legacy_alias)。"""
 
     a = str(algo).lower().strip()
     if a in {"dqn", "ddqn"}:
@@ -89,12 +89,12 @@ def parse_rl_algo(algo: str) -> tuple[str, AlgoArch, AlgoBase, bool]:
         return (f"mlp-{base}", "mlp", base, True)
 
     if a == "iddqn":
-        # Legacy name (avoid collision with published "IDDQN").
-        # This project uses it for a Polyak/soft-target Double DQN variant.
+        # 旧版名称（避免与已发表的"IDDQN"冲突）。
+        # 本项目中用于 Polyak/软目标 Double DQN 变体。
         return ("mlp-pddqn", "mlp", "ddqn", True)
 
     if a == "cnn-iddqn":
-        # Legacy name (avoid collision with published "IDDQN").
+        # 旧版名称（避免与已发表的"IDDQN"冲突）。
         return ("cnn-pddqn", "cnn", "ddqn", True)
 
     supported = {"mlp-dqn", "mlp-ddqn", "mlp-pddqn", "cnn-dqn", "cnn-ddqn", "cnn-pddqn"}
@@ -133,13 +133,13 @@ class DQNFamilyAgent:
         self._rng = np.random.default_rng(seed)
         torch.manual_seed(seed)
 
-        # DQN is the baseline (plain Q-learning).
-        # DDQN keeps the same architecture but uses the Double DQN TD target (online argmax + target eval).
+        # DQN 是基线（普通 Q-learning）。
+        # DDQN 保持相同架构，但使用 Double DQN TD 目标（在线网络选动作 + 目标网络评估）。
         #
-        # Observation split: CNN uses all 3 map channels (occ + cost + EDT clearance),
-        # MLP drops the EDT channel (last N² dims) to avoid extra noise from spatial
-        # features that MLP cannot exploit.  See repro_20260222_cnn_edt_channel.json.
-        # When cnn_drop_edt=True, CNN also drops the EDT channel (ablation study).
+        # 观测拆分：CNN 使用全部 3 个地图通道（occ + cost + EDT 间隙），
+        # MLP 丢弃 EDT 通道（最后 N² 维），避免 MLP 无法利用的空间特征
+        # 引入额外噪声。参见 repro_20260222_cnn_edt_channel.json。
+        # 当 cnn_drop_edt=True 时，CNN 也丢弃 EDT 通道（消融实验）。
         self._env_obs_dim = int(obs_dim)
         effective_obs_dim = int(obs_dim)
 
@@ -160,7 +160,7 @@ class DQNFamilyAgent:
                 "iqn_quantiles": int(config.iqn_quantiles),
             }
             if self.cnn_drop_edt:
-                # Ablation: strip EDT channel, keep only occ + cost (2 channels)
+                # 消融实验：去除 EDT 通道，仅保留 occ + cost（2 个通道）
                 effective_obs_dim = int(layout.scalar_dim) + 2 * int(layout.map_size) ** 2
                 self._net_cls = CNNQNetwork
                 self._net_kwargs = {
@@ -178,7 +178,7 @@ class DQNFamilyAgent:
                     **_cnn_extra,
                 }
         else:
-            # Strip the 3rd map channel (EDT) when present: 11+3*N² → 11+2*N².
+            # 当存在第 3 个地图通道（EDT）时去除它：11+3*N² → 11+2*N²。
             map_rem = int(obs_dim) - 11
             if map_rem > 0 and map_rem % 3 == 0:
                 n_sq = map_rem // 3
@@ -198,7 +198,7 @@ class DQNFamilyAgent:
         self.replay = ReplayBuffer(config.replay_capacity, obs_dim, n_actions, rng=self._rng)
 
         self._train_steps = 0
-        self._noise_counter = 0  # for NoisyNet reset interval
+        self._noise_counter = 0  # 用于 NoisyNet 重置间隔
         self._n_actions = int(n_actions)
         self._obs_dim = int(obs_dim)
         self._n_step = int(max(1, int(getattr(config, "n_step", 1))))
@@ -229,13 +229,13 @@ class DQNFamilyAgent:
         )
 
     def _prep_obs(self, obs: np.ndarray) -> np.ndarray:
-        """Slice env observation to the effective dim used by this agent's network."""
+        """将环境观测裁剪到当前智能体网络使用的有效维度。"""
         if self._obs_dim < self._env_obs_dim:
             return np.asarray(obs, dtype=np.float32).ravel()[: self._obs_dim]
         return np.asarray(obs, dtype=np.float32).ravel()
 
     def act(self, obs: np.ndarray, *, episode: int, explore: bool = True) -> int:
-        # NoisyNet: no epsilon-greedy; noise in weights provides exploration
+        # NoisyNet：不使用 epsilon-greedy；权重中的噪声提供探索
         if explore and not self.config.noisy and (self._rng.random() < self.epsilon(episode)):
             return int(self._rng.integers(0, self._n_actions))
 
@@ -253,7 +253,7 @@ class DQNFamilyAgent:
         explore: bool = True,
         action_mask: np.ndarray | None = None,
     ) -> int:
-        """Epsilon-greedy action selection with an optional boolean action mask."""
+        """带可选布尔动作掩码的 epsilon-greedy 动作选择。"""
 
         mask = None
         if action_mask is not None:
@@ -261,7 +261,7 @@ class DQNFamilyAgent:
             if mask.size != self._n_actions:
                 raise ValueError("action_mask must have shape (n_actions,)")
 
-        # NoisyNet: no epsilon-greedy; noise in weights provides exploration
+        # NoisyNet：不使用 epsilon-greedy；权重中的噪声提供探索
         if explore and not self.config.noisy and (self._rng.random() < self.epsilon(episode)):
             if mask is None:
                 return int(self._rng.integers(0, self._n_actions))
@@ -280,7 +280,7 @@ class DQNFamilyAgent:
             return int(torch.argmax(q).item())
 
     def top_actions(self, obs: np.ndarray, *, k: int) -> np.ndarray:
-        """Return the top-k action indices by Q-value (descending)."""
+        """返回按 Q 值降序排列的前 k 个动作索引。"""
         obs = self._prep_obs(obs)
         kk = int(max(1, int(k)))
         with torch.no_grad():
@@ -324,11 +324,11 @@ class DQNFamilyAgent:
         truncated: bool = False,
         next_action_mask: np.ndarray | None = None,
     ) -> None:
-        """Record a transition (supports n-step returns).
+        """记录一次转移（支持 n-step 回报）。
 
-        `done` should reflect *true* terminal states (collision/reached). Use `truncated=True`
-        for time-limit episode ends so the n-step buffer does not leak across episodes while
-        still allowing bootstrapping from the final state.
+        `done` 应反映 *真正的* 终止状态（碰撞/到达目标）。对于时间限制导致的
+        回合结束请使用 `truncated=True`，这样 n-step 缓冲区不会跨回合泄漏，
+        同时仍允许从最终状态进行自举。
         """
         obs = self._prep_obs(obs)
         next_obs = self._prep_obs(next_obs)
@@ -363,7 +363,7 @@ class DQNFamilyAgent:
         gamma = float(self.config.gamma)
         n_target = int(self._n_step)
 
-        # When `force` is True (episode boundary), flush everything with truncated n-step horizons.
+        # 当 `force` 为 True（回合边界）时，以截断的 n-step 视野刷新所有缓冲。
         while self._nstep_buffer:
             horizon = min(int(n_target), int(len(self._nstep_buffer)))
             ret = 0.0
@@ -394,18 +394,18 @@ class DQNFamilyAgent:
             )
             self._nstep_buffer.popleft()
 
-            # If we're not at an episode boundary, only emit one transition per step.
+            # 如果不在回合边界，每步只发出一个转移。
             if not bool(force):
                 break
 
     def end_episode(self) -> None:
-        """Flush any pending n-step transitions at an episode boundary."""
+        """在回合边界刷新所有挂起的 n-step 转移。"""
         if int(self._n_step) <= 1:
             return
         self._flush_nstep_buffer(force=True)
 
     def pretrain_on_demos(self, *, steps: int) -> int:
-        """Supervised warm-start on demonstration transitions (DQfD-style stabilizer)."""
+        """在演示转移上进行有监督预热（DQfD 风格的稳定器）。"""
 
         n_steps = int(steps)
         if n_steps <= 0:
@@ -462,7 +462,7 @@ class DQNFamilyAgent:
         if len(self.replay) < self.config.batch_size:
             return {}
 
-        # NoisyNet: resample noise every N update steps (default 4)
+        # NoisyNet：每 N 个更新步重新采样噪声（默认 4）
         if self.config.noisy:
             self._noise_counter += 1
             if self._noise_counter >= self.config.noisy_reset_interval:
@@ -476,7 +476,7 @@ class DQNFamilyAgent:
         obs = torch.from_numpy(batch.obs).to(self.device)
         actions = torch.from_numpy(batch.actions).to(self.device)
         rewards = torch.from_numpy(batch.rewards).to(self.device)
-        # V9: normalize rewards at sampling time using current running stats.
+        # V9：在采样时使用当前运行统计量归一化奖励。
         if rew_normalizer is not None:
             _norm_t = getattr(rew_normalizer, "normalize_tensor", None)
             if callable(_norm_t):
@@ -493,7 +493,7 @@ class DQNFamilyAgent:
         with torch.no_grad():
             mask = next_action_masks.to(torch.bool)
             if self.base_algo == "ddqn":
-                # Double DQN target: action selection with online network, evaluation with target network.
+                # Double DQN 目标：用在线网络选动作，用目标网络评估。
                 q_next_online = self.q(next_obs)
                 q_next_online = q_next_online.masked_fill(~mask, torch.finfo(q_next_online.dtype).min)
                 next_actions = torch.argmax(q_next_online, dim=1, keepdim=True)
@@ -502,12 +502,12 @@ class DQNFamilyAgent:
                 q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
                 next_q = q_next_target.gather(1, next_actions).squeeze(1)
             else:
-                # Vanilla DQN target: max over target network.
+                # 原始 DQN 目标：对目标网络取 max。
                 q_next_target = self.q_target(next_obs)
                 q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
                 next_q = q_next_target.max(dim=1).values
 
-            # Safety: avoid propagating NaNs/-inf when a mask is malformed.
+            # 安全措施：当掩码格式异常时避免传播 NaN/-inf。
             next_q = torch.where(torch.isfinite(next_q), next_q, torch.zeros_like(next_q))
             gamma = float(self.config.gamma)
             gamma_n = torch.pow(torch.tensor(gamma, device=self.device, dtype=torch.float32), n_steps.to(torch.float32))
@@ -517,7 +517,7 @@ class DQNFamilyAgent:
         losses = self.loss_fn(q_values, target)
         td_loss = losses.mean()
 
-        # Expert large-margin loss (DQfD). Only applied to `demo` transitions.
+        # 专家大 margin 损失（DQfD）。仅应用于 `demo` 转移。
         demo_lambda = float(getattr(self.config, "demo_lambda", 0.0))
         demo_margin = float(getattr(self.config, "demo_margin", 0.0))
         margin_loss = torch.tensor(0.0, device=self.device)
@@ -530,7 +530,7 @@ class DQNFamilyAgent:
                 margin = torch.relu(q_max_other + float(demo_margin) - q_values)
                 margin_loss = (margin * demo_mask).mean()
 
-        # Expert behavior cloning loss on demo transitions (works as a strong stabilizer on static maps).
+        # 演示转移上的专家行为克隆损失（在静态地图上起到强稳定器作用）。
         demo_ce_lambda = float(getattr(self.config, "demo_ce_lambda", 0.0))
         ce_loss = torch.tensor(0.0, device=self.device)
         if demo_ce_lambda > 0.0:
@@ -618,7 +618,7 @@ class DQNFamilyAgent:
         hidden_dim = int(cfg.get("hidden_dim", self.config.hidden_dim))
         hidden_layers = int(cfg.get("hidden_layers", self.config.hidden_layers))
 
-        # Architecture can change across experiments (hidden_dim/layers). Rebuild when shapes mismatch.
+        # 架构可能在不同实验间变化（hidden_dim/layers）。当形状不匹配时重建网络。
         try:
             self.q.load_state_dict(q_sd, strict=True)
         except RuntimeError:
@@ -629,7 +629,7 @@ class DQNFamilyAgent:
             try:
                 self.q_target.load_state_dict(q_target_sd, strict=True)
             except RuntimeError:
-                # Fall back to syncing the target net if the checkpoint predates saving it (or shapes mismatch).
+                # 如果检查点早于保存目标网络的版本（或形状不匹配），则回退到同步目标网络。
                 self.q_target.load_state_dict(self.q.state_dict(), strict=True)
         else:
             self.q_target.load_state_dict(self.q.state_dict(), strict=True)

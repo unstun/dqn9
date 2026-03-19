@@ -25,3 +25,31 @@ paper/*.synctex.gz
 *.log
 tmp.md
 .claude/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.agents/
+.playwright-cli/
+.mcp.json
+
+# AI writing drafts (not part of main paper)
+aipaper/
+aipaper_cn/
+
+# Personal / non-project files
+博士第一篇/
+科研写作风格与结构总指南.md
+
+# Compiled artifacts (root level)
+main.pdf
+cnn_ddqn_md_architecture.pdf
+docs/mainreal.pdf
+
+# Paper backup / temp files
+paper/main.tex.bak
+paper/main.docx
+paper/.DS_Store
+paper/media/*_backup.*
+paper/media/*_cropped.*
+paper/media/.~*

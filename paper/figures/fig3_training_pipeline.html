@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fig.3 Training Pipeline — DQfD Three-Phase Training</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #fff;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    display: flex; justify-content: center;
+    padding: 20px;
+  }
+  .canvas {
+    width: 1400px;
+    height: 580px;
+    position: relative;
+    background: #fff;
+  }
+
+  /* ── phase zones ── */
+  .phase {
+    position: absolute;
+    border-radius: 10px;
+    border: 2.5px solid;
+    top: 50px;
+    height: 460px;
+  }
+  .p1 { left: 15px; width: 380px; background: #eaf7ed; border-color: #27ae60; }
+  .p2 { left: 415px; width: 380px; background: #ebf5fb; border-color: #2980b9; }
+  .p3 { left: 815px; width: 570px; background: #fef5e7; border-color: #e67e22; }
+
+  .phase-header {
+    position: absolute;
+    top: -18px; left: 50%; transform: translateX(-50%);
+    background: #fff;
+    padding: 2px 16px;
+    font-size: 14px; font-weight: 800;
+    border-radius: 20px;
+    border: 2.5px solid;
+    white-space: nowrap;
+    z-index: 5;
+  }
+  .p1 .phase-header { color: #1e8449; border-color: #27ae60; }
+  .p2 .phase-header { color: #1a5276; border-color: #2980b9; }
+  .p3 .phase-header { color: #9c640c; border-color: #e67e22; }
+
+  /* ── box ── */
+  .box {
+    position: absolute;
+    border-radius: 7px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    font-size: 12px; line-height: 1.35; color: #222;
+    border: 2px solid; padding: 6px 10px;
+  }
+  .box .t { font-weight: 700; font-size: 13px; }
+  .box .d { font-size: 10.5px; color: #666; margin-top: 2px; }
+
+  /* ── circular node ── */
+  .circ {
+    position: absolute;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; text-align: center;
+    border: 2.5px solid; z-index: 5;
+  }
+
+  /* ── replay buffer visual ── */
+  .buffer {
+    position: absolute;
+    border: 2.5px solid #7d3c98;
+    border-radius: 8px;
+    background: linear-gradient(to bottom, #f5eef8, #ebdef0);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8px;
+  }
+  .buffer .t { font-weight: 700; font-size: 12px; color: #6c3483; }
+  .buffer .d { font-size: 10px; color: #7d3c98; margin-top: 3px; }
+  .buffer-bar {
+    width: 90%; height: 14px; margin-top: 6px;
+    border-radius: 3px; overflow: hidden;
+    display: flex;
+    border: 1px solid #7d3c98;
+  }
+  .buf-demo { background: #a569bd; height: 100%; }
+  .buf-agent { background: #d7bde2; height: 100%; }
+
+  .star { color: #c0392b; font-weight: 700; font-size: 15px; vertical-align: super; }
+
+  /* ── SVG ── */
+  svg.arrows {
+    position: absolute; top: 0; left: 0;
+    width: 1400px; height: 580px;
+    pointer-events: none; z-index: 10;
+  }
+  .al { stroke: #555; stroke-width: 2.2; fill: none; marker-end: url(#ah); }
+  .al-thick { stroke: #333; stroke-width: 2.8; fill: none; marker-end: url(#ahd); }
+  .al-green { stroke: #27ae60; stroke-width: 2.5; fill: none; marker-end: url(#ahg); }
+  .al-blue { stroke: #2980b9; stroke-width: 2.5; fill: none; marker-end: url(#ahb); }
+  .al-orange { stroke: #e67e22; stroke-width: 2.5; fill: none; marker-end: url(#aho); }
+
+  /* ── legend ── */
+  .legend {
+    position: absolute; bottom: 8px; left: 20px;
+    display: flex; gap: 22px; font-size: 11px; color: #555;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .lsw { width: 16px; height: 11px; border-radius: 3px; border: 1.5px solid; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- ════ Phase zones ════ -->
+  <div class="phase p1">
+    <div class="phase-header">Phase 1: Demo Collection</div>
+  </div>
+  <div class="phase p2">
+    <div class="phase-header">Phase 2: Supervised Pre-train</div>
+  </div>
+  <div class="phase p3">
+    <div class="phase-header">Phase 3: RL Training (DQN + DQfD)</div>
+  </div>
+
+  <!-- ════ Phase 1 content ════ -->
+  <div class="box" style="left:40px; top:80px; width:330px; height:55px; background:#d5f5e3; border-color:#229954;">
+    <div class="t" style="color:#1e8449;">Simulation Environment</div>
+    <div class="d">Random forest maps (dense obstacles)</div>
+  </div>
+
+  <div class="box" style="left:40px; top:165px; width:330px; height:55px; background:#d5f5e3; border-color:#229954;">
+    <div class="t" style="color:#1e8449;">Hybrid A* Expert Policy</div>
+    <div class="d">Kinematically feasible reference trajectory</div>
+  </div>
+
+  <div class="box" style="left:40px; top:250px; width:330px; height:55px; background:#d5f5e3; border-color:#229954;">
+    <div class="t" style="color:#1e8449;">Trajectory Following</div>
+    <div class="d">Expert action at each step → (s, a, r, s', done)</div>
+  </div>
+
+  <div class="box" style="left:40px; top:335px; width:330px; height:45px; background:#d5f5e3; border-color:#229954;">
+    <div class="t" style="color:#1e8449;">Filter: Success Only</div>
+    <div class="d">Keep episodes where goal is reached</div>
+  </div>
+
+  <!-- Demo count -->
+  <div class="circ" style="left:150px; top:410px; width:110px; height:55px; background:#a9dfbf; border-color:#27ae60; border-radius:8px;">
+    <div><span style="font-size:18px; font-weight:800; color:#1e8449;">20k</span><br><span style="font-size:10px; color:#27ae60;">transitions</span></div>
+  </div>
+
+  <!-- ════ Replay Buffer (shared between phases) ════ -->
+  <div class="buffer" style="left:165px; top:480px; width:280px; height:80px;">
+    <div class="t">Prioritized Replay Buffer</div>
+    <div class="d">Demo transitions preserved (never overwritten)</div>
+    <div class="buffer-bar">
+      <div class="buf-demo" style="width:25%;"></div>
+      <div class="buf-agent" style="width:75%;"></div>
+    </div>
+    <div style="display:flex; gap:15px; margin-top:2px; font-size:9px; color:#7d3c98;">
+      <span>■ Demo (protected)</span>
+      <span>□ Agent experience</span>
+    </div>
+  </div>
+
+  <!-- ════ Phase 2 content ════ -->
+  <div class="box" style="left:440px; top:80px; width:330px; height:50px; background:#d6eaf8; border-color:#2980b9;">
+    <div class="t" style="color:#1a5276;">Sample Demo Batches</div>
+    <div class="d">Mini-batch from demo transitions only</div>
+  </div>
+
+  <div class="box" style="left:440px; top:160px; width:330px; height:65px; background:#d6eaf8; border-color:#2980b9;">
+    <div class="t" style="color:#1a5276;">CNN-PDDQN Forward Pass</div>
+    <div class="d">Q(s,a) = V(s) + A(s,a) − mean(A)<br>Compute Q-values for demo states</div>
+  </div>
+
+  <div class="box" style="left:440px; top:258px; width:330px; height:80px; background:#aed6f1; border-color:#2980b9;">
+    <div class="t" style="color:#1a5276;">Combined Supervised Loss</div>
+    <div style="font-size:11.5px; color:#1a5276; margin-top:4px; line-height:1.4; text-align:left; padding-left:20px;">
+      L<sub>CE</sub> = CrossEntropy(softmax(Q), a<sub>expert</sub>)<br>
+      L<sub>margin</sub> = max(0, max Q + m − Q(a<sub>expert</sub>))<br>
+      <b>L = λ<sub>CE</sub>·L<sub>CE</sub> + λ<sub>m</sub>·L<sub>margin</sub></b>
+    </div>
+  </div>
+
+  <div class="box" style="left:440px; top:370px; width:330px; height:42px; background:#d6eaf8; border-color:#2980b9;">
+    <div class="t" style="color:#1a5276;">Gradient Update</div>
+    <div class="d">Adam optimizer, 50,000 steps</div>
+  </div>
+
+  <!-- 50k steps badge -->
+  <div class="circ" style="left:545px; top:430px; width:120px; height:50px; background:#aed6f1; border-color:#2980b9; border-radius:8px;">
+    <div><span style="font-size:16px; font-weight:800; color:#1a5276;">50k steps</span><br><span style="font-size:10px; color:#2980b9;">supervised</span></div>
+  </div>
+
+  <!-- ════ Phase 3 content ════ -->
+  <!-- Environment interaction -->
+  <div class="box" style="left:840px; top:75px; width:240px; height:50px; background:#fdebd0; border-color:#e67e22;">
+    <div class="t" style="color:#9c640c;">ε-Greedy Exploration</div>
+    <div class="d">ε: 1.0 → 0.01 (linear decay)</div>
+  </div>
+
+  <div class="box" style="left:1100px; top:75px; width:260px; height:50px; background:#fdebd0; border-color:#e67e22;">
+    <div class="t" style="color:#9c640c;">Environment Step</div>
+    <div class="d">action → (s', r, done) + store to buffer</div>
+  </div>
+
+  <!-- Sample from buffer -->
+  <div class="box" style="left:840px; top:165px; width:240px; height:50px; background:#fdebd0; border-color:#e67e22;">
+    <div class="t" style="color:#9c640c;">Sample Mixed Batch</div>
+    <div class="d">Prioritized: demo + agent experience</div>
+  </div>
+
+  <!-- TD loss -->
+  <div class="box" style="left:840px; top:248px; width:520px; height:80px; background:#fae5d3; border-color:#e67e22;">
+    <div class="t" style="color:#9c640c;">Combined DQfD Loss</div>
+    <div style="font-size:11.5px; color:#9c640c; margin-top:4px; line-height:1.5; text-align:left; padding-left:15px;">
+      L<sub>TD</sub> = (r + γ·Q<sub>target</sub>(s', argmax<sub>a'</sub> Q(s',a')) − Q(s,a))²
+      <span style="font-size:10px; color:#aaa;"> (DDQN)</span><br>
+      L<sub>demo</sub> = λ<sub>CE</sub>·L<sub>CE</sub> + λ<sub>m</sub>·L<sub>margin</sub>
+      <span style="font-size:10px; color:#aaa;"> (demo samples only)</span><br>
+      <b>L<sub>total</sub> = L<sub>TD</sub> + L<sub>demo</sub></b>
+    </div>
+  </div>
+
+  <!-- Target network -->
+  <div class="box" style="left:1100px; top:165px; width:260px; height:50px; background:#fdebd0; border-color:#d68910; border-style:dashed;">
+    <div class="t" style="color:#9c640c;">Target Network Q̂</div>
+    <div class="d">Hard copy every τ steps</div>
+  </div>
+
+  <!-- Gradient update -->
+  <div class="box" style="left:840px; top:365px; width:250px; height:42px; background:#fdebd0; border-color:#e67e22;">
+    <div class="t" style="color:#9c640c;">Gradient Update (Adam)</div>
+    <div class="d">Online network θ ← θ − α∇L</div>
+  </div>
+
+  <!-- Evaluation -->
+  <div class="box" style="left:1110px; top:365px; width:250px; height:42px; background:#fdebd0; border-color:#d68910; border-style:dashed;">
+    <div class="t" style="color:#9c640c;">Periodic Evaluation</div>
+    <div class="d">Every N steps, no exploration</div>
+  </div>
+
+  <!-- Convergence badge -->
+  <div class="box" style="left:920px; top:435px; width:280px; height:55px; background:#f9e79f; border-color:#d4ac0d; border-width:2.5px;">
+    <div class="t" style="color:#7d6608;">Trained CNN-PDDQN Policy</div>
+    <div class="d">Best checkpoint by evaluation success rate</div>
+  </div>
+
+  <!-- ════ SVG Arrows ════ -->
+  <svg class="arrows" viewBox="0 0 1400 580">
+    <defs>
+      <marker id="ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+      </marker>
+      <marker id="ahd" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+        <polygon points="0 0, 9 3.5, 0 7" fill="#333"/>
+      </marker>
+      <marker id="ahg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#27ae60"/>
+      </marker>
+      <marker id="ahb" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#2980b9"/>
+      </marker>
+      <marker id="aho" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+      </marker>
+    </defs>
+
+    <!-- Phase 1 vertical -->
+    <path d="M 205,135 L 205,165" class="al-green"/>
+    <path d="M 205,220 L 205,250" class="al-green"/>
+    <path d="M 205,305 L 205,335" class="al-green"/>
+    <path d="M 205,380 L 205,410" class="al-green"/>
+
+    <!-- Phase 1 → Replay buffer -->
+    <path d="M 205,465 L 270,480" class="al-green"/>
+
+    <!-- Replay buffer → Phase 2 -->
+    <path d="M 445,510 L 500,380 L 605,412" class="al-blue"/>
+
+    <!-- Phase 2 vertical -->
+    <path d="M 605,130 L 605,160" class="al-blue"/>
+    <path d="M 605,225 L 605,258" class="al-blue"/>
+    <path d="M 605,338 L 605,370" class="al-blue"/>
+
+    <!-- Phase 2 → Phase 3 (transfer learned weights) -->
+    <path d="M 770,400 C 810,400 830,120 840,100" class="al-thick"/>
+    <text x="790" y="385" fill="#333" font-size="10" font-weight="600" transform="rotate(-70,790,385)">weights init</text>
+
+    <!-- Phase 3: explore → env -->
+    <path d="M 1080,100 L 1100,100" class="al-orange"/>
+    <!-- env → buffer -->
+    <path d="M 1230,125 C 1230,480 600,530 445,520" class="al-orange"/>
+    <!-- buffer → sample mixed -->
+    <path d="M 350,480 C 500,460 840,200 840,190" class="al-orange"/>
+    <!-- sample → loss -->
+    <path d="M 960,215 L 960,248" class="al-orange"/>
+    <!-- target net → loss -->
+    <path d="M 1230,215 L 1200,248" class="al-orange"/>
+    <!-- loss → grad -->
+    <path d="M 960,328 L 960,365" class="al-orange"/>
+    <!-- grad → evaluation -->
+    <path d="M 1090,386 L 1110,386" class="al-orange"/>
+    <!-- grad → output -->
+    <path d="M 960,407 L 1020,435" class="al-orange"/>
+  </svg>
+
+  <!-- ════ Legend ════ -->
+  <div class="legend">
+    <div class="legend-item"><div class="lsw" style="background:#eaf7ed; border-color:#27ae60;"></div>Phase 1: Demo Collection</div>
+    <div class="legend-item"><div class="lsw" style="background:#ebf5fb; border-color:#2980b9;"></div>Phase 2: Supervised Pre-train (DQfD)</div>
+    <div class="legend-item"><div class="lsw" style="background:#fef5e7; border-color:#e67e22;"></div>Phase 3: RL Training</div>
+    <div class="legend-item"><div class="lsw" style="background:#f5eef8; border-color:#7d3c98;"></div>Replay Buffer (shared)</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,28 +1,28 @@
-"""Map definitions and loading for all supported environments.
+"""所有支持环境的地图定义与加载。
 
-Map types
+地图类型
 ---------
-- Forest maps (procedural):  forest_a / forest_b / forest_c / forest_d
-  Generated via ForestParams + generate_forest_grid() in forest.py.
-  Cached in _FOREST_CACHE after first access.
+- 森林地图（程序化生成）：forest_a / forest_b / forest_c / forest_d
+  通过 forest.py 中的 ForestParams + generate_forest_grid() 生成。
+  首次访问后缓存于 _FOREST_CACHE。
 
-- Real-world maps (PGM):     realmap_a
-  Loaded from realmap/map_a.pgm via pgm.py.
-  Start/goal chosen by EDT clearance analysis.
+- 真实世界地图（PGM）：realmap_a
+  通过 pgm.py 从 realmap/map_a.pgm 加载。
+  起点/终点由 EDT clearance 分析选定。
 
-Key exports
+主要导出
 -----------
-- MapSpec protocol        Interface: name, start_xy, goal_xy, size, obstacle_grid().
-- GridMapSpec             String-row map spec (legacy grid maps).
-- ArrayGridMapSpec        Numpy-array map spec (forest + realmap).
-- get_map_spec(name)      Unified entry: returns MapSpec for any env name.
+- MapSpec protocol        接口：name, start_xy, goal_xy, size, obstacle_grid()。
+- GridMapSpec             字符串行地图规格（旧版栅格地图）。
+- ArrayGridMapSpec        Numpy 数组地图规格（森林 + 真实地图）。
+- get_map_spec(name)      统一入口：根据环境名返回 MapSpec。
 - FOREST_ENV_ORDER        ("forest_a", "forest_b", "forest_c", "forest_d")
 - REALMAP_ENV_ORDER       ("realmap_a",)
-- ALL_ENV_ORDER           FOREST + REALMAP combined.
+- ALL_ENV_ORDER           FOREST + REALMAP 合集。
 
-Precomputed expert paths
+预计算专家路径
 ------------------------
-maps/precomputed/*.json   Hybrid A* reference paths (used by DQfD in train.py).
+maps/precomputed/*.json   Hybrid A* 参考路径（供 train.py 中 DQfD 使用）。
 """
 
 from __future__ import annotations
@@ -61,7 +61,7 @@ class GridMapSpec:
         return width, height
 
     def obstacle_grid(self) -> np.ndarray:
-        """Returns a (H, W) uint8 array with y=0 at bottom, 1=obstacle."""
+        """返回 (H, W) uint8 数组，y=0 在底部，1=障碍物。"""
         width, height = self.size
         if height == 0 or width == 0:
             raise ValueError(f"Empty map: {self.name!r}")
@@ -85,7 +85,7 @@ class GridMapSpec:
 @dataclass(frozen=True)
 class ArrayGridMapSpec:
     name: str
-    grid_y0_bottom: np.ndarray  # (H, W) uint8 with y=0 bottom, 1=obstacle
+    grid_y0_bottom: np.ndarray  # (H, W) uint8，y=0 在底部，1=障碍物
     start_xy: tuple[int, int]
     goal_xy: tuple[int, int]
 
@@ -98,14 +98,14 @@ class ArrayGridMapSpec:
         return self.grid_y0_bottom.astype(np.uint8, copy=True)
 
 
-# Legacy grid maps ("a"..."d") were removed; keep the symbol for back-compat.
+# 旧版栅格地图（"a"..."d"）已移除；保留符号以向后兼容。
 ENV_ORDER: tuple[str, ...] = ()
 FOREST_ENV_ORDER: tuple[str, ...] = ("forest_a", "forest_b", "forest_c", "forest_d")
 
-# Real-world PGM maps (treated as forest-type: use AMRBicycleEnv with same params)
+# 真实世界 PGM 地图（按森林类型处理：使用相同参数的 UGVBicycleEnv）
 REALMAP_ENV_ORDER: tuple[str, ...] = ("realmap_a",)
 
-# Combined env order used externally
+# 对外使用的组合环境顺序
 ALL_ENV_ORDER: tuple[str, ...] = FOREST_ENV_ORDER + REALMAP_ENV_ORDER
 
 
@@ -117,13 +117,13 @@ _REALMAP_CACHE: dict[str, ArrayGridMapSpec] = {}
 
 
 def _get_realmap_spec(env_name: str) -> ArrayGridMapSpec:
-    """Load a real-world PGM map as ArrayGridMapSpec (y=0 at bottom, 1=obstacle)."""
+    """加载真实世界 PGM 地图为 ArrayGridMapSpec（y=0 在底部，1=障碍物）。"""
     if env_name in _REALMAP_CACHE:
         return _REALMAP_CACHE[env_name]
     from ugv_dqn.maps.pgm import load_pgm_map
     if env_name == "realmap_a":
         pgm_path = str(_PROJECT_ROOT / "realmap" / "map_a.pgm")
-        # Best start/goal found by distance-transform analysis (clearance >1.8m each)
+        # 通过距离变换分析找到的最佳起点/终点（各自 clearance >1.8m）
         start_xy = (34, 29)   # x=34, y=29 (y=0 at bottom), clearance≈1.88m
         goal_xy  = (371, 109) # x=371, y=109, clearance≈2.20m
     else:
@@ -140,7 +140,7 @@ def _get_forest_spec(env_name: str) -> ArrayGridMapSpec:
     from ugv_dqn.maps.forest import ForestParams, generate_forest_grid
 
     if env_name == "forest_a":
-        # Largest forest map (more room; easier to see generalization).
+        # 最大森林地图（空间更大；更易观察泛化效果）。
         seed = 101
         params = ForestParams(
             width_cells=360,
@@ -153,7 +153,7 @@ def _get_forest_spec(env_name: str) -> ArrayGridMapSpec:
             goal_frac=0.88,
         )
     elif env_name == "forest_b":
-        # Small map, tighter gaps (must remain bicycle-feasible).
+        # 小地图，间隙更窄（须保持 bicycle 运动学可行性）。
         seed = 202
         params = ForestParams(
             width_cells=96,
@@ -163,7 +163,7 @@ def _get_forest_spec(env_name: str) -> ArrayGridMapSpec:
             bush_cluster_count=0,
         )
     elif env_name == "forest_c":
-        # Large map, denser layout (must remain bicycle-feasible).
+        # 大地图，更密集布局（须保持 bicycle 运动学可行性）。
         seed = 303
         params = ForestParams(
             width_cells=160,
@@ -173,7 +173,7 @@ def _get_forest_spec(env_name: str) -> ArrayGridMapSpec:
             bush_cluster_count=0,
         )
     elif env_name == "forest_d":
-        # Small map, wide gaps.
+        # 小地图，间隙较宽。
         seed = 404
         params = ForestParams(
             width_cells=96,
@@ -185,10 +185,10 @@ def _get_forest_spec(env_name: str) -> ArrayGridMapSpec:
     else:
         raise KeyError(env_name)
 
-    # Footprint clearance for reachability checks: (r + safe_distance + eps_cell).
-    # This ensures the generated forest maps are not only collision-free but also have
-    # enough clearance for the reward's safe-distance threshold.
-    # r=0.436m for the two-circle approximation, eps_cell=sqrt(2)/2*cell_size.
+    # 可达性检查的车身 clearance：(r + safe_distance + eps_cell)。
+    # 确保生成的森林地图不仅无碰撞，还具备足够的 clearance
+    # 以满足奖励函数的安全距离阈值。
+    # r=0.436m 对应双圆近似，eps_cell=sqrt(2)/2*cell_size。
     r_m = 0.436
     eps_cell_m = (2.0**0.5) * 0.5 * float(params.cell_size_m)
     safe_distance_m = 0.20

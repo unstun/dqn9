@@ -1,9 +1,9 @@
-"""Offline precomputation of Hybrid A* expert paths for forest maps.
+"""离线预计算 forest 地图的 Hybrid A* 专家路径。
 
-Generates JSON files in ugv_dqn/maps/precomputed/ that are loaded at
-training time to provide demonstration trajectories for DQfD prefill.
-Each JSON contains the path as a list of (x_cells, y_cells) waypoints
-plus timing and planner stats.
+在 ugv_dqn/maps/precomputed/ 下生成 JSON 文件，在训练时加载以
+为 DQfD 预填充提供演示轨迹。
+每个 JSON 包含路径（(x_cells, y_cells) 路点列表）
+以及耗时和规划器统计信息。
 """
 
 from __future__ import annotations

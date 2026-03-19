@@ -1,9 +1,8 @@
-"""Non-learning baseline planners used for evaluation.
+"""用于评估的非学习 baseline 规划器。
 
-Modules
+模块
 -------
-pathplan.py    Wrappers around third_party.pathplan for Hybrid A* and RRT*.
-               Provides plan_hybrid_astar() and plan_rrt_star() with
-               forest-specific footprint and Ackermann parameter defaults.
+pathplan.py    对 third_party.pathplan 的封装，用于 Hybrid A* 和 RRT*。
+               提供 plan_hybrid_astar() 和 plan_rrt_star()，
+               带有 forest 专用的碰撞几何和 Ackermann 参数默认值。
 """
-

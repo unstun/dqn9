@@ -1,28 +1,25 @@
-"""Training loop for DQN/DDQN agents on AMR path-planning environments.
+"""DQN/DDQN 智能体在 AMR 路径规划环境中的训练循环。
 
-Usage:  python train.py --profile <name>     (reads configs/<name>.json)
-        python train.py --self-check         (verify CUDA & imports only)
+用法：  python train.py --profile <name>     （读取 configs/<name>.json）
+        python train.py --self-check         （仅验证 CUDA 和 import）
 
-Structure (1500+ lines)
+结构（1500+ 行）
 -----------------------
-Helpers:
-    moving_average()                   Smoothing for training curves.
-    plot_training_eval_metrics()       Plot eval success_rate / avg_steps / avg_return.
-    plot_training_diagnostics()        Plot per-step loss / epsilon / Q-values.
+辅助函数：
+    moving_average()                   训练曲线平滑。
+DQfD 专家支持：
+    forest_demo_target()               预填充 demo 数量。
+    forest_expert_action()             向 Hybrid A* 专家查询单步动作。
+    collect_forest_demos()             批量填充经验回放池（专家演示）。
 
-DQfD expert support:
-    forest_demo_target()               How many demos to pre-fill.
-    forest_expert_action()             Query Hybrid A* expert for a single action.
-    collect_forest_demos()             Batch-fill replay buffer with expert demonstrations.
+核心：
+    train_one()                        训练一个 (env, algo) 组合 N 个 episode。
+                                       包含 episode 循环、DQfD 预训练、
+                                       周期性贪心评估和 checkpoint 保存。
 
-Core:
-    train_one()                        Train one (env, algo) combination for N episodes.
-                                       Contains the episode loop, DQfD pre-training,
-                                       periodic greedy evaluation, and checkpoint saving.
-
-CLI:
-    build_parser()                     Argparse definition (~300 lines of parameters).
-    main()                             Entry point: load config -> iterate envs x algos -> train_one.
+CLI：
+    build_parser()                     Argparse 定义（约 300 行参数）。
+    main()                             入口：加载配置 -> 遍历 envs x algos -> train_one。
 """
 
 from __future__ import annotations
@@ -49,13 +46,13 @@ import torch
 
 from ugv_dqn.agents import AgentConfig, DQNFamilyAgent, parse_rl_algo
 from ugv_dqn.config_io import apply_config_defaults, load_json, resolve_config_path, select_section
-from ugv_dqn.env import AMRBicycleEnv, AMRGridEnv, RewardWeights
+from ugv_dqn.env import UGVBicycleEnv
 from ugv_dqn.forest_policy import forest_compute_next_mask, forest_select_action
 from ugv_dqn.maps import FOREST_ENV_ORDER, REALMAP_ENV_ORDER, get_map_spec
 
 
 # ===========================================================================
-# Plotting helpers
+# 绘图辅助函数
 # ===========================================================================
 
 def moving_average(x: np.ndarray, window: int) -> np.ndarray:
@@ -68,91 +65,8 @@ def moving_average(x: np.ndarray, window: int) -> np.ndarray:
     return np.convolve(x, kernel, mode="same")
 
 
-def plot_training_eval_metrics(df_eval: pd.DataFrame, *, out_path: Path) -> None:
-    if df_eval.empty:
-        return
-
-    metrics: list[tuple[str, str]] = [
-        ("success_rate", "Success rate"),
-        ("avg_steps", "Avg steps"),
-        ("avg_return", "Avg return"),
-        ("planning_cost", "Planning cost (m)"),
-    ]
-
-    df_eval = df_eval.copy()
-    if "episode" in df_eval.columns:
-        df_eval["episode"] = pd.to_numeric(df_eval["episode"], errors="coerce")
-
-    envs = [str(x) for x in df_eval["env"].drop_duplicates().tolist()]
-    if not envs:
-        return
-
-    rows_n = int(len(envs))
-    cols_n = int(len(metrics))
-    fig, axes = plt.subplots(
-        rows_n,
-        cols_n,
-        figsize=(4.3 * cols_n, 2.8 * rows_n),
-        sharex=False,
-        sharey=False,
-    )
-    axes_arr = np.atleast_2d(axes)
-
-    algo_label = {
-        "mlp-dqn": "MLP-DQN",
-        "mlp-ddqn": "MLP-DDQN",
-        "mlp-pddqn": "MLP-PDDQN",
-        "cnn-dqn": "CNN-DQN",
-        "cnn-ddqn": "CNN-DDQN",
-        "cnn-pddqn": "CNN-PDDQN",
-        # Legacy (older runs)
-        "dqn": "DQN",
-        "ddqn": "DDQN",
-        "iddqn": "MLP-PDDQN",
-        "cnn-iddqn": "CNN-PDDQN",
-    }
-    present = [str(x) for x in df_eval["algo"].dropna().drop_duplicates().tolist()]
-    pref = ("mlp-dqn", "mlp-ddqn", "mlp-pddqn", "cnn-dqn", "cnn-ddqn", "cnn-pddqn", "dqn", "ddqn")
-    ordered = [a for a in pref if a in present] + [a for a in present if a not in pref]
-    algo_defs: list[tuple[str, str]] = [(a, algo_label.get(a, a.upper())) for a in ordered]
-    for i, env_name in enumerate(envs):
-        for j, (col, title) in enumerate(metrics):
-            ax = axes_arr[i, j]
-            for algo, label in algo_defs:
-                sub = df_eval[(df_eval["env"] == env_name) & (df_eval["algo"] == algo)].copy()
-                if sub.empty:
-                    continue
-                sub = sub.sort_values("episode")
-                x = sub["episode"].to_numpy()
-                y = pd.to_numeric(sub[col], errors="coerce").astype(float).to_numpy()
-                if col == "planning_cost":
-                    y = np.where(np.isfinite(y), y, np.nan)
-                ax.plot(x, y, alpha=0.25, linewidth=0.7, color=ax._get_lines.get_next_color())
-                win = max(1, len(y) // 15)
-                y_smooth = pd.Series(y).rolling(window=win, min_periods=1, center=True).mean().to_numpy()
-                ax.plot(x, y_smooth, label=label, linewidth=1.5, color=ax.lines[-1].get_color())
-
-            if i == 0:
-                ax.set_title(title)
-            if j == 0:
-                ax.set_ylabel(str(env_name))
-            if i == rows_n - 1:
-                ax.set_xlabel("Episodes")
-            if col == "success_rate":
-                ax.set_ylim(-0.05, 1.05)
-            ax.grid(True, alpha=0.25)
-
-    handles, labels = axes_arr[0, 0].get_legend_handles_labels()
-    if handles:
-        fig.legend(handles, labels, loc="upper center", ncol=min(4, len(labels)), fontsize=9, frameon=False)
-    fig.suptitle("Training greedy-eval metrics", y=0.98)
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
-    fig.savefig(out_path, dpi=200)
-    plt.close(fig)
-
-
 def plot_training_diagnostics(df_diag: pd.DataFrame, *, out_path: Path) -> None:
-    """Plot loss curves, epsilon schedule, and Q-value spread."""
+    """绘制 loss 曲线、epsilon 衰减和 Q 值分布。"""
     if df_diag.empty:
         return
 
@@ -221,19 +135,18 @@ def plot_training_diagnostics(df_diag: pd.DataFrame, *, out_path: Path) -> None:
 
 
 # ===========================================================================
-# DQfD expert demonstration support
+# DQfD 专家演示支持
 # ===========================================================================
 
 def forest_demo_target(*, learning_starts: int, batch_size: int) -> int:
-    # Forest long-horizon runs can fall into a "stop until stuck" local optimum unless the replay
-    # is initially dominated by successful expert trajectories. Empirically, forest_a needs ~20k
-    # demo transitions (the cap) for stable imitation + TD bootstrapping.
+    # Forest 长期运行若回放池初始未被成功专家轨迹主导，容易陷入"停住直到卡住"的局部最优。
+    # 经验上 forest_a 需要约 20k demo 转移（上限）才能稳定模仿 + TD 引导。
     target = max(int(learning_starts) * 40, int(batch_size))
     return int(min(int(target), 20_000))
 
 
 def forest_expert_action(
-    env: AMRBicycleEnv,
+    env: UGVBicycleEnv,
     *,
     forest_expert: str,
     horizon_steps: int,
@@ -245,8 +158,8 @@ def forest_expert_action(
         expert = "hybrid_astar"
 
     if expert == "hybrid_astar":
-        # Safer Hybrid A* tracking for demonstrations / guided exploration.
-        # The shorter-horizon aggressive tracker can collide on harder maps (notably forest_a).
+        # 更安全的 Hybrid A* 跟踪，用于演示/引导探索。
+        # 短视距的激进跟踪器在较难的地图上（尤其是 forest_a）容易碰撞。
         return env.expert_action_hybrid_astar(
             lookahead_points=5,
             horizon_steps=max(15, h),
@@ -263,11 +176,11 @@ def forest_expert_action(
 
 
 # ===========================================================================
-# Core training loop
+# 核心训练循环
 # ===========================================================================
 
 def collect_forest_demos(
-    env: AMRBicycleEnv,
+    env: UGVBicycleEnv,
     *,
     target: int,
     seed: int,
@@ -300,9 +213,9 @@ def collect_forest_demos(
     added = 0
     demo_ep = 0
     demo_prog = np.linspace(0.0, 1.0, num=5, dtype=np.float32)
-    # Only keep demonstrations from successful (goal-reaching) episodes.
-    # Otherwise, failed expert rollouts can dominate DQfD losses + the demo-preserving replay buffer
-    # and lock the policy into the degenerate "stop until stuck" behavior.
+    # 仅保留成功（到达目标）episode 的演示。
+    # 否则，失败的专家 rollout 会主导 DQfD loss + demo 保留回放池，
+    # 使策略锁定在退化的"停住直到卡住"行为上。
     max_demo_eps = 2000
     while added < n and demo_ep < int(max_demo_eps):
         opts = None
@@ -423,23 +336,23 @@ def train_one(
     explore_rng = np.random.default_rng(seed + 777)
 
     def episode_score(*, reached: bool, collision: bool, steps: int, ret: float) -> tuple[int, int, int]:
-        """Prefer reach > survive (timeout) > collision (then higher return)."""
+        """优先级：到达 > 存活（超时） > 碰撞（同级别下优先更高回报）。"""
         if bool(reached):
-            # Prefer higher return, then fewer steps.
+            # 优先更高回报，其次更少步数。
             return (2, int(1_000_000 * float(ret)), -int(steps))
         if bool(collision):
             return (0, int(1_000_000 * float(ret)), -int(steps))
-        # Timeout / did not reach.
+        # 超时 / 未到达目标。
         return (1, int(1_000_000 * float(ret)), -int(steps))
 
     def clone_state_dict(sd: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
         return {k: v.detach().cpu().clone() for k, v in sd.items()}
 
-    # Match checkpoint selection and metric logging to the evaluation distribution:
-    # - fixed-start training => evaluate on canonical start/goal
-    # - random-start/goal training => evaluate on a small fixed batch of sampled (start,goal) pairs
+    # 将 checkpoint 选择和指标记录与评估分布匹配：
+    # - 固定起点训练 => 在规范起点/终点上评估
+    # - 随机起点/终点训练 => 在一小批固定采样的 (start, goal) 对上评估
     eval_reset_options_list: list[dict[str, object] | None] = [None]
-    if bool(forest_random_start_goal) and isinstance(env, AMRBicycleEnv):
+    if bool(forest_random_start_goal) and isinstance(env, UGVBicycleEnv):
         eval_reset_options_list = []
         n_eval = max(1, int(eval_runs))
         for i in range(n_eval):
@@ -465,7 +378,7 @@ def train_one(
             torch.cuda.synchronize()
 
     def forest_expert_action_local() -> int:
-        if not isinstance(env, AMRBicycleEnv):
+        if not isinstance(env, UGVBicycleEnv):
             raise RuntimeError("forest_expert_action called for non-forest env")
         expert = str(forest_expert).lower().strip()
         if expert == "auto":
@@ -477,10 +390,10 @@ def train_one(
             w_clearance=float(forest_demo_w_clearance),
         )
 
-    # Forest-only: prefill replay buffer with a few short expert rollouts.
-    # This is off-policy data (valid for Q-learning) and dramatically reduces the
-    # chance of converging to the degenerate "stop until stuck" behavior.
-    if forest_demo_prefill and isinstance(env, AMRBicycleEnv) and learning_starts > 0:
+    # 仅 Forest：用少量短专家 rollout 预填充回放池。
+    # 这是 off-policy 数据（对 Q-learning 有效），显著降低了
+    # 收敛到退化的"停住直到卡住"行为的概率。
+    if forest_demo_prefill and isinstance(env, UGVBicycleEnv) and learning_starts > 0:
         demo_target = forest_demo_target(learning_starts=int(learning_starts), batch_size=int(agent_cfg.batch_size))
         if forest_demo_data is not None:
             obs_buf, act_buf, rew_buf, next_obs_buf, next_mask_buf, done_buf, trunc_buf = forest_demo_data
@@ -499,13 +412,13 @@ def train_one(
                     bool(done_buf[i] > 0.5),
                     demo=True,
                     truncated=bool(trunc_buf[i] > 0.5),
-                    next_action_mask=next_mask_buf[i],
+                    next_action_mask=next_mask_buf[i] if forest_action_shield else None,
                 )
             global_step += int(n)
         else:
-            # Collect *more* than just learning_starts transitions: imitation on static global maps
-            # is very data-efficient, and preserving a diverse demo set improves robustness when the
-            # learned policy slightly deviates from the reference trajectory (DAgger-like effect).
+            # 收集比 learning_starts 更多的转移：静态全局地图上的模仿非常高效，
+            # 保留多样化的 demo 集合可以提高鲁棒性——当学习的策略
+            # 轻微偏离参考轨迹时仍能稳定（类 DAgger 效果）。
             demo_added = 0
             demo_ep = 0
             demo_prog = np.linspace(0.0, 1.0, num=5, dtype=np.float32)
@@ -521,8 +434,7 @@ def train_one(
                         "rand_tries": int(forest_rand_tries),
                     }
                 elif forest_curriculum:
-                    # When curriculum is enabled, diversify demonstration starts to match the
-                    # training start-state distribution.
+                    # 启用课程学习时，多样化演示起点以匹配训练起始状态分布。
                     p = float(demo_prog[demo_ep % int(demo_prog.size)])
                     opts = {"curriculum_progress": p, "curriculum_band_m": float(curriculum_band_m)}
                 obs, _ = env.reset(seed=seed + 50_000 + demo_ep, options=opts)
@@ -552,7 +464,7 @@ def train_one(
                             bool(d),
                             demo=True,
                             truncated=bool(tr),
-                            next_action_mask=nm,
+                            next_action_mask=nm if forest_action_shield else None,
                         )
                         demo_added += 1
                         global_step += 1
@@ -560,10 +472,10 @@ def train_one(
                         break
                 demo_ep += 1
 
-        # Supervised warm-start on demos before TD learning.
+        # 在 TD 学习之前对 demo 进行监督式热启动。
         pre_steps = int(max(0, int(forest_demo_pretrain_steps)))
         if pre_steps > 0:
-            # Run in chunks and stop early once the greedy (masked) policy can reach the goal.
+            # 分块运行，一旦贪心（带掩码）策略能到达目标就提前停止。
             done_steps = 0
             chunk = 2000
             while done_steps < pre_steps:
@@ -571,7 +483,7 @@ def train_one(
                 agent.pretrain_on_demos(steps=int(n))
                 done_steps += int(n)
 
-                # Quick self-check: use the same admissible-action mask as inference.
+                # 快速自检：使用与推理相同的可行动作掩码。
                 obs_eval, _ = env.reset(seed=seed + 99_999)
                 done_eval = False
                 trunc_eval = False
@@ -590,20 +502,20 @@ def train_one(
                 if reached_eval:
                     break
 
-            # Sync target net after imitation so subsequent TD updates start from a consistent pair.
+            # 模仿学习后同步目标网络，使后续 TD 更新从一致的网络对开始。
             agent.q_target.load_state_dict(agent.q.state_dict())
 
-            # Keep a snapshot of the post-imitation policy: it is often the most reliable
-            # goal-reaching policy on static maps, while later TD updates can sometimes drift.
+            # 保存模仿学习后策略的快照：在静态地图上它通常是最可靠的
+            # 到达目标策略，而后续 TD 更新有时会发生漂移。
             pretrain_q = clone_state_dict(agent.q.state_dict())
             pretrain_q_target = clone_state_dict(agent.q_target.state_dict())
             pretrain_train_steps = int(agent._train_steps)
 
-        # Start learning immediately once the buffer has useful transitions.
+        # 回放池有有效转移后立即开始学习。
         global_step = max(int(global_step), int(learning_starts))
 
     def eval_action(obs_eval: np.ndarray) -> int:
-        if isinstance(env, AMRBicycleEnv):
+        if isinstance(env, UGVBicycleEnv):
             return forest_select_action(
                 env, agent, obs_eval,
                 episode=0, explore=False,
@@ -630,10 +542,8 @@ def train_one(
             if "agent_xy" in info:
                 try:
                     ax, ay = info["agent_xy"]  # type: ignore[misc]
-                    if isinstance(env, AMRBicycleEnv):
+                    if isinstance(env, UGVBicycleEnv):
                         return (float(ax) * float(env.cell_size_m), float(ay) * float(env.cell_size_m))
-                    if isinstance(env, AMRGridEnv):
-                        return (float(ax) * float(env.cell_size), float(ay) * float(env.cell_size))
                 except Exception:
                     return None
             return None
@@ -714,7 +624,7 @@ def train_one(
     ep_iter = pbar if pbar is not None else range(episodes)
     for ep in ep_iter:
         reset_options = None
-        if bool(forest_random_start_goal) and isinstance(env, AMRBicycleEnv):
+        if bool(forest_random_start_goal) and isinstance(env, UGVBicycleEnv):
             reset_options = {
                 "random_start_goal": True,
                 "rand_min_cost_m": float(forest_rand_min_cost_m),
@@ -722,7 +632,7 @@ def train_one(
                 "rand_fixed_prob": float(forest_rand_fixed_prob),
                 "rand_tries": int(forest_rand_tries),
             }
-        elif forest_curriculum and isinstance(env, AMRBicycleEnv):
+        elif forest_curriculum and isinstance(env, UGVBicycleEnv):
             p_raw = float(ep) / float(max(1, episodes - 1))
             ramp = max(1e-6, float(curriculum_ramp))
             p = float(np.clip(p_raw / ramp, 0.0, 1.0))
@@ -741,11 +651,11 @@ def train_one(
         while not (done or truncated):
             ep_steps += 1
             global_step += 1
-            # Forest stabilizer: mix in an expert as the *behavior* policy early in training.
-            # Off-policy Q-learning remains valid, while successful trajectories become frequent
-            # enough for bootstrapping long-horizon returns.
+            # Forest 稳定器：训练早期将专家混入行为策略。
+            # Off-policy Q-learning 仍然有效，同时成功轨迹的频率
+            # 足以支撑长期回报的 bootstrapping。
             used_expert = False
-            if forest_expert_exploration and isinstance(env, AMRBicycleEnv):
+            if forest_expert_exploration and isinstance(env, UGVBicycleEnv):
                 ramp = max(1e-6, float(forest_expert_prob_decay))
                 t = float(np.clip((float(ep) / float(max(1, episodes - 1))) / ramp, 0.0, 1.0))
                 p_exp = float(forest_expert_prob_start) + (float(forest_expert_prob_final) - float(forest_expert_prob_start)) * t
@@ -754,13 +664,16 @@ def train_one(
                     action = forest_expert_action_local()
                     used_expert = True
                 else:
-                    action = forest_select_action(
-                        env, agent, obs,
-                        episode=ep, explore=True,
-                        horizon_steps=adm_h, topk=topk_k,
-                        training_mode=True,
-                    )
-            elif bool(forest_action_shield) and isinstance(env, AMRBicycleEnv):
+                    if forest_action_shield:
+                        action = forest_select_action(
+                            env, agent, obs,
+                            episode=ep, explore=True,
+                            horizon_steps=adm_h, topk=topk_k,
+                            training_mode=True,
+                        )
+                    else:
+                        action = agent.act(obs, episode=ep, explore=True)
+            elif bool(forest_action_shield) and isinstance(env, UGVBicycleEnv):
                 action = forest_select_action(
                     env, agent, obs,
                     episode=ep, explore=True,
@@ -772,13 +685,13 @@ def train_one(
             next_obs, reward, done, truncated, info = env.step(action)
             last_info = dict(info)
             next_mask = None
-            if isinstance(env, AMRBicycleEnv):
+            if bool(forest_action_shield) and isinstance(env, UGVBicycleEnv):
                 next_mask = forest_compute_next_mask(env, horizon_steps=adm_h)
-            # Time-limit truncation should not be treated as terminal for bootstrapping.
-            # Only mark expert transitions as demos when the *episode* reaches the goal.
-            # Failed expert steps are still useful off-policy data, but should not be imitated/preserved.
-            # V9: store RAW reward in replay; normalize at sampling time in update().
-            # Always track stats so the normalizer is up-to-date for sampling.
+            # 时间限制截断不应视为终止状态用于 bootstrapping。
+            # 仅当该 episode 到达目标时才将专家转移标记为 demo。
+            # 失败的专家步骤仍是有效的 off-policy 数据，但不应被模仿/保留。
+            # V9：在回放池中存储原始奖励；在 update() 采样时归一化。
+            # 始终跟踪统计量以保持归一化器对采样的时效性。
             if rew_normalizer is not None:
                 rew_normalizer.update(float(reward))
             if reward_clip > 0.0:
@@ -822,13 +735,13 @@ def train_one(
 
         returns[ep] = float(ep_return)
 
-        # --- diagnostics: loss, epsilon, Q-value spread ---
+        # --- 诊断信息：loss、epsilon、Q 值分布 ---
         ep_diag: dict[str, float] = {"episode": float(ep + 1), "epsilon": float(agent.epsilon(ep))}
         if ep_losses:
             for k in ("loss", "td_loss", "margin_loss", "ce_loss"):
                 vals = [d[k] for d in ep_losses if k in d]
                 ep_diag[k] = float(np.mean(vals)) if vals else 0.0
-        # Q-value distribution: forward pass on current obs (cheap, single sample)
+        # Q 值分布：对当前观测做前向传播（廉价，单样本）
         with torch.no_grad():
             obs_diag = agent._prep_obs(obs)
             q_vals = agent.q(torch.from_numpy(obs_diag).unsqueeze(0).to(agent.device)).squeeze(0)
@@ -880,7 +793,7 @@ def train_one(
             best_q_target = clone_state_dict(agent.q_target.state_dict())
             best_train_steps = int(agent._train_steps)
 
-        # Periodic checkpoint saving.
+        # 周期性 checkpoint 保存。
         if save_every > 0 and (ep + 1) % save_every == 0:
             ckpt_dir = out_dir / "checkpoints" / env.map_spec.name
             ckpt_dir.mkdir(parents=True, exist_ok=True)
@@ -894,8 +807,8 @@ def train_one(
         agent.q.load_state_dict(q_sd)
         agent.q_target.load_state_dict(q_target_sd)
 
-        # Canonical (single) evaluation.
-        if not (bool(forest_random_start_goal) and isinstance(env, AMRBicycleEnv)):
+        # 规范（单次）评估。
+        if not (bool(forest_random_start_goal) and isinstance(env, UGVBicycleEnv)):
             obs, _ = env.reset(seed=seed + 9999)
             done = False
             truncated = False
@@ -904,7 +817,7 @@ def train_one(
             last_info: dict[str, object] = {}
             while not (done or truncated):
                 steps += 1
-                if isinstance(env, AMRBicycleEnv):
+                if isinstance(env, UGVBicycleEnv):
                     a = forest_select_action(
                         env, agent, obs,
                         episode=0, explore=False,
@@ -921,7 +834,7 @@ def train_one(
             collision = bool(last_info.get("collision", False) or last_info.get("stuck", False))
             return episode_score(reached=reached, collision=collision, steps=steps, ret=ret)
 
-        # Random-start/goal evaluation: use a fixed batch of sampled (start,goal) pairs.
+        # 随机起点/终点评估：使用一批固定采样的 (start, goal) 对。
         successes = 0
         total_ret = 0.0
         total_steps = 0
@@ -953,7 +866,7 @@ def train_one(
         avg_steps = float(total_steps) / float(n)
         return (int(successes), int(1_000_000 * float(avg_ret)), -int(avg_steps))
 
-    # Choose between the final policy and the best (exploratory) episode checkpoint based on greedy performance.
+    # 根据贪心评估性能在最终策略和最佳（探索）episode checkpoint 之间选择。
     best_greedy_score = eval_greedy(final_q, final_q_target)
     chosen_q, chosen_q_target, chosen_train_steps = final_q, final_q_target, final_train_steps
 
@@ -979,7 +892,7 @@ def train_one(
 
 
 # ===========================================================================
-# Argparse & CLI entry point
+# Argparse 与 CLI 入口
 # ===========================================================================
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1383,19 +1296,19 @@ def main(argv: list[str] | None = None) -> int:
     run_paths = create_run_dir(experiment_dir, timestamp_runs=args.timestamp_runs, prefix="train")
     out_dir = run_paths.run_dir
 
-    # Build AgentConfig with optional CLI/JSON overrides.
+    # 构建 AgentConfig，支持 CLI/JSON 可选覆盖。
     agent_kw: dict[str, object] = {}
-    # eps_decay: explicit > auto-scale (80% of episodes, min 200)
+    # eps_decay：显式指定 > 自动缩放（80% episodes，最小 200）
     if args.eps_decay is not None:
         agent_kw["eps_decay"] = int(args.eps_decay)
     else:
         agent_kw["eps_decay"] = max(200, int(0.8 * args.episodes))
-    # replay_capacity: explicit > auto-scale (episodes * 100, min 100_000)
+    # replay_capacity：显式指定 > 自动缩放（episodes * 100，最小 100_000）
     if args.replay_capacity is not None:
         agent_kw["replay_capacity"] = int(args.replay_capacity)
     else:
         agent_kw["replay_capacity"] = max(100_000, args.episodes * 100)
-    # eval_every: explicit (>0) > auto-scale (episodes // 30, min 10, ~30 eval points per run)
+    # eval_every：显式指定（>0）> 自动缩放（episodes // 30，最小 10，每次运行约 30 个评估点）
     _eval_every = args.eval_every if args.eval_every > 0 else max(10, args.episodes // 30)
     if args.gamma is not None:
         agent_kw["gamma"] = float(args.gamma)
@@ -1423,7 +1336,7 @@ def main(argv: list[str] | None = None) -> int:
         agent_kw["iqn_quantiles"] = int(args.iqn_quantiles)
     agent_cfg = AgentConfig(**agent_kw)  # type: ignore[arg-type]
 
-    # Per-algo configs.  --target-update-tau overrides ALL algos when set.
+    # 各算法配置。设置 --target-update-tau 时会覆盖所有算法。
     tau_override = float(args.target_update_tau) if args.target_update_tau is not None else None
     pddqn_tau = float(tau_override) if tau_override is not None else 0.01
     dqn_cfg = replace(agent_cfg, eps_start=0.6, n_step=3, **({"target_update_tau": tau_override} if tau_override is not None else {}))
@@ -1487,59 +1400,46 @@ def main(argv: list[str] | None = None) -> int:
 
     for env_name in args.envs:
         spec = get_map_spec(env_name)
-        if env_name in FOREST_ENV_ORDER or env_name in REALMAP_ENV_ORDER:
-            env = AMRBicycleEnv(
-                spec,
-                max_steps=args.max_steps,
-                cell_size_m=0.1,
-                sensor_range_m=float(args.sensor_range),
-                n_sectors=args.n_sectors,
-                obs_map_size=int(args.obs_map_size),
-                goal_tolerance_m=float(args.goal_tolerance),
-                goal_speed_tol_m_s=float(args.goal_speed_tol),
-                reward_k_goal=float(args.reward_k_goal),
-                reward_k_eff=float(getattr(args, "reward_k_eff", 0.0)),
-                reward_k_p=float(getattr(args, "reward_k_p", 12.0)),
-                reward_k_t=float(getattr(args, "reward_k_t", 0.1)),
-                reward_k_delta=float(getattr(args, "reward_k_delta", 1.5)),
-                reward_k_kappa=float(getattr(args, "reward_k_kappa", 0.2)),
-                reward_k_a=float(getattr(args, "reward_k_a", 0.2)),
-                reward_k_o=float(getattr(args, "reward_k_o", 1.5)),
-                reward_k_v=float(getattr(args, "reward_k_v", 2.0)),
-                edt_collision_margin=getattr(args, "edt_collision_margin", "half"),
+        env = UGVBicycleEnv(
+            spec,
+            max_steps=args.max_steps,
+            cell_size_m=0.1,
+            sensor_range_m=float(args.sensor_range),
+            n_sectors=args.n_sectors,
+            obs_map_size=int(args.obs_map_size),
+            goal_tolerance_m=float(args.goal_tolerance),
+            goal_speed_tol_m_s=float(args.goal_speed_tol),
+            reward_k_goal=float(args.reward_k_goal),
+            reward_k_eff=float(getattr(args, "reward_k_eff", 0.0)),
+            reward_k_p=float(getattr(args, "reward_k_p", 12.0)),
+            reward_k_t=float(getattr(args, "reward_k_t", 0.2)),
+            reward_k_delta=float(getattr(args, "reward_k_delta", 1.5)),
+            reward_k_kappa=float(getattr(args, "reward_k_kappa", 0.2)),
+            reward_k_a=float(getattr(args, "reward_k_a", 0.2)),
+            reward_k_o=float(getattr(args, "reward_k_o", 1.5)),
+            reward_k_v=float(getattr(args, "reward_k_v", 2.0)),
+            edt_collision_margin=getattr(args, "edt_collision_margin", "diag"),
+        )
+        forest_demo_data = None
+        if bool(args.forest_demo_prefill) and int(args.learning_starts) > 0:
+            demo_target = forest_demo_target(learning_starts=int(args.learning_starts), batch_size=int(agent_cfg.batch_size))
+            rand_max = None if float(args.forest_rand_max_cost_m) <= 0.0 else float(args.forest_rand_max_cost_m)
+            forest_demo_data = collect_forest_demos(
+                env,
+                target=int(demo_target),
+                seed=int(args.seed + 1000),
+                forest_curriculum=bool(args.forest_curriculum),
+                curriculum_band_m=float(args.curriculum_band_m),
+                forest_random_start_goal=bool(args.forest_random_start_goal),
+                forest_rand_min_cost_m=float(args.forest_rand_min_cost_m),
+                forest_rand_max_cost_m=rand_max,
+                forest_rand_fixed_prob=float(args.forest_rand_fixed_prob),
+                forest_rand_tries=int(args.forest_rand_tries),
+                forest_expert=str(args.forest_expert),
+                forest_demo_horizon=int(args.forest_demo_horizon),
+                forest_demo_w_clearance=float(args.forest_demo_w_clearance),
+                forest_adm_horizon=int(args.forest_adm_horizon),
             )
-            forest_demo_data = None
-            if bool(args.forest_demo_prefill) and int(args.learning_starts) > 0:
-                demo_target = forest_demo_target(learning_starts=int(args.learning_starts), batch_size=int(agent_cfg.batch_size))
-                rand_max = None if float(args.forest_rand_max_cost_m) <= 0.0 else float(args.forest_rand_max_cost_m)
-                forest_demo_data = collect_forest_demos(
-                    env,
-                    target=int(demo_target),
-                    seed=int(args.seed + 1000),
-                    forest_curriculum=bool(args.forest_curriculum),
-                    curriculum_band_m=float(args.curriculum_band_m),
-                    forest_random_start_goal=bool(args.forest_random_start_goal),
-                    forest_rand_min_cost_m=float(args.forest_rand_min_cost_m),
-                    forest_rand_max_cost_m=rand_max,
-                    forest_rand_fixed_prob=float(args.forest_rand_fixed_prob),
-                    forest_rand_tries=int(args.forest_rand_tries),
-                    forest_expert=str(args.forest_expert),
-                    forest_demo_horizon=int(args.forest_demo_horizon),
-                    forest_demo_w_clearance=float(args.forest_demo_w_clearance),
-                    forest_adm_horizon=int(args.forest_adm_horizon),
-                )
-        else:
-            env = AMRGridEnv(
-                spec,
-                sensor_range=args.sensor_range,
-                max_steps=args.max_steps,
-                reward=RewardWeights(),
-                cell_size=args.cell_size,
-                safe_distance=0.6,
-                obs_map_size=int(args.obs_map_size),
-                terminate_on_collision=False,
-            )
-            forest_demo_data = None
 
         rand_max = None if float(args.forest_rand_max_cost_m) <= 0.0 else float(args.forest_rand_max_cost_m)
 
@@ -1551,8 +1451,8 @@ def main(argv: list[str] | None = None) -> int:
                 env,
                 str(algo),
                 episodes=args.episodes,
-                # Forest training (global-map + imitation warm-start) can be sensitive to random initialization.
-                # Keep a deterministic seed offset across algorithms for fair comparisons.
+                # Forest 训练（全局地图 + 模仿热启动）对随机初始化敏感。
+                # 在各算法间保持确定性 seed 偏移以保证公平比较。
                 seed=args.seed + 1000,
                 out_dir=out_dir,
                 agent_cfg=cfg,
@@ -1612,11 +1512,6 @@ def main(argv: list[str] | None = None) -> int:
             df_eval.to_excel(out_dir / "training_eval.xlsx", index=False)
         except Exception as exc:
             print(f"Warning: failed to write training_eval.xlsx: {exc}", file=sys.stderr)
-        try:
-            plot_training_eval_metrics(df_eval, out_path=out_dir / "training_eval_metrics.png")
-        except Exception as exc:
-            print(f"Warning: failed to write training_eval_metrics.png: {exc}", file=sys.stderr)
-
     if all_diag_rows:
         df_diag = pd.DataFrame(all_diag_rows)
         df_diag.to_csv(out_dir / "training_diagnostics.csv", index=False)
@@ -1625,56 +1520,11 @@ def main(argv: list[str] | None = None) -> int:
         except Exception as exc:
             print(f"Warning: failed to write training_diagnostics.png: {exc}", file=sys.stderr)
 
-    # Plot Fig. 13-style reward curves
-    envs_to_plot = list(args.envs)[:4]
-    n_env = int(len(envs_to_plot))
-    cols = 1 if n_env <= 1 else 2
-    rows_n = int(np.ceil(float(n_env) / float(cols))) if n_env else 1
-    fig, axes = plt.subplots(rows_n, cols, figsize=(5.2 * cols, 3.8 * rows_n), sharex=True, sharey=True)
-    axes = np.atleast_1d(axes).ravel()
-    used = 0
-    for i, env_name in enumerate(envs_to_plot):
-        ax = axes[i]
-        for algo in args.rl_algos:
-            series = curves.get(env_name, {}).get(str(algo))
-            if series is None:
-                continue
-            eps_x = list(range(1, args.episodes + 1))
-            color = ax._get_lines.get_next_color()
-            ax.plot(eps_x, series, alpha=0.2, linewidth=0.7, color=color)
-            win = max(1, len(series) // 15)
-            smooth = pd.Series(series).rolling(window=win, min_periods=1, center=True).mean().tolist()
-            ax.plot(
-                eps_x,
-                smooth,
-                label=algo_labels.get(str(algo), str(algo).upper()),
-                linewidth=1.5,
-                color=color,
-            )
-        ax.set_title(f"Env. ({env_name})")
-        ax.set_xlabel("Episodes")
-        ax.set_ylabel("Rewards")
-        ax.grid(True, alpha=0.25)
-        ax.legend(fontsize=8)
-        used += 1
-
-    for ax in axes[n_env:]:
-        ax.axis("off")
-
-    algo_title = ", ".join(algo_labels.get(str(a), str(a).upper()) for a in args.rl_algos)
-    fig.suptitle(f"Training reward curves ({algo_title})")
-    fig.tight_layout(rect=(0, 0, 1, 0.96))
-    fig.savefig(out_dir / "fig13_rewards.png", dpi=200)
-    plt.close(fig)
-
-    print(f"Wrote: {out_dir / 'fig13_rewards.png'}")
     print(f"Wrote: {out_dir / 'training_returns.csv'}")
     if all_eval_rows:
         print(f"Wrote: {out_dir / 'training_eval.csv'}")
         if (out_dir / "training_eval.xlsx").exists():
             print(f"Wrote: {out_dir / 'training_eval.xlsx'}")
-        if (out_dir / "training_eval_metrics.png").exists():
-            print(f"Wrote: {out_dir / 'training_eval_metrics.png'}")
     if all_diag_rows:
         print(f"Wrote: {out_dir / 'training_diagnostics.csv'}")
         if (out_dir / "training_diagnostics.png").exists():

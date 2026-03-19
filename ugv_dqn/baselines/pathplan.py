@@ -1,17 +1,17 @@
-"""Hybrid A* and RRT* planning wrappers for baseline evaluation.
+"""Hybrid A* 和 RRT* 规划封装，用于 baseline 评估。
 
-Provides
+提供
 --------
-- PlannerResult             Dataclass: path + timing + success flag + stats.
-- default_ackermann_params  Default Ackermann kinematic params (wheelbase 0.6m, delta_max 27deg).
-- grid_map_from_obstacles   Convert numpy obstacle grid to GridMap for planners.
+- PlannerResult             数据类：路径 + 耗时 + 成功标志 + 统计信息。
+- default_ackermann_params  默认 Ackermann 运动学参数（轴距 0.6m，delta_max 27deg）。
+- grid_map_from_obstacles   将 numpy 障碍物网格转换为规划器使用的 GridMap。
 - forest_two_circle_footprint / forest_oriented_box_footprint
-                            Vehicle collision geometry matching the bicycle env.
-- plan_hybrid_astar()       Run Hybrid A* with timeout and node limit.
-- plan_rrt_star()           Run RRT* with multi-restart strategy.
+                            与 bicycle 环境匹配的车辆碰撞几何。
+- plan_hybrid_astar()       运行带超时和节点限制的 Hybrid A*。
+- plan_rrt_star()           运行带多重启策略的 RRT*。
 
-These functions are called by cli/infer.py to produce classical-planner paths
-that serve as baselines for the DQN agent comparison (Table II in the paper).
+这些函数由 cli/infer.py 调用，生成经典规划器路径作为
+DQN 智能体对比的 baseline（论文 Table II）。
 """
 
 from __future__ import annotations
@@ -67,25 +67,24 @@ def grid_map_from_obstacles(*, grid_y0_bottom: np.ndarray, cell_size_m: float) -
 
 
 def point_footprint(*, cell_size_m: float) -> OrientedBoxFootprint:
-    # Keep a small non-zero size so the unified collision checker does not
-    # degenerate on strict comparisons.
+    # 保持一个较小的非零尺寸，避免统一碰撞检测器
+    # 在严格比较时退化。
     s = max(1e-3, 0.1 * float(cell_size_m))
     return OrientedBoxFootprint(length=s, width=s)
 
 
 def forest_oriented_box_footprint() -> OrientedBoxFootprint:
-    # Matches the forest env's nominal vehicle dimensions used by the two-circle approximation:
-    # length=0.924m, width=0.740m.
+    # 与 forest 环境中双圆近似使用的标称车辆尺寸匹配：
+    # length=0.924m, width=0.740m。
     return OrientedBoxFootprint(length=0.924, width=0.740)
 
 
 def forest_two_circle_footprint(*, wheelbase_m: float = 0.6) -> TwoCircleFootprint:
-    # Use the same nominal vehicle dimensions as the forest env and convert to a conservative
-    # two-circle approximation (robust for grid collision checks at arbitrary headings).
+    # 使用与 forest 环境相同的标称车辆尺寸，转换为保守的
+    # 双圆近似（对任意航向的网格碰撞检测具有鲁棒性）。
     #
-    # IMPORTANT: The forest env's bicycle model state is the rear-axle center. To match that
-    # reference, shift the footprint forward by wheelbase/2 so the two-circle model covers
-    # the vehicle body centered around the axle midpoint.
+    # 重要：forest 环境的自行车模型状态为后轴中心。为匹配该参考点，
+    # 将碰撞轮廓向前偏移 wheelbase/2，使双圆模型覆盖以轴中点为中心的车身。
     box = forest_oriented_box_footprint()
     return TwoCircleFootprint.from_box(
         length=float(box.length),
@@ -114,6 +113,7 @@ def plan_hybrid_astar(
     timeout_s: float = 5.0,
     max_nodes: int = 200_000,
     collision_padding: float | None = None,
+    collision_checker=None,
 ) -> PlannerResult:
     cell_size_m = float(grid_map.resolution)
     st = float(start_theta_rad) if start_theta_rad is not None else _default_start_theta(start_xy, goal_xy, cell_size_m=cell_size_m)
@@ -127,6 +127,7 @@ def plan_hybrid_astar(
         goal_xy_tol=float(goal_xy_tol_m),
         goal_theta_tol=float(goal_theta_tol_rad),
         collision_padding=collision_padding,
+        collision_checker=collision_checker,
     )
 
     t0 = time.perf_counter()
@@ -160,18 +161,19 @@ def plan_rrt_star(
     timeout_s: float = 5.0,
     max_iter: int = 5_000,
     collision_padding: float | None = None,
+    collision_checker=None,
 ) -> PlannerResult:
     cell_size_m = float(grid_map.resolution)
     st = float(start_theta_rad) if start_theta_rad is not None else _default_start_theta(start_xy, goal_xy, cell_size_m=cell_size_m)
     start = AckermannState(float(start_xy[0]) * cell_size_m, float(start_xy[1]) * cell_size_m, st)
     goal = AckermannState(float(goal_xy[0]) * cell_size_m, float(goal_xy[1]) * cell_size_m, float(goal_theta_rad))
 
-    # RRT* is stochastic; for tight per-run budgets we do a few restarts with different RNG
-    # seeds. We intentionally keep planner hyperparameters at their library defaults because
-    # they were tuned together; changing them can *reduce* success in some scenes.
+    # RRT* 是随机的；在有限的单次运行预算下，我们用不同的 RNG seed 做几次重启。
+    # 我们有意保持规划器超参数为库默认值，因为它们是联合调优的；
+    # 修改它们可能会降低某些场景的成功率。
     base_seed = int(seed)
-    max_restarts = 2  # total attempts = 1 + max_restarts
-    # Allocate most budget to the first attempt, but keep a small reserve for retries.
+    max_restarts = 2  # 总尝试次数 = 1 + max_restarts
+    # 将大部分预算分配给首次尝试，保留少量预算用于重试。
     time_fracs = (0.85, 0.10, 0.05)
     iter_fracs = (0.85, 0.10, 0.05)
 
@@ -195,6 +197,7 @@ def plan_rrt_star(
             goal_xy_tol=float(goal_xy_tol_m),
             goal_theta_tol=float(goal_theta_tol_rad),
             collision_padding=collision_padding,
+            collision_checker=collision_checker,
         )
 
         path, stats = planner.plan(
@@ -246,6 +249,7 @@ def plan_lo_hybrid_astar(
     lo_iterations: int = 0,
     lo_seed: int | None = None,
     collision_padding: float | None = None,
+    collision_checker=None,
 ) -> PlannerResult:
     """运行 LO-Hybrid A*（论文 Chen et al. 2025，Applied Sciences 15(14) 7734）。
 
@@ -297,6 +301,7 @@ def plan_lo_hybrid_astar(
         goal_xy_tol=float(goal_xy_tol_m),
         goal_theta_tol=float(goal_theta_tol_rad),
         collision_padding=collision_padding,
+        collision_checker=collision_checker,
     )
     _ref_path, _ref_stats = _ref_planner.plan(start, goal, timeout=2.0, max_nodes=50_000, self_check=False)
     L_ref = float(_ref_stats.get("path_length", 0.0)) if _ref_path else 0.0
@@ -321,6 +326,7 @@ def plan_lo_hybrid_astar(
             goal_theta_tol=float(goal_theta_tol_rad),
             heading_change_penalty=p_theta,
             collision_padding=collision_padding,
+            collision_checker=collision_checker,
         )
         return planner.plan(start, goal, timeout=budget_s, max_nodes=int(max_nodes), self_check=False)
 

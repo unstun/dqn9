@@ -12,7 +12,7 @@ DQN9/
 │
 ├── ugv_dqn/                     # 核心 Python 包
 │   ├── agents.py                #   DQN/DDQN/PDDQN 智能体
-│   ├── env.py                   #   Gymnasium 环境（AMRGridEnv + AMRBicycleEnv）
+│   ├── env.py                   #   Gymnasium 环境（UGVBicycleEnv）
 │   ├── networks.py              #   Q 网络（MLP + CNN）
 │   ├── replay_buffer.py         #   经验回放（含 DQfD demo 保护）
 │   ├── reward_norm.py           #   Welford 在线奖励归一化

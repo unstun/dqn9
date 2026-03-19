@@ -1,0 +1,40 @@
+{
+  "env_base": "realmap_a",
+  "cell_size_m": 0.1,
+  "grid_shape": [
+    129,
+    410
+  ],
+  "grid_values": {
+    "0": "free",
+    "1": "obstacle"
+  },
+  "canonical_start_xy": [
+    34,
+    29
+  ],
+  "canonical_goal_xy": [
+    371,
+    109
+  ],
+  "collision_footprint": {
+    "kind": "two_circle",
+    "radius_m": 0.4361891791413446,
+    "x1_m": 0.06899999999999998,
+    "x2_m": 0.531
+  },
+  "goal": {
+    "position_tolerance_m": 1.0,
+    "position_tolerance_cells": 10.0,
+    "angle_tolerance_rad": 3.141592653589793
+  },
+  "convention": {
+    "grid_y0_bottom": true,
+    "origin": "bottom_left",
+    "x_axis": "+right",
+    "y_axis": "+up",
+    "trace_units": {
+      "x_m_y_m": "meters"
+    }
+  }
+}

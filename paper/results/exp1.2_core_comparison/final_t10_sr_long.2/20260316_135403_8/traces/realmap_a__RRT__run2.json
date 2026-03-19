@@ -1,0 +1,27 @@
+{
+  "algorithm": "SS-RRT*",
+  "cell_size_m": 0.1,
+  "env_base": "realmap_a",
+  "env_case": "realmap_a",
+  "goal_m": [
+    15.3,
+    4.1000000000000005
+  ],
+  "goal_xy": [
+    153,
+    41
+  ],
+  "kind": "trace",
+  "map_grid_npz": "maps/realmap_a__grid_y0_bottom.npz",
+  "map_meta_json": "maps/realmap_a__meta.json",
+  "run_idx": 2,
+  "start_m": [
+    34.1,
+    2.5
+  ],
+  "start_xy": [
+    341,
+    25
+  ],
+  "trace_csv": "traces/realmap_a__RRT__run2.csv"
+}

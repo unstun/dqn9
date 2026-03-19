@@ -1,8 +1,7 @@
-"""Benchmark orchestrator: train -> infer -> validate KPI results.
+"""Benchmark 编排器：train -> infer -> 验证 KPI 结果。
 
-Runs train.py and infer.py as subprocesses, then loads the resulting
-table2_kpis.csv and checks that all required algorithms are present
-and meet minimum quality thresholds.
+以子进程方式运行 train.py 和 infer.py，然后加载生成的
+table2_kpis.csv 并检查所有必需算法是否存在且满足最低质量阈值。
 """
 
 from __future__ import annotations

@@ -59,6 +59,8 @@ class HybridAStarPlanner:
         reeds_shepp_heuristic_max_dist: float = 15.0,
         # Collision checker padding (meters), optional safety buffer.
         collision_padding: Optional[float] = None,
+        # Optional pre-built collision checker (e.g. EDTCollisionChecker).
+        collision_checker=None,
     ):
         self.map = grid_map
         self.footprint = footprint
@@ -86,9 +88,12 @@ class HybridAStarPlanner:
         self.use_reeds_shepp_heuristic = bool(use_reeds_shepp_heuristic)
         self.reeds_shepp_heuristic_max_dist = max(0.0, float(reeds_shepp_heuristic_max_dist))
 
-        self.collision_checker = GridFootprintChecker(
-            grid_map, footprint, theta_bins=theta_bins, padding=collision_padding
-        )
+        if collision_checker is not None:
+            self.collision_checker = collision_checker
+        else:
+            self.collision_checker = GridFootprintChecker(
+                grid_map, footprint, theta_bins=theta_bins, padding=collision_padding
+            )
 
         self._holonomic_cache_key = None
         self._holonomic_cache = None
@@ -239,30 +244,31 @@ class HybridAStarPlanner:
         start_time = time.time()
         remediations: List[str] = []
 
-        if self.collision_checker.collides_pose(start.x, start.y, start.theta):
-            return [], self._stats(
-                [],
-                [],
-                expansions=0,
-                elapsed=time.time() - start_time,
-                trace_poses=[],
-                trace_boxes=[],
-                timed_out=False,
-                failure_reason="start_in_collision",
-                remediations=remediations,
-            )
-        if self.collision_checker.collides_pose(goal.x, goal.y, goal.theta):
-            return [], self._stats(
-                [],
-                [],
-                expansions=0,
-                elapsed=time.time() - start_time,
-                trace_poses=[],
-                trace_boxes=[],
-                timed_out=False,
-                failure_reason="goal_in_collision",
-                remediations=remediations,
-            )
+        if self_check:
+            if self.collision_checker.collides_pose(start.x, start.y, start.theta):
+                return [], self._stats(
+                    [],
+                    [],
+                    expansions=0,
+                    elapsed=time.time() - start_time,
+                    trace_poses=[],
+                    trace_boxes=[],
+                    timed_out=False,
+                    failure_reason="start_in_collision",
+                    remediations=remediations,
+                )
+            if self.collision_checker.collides_pose(goal.x, goal.y, goal.theta):
+                return [], self._stats(
+                    [],
+                    [],
+                    expansions=0,
+                    elapsed=time.time() - start_time,
+                    trace_poses=[],
+                    trace_boxes=[],
+                    timed_out=False,
+                    failure_reason="goal_in_collision",
+                    remediations=remediations,
+                )
 
         dist_map = None
         goal_center = None

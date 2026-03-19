@@ -1,8 +1,8 @@
-"""Generate a combined train+infer JSON config template.
+"""生成合并的 train+infer JSON 配置模板。
 
-Introspects argparse definitions from train.py and infer.py to produce
-a single JSON with all available parameters and their defaults.
-Usage: python config.py [--out configs/template.json | --stdout]
+通过反射 train.py 和 infer.py 的 argparse 定义，生成
+包含所有可用参数及其默认值的单一 JSON。
+用法：python config.py [--out configs/template.json | --stdout]
 """
 
 from __future__ import annotations
@@ -33,8 +33,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = ap.parse_args(argv)
 
-    # Import lazily so this stays lightweight.
-    # Some dependencies (e.g. gym) can emit deprecation prints on import; keep JSON output clean.
+    # 延迟导入以保持轻量。
+    # 部分依赖（如 gym）在导入时可能输出废弃警告；保持 JSON 输出干净。
     with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
         from ugv_dqn.cli.infer import build_parser as build_infer_parser
         from ugv_dqn.cli.train import build_parser as build_train_parser

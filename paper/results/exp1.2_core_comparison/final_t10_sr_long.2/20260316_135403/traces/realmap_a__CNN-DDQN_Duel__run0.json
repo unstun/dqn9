@@ -1,0 +1,27 @@
+{
+  "algorithm": "CNN-DDQN+Duel",
+  "cell_size_m": 0.1,
+  "env_base": "realmap_a",
+  "env_case": "realmap_a",
+  "goal_m": [
+    15.200000000000001,
+    4.0
+  ],
+  "goal_xy": [
+    152,
+    40
+  ],
+  "kind": "trace",
+  "map_grid_npz": "maps/realmap_a__grid_y0_bottom.npz",
+  "map_meta_json": "maps/realmap_a__meta.json",
+  "run_idx": 0,
+  "start_m": [
+    37.300000000000004,
+    11.100000000000001
+  ],
+  "start_xy": [
+    373,
+    111
+  ],
+  "trace_csv": "traces/realmap_a__CNN-DDQN_Duel__run0.csv"
+}

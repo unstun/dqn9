@@ -1,11 +1,11 @@
-"""PyTorch / CUDA / Matplotlib runtime setup.
+"""PyTorch / CUDA / Matplotlib 运行时配置。
 
-Provides
---------
-- configure_runtime()    Force non-interactive Matplotlib backend; OpenMP workaround on Windows.
-- torch_runtime_info()   Detect CUDA availability, device count, device names.
-- require_cuda()         Return CUDA device or raise with diagnostic message.
-- select_device()        "auto" / "cuda" / "cpu" device selection.
+提供
+----
+- configure_runtime()    强制使用非交互式 Matplotlib 后端；Windows 上的 OpenMP 变通方案。
+- torch_runtime_info()   检测 CUDA 可用性、设备数量、设备名称。
+- require_cuda()         返回 CUDA 设备，若不可用则抛出带诊断信息的异常。
+- select_device()        "auto" / "cuda" / "cpu" 设备选择。
 """
 
 from __future__ import annotations
@@ -16,18 +16,17 @@ from dataclasses import dataclass
 
 
 def configure_runtime(*, matplotlib_backend: str = "Agg") -> None:
-    """Best-effort runtime hardening for reproducible CLI runs.
+    """尽力进行运行时加固，确保 CLI 运行的可复现性。
 
-    - Forces a non-interactive Matplotlib backend to avoid Qt thread shutdown
-      issues when only saving figures.
-    - Works around a common Windows crash when multiple OpenMP runtimes are
-      loaded (e.g., torch + numpy/pandas/opencv).
+    - 强制使用非交互式 Matplotlib 后端，避免仅保存图片时出现 Qt 线程关闭问题。
+    - 解决 Windows 上加载多个 OpenMP 运行时（如 torch + numpy/pandas/opencv）时
+      常见的崩溃问题。
     """
 
     os.environ.setdefault("MPLBACKEND", str(matplotlib_backend))
 
     if platform.system() == "Windows":
-        # Workaround for: "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
+        # 变通方案："OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
         os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 
@@ -57,7 +56,7 @@ def torch_runtime_info() -> TorchRuntimeInfo:
 
 
 def require_cuda(*, device_index: int = 0) -> "torch.device":
-    """Return a CUDA torch.device, or raise with a helpful message."""
+    """返回 CUDA torch.device，若不可用则抛出带有帮助信息的异常。"""
     import torch
 
     info = torch_runtime_info()
@@ -80,12 +79,12 @@ def require_cuda(*, device_index: int = 0) -> "torch.device":
 
 
 def select_device(*, device: str = "auto", cuda_device: int = 0) -> "torch.device":
-    """Select a torch.device.
+    """选择 torch.device。
 
     device:
-      - "auto": CUDA if available, else CPU
-      - "cuda": require CUDA (raises if unavailable)
-      - "cpu": force CPU
+      - "auto": 若 CUDA 可用则使用 CUDA，否则使用 CPU
+      - "cuda": 要求 CUDA（不可用时抛出异常）
+      - "cpu": 强制使用 CPU
     """
     import torch
 

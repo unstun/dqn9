@@ -1,31 +1,27 @@
-"""Gymnasium environments for AMR (Autonomous Mobile Robot) path planning.
+"""UGV 路径规划 Gymnasium 环境模块。
 
-This is the largest module (~2000 lines). Contents by section:
+本文件包含以下三个部分：
 
-Section 1 — Utility functions (L30-70)
-    _downsample_map_preserve_aspect   Resize occupancy map keeping aspect ratio.
+Section 1 — 工具函数
+    _downsample_map_preserve_aspect   保持宽高比的占据栅格降采样。
 
-Section 2 — AMRGridEnv (L70-270)
-    RewardWeights                     Dataclass for multi-objective reward tuning.
-    AMRGridEnv                        Simple 8-directional grid environment (mostly for prototyping).
+Section 2 — 自行车模型原语（运动学、碰撞检测、代价场）
+    BicycleModelParams                阿克曼自行车运动学参数。
+    build_ackermann_action_table_35   35 离散动作表（转向角速率 × 加速度）。
+    bicycle_integrate_one_step        单步欧拉积分（自行车 ODE）。
+    TwoCircleFootprint                双圆近似碰撞足迹。
+    compute_edt_distance_m            欧氏距离变换（EDT），用于安全距离场。
+    bilinear_sample_2d*               亚像素双线性插值采样。
+    dijkstra_cost_to_goal_m           Dijkstra 绕障最短路径距离场（goal distance field）。
 
-Section 3 — Bicycle model primitives (L270-600)
-    BicycleModelParams                Ackermann bicycle kinematic parameters.
-    build_ackermann_action_table_35   35-action discretization of (delta_dot, accel).
-    bicycle_integrate_one_step        Single-step Euler integration of bicycle ODE.
-    TwoCircleFootprint                Conservative two-circle collision approximation.
-    compute_edt_distance_m            Euclidean Distance Transform for clearance maps.
-    bilinear_sample_2d*               Sub-cell interpolation of map layers.
-    dijkstra_cost_to_goal_m           Geodesic cost-to-goal field (obstacle-aware).
-
-Section 4 — AMRBicycleEnv (L600-2064)
-    AMRBicycleEnv                     Full bicycle-kinematics environment with:
-        - Ackermann steering + acceleration (35 discrete actions)
-        - Three map channels: occupancy + cost-to-goal + EDT clearance
-        - Multi-component reward (goal, collision, progress, safe-distance, speed, curvature)
-        - Admissible action mask / safety shield
-        - Hybrid A* expert action for DQfD demos
-        - Short-rollout heuristic fallback
+Section 3 — UGVBicycleEnv（完整阿克曼自行车环境）
+    UGVBicycleEnv                     基于自行车运动学的完整环境，包含：
+        - 阿克曼转向 + 加速度（35 离散动作）
+        - 三通道地图观测：占据栅格 + goal distance field + EDT 安全距离
+        - 多分量奖励（目标接近、碰撞、进度塑形、安全距离、速度、曲率）
+        - 可容许动作掩码 / 安全屏障
+        - Hybrid A* 专家动作（用于 DQfD 演示）
+        - 短视野启发式回退策略
 """
 
 from __future__ import annotations
@@ -44,23 +40,8 @@ import numpy as np
 from ugv_dqn.maps import MapSpec
 
 
-_ACTIONS_8 = np.array(
-    [
-        (0, 1),  # up
-        (0, -1),  # down
-        (-1, 0),  # left
-        (1, 0),  # right
-        (1, 1),  # upper right
-        (1, -1),  # lower right
-        (-1, 1),  # upper left
-        (-1, -1),  # lower left
-    ],
-    dtype=np.int32,
-)
-
-
 # ===========================================================================
-# Section 1 — Utility functions
+# Section 1 — 工具函数
 # ===========================================================================
 
 def _downsample_map_preserve_aspect(
@@ -70,12 +51,10 @@ def _downsample_map_preserve_aspect(
     interpolation: int = cv2.INTER_AREA,
     pad_value: float = 0.0,
 ) -> np.ndarray:
-    """Downsample a 2-D map to (target_size, target_size) preserving aspect ratio.
+    """保持宽高比地将 2D 地图降采样至 (target_size, target_size)。
 
-    The longer side is scaled to *target_size*; the shorter side is scaled
-    proportionally and then **bottom-padded** with *pad_value* so the output
-    is always square.  For square inputs the result is identical to a plain
-    ``cv2.resize(..., dsize=(target_size, target_size))``.
+    长边缩放至 target_size，短边等比例缩放后在底部填充 pad_value，
+    保证输出始终为正方形。对于正方形输入，等价于直接 cv2.resize。
     """
     h, w = src.shape[:2]
     n = int(target_size)
@@ -83,7 +62,7 @@ def _downsample_map_preserve_aspect(
     scale = float(n) / float(long_side)
     ds_w = max(1, round(w * scale))
     ds_h = max(1, round(h * scale))
-    # Clamp to target_size (rounding can overshoot by 1).
+    # 四舍五入可能超出 1 像素，需钳位到 target_size。
     ds_w = min(ds_w, n)
     ds_h = min(ds_h, n)
     resized = cv2.resize(
@@ -99,216 +78,7 @@ def _downsample_map_preserve_aspect(
 
 
 # ===========================================================================
-# Section 2 — AMRGridEnv (simple 8-directional grid environment)
-# ===========================================================================
-
-@dataclass(frozen=True)
-class RewardWeights:
-    lambda_target: float = 1.0
-    lambda_distance: float = -0.35
-    lambda_boundary: float = -1.0
-    lambda_obstacle: float = -1.0
-
-
-class AMRGridEnv(gym.Env):
-    metadata = {"render_modes": []}
-
-    def __init__(
-        self,
-        map_spec: MapSpec,
-        *,
-        sensor_range: int = 6,
-        max_steps: int = 500,
-        reward: RewardWeights = RewardWeights(),
-        cell_size: float = 1.0,
-        safe_distance: float = 0.6,
-        obs_map_size: int = 12,
-        terminate_on_collision: bool = False,
-    ) -> None:
-        super().__init__()
-
-        self.map_spec = map_spec
-        self._grid = map_spec.obstacle_grid()  # (H, W), y=0 bottom
-        self._height, self._width = self._grid.shape
-        self.start_xy = map_spec.start_xy
-        self.goal_xy = map_spec.goal_xy
-        self.sensor_range = int(sensor_range)
-        self.max_steps = int(max_steps)
-        self.reward = reward
-        self.cell_size = float(cell_size)
-        if not (self.cell_size > 0):
-            raise ValueError("cell_size must be > 0")
-        self.safe_distance = float(safe_distance)
-        self.terminate_on_collision = bool(terminate_on_collision)
-
-        self.action_space = gym.spaces.Discrete(8)
-        # Global-planning observation: full occupancy grid (downsampled) + agent/goal pose.
-        self.obs_map_size = int(obs_map_size)
-        if self.obs_map_size < 4:
-            raise ValueError("obs_map_size must be >= 4")
-        grid_ds = _downsample_map_preserve_aspect(
-            self._grid.astype(np.float32, copy=False),
-            int(self.obs_map_size),
-            interpolation=cv2.INTER_NEAREST, pad_value=1.0,
-        )
-        self._obs_grid_flat = (2.0 * grid_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
-
-        obs_dim = 5 + int(self.obs_map_size) * int(self.obs_map_size)
-        self.observation_space = gym.spaces.Box(
-            low=-1.0, high=1.0, shape=(obs_dim,), dtype=np.float32
-        )
-
-        self._rng = np.random.default_rng()
-        self._agent_xy = np.array(self.start_xy, dtype=np.int32)
-        self._steps = 0
-        self._dist_to_obstacle = self._compute_dist_to_obstacle()
-
-    @property
-    def grid(self) -> np.ndarray:
-        return self._grid
-
-    def reset(self, *, seed: int | None = None, options: dict[str, Any] | None = None):
-        super().reset(seed=seed)
-        if seed is not None:
-            self._rng = np.random.default_rng(seed)
-        self._agent_xy = np.array(self.start_xy, dtype=np.int32)
-        self._steps = 0
-        obs = self._observe()
-        info = {"agent_xy": tuple(self._agent_xy.tolist())}
-        return obs, info
-
-    def step(self, action: int):
-        self._steps += 1
-
-        dx, dy = _ACTIONS_8[int(action)]
-        old_xy = self._agent_xy.copy()
-        new_xy = old_xy + np.array([dx, dy], dtype=np.int32)
-
-        boundary_violation = not self._in_bounds(new_xy[0], new_xy[1])
-        collision = False
-        if boundary_violation:
-            new_xy = old_xy  # stay in place
-        else:
-            collision = bool(self._grid[new_xy[1], new_xy[0]])
-            if collision:
-                new_xy = old_xy  # stay in place on collision
-
-        self._agent_xy = new_xy
-
-        reached = self._reached_goal()
-        truncated = self._steps >= self.max_steps
-        terminated = reached or (self.terminate_on_collision and collision)
-
-        reward = self._reward(
-            reached=reached,
-            boundary_violation=boundary_violation,
-            collision=collision,
-        )
-
-        obs = self._observe()
-        info = {
-            "agent_xy": tuple(self._agent_xy.tolist()),
-            "boundary_violation": boundary_violation,
-            "collision": collision,
-            "reached": reached,
-            "steps": self._steps,
-        }
-        return obs, float(reward), bool(terminated), bool(truncated), info
-
-    def _in_bounds(self, x: int, y: int) -> bool:
-        return 0 <= x < self._width and 0 <= y < self._height
-
-    def _reached_goal(self) -> bool:
-        return int(self._agent_xy[0]) == self.goal_xy[0] and int(self._agent_xy[1]) == self.goal_xy[1]
-
-    def _distance_to_goal(self) -> float:
-        dx = float(self._agent_xy[0] - self.goal_xy[0]) * float(self.cell_size)
-        dy = float(self._agent_xy[1] - self.goal_xy[1]) * float(self.cell_size)
-        return float(np.sqrt(dx * dx + dy * dy))
-
-    def _min_obstacle_distance_cells(self) -> float:
-        ax, ay = int(self._agent_xy[0]), int(self._agent_xy[1])
-        return float(self._dist_to_obstacle[ay, ax])
-
-    def _min_obstacle_distance(self) -> float:
-        return float(self._min_obstacle_distance_cells()) * float(self.cell_size)
-
-    def _compute_dist_to_obstacle(self) -> np.ndarray:
-        # cv2.distanceTransform computes distance to nearest zero pixel, so we make
-        # obstacles zeros and free space non-zero. Use top-left origin for OpenCV,
-        # then flip back to y=0 bottom.
-        grid_top = self._grid[::-1, :]
-        free = (grid_top == 0).astype(np.uint8) * 255
-        dist_top = cv2.distanceTransform(
-            free, distanceType=cv2.DIST_L2, maskSize=cv2.DIST_MASK_PRECISE
-        ).astype(np.float32)
-
-        # Convert center-to-center distances to approximate clearance from the agent
-        # (assumed at the cell center) to the obstacle cell boundary.
-        dist_top = np.maximum(0.0, dist_top - 0.5).astype(np.float32, copy=False)
-        return dist_top[::-1, :].astype(np.float32, copy=False)
-
-    def _ray_distances(self) -> np.ndarray:
-        ax, ay = int(self._agent_xy[0]), int(self._agent_xy[1])
-        sr = self.sensor_range
-        distances = np.zeros((8,), dtype=np.float32)
-        for i, (dx, dy) in enumerate(_ACTIONS_8):
-            d = 0
-            x, y = ax, ay
-            for step in range(1, sr + 1):
-                x = ax + int(dx) * step
-                y = ay + int(dy) * step
-                if not self._in_bounds(x, y):
-                    break
-                if self._grid[y, x] == 1:
-                    break
-                d = step
-            distances[i] = float(d) / float(sr)
-        return distances
-
-    def _observe(self) -> np.ndarray:
-        ax, ay = int(self._agent_xy[0]), int(self._agent_xy[1])
-        gx, gy = self.goal_xy
-        # Normalize to [-1, 1] (stable for MLPs).
-        ax_n = 2.0 * (ax / max(1, self._width - 1)) - 1.0
-        ay_n = 2.0 * (ay / max(1, self._height - 1)) - 1.0
-        gx_n = 2.0 * (gx / max(1, self._width - 1)) - 1.0
-        gy_n = 2.0 * (gy / max(1, self._height - 1)) - 1.0
-
-        td = self._distance_to_goal()
-        diag = float(np.sqrt((self._width - 1) ** 2 + (self._height - 1) ** 2)) * float(self.cell_size)
-        td01 = float(td / max(1e-6, diag))
-        td_n = float(np.clip(2.0 * td01 - 1.0, -1.0, 1.0))
-
-        obs = np.concatenate(
-            [np.array([ax_n, ay_n, gx_n, gy_n, td_n], dtype=np.float32), self._obs_grid_flat],
-        )
-        return obs
-
-    def _reward(self, *, reached: bool, boundary_violation: bool, collision: bool) -> float:
-        r = 0.0
-        if reached:
-            r += float(self.reward.lambda_target)
-
-        # Heuristic distance shaping (Eq. 11)
-        r += float(self.reward.lambda_distance) * float(self._distance_to_goal())
-
-        if boundary_violation:
-            r += float(self.reward.lambda_boundary)
-
-        # Obstacle proximity / collision penalty (Eq. 13 surrogate)
-        if collision:
-            r += float(self.reward.lambda_obstacle)
-        else:
-            od = self._min_obstacle_distance()
-            if od < float(self.safe_distance):
-                r += float(self.reward.lambda_obstacle)
-
-        return float(r)
-
-
-# ===========================================================================
-# Section 3 — Bicycle model primitives (kinematics, collision, cost fields)
+# Section 2 — 自行车模型原语（运动学、碰撞检测、代价场）
 # ===========================================================================
 
 @dataclass(frozen=True)
@@ -325,7 +95,7 @@ class BicycleModelParams:
 
 
 def build_ackermann_action_table_35(*, delta_dot_max_rad_s: float, a_max_m_s2: float) -> np.ndarray:
-    """Returns (35, 2) array with columns [delta_dot(rad/s), a(m/s^2)]."""
+    """返回 (35, 2) 动作表，列为 [转向角速率 delta_dot(rad/s), 加速度 a(m/s²)]。"""
     dd = float(delta_dot_max_rad_s)
     aa = float(a_max_m_s2)
     delta_dots = np.array(
@@ -344,7 +114,7 @@ def build_ackermann_action_table_35(*, delta_dot_max_rad_s: float, a_max_m_s2: f
 
 
 def wrap_angle_rad(x: float) -> float:
-    """Wrap angle to [-pi, pi)."""
+    """将角度归一化到 [-π, π) 范围。"""
     return float((float(x) + math.pi) % (2.0 * math.pi) - math.pi)
 
 
@@ -359,7 +129,7 @@ def bicycle_integrate_one_step(
     a_m_s2: float,
     params: BicycleModelParams,
 ) -> tuple[float, float, float, float, float]:
-    """Rear-axle center bicycle model with one-step Euler integration."""
+    """后轴中心自行车模型，单步欧拉积分。"""
     dt = float(params.dt)
     v_next = float(np.clip(v_m_s + float(a_m_s2) * dt, -float(params.v_max_m_s), float(params.v_max_m_s)))
 
@@ -381,9 +151,9 @@ def min_steps_to_cover_distance_m(
     a_max_m_s2: float,
     v0_m_s: float = 0.0,
 ) -> int:
-    """Minimum steps needed to cover `distance_m` along a straight line.
+    """沿直线覆盖 distance_m 所需的最少步数。
 
-    Uses the same discrete update as the environment speed integrator for forward motion:
+    使用与环境速度积分器相同的离散更新规则：
         v_{k+1} = clip(v_k + a_max * dt, 0, v_max)
         x_{k+1} = x_k + v_{k+1} * dt
     """
@@ -421,7 +191,7 @@ class TwoCircleFootprint:
 
 
 def compute_edt_distance_m(grid_y0_bottom: np.ndarray, *, cell_size_m: float) -> np.ndarray:
-    """EDT distance (meters) from each cell center to the nearest obstacle cell center."""
+    """EDT 距离（米），每个栅格中心到最近障碍物栅格中心的欧氏距离。"""
     grid_top = grid_y0_bottom[::-1, :]
     free = (grid_top == 0).astype(np.uint8) * 255
     dist_top = cv2.distanceTransform(
@@ -431,7 +201,7 @@ def compute_edt_distance_m(grid_y0_bottom: np.ndarray, *, cell_size_m: float) ->
 
 
 def bilinear_sample_2d(arr: np.ndarray, *, x: float, y: float, default: float = float("inf")) -> float:
-    """Bilinear sample on a (H, W) array using x/y in index coordinates."""
+    """在 (H, W) 数组上按索引坐标 (x, y) 进行双线性插值采样。"""
     h, w = arr.shape
     if not (0.0 <= x <= (w - 1) and 0.0 <= y <= (h - 1)):
         return float(default)
@@ -459,11 +229,10 @@ def bilinear_sample_2d_finite(
     fill_value: float,
     default: float | None = None,
 ) -> float:
-    """Bilinear sample that replaces non-finite corner values with `fill_value`.
+    """将非有限角点值替换为 fill_value 后再双线性插值。
 
-    This is important for sampling cost-to-go fields that use `inf` to mark
-    non-traversable cells: plain bilinear interpolation would propagate `inf`
-    into neighboring valid regions and destroy shaping gradients near obstacles.
+    用于采样 goal distance field 时非常重要：该场用 inf 标记不可通行栅格，
+    普通双线性插值会把 inf 传播到相邻有效区域，破坏障碍物附近的塑形梯度。
     """
 
     h, w = arr.shape
@@ -504,7 +273,7 @@ def bilinear_sample_2d_vec(
     y: np.ndarray,
     default: float = float("inf"),
 ) -> np.ndarray:
-    """Vectorized bilinear sampling on a (H, W) array using x/y in index coordinates."""
+    """向量化双线性插值采样，输入为索引坐标 (x, y) 数组。"""
     h, w = arr.shape
     xv = np.asarray(x, dtype=np.float64)
     yv = np.asarray(y, dtype=np.float64)
@@ -543,7 +312,7 @@ def bilinear_sample_2d_finite_vec(
     fill_value: float,
     default: float | None = None,
 ) -> np.ndarray:
-    """Vectorized bilinear sampling that replaces non-finite corner values with `fill_value`."""
+    """向量化双线性插值，非有限角点值替换为 fill_value（用于 goal distance field 采样）。"""
     h, w = arr.shape
     xv = np.asarray(x, dtype=np.float64)
     yv = np.asarray(y, dtype=np.float64)
@@ -589,7 +358,7 @@ def dijkstra_cost_to_goal_m(
     goal_xy: tuple[int, int],
     cell_size_m: float,
 ) -> np.ndarray:
-    """Compute an 8-connected shortest-path cost-to-go field (meters) via Dijkstra."""
+    """通过 Dijkstra 算法计算 8 连通绕障最短路径距离场（goal distance field，单位：米）。"""
     if traversable_y0_bottom.ndim != 2:
         raise ValueError("traversable_y0_bottom must be a 2D array")
     h, w = traversable_y0_bottom.shape
@@ -644,11 +413,11 @@ def dijkstra_cost_to_goal_m(
 
 
 # ===========================================================================
-# Section 4 — AMRBicycleEnv (full Ackermann bicycle environment)
+# Section 3 — UGVBicycleEnv（完整阿克曼自行车运动学环境）
 # ===========================================================================
 
-class AMRBicycleEnv(gym.Env):
-    """Ackermann/bicycle dynamics on a grid occupancy map using EDT for collision + clearance (OD)."""
+class UGVBicycleEnv(gym.Env):
+    """基于阿克曼/自行车运动学的栅格环境，使用 EDT 进行碰撞检测和安全距离（OD）计算。"""
 
     metadata = {"render_modes": []}
 
@@ -666,8 +435,8 @@ class AMRBicycleEnv(gym.Env):
         od_cap_m: float = 2.0,
         safe_distance_m: float = 0.20,
         safe_speed_distance_m: float = 0.20,
-        # A slightly looser positional tolerance improves robustness with discrete controls
-        # and short-horizon safety shields (the paper's 0.30m can be hard to hit exactly).
+        # 稍宽松的到达容差提高了离散控制和短视野安全屏障下的鲁棒性
+        # （论文中的 0.30m 在离散动作下很难精确到达）。
         goal_tolerance_m: float = 1,
         goal_angle_tolerance_deg: float = 180.0,
         goal_speed_tol_m_s: float = 999.0,
@@ -686,12 +455,15 @@ class AMRBicycleEnv(gym.Env):
         stuck_min_disp_m: float = 0.02,
         stuck_min_speed_m_s: float = 0.05,
         stuck_penalty: float = 300.0,
-        edt_collision_margin: str = "half",
+        # 消融实验表明 "diag" 模式（碰撞边距 = √2/2 * cell_size，即对角线半栅格）
+        # 比 "half" 模式（碰撞边距 = 0.5 * cell_size）更保守，碰撞率更低，
+        # 尤其在狭窄走廊场景下显著提升成功率。默认使用 "diag"。
+        edt_collision_margin: str = "diag",
     ) -> None:
         super().__init__()
 
         self.map_spec = map_spec
-        self._grid = map_spec.obstacle_grid().astype(np.uint8, copy=False)  # (H, W), y=0 bottom
+        self._grid = map_spec.obstacle_grid().astype(np.uint8, copy=False)  # (H, W)，y=0 在底部
         self._height, self._width = self._grid.shape
         self._canonical_start_xy = (int(map_spec.start_xy[0]), int(map_spec.start_xy[1]))
         self._canonical_goal_xy = (int(map_spec.goal_xy[0]), int(map_spec.goal_xy[1]))
@@ -733,8 +505,11 @@ class AMRBicycleEnv(gym.Env):
             raise ValueError("goal_angle_tolerance_deg must be in (0, 180]")
         self.goal_speed_tol_m_s = float(goal_speed_tol_m_s)
 
-        # Precompute EDT + cost-to-go once (forest maps are static).
+        # 预计算 EDT 和 goal distance field（森林地图为静态地图，只需计算一次）。
         self._eps_cell_m = float(math.sqrt(2.0) * 0.5 * self.cell_size_m)
+        # EDT 碰撞边距：
+        #   "diag" → √2/2 * cell_size（对角线半栅格，更保守，消融实验推荐）
+        #   "half" → 0.5 * cell_size（正交半栅格，旧默认值）
         if edt_collision_margin == "diag":
             self._half_cell_m = float(math.sqrt(2.0) * 0.5 * self.cell_size_m)
         else:
@@ -744,7 +519,7 @@ class AMRBicycleEnv(gym.Env):
             math.hypot(float(self._width - 1) * self.cell_size_m, float(self._height - 1) * self.cell_size_m)
         )
 
-        # Treat the world boundary as an obstacle for both collision checking and sensing.
+        # 将世界边界也视为障碍物，同时用于碰撞检测和传感。
         max_x = float(self._width - 1) * self.cell_size_m
         max_y = float(self._height - 1) * self.cell_size_m
         xs = (np.arange(self._width, dtype=np.float32) * float(self.cell_size_m)).reshape(1, -1)
@@ -755,27 +530,26 @@ class AMRBicycleEnv(gym.Env):
         ).astype(np.float32, copy=False)
         self._dist_m = np.minimum(self._dist_m, boundary_dist).astype(np.float32, copy=False)
 
-        # Traversability used for cost-to-go shaping and curriculum sampling.
+        # 可通行性掩码，用于 goal distance field 塑形和课程学习采样。
         #
-        # Use *collision-free* clearance (r + eps_cell). The reward's OD-based safe-distance terms
-        # handle additional margin; making the cost-to-go field too conservative can disconnect the
-        # free space and remove useful progress gradients.
+        # 使用无碰撞安全距离（r + eps_cell）。奖励函数中的 OD 安全距离项
+        # 会额外处理边距；若代价场过于保守会断开自由空间，消除有用的进度梯度。
         self._clearance_thr_m = float(self.footprint.radius_m) + float(self._eps_cell_m)
         self._traversable_base = (self._dist_m > float(self._clearance_thr_m)).astype(bool, copy=False)
-        # Ensure the canonical start/goal cells are always treated as traversable.
+        # 确保固定起点/终点栅格始终被视为可通行。
         self._traversable_base[self._canonical_start_xy[1], self._canonical_start_xy[0]] = True
         self._traversable_base[self._canonical_goal_xy[1], self._canonical_goal_xy[0]] = True
 
-        # Candidate free cells for random start/goal sampling.
+        # 用于随机起点/终点采样的候选自由栅格。
         free_y, free_x = np.where(self._traversable_base)
         self._rand_free_xy = np.stack([free_x, free_y], axis=1).astype(np.int32, copy=False)
 
-        # Goal-dependent fields (cost-to-go + curriculum candidates).
+        # 目标相关的字段（goal distance field + 课程学习候选点）。
         self._set_goal_xy(self.goal_xy)
-        # Start-dependent normalization + downsampled cost map.
+        # 起点相关的归一化 + 降采样代价图。
         self._update_start_dependent_fields(start_xy=self.start_xy)
 
-        # Sanity-check horizon: use cost-to-go from start (accounts for detours).
+        # 合理性检查：基于起点的 goal distance（考虑绕障）验证步数上限是否充足。
         min_steps = min_steps_to_cover_distance_m(
             max(0.0, float(self._cost_norm_m) - float(self.goal_tolerance_m)),
             dt=float(self.model.dt),
@@ -822,14 +596,13 @@ class AMRBicycleEnv(gym.Env):
         )
         self.action_space = gym.spaces.Discrete(int(self.action_table.shape[0]))
 
-        # Global-planning observation: agent/goal pose + downsampled (static) maps.
+        # 全局规划观测：智能体/目标位姿 + 降采样静态地图。
         #
-        # The obstacle grid and cost-to-go field are known in global planning and provide
-        # much richer context than sensor-only lidar features.
+        # 障碍栅格和 goal distance field 在全局规划中已知，比纯激光雷达特征
+        # 提供更丰富的上下文信息。
         #
-        # Downsample preserving aspect ratio so non-square maps (e.g. 410x129)
-        # keep correct spatial relationships.  Padding uses semantically correct
-        # fill values: occupied=1 for occ, max-cost=1 for cost, zero-clearance=0 for EDT.
+        # 保持宽高比降采样，使非正方形地图（如 410×129）保持正确的空间关系。
+        # 填充值语义正确：占据=1，最大代价=1，零安全距离=0。
         _n = int(self.obs_map_size)
         occ_ds = _downsample_map_preserve_aspect(
             self._grid.astype(np.float32, copy=False), _n,
@@ -842,7 +615,7 @@ class AMRBicycleEnv(gym.Env):
         cost_ds = _downsample_map_preserve_aspect(cost01, _n, pad_value=1.0)
         self._obs_cost_flat = (2.0 * cost_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
 
-        # EDT clearance map: normalised distance-to-nearest-obstacle, capped at od_cap_m.
+        # EDT 安全距离图：归一化到最近障碍物的距离，上限为 od_cap_m。
         edt01 = np.clip(self._dist_m / max(1e-6, float(self.od_cap_m)), 0.0, 1.0).astype(np.float32, copy=False)
         edt_ds = _downsample_map_preserve_aspect(edt01, _n, pad_value=0.0)
         self._obs_edt_flat = (2.0 * edt_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
@@ -904,10 +677,10 @@ class AMRBicycleEnv(gym.Env):
             )
         self._cost_fill_m = float(np.max(finite_cost)) + float(self.cell_size_m)
 
-        # Curriculum: candidate start cells (reachable under clearance + have finite cost-to-go).
+        # 课程学习：候选起始栅格（安全距离可通行 + 有限 goal distance）。
         self._curriculum_min_cost_m = float(max(self.goal_tolerance_m + self.cell_size_m, 1.0))
         cand_mask = np.isfinite(self._cost_to_goal_m) & (self._dist_m > float(self._clearance_thr_m))
-        # Exclude the goal cell (too trivial) and any cells inside the goal tolerance.
+        # 排除目标栅格（过于简单）及目标容差范围内的栅格。
         cand_mask[int(gy), int(gx)] = False
         cand_mask &= self._cost_to_goal_m >= float(self._curriculum_min_cost_m)
 
@@ -916,7 +689,7 @@ class AMRBicycleEnv(gym.Env):
         self._curriculum_start_costs_m = self._cost_to_goal_m[cand_y, cand_x].astype(np.float32, copy=False)
 
     def _heading_from_cost_gradient(self, cx: int, cy: int) -> float | None:
-        """Return heading from cost-to-go gradient descent, or None if undefined."""
+        """根据 goal distance field 梯度下降方向返回航向角，无法计算时返回 None。"""
         cost = self._cost_to_goal_m
         h, w = cost.shape
         x0, x1 = max(0, cx - 1), min(w - 1, cx + 1)
@@ -937,8 +710,8 @@ class AMRBicycleEnv(gym.Env):
         if not self._in_bounds_xy((sx, sy)):
             raise ValueError("start_xy is out of bounds")
 
-        # Normalize cost-to-go by the *anchor* start pose (two-circle footprint),
-        # not just the rear-axle cell, so shaping remains meaningful near obstacles.
+        # 用锚定起始位姿（双圆足迹）归一化 goal distance，而非仅用后轴栅格，
+        # 使得障碍物附近的塑形保持有效。
         start_cost_cell = float(self._cost_to_goal_m[int(sy), int(sx)])
         start_x_m = float(sx) * self.cell_size_m
         start_y_m = float(sy) * self.cell_size_m
@@ -958,11 +731,11 @@ class AMRBicycleEnv(gym.Env):
                 "regenerate the map or reduce obstacle density."
             )
 
-        # Curriculum cost anchor (used only for curriculum sampling by cost bands).
+        # 课程学习代价锚点（仅用于按代价带采样起点）。
         start_cost = float(start_cost_pose if math.isfinite(start_cost_pose) else start_cost_cell)
         self._curriculum_start_cost_m = float(start_cost)
 
-        # Downsampled cost-to-go field (normalized) for global-map observations.
+        # 降采样归一化 goal distance field，用于全局地图观测。
         cost = np.minimum(self._cost_to_goal_m, float(self._cost_fill_m)).astype(np.float32, copy=False)
         cost01 = np.clip(cost / max(1e-6, float(self._cost_norm_m)), 0.0, 1.0).astype(np.float32, copy=False)
         cost_ds = _downsample_map_preserve_aspect(
@@ -1015,8 +788,8 @@ class AMRBicycleEnv(gym.Env):
             si = int(self._rng.integers(0, int(sx.size)))
             start_xy = (int(sx[si]), int(sy[si]))
 
-            # Verify the initial pose is collision-free under the two-circle footprint.
-            # Try atan2 heading (toward goal) first; fallback to cost-gradient heading.
+            # 验证初始位姿在双圆足迹下无碰撞。
+            # 先尝试 atan2 航向（朝目标方向），碰撞则回退到代价梯度航向。
             dx0 = float(gx - int(start_xy[0])) * float(self.cell_size_m)
             dy0 = float(gy - int(start_xy[1])) * float(self.cell_size_m)
             psi0 = wrap_angle_rad(math.atan2(dy0, dx0))
@@ -1031,13 +804,13 @@ class AMRBicycleEnv(gym.Env):
                 if bool(coll0):
                     continue
 
-            # Update normalization anchor to the sampled start.
+            # 将归一化锚点更新为采样的起点。
             try:
                 self._update_start_dependent_fields(start_xy=start_xy)
             except Exception:
                 continue
 
-            # Reject pairs that cannot be executed within the episode horizon.
+            # 拒绝无法在回合步数上限内完成的起终点对。
             try:
                 min_steps = min_steps_to_cover_distance_m(
                     max(0.0, float(self._cost_norm_m) - float(self.goal_tolerance_m)),
@@ -1053,7 +826,7 @@ class AMRBicycleEnv(gym.Env):
 
             return start_xy, (gx, gy)
 
-        # Fallback: canonical pair.
+        # 回退：使用标准起终点对。
         self._set_goal_xy(self._canonical_goal_xy)
         self._update_start_dependent_fields(start_xy=self._canonical_start_xy)
         return self._canonical_start_xy, self._canonical_goal_xy
@@ -1065,7 +838,7 @@ class AMRBicycleEnv(gym.Env):
 
         self._steps = 0
 
-        # Default: canonical fixed start/goal (backwards compatible).
+        # 默认：使用固定的标准起点/终点（向后兼容）。
         start_xy = (int(self._canonical_start_xy[0]), int(self._canonical_start_xy[1]))
         goal_xy = (int(self._canonical_goal_xy[0]), int(self._canonical_goal_xy[1]))
 
@@ -1102,17 +875,17 @@ class AMRBicycleEnv(gym.Env):
                 tries=int(rand_tries),
             )
         else:
-            # Ensure env goal-dependent fields match the requested goal.
+            # 确保环境的目标相关字段与请求的目标一致。
             if (int(self.goal_xy[0]), int(self.goal_xy[1])) != (int(goal_xy[0]), int(goal_xy[1])):
                 self._set_goal_xy(goal_xy)
 
             if start_override is not None:
                 start_xy = (int(start_override[0]), int(start_override[1]))
-                # For explicit (start,goal) overrides, normalize the cost-to-go field by the episode start.
+                # 显式指定 (start, goal) 时，以本次起点归一化 goal distance field。
                 self._update_start_dependent_fields(start_xy=start_xy)
             else:
-                # Keep normalization anchored at the canonical start (same behavior as fixed-start training),
-                # even when curriculum samples a different episode start.
+                # 归一化锚定在标准起点（与固定起点训练行为一致），
+                # 即使课程学习采样了不同的起点也不改变。
                 self._update_start_dependent_fields(start_xy=self._canonical_start_xy)
 
         self.start_xy = (int(start_xy[0]), int(start_xy[1]))
@@ -1129,13 +902,12 @@ class AMRBicycleEnv(gym.Env):
             and options.get("curriculum_progress") is not None
             and len(self._curriculum_start_xy) > 0
         ):
-            # Forest curriculum: early episodes start closer to the goal; later episodes gradually
-            # shift probability mass back to the canonical start. This prevents a train/test mismatch
-            # where the agent never practices the true start state but inference always begins there.
+            # 森林课程学习：早期回合从更靠近目标的位置出发；后期逐步将概率质量
+            # 移回标准起点。防止训练/测试不匹配（训练时从未练习真实起点，推理时却总从那里开始）。
             p = float(options["curriculum_progress"])
             p = float(np.clip(p, 0.0, 1.0))
 
-            # With probability p, use the fixed start (p=1 => always start from SP).
+            # 以概率 p 使用固定起点（p=1 时始终从标准起点出发）。
             if float(self._rng.random()) >= float(p):
                 band_m = float(options.get("curriculum_band_m", 2.0))
                 band_m = max(float(self.cell_size_m), float(band_m))
@@ -1145,14 +917,13 @@ class AMRBicycleEnv(gym.Env):
                 )
                 lo = max(float(self._curriculum_min_cost_m), float(hi) - float(band_m))
 
-                # Prefer sampling starts along the (precomputed) Hybrid A* reference path when available.
-                # This keeps curriculum starts on a known feasible corridor and avoids repeatedly
-                # re-planning from many random start states (which can time out on large forests).
+                # 优先沿预计算的 Hybrid A* 参考路径采样起点。
+                # 保持课程起点在已知可行走廊上，避免从大量随机起点重复规划（大森林地图会超时）。
                 chosen_ref_idx: int | None = None
                 ref_path = self._hybrid_astar_path(start_xy=self.start_xy)
                 if len(ref_path) >= 2:
-                    # Sample by reference-path progress (more robust than matching exact cost bands
-                    # after rounding continuous Hybrid A* coordinates back to grid cells).
+                    # 按参考路径进度采样（比将连续 Hybrid A* 坐标四舍五入回栅格后匹配
+                    # 精确代价带更鲁棒）。
                     max_idx = max(0, int(len(ref_path) - 2))  # exclude last point (goal vicinity)
                     band_steps = max(1, int(round(float(band_m) / float(self.cell_size_m))))
                     target_idx = int(round((1.0 - float(p)) * float(max_idx)))
@@ -1195,7 +966,7 @@ class AMRBicycleEnv(gym.Env):
                         ha_start_xy = (int(start_xy[0]), int(start_xy[1]))
                         ha_progress_idx = 0
 
-        # Finalize episode start (may differ from the canonical start when curriculum/randomization is used).
+        # 确定本回合起点（使用课程学习/随机化时可能与标准起点不同）。
         self.start_xy = (int(start_xy[0]), int(start_xy[1]))
 
         self._x_m = float(start_xy[0]) * self.cell_size_m
@@ -1203,7 +974,7 @@ class AMRBicycleEnv(gym.Env):
         dx = float(self.goal_xy[0] - start_xy[0]) * self.cell_size_m
         dy = float(self.goal_xy[1] - start_xy[1]) * self.cell_size_m
         psi = wrap_angle_rad(math.atan2(dy, dx))
-        # Fallback: if atan2 heading collides, use cost-gradient direction.
+        # 回退：若 atan2 航向导致碰撞，改用代价梯度方向。
         if psi_override is None:
             _od_chk, coll_chk = self._od_and_collision_at_pose_m(
                 float(self._x_m), float(self._y_m), float(psi),
@@ -1240,7 +1011,7 @@ class AMRBicycleEnv(gym.Env):
 
         x_before = float(self._x_m)
         y_before = float(self._y_m)
-        # Progress shaping uses a clearance-aware cost-to-go field (helps detours around obstacles).
+        # 进度塑形使用考虑安全距离的 goal distance field（有助于绕障）。
         cost_before = self._cost_to_goal_pose_m(x_before, y_before, float(self._psi_rad))
         d_goal_before = self._distance_to_goal_m()
         delta_before = float(self._delta_rad)
@@ -1275,10 +1046,10 @@ class AMRBicycleEnv(gym.Env):
         truncated = self._steps >= self.max_steps
         terminated = bool(collision or reached)
 
-        # Stuck detection (helps prevent in-place steering jitter / stopping forever).
+        # 卡住检测（防止原地转向抖动 / 永久停止）。
         #
-        # Use *windowed* displacement, not per-step displacement: with dt=0.05s the vehicle can
-        # legitimately move <2cm per step at low speeds, so per-step thresholds cause false stuck.
+        # 使用滑动窗口位移而非单步位移：dt=0.05s 时车辆低速下每步可能合理移动 <2cm，
+        # 单步阈值会导致误判卡住。
         stuck = False
         if not (terminated or truncated):
             self._stuck_pos_history.append((float(self._x_m), float(self._y_m)))
@@ -1295,14 +1066,14 @@ class AMRBicycleEnv(gym.Env):
                     terminated = True
 
         reward = 0.0
-        # Progress (short)
+        # 进度奖励（接近目标）
         if math.isfinite(cost_before) and math.isfinite(cost_after):
             reward += self.reward_k_p * float(cost_before - cost_after)
         else:
             reward += self.reward_k_p * float(d_goal_before - d_goal_after)
-        # Time (fast): per-step penalty.
+        # 时间惩罚：每步固定惩罚，鼓励快速到达。
         reward -= self.reward_k_t
-        # Efficiency: penalise wasted motion (distance traveled but no geodesic progress).
+        # 效率惩罚：惩罚无效运动（行驶了距离但无测地线进度）。
         if self.reward_k_eff > 0.0:
             dist_traveled = math.hypot(float(self._x_m) - x_before, float(self._y_m) - y_before)
             if math.isfinite(cost_before) and math.isfinite(cost_after):
@@ -1312,48 +1083,48 @@ class AMRBicycleEnv(gym.Env):
             if dist_traveled > 1e-6:
                 eff = max(0.0, progress) / dist_traveled  # 1.0 = perfect, 0 = wasted
                 reward -= self.reward_k_eff * max(0.0, 1.0 - eff)
-        # Smoothness
+        # 转向平滑性惩罚
         reward -= self.reward_k_delta * float(delta_next - delta_before) ** 2
-        # Acceleration smoothness should not prevent "getting going" from rest; scale by speed.
+        # 加速度平滑性惩罚：不应阻止从静止起步，因此按速度缩放。
         v_scale = (float(v_next) / float(self.model.v_max_m_s)) ** 2
         reward -= self.reward_k_a * float(a - prev_a) ** 2 * float(v_scale)
-        # Curvature / large steering penalty
+        # 曲率 / 大转向角惩罚
         reward -= self.reward_k_kappa * float(math.tan(delta_next) ** 2)
-        # Clearance-based safety shaping. Skip when already in collision to avoid compounding huge penalties.
+        # 基于安全距离的奖励塑形。已碰撞时跳过，避免叠加过大惩罚。
         if not collision:
             od_pos = max(0.0, float(od_m))
 
-            # Near-obstacle penalty (using OD).
+            # 近障碍物惩罚（基于 OD 安全距离）。
             if od_pos < self.safe_distance_m:
                 obs_term = (1.0 / (od_pos + self.reward_eps)) - (1.0 / (self.safe_distance_m + self.reward_eps))
                 obs_pen = float(self.reward_k_o) * float(obs_term)
                 reward -= min(float(self.reward_obs_max), float(obs_pen))
 
-            # Forest near-obstacle speed coupling + optional soft speed cap.
+            # 森林环境近障碍物速度耦合 + 可选软速度上限。
             if od_pos < self.safe_speed_distance_m:
-                # Speed coupling term (penalize speed when clearance is small).
+                # 速度耦合项（安全距离小时惩罚高速）。
                 reward -= self.reward_k_v * ((self.safe_speed_distance_m - od_pos) / self.safe_speed_distance_m) * (
                     float(v_next) / float(self.model.v_max_m_s)
                 ) ** 2
 
-                # Soft speed cap (optional, but stabilizes forest driving in thin corridors).
+                # 软速度上限（可选，在狭窄走廊中稳定行驶）。
                 v_cap = float(self.model.v_max_m_s) * float(
                     np.clip(float(od_pos) / float(self.safe_speed_distance_m), 0.0, 1.0)
                 )
                 dv = max(0.0, float(v_next) - float(v_cap))
                 reward -= self.reward_k_c * float(dv) ** 2
 
-        # Goal proximity shaping (per-step bonus when approaching the goal region).
+        # 目标接近塑形（进入目标区域附近时的每步奖励）。
         if self.reward_k_goal > 0.0:
             _shaping_r = 1.5 * self.goal_tolerance_m
             if d_goal_after < _shaping_r:
                 reward += self.reward_k_goal * (1.0 - d_goal_after / _shaping_r)
-                # Speed penalty near goal: penalise high speed to encourage stopping.
+                # 目标附近速度惩罚：惩罚高速以鼓励减速停车。
                 if self.goal_speed_tol_m_s < 900.0:
                     _v_ratio = abs(float(self._v_m_s)) / float(self.model.v_max_m_s)
                     reward -= self.reward_k_goal * _v_ratio
 
-        # Terminal
+        # 终止奖励/惩罚
         if collision:
             reward -= 200.0
         elif reached:
@@ -1365,7 +1136,7 @@ class AMRBicycleEnv(gym.Env):
         if stuck:
             reward -= float(self.stuck_penalty)
 
-        # Markov: the *next* state carries previous action = action taken now.
+        # 马尔可夫性：下一状态携带的"上一动作"= 本步执行的动作。
         self._prev_delta_dot = float(delta_dot)
         self._prev_a = float(a)
 
@@ -1392,10 +1163,10 @@ class AMRBicycleEnv(gym.Env):
         return self._step_with_controls(delta_dot=delta_dot, a=a)
 
     def step_continuous(self, *, delta_dot_rad_s: float, a_m_s2: float):
-        """Continuous-control variant of `step()` (uses the same dynamics/collision/termination).
+        """step() 的连续控制变体（使用相同的动力学/碰撞/终止逻辑）。
 
-        This is intended for evaluating continuous controllers (e.g., MPC) on the forest env without
-        forcing them through the discrete `action_table` interface used by DQN.
+        用于在森林环境中评估连续控制器（如 MPC），无需强制通过 DQN 使用的
+        离散 action_table 接口。
         """
         dd_max = float(self.model.delta_dot_max_rad_s)
         a_max = float(self.model.a_max_m_s2)
@@ -1437,8 +1208,8 @@ class AMRBicycleEnv(gym.Env):
         d2 = self._dist_at_m(c2[0], c2[1])
         r = float(self.footprint.radius_m)
         od_m = min(d1 - r, d2 - r)
-        # EDT measures center-to-center distance; add half-cell margin to account
-        # for the obstacle cell extending 0.5*cell_size from its center.
+        # EDT 测量的是中心到中心的距离；加上半栅格边距以补偿障碍物栅格
+        # 从中心延伸 0.5*cell_size 的范围。
         r_col = r + self._half_cell_m
         collision = (d1 <= r_col) or (d2 <= r_col)
         return float(od_m), bool(collision)
@@ -1591,7 +1362,7 @@ class AMRBicycleEnv(gym.Env):
                 delta_dot_rad_s=delta_dot,
                 a_m_s2=accel,
             )
-            # Freeze terminated rollouts (reached/collided) so later steps do not affect masks.
+            # 冻结已终止的 rollout（到达/碰撞），使后续步不影响掩码。
             x = np.where(active, x1, x)
             y = np.where(active, y1, y)
             psi = np.where(active, psi1, psi)
@@ -1617,10 +1388,10 @@ class AMRBicycleEnv(gym.Env):
         horizon_steps: int,
         min_od_m: float = 0.0,
     ) -> int:
-        """Fallback action chooser when Hybrid A* guidance is unavailable.
+        """Hybrid A* 引导不可用时的回退动作选择器。
 
-        Chooses the collision-free action that yields the lowest cost-to-go after a short
-        constant-action rollout. This is used only as a last resort to keep rollouts moving.
+        选择短视野恒定动作 rollout 后 goal distance 最低的无碰撞动作，
+        仅作为最后手段保持 rollout 持续推进。
         """
 
         h = max(1, int(horizon_steps))
@@ -1648,7 +1419,7 @@ class AMRBicycleEnv(gym.Env):
             best = int(cand[int(np.argmax(min_od[cand]))])
             return int(best)
 
-        # Last resort: pick the one-step action with maximum clearance (even if it still collides).
+        # 最后手段：选择单步安全距离最大的动作（即使仍可能碰撞）。
         x0 = float(self._x_m)
         y0 = float(self._y_m)
         psi0 = float(self._psi_rad)
@@ -1682,8 +1453,8 @@ class AMRBicycleEnv(gym.Env):
         if cached is not None:
             return cached
 
-        # Fast path: load precomputed Hybrid A* reference paths for the canonical forest starts.
-        # These are deterministic given the fixed forest seeds and avoid paying planning cost during training/inference.
+        # 快速路径：加载预计算的 Hybrid A* 参考路径（针对固定森林起点）。
+        # 在固定种子下结果确定，避免训练/推理时的规划开销。
         if (
             self.map_spec.name.startswith("forest_")
             and (int(start_xy[0]), int(start_xy[1])) == (int(self._canonical_start_xy[0]), int(self._canonical_start_xy[1]))
@@ -1763,11 +1534,10 @@ class AMRBicycleEnv(gym.Env):
         w_clearance: float = 0.2,
         w_speed: float = 0.0,
     ) -> int:
-        """Hybrid-A* guided expert (DQfD demos / guided exploration).
+        """Hybrid A* 引导专家（用于 DQfD 演示 / 引导探索）。
 
-        Computes a Hybrid A* reference path once per episode-start (cached by start cell) and then
-        tracks it with a pure-pursuit style steering target + discrete control selection under a
-        short-horizon safety mask.
+        每个回合开始时计算一次 Hybrid A* 参考路径（按起始栅格缓存），然后通过
+        纯追踪（pure-pursuit）风格的转向目标 + 短视野安全掩码下的离散控制选择来跟踪。
         """
 
         path = self._hybrid_astar_path(start_xy=self._ha_start_xy)
@@ -1777,7 +1547,7 @@ class AMRBicycleEnv(gym.Env):
         x_cells = float(self._x_m) / float(self.cell_size_m)
         y_cells = float(self._y_m) / float(self.cell_size_m)
 
-        # Find nearest path index (limited window around previous index).
+        # 在上一索引附近的有限窗口内寻找最近路径点索引。
         start_i = max(0, int(self._ha_progress_idx) - 25)
         end_i = min(len(path), int(self._ha_progress_idx) + 250)
         if end_i <= start_i:
@@ -1834,7 +1604,7 @@ class AMRBicycleEnv(gym.Env):
         horizon_steps: int = 15,
         min_od_m: float = 0.0,
     ) -> int:
-        """Lightweight expert based on short-horizon rollouts over the clearance-aware cost-to-go field."""
+        """基于 goal distance field 短视野 rollout 的轻量级专家。"""
         return self._fallback_action_short_rollout(horizon_steps=int(horizon_steps), min_od_m=float(min_od_m))
 
     def _rollout_constant_action_metrics(
@@ -1843,9 +1613,9 @@ class AMRBicycleEnv(gym.Env):
         *,
         horizon_steps: int,
     ) -> tuple[float, float, float, bool, bool]:
-        """Simulate a constant discrete action for a short horizon.
+        """模拟短视野内恒定离散动作。
 
-        Returns: (cost_to_go_end, v_end, min_od_over_horizon, collision_over_horizon, reached_within_horizon).
+        返回: (末端 goal distance, 末端速度, 视野内最小 OD, 是否碰撞, 是否到达目标)。
         """
 
         h = max(1, int(horizon_steps))
@@ -1915,8 +1685,7 @@ class AMRBicycleEnv(gym.Env):
         if not math.isfinite(cost0):
             return True
 
-        # Progress is judged at the end of the short-horizon constant-action rollout, while safety
-        # (collision / clearance) is judged over the same horizon.
+        # 进度在短视野恒定动作 rollout 末端判断，安全性（碰撞/安全距离）在整个视野内判断。
         h = max(1, int(horizon_steps))
         cost1, v_end, min_od, coll, reached = self._rollout_constant_action_metrics(int(a_id), horizon_steps=h)
         if bool(coll):
@@ -1930,9 +1699,8 @@ class AMRBicycleEnv(gym.Env):
         if float(cost0 - cost1) >= float(min_progress_m):
             return True
 
-        # Allow backing up / reversing only when no forward-progress actions exist under the same
-        # short-horizon constraints. This avoids the degenerate near-goal behavior where the policy
-        # keeps selecting reverse/stop-like actions and triggers stuck termination.
+        # 仅在相同短视野约束下无前进动作时才允许倒车/后退。
+        # 避免目标附近的退化行为（策略持续选择后退/停止动作导致卡住终止）。
         if bool(allow_reverse):
             reverse_v_min = 0.10
             if float(v_end) < -float(reverse_v_min):
@@ -1953,7 +1721,7 @@ class AMRBicycleEnv(gym.Env):
         horizon_steps: int = 10,
         min_od_m: float = 0.0,
     ) -> np.ndarray:
-        """Return a boolean mask of actions that remain collision-free over a short horizon."""
+        """返回短视野内保持无碰撞的动作布尔掩码。"""
         h = max(1, int(horizon_steps))
         min_od_thr = float(min_od_m)
         delta_dot = self.action_table[:, 0]
@@ -1975,7 +1743,7 @@ class AMRBicycleEnv(gym.Env):
         fallback_to_safe: bool = True,
         allow_reverse: bool = True,
     ) -> np.ndarray:
-        """Mask actions that are safe and make cost-to-go progress (optionally allow reverse)."""
+        """掩码安全且在 goal distance 上有进度的动作（可选允许倒车）。"""
 
         cost0 = float(self._cost_to_goal_pose_m(float(self._x_m), float(self._y_m), float(self._psi_rad)))
         out = np.zeros((int(self.action_table.shape[0]),), dtype=np.bool_)
@@ -2000,17 +1768,17 @@ class AMRBicycleEnv(gym.Env):
         prog = ((float(cost0) - cost1) >= float(min_prog)) | reached
         out = safe & prog
         if bool(allow_reverse) and not bool(out.any()):
-            # Only expose reverse actions when no progress actions exist.
+            # 仅在无前进动作时暴露倒车动作。
             reverse_v_min = 0.10
             out = safe & (v_end < -float(reverse_v_min))
 
-        # Fallback: if everything is filtered out, keep the collision-safe actions.
+        # 回退：若所有动作都被过滤，保留无碰撞的安全动作。
         if bool(fallback_to_safe) and not bool(out.any()):
             out = (~coll) & (min_od >= float(min_od_thr))
         return out.astype(np.bool_, copy=False)
 
     def _observe(self) -> np.ndarray:
-        # Normalized (x,y) + goal (x,y) in [-1,1].
+        # 归一化 (x,y) + 目标 (x,y) 到 [-1,1]。
         max_x = max(1e-6, float(self._width - 1) * self.cell_size_m)
         max_y = max(1e-6, float(self._height - 1) * self.cell_size_m)
         ax_n = 2.0 * (float(self._x_m) / float(max_x)) - 1.0
@@ -2018,7 +1786,7 @@ class AMRBicycleEnv(gym.Env):
         gx_n = 2.0 * ((float(self.goal_xy[0]) * self.cell_size_m) / float(max_x)) - 1.0
         gy_n = 2.0 * ((float(self.goal_xy[1]) * self.cell_size_m) / float(max_y)) - 1.0
 
-        # Scalars
+        # 标量特征
         sin_psi = float(math.sin(float(self._psi_rad)))
         cos_psi = float(math.cos(float(self._psi_rad)))
         v_n = float(self._v_m_s) / float(self.model.v_max_m_s)
@@ -2035,7 +1803,7 @@ class AMRBicycleEnv(gym.Env):
         od01 = min(self.od_cap_m, max(0.0, float(self._last_od_m))) / float(self.od_cap_m)
         od_n = 2.0 * float(np.clip(od01, 0.0, 1.0)) - 1.0
 
-        # Clamp to stable ranges.
+        # 钳位到稳定范围。
         ax_n = float(np.clip(ax_n, -1.0, 1.0))
         ay_n = float(np.clip(ay_n, -1.0, 1.0))
         gx_n = float(np.clip(gx_n, -1.0, 1.0))
@@ -2076,10 +1844,10 @@ class AMRBicycleEnv(gym.Env):
         return bilinear_sample_2d_finite(self._cost_to_goal_m, x=xi, y=yi, fill_value=float(self._cost_fill_m))
 
     def _cost_to_goal_pose_m(self, x_m: float, y_m: float, psi_rad: float) -> float:
-        """Cost-to-go for the whole vehicle footprint (two circles).
+        """整车足迹（双圆）的 goal distance。
 
-        Uses the max over circle-center costs so progress shaping does not
-        encourage motions where one circle becomes trapped/unsafe.
+        取两个圆心代价的最大值，使进度塑形不会鼓励
+        某个圆被困/不安全的运动。
         """
         c = math.cos(float(psi_rad))
         s = math.sin(float(psi_rad))
@@ -2097,7 +1865,7 @@ class AMRBicycleEnv(gym.Env):
         return (0.0 <= float(x_m) <= max_x) and (0.0 <= float(y_m) <= max_y)
 
     def _sector_ray_distances_n(self) -> np.ndarray:
-        """LIDAR-like ray distances, normalized to [0,1]. Angles are in the vehicle frame."""
+        """类激光雷达射线距离，归一化到 [0,1]。角度在车体坐标系下。"""
         x0 = float(self._x_m) / self.cell_size_m
         y0 = float(self._y_m) / self.cell_size_m
         max_range_cells = float(self.sensor_range_m) / self.cell_size_m

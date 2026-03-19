@@ -14,21 +14,20 @@ class ForestParams:
     height_cells: int = 128
     cell_size_m: float = 0.1
 
-    # Keep obstacles slightly away from the map boundary so the boundary EDT clamp
-    # does not create a large empty border.
+    # 障碍物稍微远离地图边界，避免边界 EDT 截断产生大片空白边框。
     boundary_margin_m: float = 0.2
 
-    # Tree trunks (circular obstacles).
+    # 树干（圆形障碍物）。
     trunk_count: int = 90
     trunk_radius_m_min: float = 0.15
     trunk_radius_m_max: float = 0.35
 
-    # Target gap between trunk surfaces (meters). The actual gap varies per trunk.
+    # 树干表面之间的目标间隙（米）。实际间隙因树干而异。
     trunk_gap_m: float = 1.0
     trunk_gap_jitter: float = 0.25
     trunk_place_tries: int = 20_000
 
-    # Optional small bushes/rubble as circles (kept round; no square dilation).
+    # 可选的小灌木/碎石，以圆形表示（保持圆形，不做方形膨胀）。
     bush_cluster_count: int = 0
     bush_per_cluster_min: int = 3
     bush_per_cluster_max: int = 8
@@ -38,7 +37,7 @@ class ForestParams:
 
     start_margin_m: float = 1.0
     goal_margin_m: float = 1.0
-    # Fixed (deterministic) start/goal placement inside the forest.
+    # 森林内部固定（确定性）的起点/终点放置位置。
     start_frac: float = 0.2
     goal_frac: float = 0.8
 
@@ -119,10 +118,10 @@ def reachable_bicycle_kinematics(
     goal_tolerance_m: float,
     max_expansions: int,
 ) -> bool:
-    """Coarse reachability check under bicycle kinematics + two-circle collision.
+    """基于 bicycle 运动学 + 双圆碰撞检测的粗略可达性检查。
 
-    This is intentionally lightweight (fixed speed + constant steering primitives) and is
-    only used to reject forest maps that are *not* solvable under the bicycle model.
+    故意设计为轻量级（固定速度 + 恒定转向 primitive），
+    仅用于排除在 bicycle 模型下*不可解*的森林地图。
     """
     if int(heading_bins) < 8:
         raise ValueError("heading_bins must be >= 8")
@@ -174,7 +173,7 @@ def reachable_bicycle_kinematics(
     def h_cost(x_m: float, y_m: float) -> float:
         return float(math.hypot(float(goal_x_m) - float(x_m), float(goal_y_m) - float(y_m)))
 
-    # Steering primitives (match the discrete delta_dot granularity loosely, but in delta-space).
+    # 转向 primitive（在 delta 空间中大致匹配离散 delta_dot 粒度）。
     dmax = float(delta_max_rad)
     deltas = (-dmax, -(2.0 / 3.0) * dmax, -(1.0 / 3.0) * dmax, 0.0, (1.0 / 3.0) * dmax, (2.0 / 3.0) * dmax, dmax)
 
@@ -358,7 +357,7 @@ def _sample_gap_cells(*, base_gap_m: float, jitter: float, rng: np.random.Genera
     jit = max(0.0, float(jitter))
     scale_jit = rng.uniform(1.0 - jit, 1.0 + jit) if jit > 0.0 else 1.0
 
-    # Mixture for "some wider, some narrower" corridors (kept mild for stability).
+    # 混合采样实现"部分宽、部分窄"的通道效果（幅度温和以保持稳定性）。
     mix = rng.choice(np.array([0.85, 1.0, 1.15], dtype=np.float32), p=np.array([0.15, 0.70, 0.15]))
     gap_m = base * float(mix) * float(scale_jit)
     return float(gap_m) / float(cell_size_m)
@@ -377,13 +376,13 @@ def _place_trunks(
     cell = float(params.cell_size_m)
     boundary_margin = max(0, int(round(float(params.boundary_margin_m) / cell)))
 
-    # Spatial hash for fast overlap checks (bin coordinates -> trunks in that bin).
+    # 空间哈希用于快速重叠检查（bin 坐标 -> 该 bin 中的树干）。
     r_max_cells = float(params.trunk_radius_m_max) / cell
     gap_max_cells = float(params.trunk_gap_m) * 1.35 * (1.0 + float(params.trunk_gap_jitter)) / cell
     bin_size = max(4.0, (2.0 * r_max_cells) + gap_max_cells)
     bins: dict[tuple[int, int], list[tuple[float, float, float, float]]] = {}
 
-    trunks: list[tuple[float, float, float, float]] = []  # cx_cells, cy_cells, r_cells, gap_cells
+    trunks: list[tuple[float, float, float, float]] = []  # cx_cells, cy_cells, r_cells, gap_cells（树干列表）
 
     tries = 0
 
@@ -398,11 +397,11 @@ def _place_trunks(
             rng=rng,
             cell_size_m=cell,
         )
-        # Keep the trunk gap independent from the vehicle footprint.
-        # Forests naturally contain tight clusters; feasibility is enforced later via EDT + reachability checks.
+        # 树干间隙独立于车辆轮廓。
+        # 森林自然包含紧密聚簇；可行性后续通过 EDT + 可达性检查保证。
         gap_cells = max(0.0, float(gap_cells))
 
-        # Keep trunks inside bounds with a small guard band.
+        # 保持树干在边界内，预留小段保护带。
         guard = max(1.0, r_cells + 1.0)
         x_min = float(boundary_margin) + guard
         x_max = float(w - 1 - boundary_margin) - guard
@@ -414,12 +413,11 @@ def _place_trunks(
         cx = float(rng.uniform(x_min, x_max))
         cy = float(rng.uniform(y_min, y_max))
 
-        # Keep start/goal regions clean.
+        # 保持起点/终点区域清空。
         sx, sy = float(start_xy[0]), float(start_xy[1])
         gx, gy = float(goal_xy[0]), float(goal_xy[1])
-        # Keepout should be just enough to place the initial vehicle pose without forcing
-        # unnaturally large open areas around start/goal. Feasibility is enforced later by
-        # EDT + reachability checks.
+        # 禁入区仅需足够放置初始车辆姿态，避免在起点/终点周围
+        # 产生不自然的大片空旷区域。可行性后续通过 EDT + 可达性检查保证。
         keepout = float(footprint_clearance_cells) + r_cells + 2.0
         if (cx - sx) ** 2 + (cy - sy) ** 2 < keepout**2:
             continue
@@ -449,7 +447,7 @@ def _place_trunks(
         bins.setdefault((bx, by), []).append((cx, cy, r_cells, gap_cells))
         _mark_disk(grid, cx=cx, cy=cy, r_cells=r_cells)
 
-    # If placement fails badly, it's better to force a retry at the map level.
+    # 如果放置严重失败，最好在地图层面强制重试。
     if len(trunks) < max(5, int(0.6 * float(params.trunk_count))):
         raise RuntimeError("Trunk placement failed; retry map generation.")
 
@@ -475,7 +473,7 @@ def _place_bushes(
         cx = float(rng.uniform(boundary_margin + 2, w - 1 - (boundary_margin + 2)))
         cy = float(rng.uniform(boundary_margin + 2, h - 1 - (boundary_margin + 2)))
 
-        # Keep away from start/goal a bit.
+        # 与起点/终点保持一定距离。
         sx, sy = float(start_xy[0]), float(start_xy[1])
         gx, gy = float(goal_xy[0]), float(goal_xy[1])
         if (cx - sx) ** 2 + (cy - sy) ** 2 < (8.0 * spread_cells) ** 2:
@@ -499,11 +497,11 @@ def generate_forest_grid(
     rng: np.random.Generator,
     footprint_clearance_m: float,
 ) -> tuple[np.ndarray, tuple[int, int], tuple[int, int]]:
-    """Generate a fragmented forest occupancy grid with a reachability check.
+    """生成带有可达性检查的碎片化森林占据栅格。
 
     Returns:
-      - grid (H, W) uint8 with y=0 bottom, 1=obstacle
-      - start_xy, goal_xy (integer cell coordinates)
+      - grid (H, W) uint8，y=0 在底部，1=障碍物
+      - start_xy, goal_xy（整数栅格坐标）
     """
     w = int(params.width_cells)
     h = int(params.height_cells)
@@ -522,7 +520,7 @@ def generate_forest_grid(
             int(np.clip(int(y), margin_cells, h - 1 - margin_cells)),
         )
 
-    # Place start/goal well inside the forest (not near empty borders).
+    # 将起点/终点放置在森林内部（远离空白边界）。
     start_xy = clamp_xy(int(round(float(params.start_frac) * float(w - 1))), int(round(float(params.start_frac) * float(h - 1))), margin_start)
     goal_xy = clamp_xy(int(round(float(params.goal_frac) * float(w - 1))), int(round(float(params.goal_frac) * float(h - 1))), margin_goal)
 
@@ -545,12 +543,12 @@ def generate_forest_grid(
 
         _place_bushes(grid=grid, params=params, rng=rng, start_xy=start_xy, goal_xy=goal_xy)
 
-        # Clear start/goal regions.
+        # 清除起点/终点区域的障碍物。
         _clear_disk(grid, cx=float(start_xy[0]), cy=float(start_xy[1]), r_cells=safe_clearance_cells + 1.0)
         _clear_disk(grid, cx=float(goal_xy[0]), cy=float(goal_xy[1]), r_cells=safe_clearance_cells + 1.0)
 
-        # Reachability check in configuration-space approximation:
-        # treat states with enough EDT clearance as free.
+        # 构型空间近似下的可达性检查：
+        # 将 EDT clearance 足够大的状态视为自由。
         grid_top = grid[::-1, :]
         free = (grid_top == 0).astype(np.uint8) * 255
         dist_top = cv2.distanceTransform(
@@ -562,10 +560,10 @@ def generate_forest_grid(
         if not _reachable_8(safe_free, start_xy, goal_xy):
             continue
 
-        # Extra reachability check: bicycle model (min turning radius + footprint) must be able to reach.
+        # 额外可达性检查：bicycle 模型（最小转弯半径 + 车身轮廓）必须可达。
         dist_m = (dist * float(cell)).astype(np.float32, copy=False)
         eps_cell_m = float(math.sqrt(2.0) * 0.5 * cell)
-        # Two-circle model (same as env.py); derive r from clearance input to avoid drifting constants.
+        # 双圆模型（与 env.py 一致）；从 clearance 输入推导 r 以避免常量漂移。
         r_m = max(0.0, float(footprint_clearance_m) - float(eps_cell_m))
         x1_m = (0.6 / 2.0) - (0.924 / 4.0)
         x2_m = (0.6 / 2.0) + (0.924 / 4.0)
@@ -590,7 +588,7 @@ def generate_forest_grid(
         ):
             continue
 
-        # Passed both reachability checks.
+        # 通过两项可达性检查。
         return grid.astype(np.uint8, copy=False), start_xy, goal_xy
 
     raise RuntimeError("Failed to generate a reachable forest map; lower density or increase max_tries.")

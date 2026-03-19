@@ -1,0 +1,27 @@
+{
+  "algorithm": "LO-HA*",
+  "cell_size_m": 0.1,
+  "env_base": "realmap_a",
+  "env_case": "realmap_a",
+  "goal_m": [
+    37.6,
+    5.300000000000001
+  ],
+  "goal_xy": [
+    376,
+    53
+  ],
+  "kind": "trace",
+  "map_grid_npz": "maps/realmap_a__grid_y0_bottom.npz",
+  "map_meta_json": "maps/realmap_a__meta.json",
+  "run_idx": 0,
+  "start_m": [
+    38.900000000000006,
+    12.100000000000001
+  ],
+  "start_xy": [
+    389,
+    121
+  ],
+  "trace_csv": "traces/realmap_a__LO_HA__run0.csv"
+}

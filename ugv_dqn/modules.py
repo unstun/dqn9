@@ -1,13 +1,13 @@
-"""Plug-in modules for CNN Q-networks.
+"""CNN Q 网络的可插拔模块。
 
-Provides
+提供
 --------
-- SpatialMHA        Multi-head self-attention over spatial positions of a CNN feature map.
-- CoordAttention    Coordinate Attention (Hou et al., CVPR 2021).
-- NoisyLinear       Factorised Gaussian noisy linear layer (Fortunato et al., ICLR 2018).
-- FADC              Frequency-Adaptive Dilated Convolution (Chen et al., CVPR 2024).
-- DeformConv2dBlock Deformable Convolution v2 wrapper (via torchvision).
-- IQNHead           Implicit Quantile Network cosine-embedding head (Dabney et al., ICML 2018).
+- SpatialMHA        对 CNN 特征图空间位置的多头自注意力。
+- CoordAttention    坐标注意力 (Hou et al., CVPR 2021)。
+- NoisyLinear       分解高斯噪声线性层 (Fortunato et al., ICLR 2018)。
+- FADC              频率自适应空洞卷积 (Chen et al., CVPR 2024)。
+- DeformConv2dBlock 可变形卷积 v2 封装（通过 torchvision）。
+- IQNHead           IQN 余弦嵌入头部 (Dabney et al., ICML 2018)。
 """
 
 from __future__ import annotations
@@ -20,15 +20,14 @@ from torch.nn import functional as F
 
 
 # ---------------------------------------------------------------------------
-# SpatialMHA (existing)
+# SpatialMHA（空间多头注意力）
 # ---------------------------------------------------------------------------
 
 class SpatialMHA(nn.Module):
-    """Multi-head self-attention over spatial positions of a feature map.
+    """对特征图空间位置的多头自注意力。
 
-    Treats each spatial position (H*W) as a token with *channels* dimensions.
-    Applies standard multi-head attention followed by a residual connection
-    and LayerNorm.
+    将每个空间位置 (H*W) 视为具有 *channels* 维度的 token。
+    应用标准多头注意力，然后进行残差连接和 LayerNorm。
     """
 
     def __init__(self, channels: int, num_heads: int = 4) -> None:
@@ -42,21 +41,21 @@ class SpatialMHA(nn.Module):
         # x: (B, C, H, W)
         B, C, H, W = x.shape
         tokens = x.flatten(2).transpose(1, 2)       # (B, H*W, C)
-        out, _ = self.mha(tokens, tokens, tokens)    # self-attention
-        out = self.norm(tokens + out)                # residual + LN
+        out, _ = self.mha(tokens, tokens, tokens)    # 自注意力
+        out = self.norm(tokens + out)                # 残差 + LN
         return out.transpose(1, 2).reshape(B, C, H, W)
 
 
 # ---------------------------------------------------------------------------
-# Coordinate Attention (Hou et al., CVPR 2021)
+# 坐标注意力 (Hou et al., CVPR 2021)
 # ---------------------------------------------------------------------------
 
 class CoordAttention(nn.Module):
-    """Coordinate Attention: factorises channel attention into two 1-D
-    directional encodings (H and W), preserving positional information.
+    """坐标注意力：将通道注意力分解为两个一维方向编码（H 和 W），
+    保留位置信息。
 
-    Reference: Hou et al., "Coordinate Attention for Efficient Mobile
-    Network Design", CVPR 2021.
+    参考文献：Hou et al., "Coordinate Attention for Efficient Mobile
+    Network Design", CVPR 2021。
     """
 
     def __init__(self, channels: int, reduction: int = 4) -> None:
@@ -73,10 +72,10 @@ class CoordAttention(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: (B, C, H, W)
         B, C, H, W = x.shape
-        # Pool along W → (B, C, H, 1), pool along H → (B, C, 1, W)
+        # 沿 W 方向池化 → (B, C, H, 1)，沿 H 方向池化 → (B, C, 1, W)
         x_h = x.mean(dim=3, keepdim=True)           # (B, C, H, 1)
         x_w = x.mean(dim=2, keepdim=True)            # (B, C, 1, W)
-        # Concatenate along spatial dim for shared transform
+        # 沿空间维度拼接，用于共享变换
         x_w_perm = x_w.permute(0, 1, 3, 2)           # (B, C, W, 1)
         cat = torch.cat([x_h, x_w_perm], dim=2)      # (B, C, H+W, 1)
         cat = self.fc_shared(cat)                     # (B, mid, H+W, 1)
@@ -87,14 +86,14 @@ class CoordAttention(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# NoisyLinear (Fortunato et al., ICLR 2018)
+# NoisyLinear（噪声线性层，Fortunato et al., ICLR 2018）
 # ---------------------------------------------------------------------------
 
 class NoisyLinear(nn.Module):
-    """Factorised Gaussian noisy linear layer.
+    """分解高斯噪声线性层。
 
-    Replaces standard nn.Linear; injects learnable noise for exploration.
-    Reference: Fortunato et al., "Noisy Networks for Exploration", ICLR 2018.
+    替代标准 nn.Linear；注入可学习噪声以促进探索。
+    参考文献：Fortunato et al., "Noisy Networks for Exploration", ICLR 2018。
     """
 
     def __init__(self, in_features: int, out_features: int, sigma0: float = 0.5) -> None:
@@ -143,18 +142,18 @@ class NoisyLinear(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# FADC — Frequency-Adaptive Dilated Convolution (Chen et al., CVPR 2024)
-# Simplified version: learnable per-channel dilation rate + adaptive kernel.
+# FADC — 频率自适应空洞卷积 (Chen et al., CVPR 2024)
+# 简化版本：可学习的逐通道膨胀率 + 自适应卷积核。
 # ---------------------------------------------------------------------------
 
 class FADC(nn.Module):
-    """Frequency-Adaptive Dilated Convolution (simplified).
+    """频率自适应空洞卷积（简化版）。
 
-    Learns a per-channel soft dilation rate and applies it via interpolated
-    dilated convolutions. Suitable as a drop-in replacement for Conv2d.
+    学习逐通道的软膨胀率，并通过插值空洞卷积来应用。
+    可作为 Conv2d 的即插即用替代。
 
-    Reference: Chen et al., "Frequency-Adaptive Dilated Convolution for
-    Semantic Segmentation", CVPR 2024 (Highlight).
+    参考文献：Chen et al., "Frequency-Adaptive Dilated Convolution for
+    Semantic Segmentation", CVPR 2024 (Highlight)。
     """
 
     def __init__(
@@ -168,12 +167,12 @@ class FADC(nn.Module):
     ) -> None:
         super().__init__()
         self.max_dilation = max_dilation
-        # Standard conv (dilation=1)
+        # 标准卷积 (dilation=1)
         self.conv_base = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=padding, bias=False)
-        # Dilated conv (dilation=max_dilation)
+        # 空洞卷积 (dilation=max_dilation)
         pad_d = (kernel_size + (kernel_size - 1) * (max_dilation - 1)) // 2
         self.conv_dilated = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=pad_d, dilation=max_dilation, bias=False)
-        # Learnable mixing coefficient (sigmoid → [0,1])
+        # 可学习混合系数 (sigmoid → [0,1])
         self.alpha = nn.Parameter(torch.zeros(1))
         self.bn = nn.BatchNorm2d(out_channels)
 
@@ -184,16 +183,16 @@ class FADC(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# DeformConv2dBlock — Deformable Convolution wrapper (via torchvision)
+# DeformConv2dBlock — 可变形卷积封装（通过 torchvision）
 # ---------------------------------------------------------------------------
 
 class DeformConv2dBlock(nn.Module):
-    """Deformable Convolution v2 block using torchvision.ops.deform_conv2d.
+    """使用 torchvision.ops.deform_conv2d 的可变形卷积 v2 模块。
 
-    Learns spatial offsets (and modulation masks) for each kernel position,
-    allowing the receptive field to adapt to input geometry.
+    为每个卷积核位置学习空间偏移（和调制掩码），
+    使感受野能够自适应输入的几何形状。
 
-    Falls back to standard Conv2d if torchvision is unavailable.
+    若 torchvision 不可用则回退到标准 Conv2d。
     """
 
     def __init__(
@@ -209,8 +208,8 @@ class DeformConv2dBlock(nn.Module):
         self.padding = padding
         self.kernel_size = kernel_size
 
-        # Offset: 2 * kH * kW values per position
-        # Mask: kH * kW values per position
+        # 偏移量：每个位置 2 * kH * kW 个值
+        # 掩码：每个位置 kH * kW 个值
         n_offset = 2 * kernel_size * kernel_size
         n_mask = kernel_size * kernel_size
         self.offset_conv = nn.Conv2d(in_channels, n_offset + n_mask, kernel_size=3, padding=1, bias=True)
@@ -222,7 +221,7 @@ class DeformConv2dBlock(nn.Module):
         self.bias = nn.Parameter(torch.zeros(out_channels))
         self.bn = nn.BatchNorm2d(out_channels)
 
-        # Check torchvision availability at init time
+        # 在初始化时检查 torchvision 是否可用
         try:
             from torchvision.ops import deform_conv2d as _dcn  # noqa: F401
             self._has_dcn = True
@@ -248,17 +247,17 @@ class DeformConv2dBlock(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# IQN Head — Implicit Quantile Network (Dabney et al., ICML 2018)
+# IQN 头部 — 隐式分位数网络 (Dabney et al., ICML 2018)
 # ---------------------------------------------------------------------------
 
 class IQNHead(nn.Module):
-    """Implicit Quantile Network cosine-embedding head.
+    """IQN 余弦嵌入头部。
 
-    Maps a feature vector z and sampled quantile fractions τ ∈ (0,1) to
-    per-action quantile values. The final Q(s,a) is the mean over K samples.
+    将特征向量 z 和采样的分位数分数 τ ∈ (0,1) 映射为
+    逐动作的分位数值。最终 Q(s,a) 为 K 个样本的均值。
 
-    Reference: Dabney et al., "Implicit Quantile Networks for Distributional
-    Reinforcement Learning", ICML 2018.
+    参考文献：Dabney et al., "Implicit Quantile Networks for Distributional
+    Reinforcement Learning", ICML 2018。
     """
 
     def __init__(self, feature_dim: int, n_actions: int, n_cos: int = 64, n_quantiles: int = 8) -> None:
@@ -268,37 +267,37 @@ class IQNHead(nn.Module):
         self.n_actions = n_actions
         self.feature_dim = feature_dim
 
-        # Cosine embedding: τ → cos(i π τ) for i=1..n_cos → linear → feature_dim
+        # 余弦嵌入：τ → cos(i π τ)，i=1..n_cos → 线性层 → feature_dim
         self.cos_embedding = nn.Linear(n_cos, feature_dim)
-        # Final Q layer
+        # 最终 Q 值层
         self.q_layer = nn.Linear(feature_dim, n_actions)
 
     def forward(self, features: torch.Tensor, n_quantiles: int | None = None) -> torch.Tensor:
-        """Return mean Q-values (B, n_actions) by averaging over sampled quantiles."""
+        """通过对采样分位数取均值，返回平均 Q 值 (B, n_actions)。"""
         K = n_quantiles or self.n_quantiles
         B = features.shape[0]
 
-        # Sample τ ~ U(0,1): (B, K)
+        # 采样 τ ~ U(0,1): (B, K)
         if self.training:
             tau = torch.rand(B, K, device=features.device, dtype=features.dtype)
         else:
-            # Deterministic quantiles for evaluation
+            # 评估时使用确定性分位数
             tau = torch.linspace(0.5 / K, 1.0 - 0.5 / K, K, device=features.device, dtype=features.dtype)
             tau = tau.unsqueeze(0).expand(B, -1)
 
-        # Cosine basis: (B, K, n_cos)
+        # 余弦基：(B, K, n_cos)
         i_pi = math.pi * torch.arange(1, self.n_cos + 1, device=features.device, dtype=features.dtype)
         cos_features = torch.cos(tau.unsqueeze(-1) * i_pi.unsqueeze(0).unsqueeze(0))  # (B, K, n_cos)
         tau_embed = F.relu(self.cos_embedding(cos_features))  # (B, K, feature_dim)
 
-        # Element-wise multiply: (B, 1, feature_dim) * (B, K, feature_dim) → (B, K, feature_dim)
+        # 逐元素相乘：(B, 1, feature_dim) * (B, K, feature_dim) → (B, K, feature_dim)
         combined = features.unsqueeze(1) * tau_embed  # (B, K, feature_dim)
         q_quantiles = self.q_layer(combined)  # (B, K, n_actions)
 
         return q_quantiles.mean(dim=1)  # (B, n_actions)
 
     def forward_quantiles(self, features: torch.Tensor, tau: torch.Tensor) -> torch.Tensor:
-        """Given explicit τ (B, K), return quantile Q-values (B, K, n_actions)."""
+        """给定显式 τ (B, K)，返回分位数 Q 值 (B, K, n_actions)。"""
         i_pi = math.pi * torch.arange(1, self.n_cos + 1, device=features.device, dtype=features.dtype)
         cos_features = torch.cos(tau.unsqueeze(-1) * i_pi.unsqueeze(0).unsqueeze(0))
         tau_embed = F.relu(self.cos_embedding(cos_features))

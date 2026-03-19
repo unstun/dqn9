@@ -406,6 +406,108 @@ class GridFootprintChecker:
         return False
 
 
+class EDTCollisionChecker:
+    """
+    EDT-based collision checker for two-circle footprint.
+
+    Uses precomputed EDT distance field + bilinear interpolation, identical to
+    the DRL environment's collision detection in UGVBicycleEnv.
+    """
+
+    def __init__(
+        self,
+        edt_dist_m: np.ndarray,
+        cell_size_m: float,
+        footprint: TwoCircleFootprint,
+        edt_collision_margin: str = "diag",
+    ):
+        self._dist_m = np.asarray(edt_dist_m, dtype=np.float32)
+        self._h, self._w = self._dist_m.shape
+        self._cell_size_m = float(cell_size_m)
+        self._footprint = footprint
+        self._radius = float(footprint.radius)
+        self._center_offset = float(footprint.center_offset)
+        self._center_shift = float(footprint.center_shift)
+
+        if edt_collision_margin == "diag":
+            self._half_cell_m = float(math.sqrt(2.0) * 0.5 * self._cell_size_m)
+        else:
+            self._half_cell_m = float(0.5 * self._cell_size_m)
+
+        self._r_col = self._radius + self._half_cell_m
+
+        # Boundary distance (same as UGVBicycleEnv)
+        max_x = float(self._w - 1) * self._cell_size_m
+        max_y = float(self._h - 1) * self._cell_size_m
+        xs = (np.arange(self._w, dtype=np.float32) * self._cell_size_m).reshape(1, -1)
+        ys = (np.arange(self._h, dtype=np.float32) * self._cell_size_m).reshape(-1, 1)
+        boundary_dist = np.minimum(
+            np.minimum(xs, max_x - xs),
+            np.minimum(ys, max_y - ys),
+        ).astype(np.float32, copy=False)
+        self._dist_m = np.minimum(self._dist_m, boundary_dist).astype(np.float32, copy=False)
+
+    def _dist_at_m(self, x_m: float, y_m: float) -> float:
+        """Bilinear interpolation of EDT distance field (identical to UGVBicycleEnv._dist_at_m)."""
+        xi = float(x_m) / self._cell_size_m
+        yi = float(y_m) / self._cell_size_m
+        h, w = self._h, self._w
+        if not (0.0 <= xi <= (w - 1) and 0.0 <= yi <= (h - 1)):
+            return 0.0
+        x0 = int(math.floor(xi))
+        y0 = int(math.floor(yi))
+        x1 = min(x0 + 1, w - 1)
+        y1 = min(y0 + 1, h - 1)
+        fx = float(xi - x0)
+        fy = float(yi - y0)
+        v00 = float(self._dist_m[y0, x0])
+        v10 = float(self._dist_m[y0, x1])
+        v01 = float(self._dist_m[y1, x0])
+        v11 = float(self._dist_m[y1, x1])
+        v0 = v00 * (1.0 - fx) + v10 * fx
+        v1 = v01 * (1.0 - fx) + v11 * fx
+        return float(v0 * (1.0 - fy) + v1 * fy)
+
+    def _circle_centers(self, x: float, y: float, theta: float):
+        cos_t = math.cos(theta)
+        sin_t = math.sin(theta)
+        s = self._center_shift
+        d = self._center_offset
+        mid_x = x + cos_t * s
+        mid_y = y + sin_t * s
+        c1x = mid_x + cos_t * d
+        c1y = mid_y + sin_t * d
+        c2x = mid_x - cos_t * d
+        c2y = mid_y - sin_t * d
+        return (c1x, c1y), (c2x, c2y)
+
+    def collides_pose(self, x: float, y: float, theta: float) -> bool:
+        (c1x, c1y), (c2x, c2y) = self._circle_centers(x, y, theta)
+        d1 = self._dist_at_m(c1x, c1y)
+        d2 = self._dist_at_m(c2x, c2y)
+        return (d1 <= self._r_col) or (d2 <= self._r_col)
+
+    def collides_path(self, poses: Iterable[Tuple[float, float, float]]) -> bool:
+        for pose in poses:
+            if hasattr(pose, "x"):
+                x, y, theta = pose.x, pose.y, pose.theta
+            else:
+                x, y, theta = pose
+            if self.collides_pose(x, y, theta):
+                return True
+        return False
+
+    def motion_collides(
+        self, start: Tuple[float, float, float], end: Tuple[float, float, float], step: float
+    ) -> bool:
+        if self.collides_pose(start[0], start[1], start[2]):
+            return True
+        for pose in interpolate_poses(start, end, step):
+            if self.collides_pose(pose[0], pose[1], pose[2]):
+                return True
+        return False
+
+
 def interpolate_poses(
     start: Tuple[float, float, float],
     end: Tuple[float, float, float],

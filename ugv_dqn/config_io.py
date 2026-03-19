@@ -1,19 +1,19 @@
-"""JSON configuration loading and argparse integration.
+"""JSON 配置文件加载与 argparse 集成。
 
-Provides
---------
-- load_json()              Read a JSON file into a dict.
-- resolve_config_path()    Resolve --config / --profile to a Path under configs/.
-- select_section()         Extract the "train" or "infer" sub-dict from a config.
-- apply_config_defaults()  Merge config dict values into an argparse parser's defaults,
-                           with type coercion matching each argument's declared type.
-- parser_defaults()        Dump all argparse defaults as a JSON-compatible dict.
+提供
+----
+- load_json()              读取 JSON 文件并返回字典。
+- resolve_config_path()    将 --config / --profile 解析为 configs/ 下的 Path。
+- select_section()         从配置中提取 "train" 或 "infer" 子字典。
+- apply_config_defaults()  将配置字典的值合并到 argparse 解析器的默认值中，
+                           并根据每个参数声明的类型进行类型转换。
+- parser_defaults()        将所有 argparse 默认值导出为 JSON 兼容的字典。
 
-Config resolution order
------------------------
+配置解析优先级
+--------------
 1. --profile <name>  → configs/<name>.json
-2. --config <path>   → literal path (with fallback to configs/ prefix)
-3. (neither)         → configs/config.json if exists, else None
+2. --config <path>   → 直接使用路径（回退到 configs/ 前缀查找）
+3. （都未指定）      → 若 configs/config.json 存在则使用，否则返回 None
 """
 
 from __future__ import annotations
@@ -75,7 +75,7 @@ def resolve_config_path(
         candidates: list[Path] = [p]
         if p.suffix == "":
             candidates.append(p.with_suffix(".json"))
-        # Also allow passing a bare name (or bare filename) and looking under configs/.
+        # 也允许传入裸名称（或裸文件名），在 configs/ 目录下查找
         candidates.append(profiles_dir / p)
         if p.suffix == "":
             candidates.append((profiles_dir / p).with_suffix(".json"))
@@ -91,7 +91,7 @@ def resolve_config_path(
 
 
 def _unwrap_args_payload(cfg: dict[str, Any]) -> dict[str, Any]:
-    # Support re-using runs/<...>/configs/run.json (it stores args under "args").
+    # 支持复用 runs/<...>/configs/run.json（其参数存储在 "args" 键下）
     args = cfg.get("args")
     if isinstance(args, dict):
         return args
@@ -144,7 +144,7 @@ def _coerce_action_value(action: argparse.Action, value: object) -> object:
     if value is None:
         return None
 
-    # nargs="*" / "+" style args.
+    # nargs="*" / "+" 风格的参数
     nargs = getattr(action, "nargs", None)
     if nargs in ("*", "+") or isinstance(value, list):
         items = _coerce_list(value)

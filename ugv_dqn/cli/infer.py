@@ -1,36 +1,36 @@
-"""Inference, evaluation and visualization for trained DQN agents.
+"""已训练 DQN 智能体的推理、评估与可视化。
 
-Usage:  python infer.py --profile <name>     (reads configs/<name>.json)
-        python infer.py --self-check         (verify CUDA & imports only)
+用法:  python infer.py --profile <name>     (读取 configs/<name>.json)
+       python infer.py --self-check         (仅验证 CUDA 和 import)
 
-Structure (2700+ lines)
+结构 (2700+ 行)
 -----------------------
-Trace helpers:
-    _save_trace_json()                  Write per-run trace metadata companion JSON.
-    PathTrace / ControlTrace / RolloutResult   Dataclasses for rollout outputs.
+轨迹辅助:
+    _save_trace_json()                  写入每次运行的轨迹元数据伴随 JSON 文件。
+    PathTrace / ControlTrace / RolloutResult   rollout 输出的数据类。
 
-Rollout engines:
-    rollout_agent()                     Run a trained agent on an env for one episode.
-    rollout_agent_plan_then_track()     Hybrid A* plan then MPC-track mode.
-    rollout_tracked_path_mpc()          Pure MPC path-tracking (for classical baselines).
+Rollout 引擎:
+    rollout_agent()                     在环境中运行已训练智能体一个 episode。
+    rollout_agent_plan_then_track()     Hybrid A* 规划后 MPC 跟踪模式。
+    rollout_tracked_path_mpc()          纯 MPC 路径跟踪（用于经典基线算法）。
 
-Model utilities:
-    infer_checkpoint_obs_dim()          Read obs_dim from a .pt checkpoint.
-    forest_legacy_obs_transform()       Handle legacy observation formats.
+模型工具:
+    infer_checkpoint_obs_dim()          从 .pt checkpoint 读取 obs_dim。
+    forest_legacy_obs_transform()       处理旧版观测格式。
 
-KPI & post-processing:
-    mean_kpi()                          Average KPIs across runs.
-    smooth_path()                       Chaikin smoothing wrapper.
+KPI 与后处理:
+    mean_kpi()                          跨运行求 KPI 均值。
+    smooth_path()                       Chaikin 平滑封装。
 
-Visualization:
-    plot_env() / draw_vehicle_boxes()   Map + vehicle footprint drawing.
-    write_paths_figure()                Multi-panel path comparison figure.
-    write_controls_figure()             Steering / speed / curvature over time.
+可视化:
+    (已移除可视化辅助函数)
+    write_paths_figure()                多面板路径对比图。
+    write_controls_figure()             转向角 / 速度 / 曲率随时间变化图。
 
 CLI:
-    build_parser()                      Argparse definition (~300 lines).
-    main()                              Entry point: load models -> iterate envs x algos
-                                        -> rollout -> KPI table -> figures.
+    build_parser()                      Argparse 定义（约 300 行）。
+    main()                              入口: 加载模型 -> 遍历环境 x 算法
+                                        -> rollout -> KPI 表格 -> 绘图。
 """
 
 from __future__ import annotations
@@ -51,9 +51,6 @@ from ugv_dqn.runs import create_run_dir, resolve_experiment_dir, resolve_models_
 
 configure_runtime()
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import matplotlib.ticker as mticker
 import gymnasium as gym
 import numpy as np
 import pandas as pd
@@ -70,7 +67,7 @@ from ugv_dqn.baselines.pathplan import (
     plan_rrt_star,
     point_footprint,
 )
-from ugv_dqn.env import AMRBicycleEnv, AMRGridEnv, RewardWeights
+from ugv_dqn.env import UGVBicycleEnv
 from ugv_dqn.forest_policy import forest_select_action
 from ugv_dqn.maps import FOREST_ENV_ORDER, REALMAP_ENV_ORDER, get_map_spec
 from ugv_dqn.maps.forest import check_bicycle_reachable
@@ -79,7 +76,7 @@ from ugv_dqn.smoothing import chaikin_smooth
 
 
 # ===========================================================================
-# Trace helpers & dataclasses
+# 轨迹辅助函数与数据类
 # ===========================================================================
 
 def _safe_slug(s: str) -> str:
@@ -98,7 +95,7 @@ def _save_trace_json(
     goal_xy: tuple[int, int],
     run_idx: int,
 ) -> None:
-    """Write a trace metadata JSON companion file next to the CSV."""
+    """在 CSV 旁边写入轨迹元数据 JSON 伴随文件。"""
     _start_m = (float(start_xy[0]) * float(cell_size_m), float(start_xy[1]) * float(cell_size_m))
     _goal_m = (float(goal_xy[0]) * float(cell_size_m), float(goal_xy[1]) * float(cell_size_m))
     json_name = csv_name.replace(".csv", ".json")
@@ -149,13 +146,13 @@ class RolloutResult:
 
 
 def _env_dt_s(env: gym.Env) -> float:
-    if isinstance(env, AMRBicycleEnv):
+    if isinstance(env, UGVBicycleEnv):
         return float(env.model.dt)
     return 1.0
 
 
 # ===========================================================================
-# Rollout engines (agent, plan+track, MPC)
+# Rollout 引擎（智能体、规划+跟踪、MPC）
 # ===========================================================================
 
 def rollout_agent(
@@ -184,8 +181,8 @@ def rollout_agent(
 
     inference_time_s = 0.0
     sync_cuda()
-    # Start timing BEFORE env.reset() so that rollout mode includes
-    # Dijkstra cost-field and grid-map construction (fair vs baselines).
+    # 在 env.reset() 之前开始计时，使 rollout 模式包含
+    # Dijkstra 代价场和栅格地图构建时间（与基线算法公平对比）。
     t_rollout0 = time.perf_counter()
 
     obs, _info0 = env.reset(seed=seed, options=reset_options)
@@ -197,13 +194,13 @@ def rollout_agent(
     t_series: list[float] | None = None
     v_series: list[float] | None = None
     delta_series: list[float] | None = None
-    if bool(collect_controls) and isinstance(env, AMRBicycleEnv):
+    if bool(collect_controls) and isinstance(env, UGVBicycleEnv):
         t_series = [0.0]
         v_series = [float(getattr(env, "_v_m_s", 0.0))]
         delta_series = [float(getattr(env, "_delta_rad", 0.0))]
 
     trace_rows: list[dict[str, object]] | None = None
-    if bool(collect_trace) and isinstance(env, AMRBicycleEnv):
+    if bool(collect_trace) and isinstance(env, UGVBicycleEnv):
         trace_rows = [{
             "step": 0,
             "x_m": float(env._x_m),
@@ -235,7 +232,7 @@ def rollout_agent(
         if time_mode == "policy":
             sync_cuda()
             t0 = time.perf_counter()
-        if isinstance(env, AMRBicycleEnv):
+        if isinstance(env, UGVBicycleEnv):
             a = forest_select_action(
                 env, agent, obs,
                 episode=0, explore=False,
@@ -303,7 +300,7 @@ def rollout_agent(
 
 
 def rollout_agent_plan_then_track(
-    env: AMRBicycleEnv,
+    env: UGVBicycleEnv,
     agent: DQNFamilyAgent,
     *,
     max_steps: int,
@@ -318,12 +315,12 @@ def rollout_agent_plan_then_track(
     collect_controls: bool = False,
     mpc_candidates: int = 256,
 ) -> RolloutResult:
-    """Two-phase RL inference: DQN plans a global path, MPC tracks it.
+    """两阶段 RL 推理：DQN 规划全局路径，MPC 跟踪执行。
 
-    Phase 1 (planning): ``rollout_agent`` generates waypoints.
-    Phase 2 (tracking): ``rollout_tracked_path_mpc`` follows those waypoints.
+    阶段 1（规划）：``rollout_agent`` 生成航路点。
+    阶段 2（跟踪）：``rollout_tracked_path_mpc`` 沿航路点执行跟踪。
     """
-    # --- Phase 1: DQN planning ---
+    # --- 阶段 1：DQN 规划 ---
     plan_roll = rollout_agent(
         env,
         agent,
@@ -352,8 +349,8 @@ def rollout_agent_plan_then_track(
             tracking_time_s=0.0,
         )
 
-    # --- Phase 2: MPC tracking ---
-    # Build reset options to restore exact same start/goal.
+    # --- 阶段 2：MPC 跟踪 ---
+    # 构建 reset 选项以恢复完全相同的起点/终点。
     sx, sy = int(env.start_xy[0]), int(env.start_xy[1])
     gx, gy = int(env.goal_xy[0]), int(env.goal_xy[1])
     track_opts: dict[str, object] = dict(reset_options) if reset_options else {}
@@ -385,7 +382,7 @@ def rollout_agent_plan_then_track(
 
 
 def rollout_tracked_path_mpc(
-    env: AMRBicycleEnv,
+    env: UGVBicycleEnv,
     ref_path_xy_cells: list[tuple[float, float]],
     *,
     max_steps: int,
@@ -403,11 +400,10 @@ def rollout_tracked_path_mpc(
     w_control: float = 0.01,
     collect_controls: bool = False,
 ) -> RolloutResult:
-    """Continuous-control MPC-style tracker for baseline paths (forest only).
+    """连续控制 MPC 风格的路径跟踪器，用于基线算法路径（仅限 forest 环境）。
 
-    This tracker does NOT use the discrete `action_table`. Instead, it samples continuous control
-    candidates `(delta_dot, a)`, evaluates them with a short horizon rollout, and applies the best
-    control using `AMRBicycleEnv.step_continuous(...)`.
+    该跟踪器不使用离散 `action_table`，而是采样连续控制候选 `(delta_dot, a)`，
+    通过短时域 rollout 评估，并使用 `UGVBicycleEnv.step_continuous(...)` 应用最优控制。
     """
     time_mode = str(time_mode).lower().strip()
     if time_mode not in {"rollout", "policy"}:
@@ -462,7 +458,7 @@ def rollout_tracked_path_mpc(
             controls=controls,
         )
 
-    # Precompute reference arc-length (meters) for progress-based tracking.
+    # 预计算参考路径弧长（米），用于基于进度的跟踪。
     ref_xy = np.asarray(ref_path_xy_cells, dtype=np.float64)
     if ref_xy.shape[0] >= 2:
         d = np.diff(ref_xy, axis=0)
@@ -483,7 +479,7 @@ def rollout_tracked_path_mpc(
         x_cells = float(env._x_m) / float(env.cell_size_m)
         y_cells = float(env._y_m) / float(env.cell_size_m)
 
-        # Find nearest reference-path index (windowed search around previous index).
+        # 查找最近的参考路径索引（在前一索引附近窗口搜索）。
         start_i = max(0, int(progress_idx) - 25)
         end_i = min(len(ref_path_xy_cells), int(progress_idx) + 250)
         if end_i <= start_i:
@@ -496,7 +492,7 @@ def rollout_tracked_path_mpc(
             if d2 < best_d2:
                 best_d2 = d2
                 best_i = i
-        # Monotonic progress avoids getting "stuck" on self-intersections / loops.
+        # 单调递增的进度避免在自交叉/环路处"卡住"。
         progress_idx = max(int(progress_idx), int(best_i))
 
         tgt_i = min(int(progress_idx) + la, len(ref_path_xy_cells) - 1)
@@ -504,11 +500,11 @@ def rollout_tracked_path_mpc(
         tx_m = float(tx_cells) * float(env.cell_size_m)
         ty_m = float(ty_cells) * float(env.cell_size_m)
 
-        # Candidate continuous controls.
+        # 连续控制候选值。
         delta_dot = rng.uniform(-dd_max, +dd_max, size=(n,)).astype(np.float64, copy=False)
         accel = rng.uniform(-a_max, +a_max, size=(n,)).astype(np.float64, copy=False)
 
-        # Deterministic anchors (help stability / reproducibility).
+        # 确定性锚点（有助于稳定性/可复现性）。
         anchors = np.array(
             [
                 (0.0, 0.0),
@@ -522,7 +518,7 @@ def rollout_tracked_path_mpc(
         delta_dot[: anchors.shape[0]] = anchors[:, 0]
         accel[: anchors.shape[0]] = anchors[:, 1]
 
-        # Evaluate candidates with a constant-control horizon rollout (vectorized in the env).
+        # 使用恒定控制的时域 rollout 评估候选（在环境中向量化）。
         x, y, psi, v, min_od, coll, reached = env._rollout_constant_actions_end_state(
             delta_dot_rad_s=delta_dot,
             a_m_s2=accel,
@@ -533,11 +529,11 @@ def rollout_tracked_path_mpc(
         tgt_heading = np.arctan2(float(ty_m) - y, float(tx_m) - x)
         heading_err = env._wrap_angle_rad_np(tgt_heading - psi)
 
-        # Score (higher is better).
+        # 评分（越高越好）。
         score = -cost1
         score += -float(w_target) * dist_tgt - float(w_heading) * np.abs(heading_err)
         score += float(w_clearance) * min_od
-        # Progress reward: meters advanced along the reference arc-length.
+        # 进度奖励：沿参考弧长前进的米数。
         if int(progress_idx) < int(ref_s_m.shape[0]):
             start_s = float(ref_s_m[int(progress_idx)])
             proj_start = int(progress_idx)
@@ -562,7 +558,7 @@ def rollout_tracked_path_mpc(
             a_n = accel / max(1e-9, float(a_max))
             score -= float(w_control) * (dd_n * dd_n + a_n * a_n)
 
-        # Goal-proximity deceleration: when close to goal, prefer low end-speed.
+        # 接近目标时减速：靠近目标时优先选择低终端速度。
         _gx_m = float(env.goal_xy[0]) * float(env.cell_size_m)
         _gy_m = float(env.goal_xy[1]) * float(env.cell_size_m)
         _d_goal_now = float(np.hypot(float(env._x_m) - _gx_m, float(env._y_m) - _gy_m))
@@ -581,7 +577,7 @@ def rollout_tracked_path_mpc(
             best = int(idx[int(np.argmax(score[idx]))])
             return float(delta_dot[best]), float(accel[best]), int(progress_idx)
 
-        # Fallback: pick the candidate that maximizes clearance, even if it looks bad.
+        # 兜底策略：选择间隙最大的候选，即使看起来不太好。
         best = int(np.argmax(min_od))
         return float(delta_dot[best]), float(accel[best]), int(progress_idx)
 
@@ -653,7 +649,7 @@ def rollout_tracked_path_mpc(
 
 
 # ===========================================================================
-# Model utilities & KPI post-processing
+# 模型工具与 KPI 后处理
 # ===========================================================================
 
 def infer_checkpoint_obs_dim(path: Path) -> int:
@@ -675,7 +671,7 @@ def infer_checkpoint_obs_dim(path: Path) -> int:
 
 
 def forest_legacy_obs_transform(obs: np.ndarray) -> np.ndarray:
-    """Map current forest observations (11+n_sectors) -> legacy (7+n_sectors)."""
+    """将当前 forest 观测 (11+n_sectors) 映射为旧版 (7+n_sectors)。"""
     x = np.asarray(obs, dtype=np.float32).reshape(-1)
     if x.size < 11:
         return x
@@ -707,103 +703,19 @@ def mean_kpi(kpis: list[KPI]) -> KPI:
     )
 
 
-def smooth_path(path: list[tuple[float, float]], *, iterations: int) -> list[tuple[float, float]]:
+def smooth_path(path: list[tuple[float, float]], *, iterations: int, enabled: bool = False) -> list[tuple[float, float]]:
+    """Chaikin 平滑封装。默认禁用（enabled=False），直接返回原始路径。"""
     if not path:
         return []
+    if not enabled:
+        return list(path)
     pts = np.array(path, dtype=np.float32)
     sm = chaikin_smooth(pts, iterations=max(0, int(iterations)))
     return [(float(x), float(y)) for x, y in sm]
 
 
 # ===========================================================================
-# Visualization helpers
-# ===========================================================================
-
-def plot_env(ax: plt.Axes, grid: np.ndarray, *, title: str) -> None:
-    ax.imshow(grid, origin="lower", cmap="gray_r", vmin=0, vmax=1)
-    ax.set_title(title)
-    ax.set_xlim(-0.5, grid.shape[1] - 0.5)
-    ax.set_ylim(-0.5, grid.shape[0] - 0.5)
-    ax.set_aspect("equal")
-    h, w = grid.shape
-    size = int(max(h, w))
-    ax.xaxis.set_major_locator(mticker.MaxNLocator(nbins=7, integer=True))
-    ax.yaxis.set_major_locator(mticker.MaxNLocator(nbins=7, integer=True))
-    ax.tick_params(axis="both", labelsize=7)
-    ax.tick_params(axis="x", labelrotation=45)
-
-    if size <= 60:
-        ax.set_xticks(np.arange(-0.5, w, 1), minor=True)
-        ax.set_yticks(np.arange(-0.5, h, 1), minor=True)
-        ax.grid(True, which="minor", alpha=0.18, linewidth=0.35)
-        ax.grid(True, which="major", alpha=0.25, linewidth=0.6)
-    else:
-        ax.grid(True, which="major", alpha=0.25, linewidth=0.6)
-        ax.grid(False, which="minor")
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-
-
-def draw_vehicle_boxes(
-    ax: plt.Axes,
-    trace: PathTrace,
-    *,
-    length_cells: float,
-    width_cells: float,
-    color: str,
-) -> None:
-    if not (float(length_cells) > 0.0 and float(width_cells) > 0.0):
-        return
-    path = trace.path_xy_cells
-    if len(path) < 2:
-        return
-
-    stride = max(1, int(len(path) / 18))
-    hl = 0.5 * float(length_cells)
-    hw = 0.5 * float(width_cells)
-    alpha = 0.28 if trace.success else 0.18
-    ls = "-" if trace.success else ":"
-
-    prev_theta: float | None = None
-    for i in range(0, len(path), stride):
-        x, y = path[i]
-        if i < len(path) - 1:
-            x2, y2 = path[i + 1]
-            dx = float(x2) - float(x)
-            dy = float(y2) - float(y)
-        else:
-            x2, y2 = path[i - 1]
-            dx = float(x) - float(x2)
-            dy = float(y) - float(y2)
-
-        if abs(dx) + abs(dy) < 1e-9:
-            theta = float(prev_theta) if prev_theta is not None else 0.0
-        else:
-            theta = float(math.atan2(dy, dx))
-        prev_theta = float(theta)
-
-        c = float(math.cos(theta))
-        s = float(math.sin(theta))
-        corners = [
-            (float(x) + c * hl - s * hw, float(y) + s * hl + c * hw),
-            (float(x) + c * hl - s * (-hw), float(y) + s * hl + c * (-hw)),
-            (float(x) + c * (-hl) - s * (-hw), float(y) + s * (-hl) + c * (-hw)),
-            (float(x) + c * (-hl) - s * hw, float(y) + s * (-hl) + c * hw),
-        ]
-        poly = mpatches.Polygon(
-            corners,
-            closed=True,
-            fill=False,
-            edgecolor=color,
-            linewidth=0.6,
-            alpha=float(alpha),
-            linestyle=ls,
-        )
-        ax.add_patch(poly)
-
-
-# ===========================================================================
-# Argparse & CLI entry point
+# Argparse 与 CLI 入口
 # ===========================================================================
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1325,14 +1237,14 @@ def main(argv: list[str] | None = None) -> int:
         models_run_dir = models_dir.parent
         models_experiment_dir = models_run_dir.parent
 
-        # If the output points to the same experiment (timestamped runs) or the same run dir (no-timestamp runs),
-        # keep inference outputs attached to the training run.
+        # 如果输出指向相同的实验（带时间戳的 runs）或相同的 run 目录（无时间戳的 runs），
+        # 将推理输出附加到训练 run 下。
         requested_resolved = requested_experiment_dir.resolve(strict=False)
         models_run_resolved = models_run_dir.resolve(strict=False)
         models_experiment_resolved = models_experiment_dir.resolve(strict=False)
 
         if requested_resolved == models_run_resolved or requested_resolved == models_experiment_resolved:
-            # Keep inference outputs attached to the training run to avoid creating a sibling timestamped run.
+            # 将推理输出附加到训练 run 下，避免创建同级时间戳 run。
             experiment_dir = models_run_dir / "infer"
         else:
             experiment_dir = requested_experiment_dir
@@ -1393,48 +1305,30 @@ def main(argv: list[str] | None = None) -> int:
             rand_max_cost_m = float(getattr(args, "rand_long_max_cost_m", rand_max_cost_m))
 
         spec = get_map_spec(env_base)
-        if env_base in FOREST_ENV_ORDER or env_base in REALMAP_ENV_ORDER:
-            env = AMRBicycleEnv(
-                spec,
-                max_steps=args.max_steps,
-                cell_size_m=0.1,
-                sensor_range_m=float(args.sensor_range),
-                n_sectors=args.n_sectors,
-                obs_map_size=int(args.obs_map_size),
-                goal_tolerance_m=float(args.goal_tolerance),
-                goal_speed_tol_m_s=float(args.goal_speed_tol),
-                edt_collision_margin=getattr(args, "edt_collision_margin", "half"),
-            )
-            cell_size_m = 0.1
-        else:
-            env = AMRGridEnv(
-                spec,
-                sensor_range=args.sensor_range,
-                max_steps=args.max_steps,
-                reward=RewardWeights(),
-                cell_size=args.cell_size,
-                safe_distance=0.6,
-                obs_map_size=int(args.obs_map_size),
-                terminate_on_collision=False,
-            )
-            cell_size_m = float(args.cell_size)
+        env = UGVBicycleEnv(
+            spec,
+            max_steps=args.max_steps,
+            cell_size_m=0.1,
+            sensor_range_m=float(args.sensor_range),
+            n_sectors=args.n_sectors,
+            obs_map_size=int(args.obs_map_size),
+            goal_tolerance_m=float(args.goal_tolerance),
+            goal_speed_tol_m_s=float(args.goal_speed_tol),
+            edt_collision_margin=getattr(args, "edt_collision_margin", "diag"),
+        )
+        cell_size_m = 0.1
         grid = spec.obstacle_grid()
 
         env_paths_by_run: dict[int, dict[str, PathTrace]] = {}
         base_meta: dict[str, float] = {"cell_size_m": float(cell_size_m)}
-        if isinstance(env, AMRBicycleEnv):
-            base_meta["goal_tol_cells"] = float(env.goal_tolerance_m) / float(cell_size_m)
-            fp = forest_two_circle_footprint()
-            base_meta["veh_length_cells"] = float(fp.length) / float(cell_size_m)
-            base_meta["veh_width_cells"] = float(fp.width) / float(cell_size_m)
-        else:
-            base_meta["goal_tol_cells"] = 0.5
-            base_meta["veh_length_cells"] = 0.0
-            base_meta["veh_width_cells"] = 0.0
+        base_meta["goal_tol_cells"] = float(env.goal_tolerance_m) / float(cell_size_m)
+        fp = forest_two_circle_footprint()
+        base_meta["veh_length_cells"] = float(fp.length) / float(cell_size_m)
+        base_meta["veh_width_cells"] = float(fp.width) / float(cell_size_m)
 
-        # --save-traces: export map once per env_base
+        # --save-traces：每个 env_base 导出一次地图
         _save_traces = bool(getattr(args, "save_traces", False))
-        if _save_traces and isinstance(env, AMRBicycleEnv):
+        if _save_traces and isinstance(env, UGVBicycleEnv):
             _maps_dir = out_dir / "maps"
             _maps_dir.mkdir(parents=True, exist_ok=True)
             _grid_path = _maps_dir / f"{_safe_slug(env_base)}__grid_y0_bottom.npz"
@@ -1475,16 +1369,16 @@ def main(argv: list[str] | None = None) -> int:
         plot_run_indices: list[int] = [int(plot_run_idx)]
         multi_pair_plot = (
             bool(getattr(args, "random_start_goal", False))
-            and isinstance(env, AMRBicycleEnv)
+            and isinstance(env, UGVBicycleEnv)
             and int(args.runs) >= 4
             and int(len(args.envs)) == 1
         )
         if multi_pair_plot:
             plot_run_indices = [(int(plot_run_idx) + k) % int(args.runs) for k in range(4)]
 
-        # Plotting: store path traces for specific run indices to keep memory bounded.
-        # - `plot_run_indices` drives the main Fig.12/Fig.13 panels.
-        # - `plot_pair_runs` wants per-run path figures, but doesn't require control traces.
+        # 绘图：仅存储特定 run 索引的路径轨迹以控制内存。
+        # - `plot_run_indices` 驱动主 Fig.12/Fig.13 面板。
+        # - `plot_pair_runs` 需要每次运行的路径图，但不需要控制轨迹。
         path_run_indices: set[int] = set(plot_run_indices)
         control_run_indices: set[int] = set(plot_run_indices)
         if (
@@ -1502,15 +1396,15 @@ def main(argv: list[str] | None = None) -> int:
         for idx in sorted(path_run_indices):
             env_paths_by_run.setdefault(int(idx), {})
 
-        # Optional: sample a fixed set of (start, goal) pairs for fair random-start/goal evaluation.
+        # 可选：采样固定的 (start, goal) 对集合，用于公平的随机起点/终点评估。
         reset_options_list: list[dict[str, object] | None] = [None] * int(max(0, int(args.runs)))
         # 已移除 precomputed_hybrid_paths，Hybrid A* 评估阶段始终重新规划
         plot_start_xy = tuple(spec.start_xy)
         plot_goal_xy = tuple(spec.goal_xy)
 
-        # --load-pairs: load pre-saved (start, goal) pairs, skip random sampling.
+        # --load-pairs：加载预存的 (start, goal) 对，跳过随机采样。
         _load_pairs_path = getattr(args, "load_pairs", None)
-        if _load_pairs_path is not None and isinstance(env, AMRBicycleEnv):
+        if _load_pairs_path is not None and isinstance(env, UGVBicycleEnv):
             _lp = Path(_load_pairs_path)
             if not _lp.exists():
                 raise SystemExit(f"--load-pairs file not found: {_lp}")
@@ -1528,7 +1422,7 @@ def main(argv: list[str] | None = None) -> int:
                 plot_start_xy = tuple(reset_options_list[plot_run_idx]["start_xy"])  # type: ignore[arg-type]
                 plot_goal_xy = tuple(reset_options_list[plot_run_idx]["goal_xy"])  # type: ignore[arg-type]
 
-        elif bool(getattr(args, "random_start_goal", False)) and isinstance(env, AMRBicycleEnv) and int(args.runs) > 0:
+        elif bool(getattr(args, "random_start_goal", False)) and isinstance(env, UGVBicycleEnv) and int(args.runs) > 0:
             rand_max = None if float(rand_max_cost_m) <= 0.0 else float(rand_max_cost_m)
             if plot_run_idx >= int(args.runs):
                 raise SystemExit(
@@ -1570,9 +1464,8 @@ def main(argv: list[str] | None = None) -> int:
                     goal_xy = (int(env.goal_xy[0]), int(env.goal_xy[1]))
 
                     accept = True
-                    # When the sampling constraints are too strict, the env falls back to the canonical
-                    # (start,goal) pair after exhausting `rand_tries`. That defeats the purpose of
-                    # random-pair evaluation and also breaks the short/long suite separation.
+                    # 当采样约束过于严格时，环境在耗尽 `rand_tries` 后会回退到规范的
+                    # (start,goal) 对。这违背了随机对评估的目的，也会破坏 short/long 套件的分离。
                     if float(getattr(args, "rand_fixed_prob", 0.0)) <= 0.0:
                         if start_xy == (int(spec.start_xy[0]), int(spec.start_xy[1])) and goal_xy == (
                             int(spec.goal_xy[0]),
@@ -1669,7 +1562,7 @@ def main(argv: list[str] | None = None) -> int:
             plot_meta[(env_name, int(idx))] = meta
 
         if not bool(args.skip_rl):
-            # Load trained models
+            # 加载已训练模型
             env_obs_dim = int(env.observation_space.shape[0])
             n_actions = int(env.action_space.n)
             agent_cfg = AgentConfig()
@@ -1698,7 +1591,7 @@ def main(argv: list[str] | None = None) -> int:
                 legacy = {
                     "mlp-dqn": "dqn",
                     "mlp-ddqn": "ddqn",
-                    # Back-compat: older runs saved Polyak-DDQN as iddqn/cnn-iddqn.
+                    # 向后兼容：旧版 runs 将 Polyak-DDQN 保存为 iddqn/cnn-iddqn。
                     "mlp-pddqn": "iddqn",
                     "cnn-pddqn": "cnn-iddqn",
                 }.get(str(algo))
@@ -1717,9 +1610,9 @@ def main(argv: list[str] | None = None) -> int:
                     "Point --models at a training run (or an experiment name/dir with a latest run)."
                 )
 
-            # Each arch (MLP / CNN) may have a different effective obs_dim
-            # (MLP strips the EDT channel). The agent constructor and load()
-            # handle this automatically, so we just pass env_obs_dim.
+            # 每种架构（MLP / CNN）可能有不同的有效 obs_dim
+            # （MLP 会去除 EDT 通道）。智能体构造函数和 load()
+            # 会自动处理，所以我们直接传入 env_obs_dim。
             obs_dim = env_obs_dim
             obs_transform = None
 
@@ -1732,7 +1625,7 @@ def main(argv: list[str] | None = None) -> int:
             for algo in args.rl_algos:
                 algo_key = str(algo)
                 pretty = algo_label.get(algo_key, algo_key.upper())
-                # Append +Duel suffix when the loaded checkpoint uses dueling heads.
+                # 当加载的 checkpoint 使用 dueling 头时追加 +Duel 后缀。
                 if agents.get(algo_key) and getattr(agents[algo_key], "_net_kwargs", {}).get("dueling", False):
                     pretty = pretty + "+Duel"
                 seed_base = int(algo_seed_offset.get(algo_key, 30_000))
@@ -1742,8 +1635,8 @@ def main(argv: list[str] | None = None) -> int:
                 algo_plan_times: list[float] = []
                 algo_track_times: list[float] = []
                 algo_success = 0
-                _use_mpc = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, AMRBicycleEnv)
-                # When --rl-mpc-track: also accumulate "+MPC" variant
+                _use_mpc = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, UGVBicycleEnv)
+                # 当启用 --rl-mpc-track 时：同时累积 "+MPC" 变体
                 mpc_kpis: list[KPI] = []
                 mpc_times: list[float] = []
                 mpc_plan_times: list[float] = []
@@ -1751,7 +1644,7 @@ def main(argv: list[str] | None = None) -> int:
                 mpc_success = 0
                 pretty_mpc = pretty + "+MPC"
                 for i in range(int(args.runs)):
-                    # --- RL direct control (always) ---
+                    # --- RL 直接控制（始终执行） ---
                     roll = rollout_agent(
                         env,
                         agents[algo_key],
@@ -1784,7 +1677,7 @@ def main(argv: list[str] | None = None) -> int:
                         start_xy = (int(sx), int(sy))
                         goal_xy = (int(gx), int(gy))
 
-                    # --save-traces: write RL direct-control trace CSV + JSON
+                    # --save-traces：写入 RL 直接控制轨迹 CSV + JSON
                     if _save_traces and roll.trace_rows is not None:
                         _tr_dir = out_dir / "traces"
                         _tr_dir.mkdir(parents=True, exist_ok=True)
@@ -1830,7 +1723,7 @@ def main(argv: list[str] | None = None) -> int:
                         env_pbar.set_postfix_str(f"{pretty} run {int(i) + 1}/{int(args.runs)}")
                         env_pbar.update(1)
 
-                    # --- RL+MPC variant (when --rl-mpc-track) ---
+                    # --- RL+MPC 变体（当启用 --rl-mpc-track 时） ---
                     if _use_mpc:
                         mpc_roll = rollout_agent_plan_then_track(
                             env,
@@ -1902,7 +1795,7 @@ def main(argv: list[str] | None = None) -> int:
                     }
                 )
 
-                # Append RL+MPC mean row
+                # 追加 RL+MPC 均值行
                 if _use_mpc:
                     mk = mean_kpi(mpc_kpis)
                     mk_dict = dict(mk.__dict__)
@@ -1922,7 +1815,7 @@ def main(argv: list[str] | None = None) -> int:
         if baselines:
             grid_map = grid_map_from_obstacles(grid_y0_bottom=grid, cell_size_m=float(cell_size_m))
             params = default_ackermann_params()
-            if (env_base in FOREST_ENV_ORDER or env_base in REALMAP_ENV_ORDER) and isinstance(env, AMRBicycleEnv):
+            if (env_base in FOREST_ENV_ORDER or env_base in REALMAP_ENV_ORDER) and isinstance(env, UGVBicycleEnv):
                 footprint = forest_two_circle_footprint()
                 goal_xy_tol_m = float(env.goal_tolerance_m)
                 goal_theta_tol_rad = float(env.goal_angle_tolerance_rad)
@@ -1933,12 +1826,17 @@ def main(argv: list[str] | None = None) -> int:
                 goal_theta_tol_rad = float(math.pi)
                 start_theta_rad = 0.0
 
-            # Match baseline collision margin to RL's EDT collision margin for fair comparison.
-            _edt_margin = getattr(args, "edt_collision_margin", "half")
-            if _edt_margin == "diag":
-                _baseline_collision_padding = (math.sqrt(2.0) * 0.5 - 0.5) * float(cell_size_m)
-            else:
-                _baseline_collision_padding = None  # default (no extra padding)
+            # 基线使用与 DRL 完全相同的 EDT 碰撞检测。
+            _edt_margin = getattr(args, "edt_collision_margin", "diag")
+            from ugv_dqn.env import compute_edt_distance_m
+            from ugv_dqn.third_party.pathplan.geometry import EDTCollisionChecker
+            _edt_dist_m = compute_edt_distance_m(spec.obstacle_grid().astype(np.uint8), cell_size_m=cell_size_m)
+            _baseline_edt_checker = EDTCollisionChecker(
+                edt_dist_m=_edt_dist_m,
+                cell_size_m=cell_size_m,
+                footprint=footprint,
+                edt_collision_margin=_edt_margin,
+            )
 
             def pair_for_run(i: int) -> tuple[tuple[int, int], tuple[int, int], dict[str, object] | None]:
                 if use_random_pairs and i < len(reset_options_list) and reset_options_list[i] is not None:
@@ -1954,8 +1852,8 @@ def main(argv: list[str] | None = None) -> int:
                 ha_track_times: list[float] = []
                 ha_total_times: list[float] = []
                 ha_success = 0
-                _ha_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
-                # When split mode: separate plan-only and plan+MPC accumulators
+                _ha_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
+                # 拆分模式时：分别累积仅规划和规划+MPC 的指标
                 ha_mpc_kpis: list[KPI] = []
                 ha_mpc_plan_times: list[float] = []
                 ha_mpc_track_times: list[float] = []
@@ -1978,16 +1876,16 @@ def main(argv: list[str] | None = None) -> int:
                         goal_theta_tol_rad=goal_theta_tol_rad,
                         timeout_s=float(args.baseline_timeout),
                         max_nodes=int(args.hybrid_max_nodes),
-                        collision_padding=_baseline_collision_padding,
+                        collision_checker=_baseline_edt_checker,
                     )
 
                     if _ha_split:
-                        # --- Plan-only row ("Hybrid A*") ---
+                        # --- 仅规划行 ("Hybrid A*") ---
                         plan_path = list(res.path_xy_cells)
                         plan_reached = bool(res.success)
                         plan_smoothed = smooth_path(plan_path, iterations=2)
                         plan_smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in plan_smoothed]
-                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, AMRBicycleEnv) else 0.0
+                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, UGVBicycleEnv) else 0.0
                         plan_kpi = KPI(
                             avg_path_length=float(path_length(plan_smoothed)) * float(cell_size_m),
                             path_time_s=plan_path_time,
@@ -2023,7 +1921,7 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.set_postfix_str(f"Hybrid A* run {int(i) + 1}/{int(n_runs)}")
                             env_pbar.update(1)
 
-                        # --- Plan+MPC row ("Hybrid A*+MPC") ---
+                        # --- 规划+MPC 行 ("Hybrid A*+MPC") ---
                         if bool(res.success):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
@@ -2095,12 +1993,12 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.update(1)
 
                     else:
-                        # --- Original single-row mode (no split) ---
+                        # --- 原始单行模式（不拆分） ---
                         ha_exec_path = list(res.path_xy_cells)
                         ha_reached = bool(res.success)
                         ha_track_time_s = 0.0
                         ha_path_time_s = float("nan")
-                        if bool(res.success) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
+                        if bool(res.success) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
                                 trace_path = out_dir / "traces" / f"{_safe_slug(env_case)}__Hybrid_A__run{int(i)}.csv"
@@ -2138,7 +2036,7 @@ def main(argv: list[str] | None = None) -> int:
                         raw_corners = float(num_path_corners(ha_exec_path, angle_threshold_deg=13.0))
                         smoothed = smooth_path(ha_exec_path, iterations=2)
                         smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in smoothed]
-                        if not math.isfinite(float(ha_path_time_s)) and isinstance(env, AMRBicycleEnv):
+                        if not math.isfinite(float(ha_path_time_s)) and isinstance(env, UGVBicycleEnv):
                             ha_path_time_s = float(path_length(smoothed_m)) / max(1e-9, float(env.model.v_max_m_s))
                         run_kpi = KPI(
                             avg_path_length=float(path_length(smoothed)) * float(cell_size_m),
@@ -2186,7 +2084,7 @@ def main(argv: list[str] | None = None) -> int:
                         **k_dict,
                     }
                 )
-                # Append Hybrid A*+MPC mean row
+                # 追加 Hybrid A*+MPC 均值行
                 if _ha_split:
                     mk = mean_kpi(ha_mpc_kpis)
                     mk_dict = dict(mk.__dict__)
@@ -2211,7 +2109,7 @@ def main(argv: list[str] | None = None) -> int:
                 rrt_track_times: list[float] = []
                 rrt_total_times: list[float] = []
                 rrt_success = 0
-                _rrt_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
+                _rrt_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
                 rrt_mpc_kpis: list[KPI] = []
                 rrt_mpc_plan_times: list[float] = []
                 rrt_mpc_track_times: list[float] = []
@@ -2233,15 +2131,15 @@ def main(argv: list[str] | None = None) -> int:
                         timeout_s=float(args.baseline_timeout),
                         max_iter=int(args.rrt_max_iter),
                         seed=args.seed + 30_000 + i,
-                        collision_padding=_baseline_collision_padding,
+                        collision_checker=_baseline_edt_checker,
                     )
                     if _rrt_split:
-                        # --- Plan-only row ("RRT*") ---
+                        # --- 仅规划行 ("RRT*") ---
                         plan_path = list(res.path_xy_cells)
                         plan_reached = bool(res.success)
                         plan_smoothed = smooth_path(plan_path, iterations=2)
                         plan_smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in plan_smoothed]
-                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, AMRBicycleEnv) else 0.0
+                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, UGVBicycleEnv) else 0.0
                         plan_kpi = KPI(
                             avg_path_length=float(path_length(plan_smoothed)) * float(cell_size_m),
                             path_time_s=plan_path_time,
@@ -2277,7 +2175,7 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.set_postfix_str(f"RRT* run {int(i) + 1}/{int(args.runs)}")
                             env_pbar.update(1)
 
-                        # --- Plan+MPC row ("RRT*+MPC") ---
+                        # --- 规划+MPC 行 ("RRT*+MPC") ---
                         if bool(res.success):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
@@ -2349,12 +2247,12 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.update(1)
 
                     else:
-                        # --- Original single-row mode (no split) ---
+                        # --- 原始单行模式（不拆分） ---
                         exec_path = list(res.path_xy_cells)
                         reached = bool(res.success)
                         track_time_s = 0.0
                         path_time_s = float("nan")
-                        if bool(res.success) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
+                        if bool(res.success) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
                                 trace_path = out_dir / "traces" / f"{_safe_slug(env_case)}__RRT__run{int(i)}.csv"
@@ -2392,7 +2290,7 @@ def main(argv: list[str] | None = None) -> int:
                         raw_corners = float(num_path_corners(exec_path, angle_threshold_deg=13.0))
                         smoothed = smooth_path(exec_path, iterations=2)
                         smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in smoothed]
-                        if not math.isfinite(float(path_time_s)) and isinstance(env, AMRBicycleEnv):
+                        if not math.isfinite(float(path_time_s)) and isinstance(env, UGVBicycleEnv):
                             path_time_s = float(path_length(smoothed_m)) / max(1e-9, float(env.model.v_max_m_s))
                         run_kpi = KPI(
                             avg_path_length=float(path_length(smoothed)) * float(cell_size_m),
@@ -2440,7 +2338,7 @@ def main(argv: list[str] | None = None) -> int:
                         **k_dict,
                     }
                 )
-                # Append RRT*+MPC mean row
+                # 追加 RRT*+MPC 均值行
                 if _rrt_split:
                     mk = mean_kpi(rrt_mpc_kpis)
                     mk_dict = dict(mk.__dict__)
@@ -2465,7 +2363,7 @@ def main(argv: list[str] | None = None) -> int:
                 loha_track_times: list[float] = []
                 loha_total_times: list[float] = []
                 loha_success = 0
-                _loha_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
+                _loha_split = bool(getattr(args, "rl_mpc_track", False)) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False))
                 loha_mpc_kpis: list[KPI] = []
                 loha_mpc_plan_times: list[float] = []
                 loha_mpc_track_times: list[float] = []
@@ -2488,16 +2386,16 @@ def main(argv: list[str] | None = None) -> int:
                         timeout_s=float(args.baseline_timeout),
                         max_nodes=int(args.hybrid_max_nodes),
                         lo_iterations=0,
-                        collision_padding=_baseline_collision_padding,
+                        collision_checker=_baseline_edt_checker,
                     )
 
                     if _loha_split:
-                        # --- Plan-only row ("LO-HA*") ---
+                        # --- 仅规划行 ("LO-HA*") ---
                         plan_path = list(res.path_xy_cells)
                         plan_reached = bool(res.success)
                         plan_smoothed = smooth_path(plan_path, iterations=2)
                         plan_smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in plan_smoothed]
-                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, AMRBicycleEnv) else 0.0
+                        plan_path_time = float(path_length(plan_smoothed_m)) / max(1e-9, float(env.model.v_max_m_s)) if isinstance(env, UGVBicycleEnv) else 0.0
                         plan_kpi = KPI(
                             avg_path_length=float(path_length(plan_smoothed)) * float(cell_size_m),
                             path_time_s=plan_path_time,
@@ -2533,7 +2431,7 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.set_postfix_str(f"LO-HA* run {int(i) + 1}/{int(n_runs)}")
                             env_pbar.update(1)
 
-                        # --- Plan+MPC row ("LO-HA*+MPC") ---
+                        # --- 规划+MPC 行 ("LO-HA*+MPC") ---
                         if bool(res.success):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
@@ -2605,12 +2503,12 @@ def main(argv: list[str] | None = None) -> int:
                             env_pbar.update(1)
 
                     else:
-                        # --- Original single-row mode (no split) ---
+                        # --- 原始单行模式（不拆分） ---
                         loha_exec_path = list(res.path_xy_cells)
                         loha_reached = bool(res.success)
                         loha_track_time_s = 0.0
                         loha_path_time_s = float("nan")
-                        if bool(res.success) and isinstance(env, AMRBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
+                        if bool(res.success) and isinstance(env, UGVBicycleEnv) and bool(getattr(args, "forest_baseline_rollout", False)):
                             trace_path = None
                             if bool(getattr(args, "forest_baseline_save_traces", False)) or _save_traces:
                                 trace_path = out_dir / "traces" / f"{_safe_slug(env_case)}__LO_HA__run{int(i)}.csv"
@@ -2648,7 +2546,7 @@ def main(argv: list[str] | None = None) -> int:
                         raw_corners = float(num_path_corners(loha_exec_path, angle_threshold_deg=13.0))
                         smoothed = smooth_path(loha_exec_path, iterations=2)
                         smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in smoothed]
-                        if not math.isfinite(float(loha_path_time_s)) and isinstance(env, AMRBicycleEnv):
+                        if not math.isfinite(float(loha_path_time_s)) and isinstance(env, UGVBicycleEnv):
                             loha_path_time_s = float(path_length(smoothed_m)) / max(1e-9, float(env.model.v_max_m_s))
                         run_kpi = KPI(
                             avg_path_length=float(path_length(smoothed)) * float(cell_size_m),
@@ -2696,7 +2594,7 @@ def main(argv: list[str] | None = None) -> int:
                         **k_dict,
                     }
                 )
-                # Append LO-HA*+MPC mean row
+                # 追加 LO-HA*+MPC 均值行
                 if _loha_split:
                     mk = mean_kpi(loha_mpc_kpis)
                     mk_dict = dict(mk.__dict__)
@@ -2721,7 +2619,7 @@ def main(argv: list[str] | None = None) -> int:
             paths_for_plot[(env_name, int(run_idx))] = dict(run_paths)
 
     table = pd.DataFrame(rows_runs)
-    # Pretty column order
+    # 美化列顺序
     table = table[
         [
             "Environment",
@@ -2744,8 +2642,8 @@ def main(argv: list[str] | None = None) -> int:
     ]
     table = table.copy()
 
-    # Composite metric (lower is better): combines path length and compute time,
-    # then penalizes non-reaching behavior via success_rate.
+    # 综合指标（越低越好）：结合路径长度和计算时间，
+    # 然后通过成功率惩罚未到达行为。
     w_t = float(args.score_time_weight)
     sr_raw = pd.to_numeric(table["success_rate"], errors="coerce").astype(float)
     denom = sr_raw.clip(lower=1e-6)
@@ -2756,8 +2654,8 @@ def main(argv: list[str] | None = None) -> int:
     planning_cost = planning_cost.where((sr_raw > 0.0) & np.isfinite(base.to_numpy()), other=float("inf"))
     table["planning_cost"] = planning_cost
 
-    # Composite score (lower is better): combines path time, curvature, and planning compute time,
-    # then penalizes non-reaching behavior via success_rate.
+    # 综合评分（越低越好）：结合路径时间、曲率和规划计算时间，
+    # 然后通过成功率惩罚未到达行为。
     w_pt = float(getattr(args, "composite_w_path_time", 1.0))
     w_k = float(getattr(args, "composite_w_avg_curvature", 1.0))
     w_pl = float(getattr(args, "composite_w_planning_time", 1.0))
@@ -2825,7 +2723,7 @@ def main(argv: list[str] | None = None) -> int:
     table_pretty.to_csv(out_dir / "table2_kpis.csv", index=False)
     table_pretty.to_markdown(out_dir / "table2_kpis.md", index=False)
 
-    # Also write the mean KPI table (previous default behavior).
+    # 同时写入均值 KPI 表（之前的默认行为）。
     table_mean = pd.DataFrame(rows)
     table_mean = table_mean[
         [
@@ -2896,17 +2794,17 @@ def main(argv: list[str] | None = None) -> int:
     table_mean_pretty.to_csv(out_dir / "table2_kpis_mean.csv", index=False)
     table_mean_pretty.to_markdown(out_dir / "table2_kpis_mean.md", index=False)
 
-    # ---- All-succeed post-filter ----
+    # ---- 全部成功后过滤 ----
     if bool(getattr(args, "filter_all_succeed", False)) and not table.empty:
-        # For each (Environment, run_idx), check that EVERY algorithm reached the goal.
+        # 对每个 (Environment, run_idx)，检查是否所有算法都到达了目标。
         _sr = table[["Environment", "Algorithm", "run_idx", "success_rate"]].copy()
         _sr["_ok"] = pd.to_numeric(_sr["success_rate"], errors="coerce").astype(float) >= 1.0 - 1e-9
         _all_ok = _sr.groupby(["Environment", "run_idx"], sort=False)["_ok"].all()
-        _keep_all = sorted(_all_ok[_all_ok].index.tolist(), key=lambda t: int(t[1]))  # sorted by run_idx
+        _keep_all = sorted(_all_ok[_all_ok].index.tolist(), key=lambda t: int(t[1]))  # 按 run_idx 排序
         n_total = int(table.groupby("Environment", sort=False)["run_idx"].nunique().max()) if not table.empty else 0
         n_kept_raw = len({ri for _, ri in _keep_all})
 
-        # --filter-target-count: truncate to first N all-succeed pairs.
+        # --filter-target-count：截断为前 N 个全部成功的对。
         _ftc = int(getattr(args, "filter_target_count", 0))
         if _ftc > 0 and len(_keep_all) > _ftc:
             _keep_all = _keep_all[:_ftc]
@@ -2921,7 +2819,7 @@ def main(argv: list[str] | None = None) -> int:
         n_kept = len({ri for _, ri in _keep})
         print(f"[filter-all-succeed] Kept {n_kept}/{n_total} run pairs where all algorithms succeeded.")
 
-        # Save all-succeed pairs to JSON for future --load-pairs reuse.
+        # 将全部成功的对保存到 JSON，供后续 --load-pairs 复用。
         _allsuc_pairs: list[dict[str, list[int]]] = []
         for _env_key, _ri in _keep_all:
             _pair_rows = table[(table["Environment"] == _env_key) & (table["run_idx"] == _ri)]
@@ -2943,7 +2841,7 @@ def main(argv: list[str] | None = None) -> int:
         if table_f.empty:
             print("[filter-all-succeed] WARNING: no pairs survived the filter — skipping filtered tables.")
         else:
-            # Re-compute mean KPIs from filtered raw rows.
+            # 从过滤后的原始行重新计算均值 KPI。
             _kpi_cols = [
                 "avg_path_length", "path_time_s", "avg_curvature_1_m",
                 "planning_time_s", "tracking_time_s", "num_corners",
@@ -2958,7 +2856,7 @@ def main(argv: list[str] | None = None) -> int:
             table_mean_f["n_filtered_runs"] = _n_runs_f
             table_mean_f = table_mean_f.reset_index()
 
-            # Recompute composite metrics on filtered means.
+            # 在过滤后的均值上重新计算综合指标。
             _w_t = float(args.score_time_weight)
             _sr_raw_f = pd.to_numeric(table_mean_f["success_rate"], errors="coerce").astype(float)
             _denom_f = _sr_raw_f.clip(lower=1e-6)
@@ -2978,7 +2876,7 @@ def main(argv: list[str] | None = None) -> int:
             _cs_f = _cs_f.where(_sr_raw_f > 0.0, other=float("inf"))
             table_mean_f["composite_score"] = _cs_f
 
-            # Round and write.
+            # 四舍五入并写入。
             for c, r in [("success_rate", 3), ("avg_path_length", 4), ("path_time_s", 4),
                          ("avg_curvature_1_m", 6), ("planning_time_s", 5), ("tracking_time_s", 5),
                          ("inference_time_s", 5), ("planning_cost", 3), ("composite_score", 3)]:
@@ -2988,10 +2886,10 @@ def main(argv: list[str] | None = None) -> int:
                 if c in table_mean_f.columns:
                     table_mean_f[c] = pd.to_numeric(table_mean_f[c], errors="coerce").round(0).astype("Int64")
 
-            # Write filtered raw table.
+            # 写入过滤后的原始表。
             table_f.to_csv(out_dir / "table2_kpis_raw_filtered.csv", index=False)
 
-            # Write filtered mean table.
+            # 写入过滤后的均值表。
             table_mean_f_pretty = table_mean_f.rename(
                 columns={
                     "Algorithm": "Algorithm name",
@@ -3014,267 +2912,6 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Wrote: {out_dir / 'table2_kpis_raw_filtered.csv'}")
             print(f"Wrote: {out_dir / 'table2_kpis_mean_filtered.csv'}")
             print(f"Wrote: {out_dir / 'table2_kpis_mean_filtered.md'}")
-
-    # Plot Fig. 12-style paths
-    styles = {
-        "MLP-DQN": dict(color="tab:blue", linestyle="-", linewidth=2.0),
-        "MLP-DDQN": dict(color="tab:orange", linestyle="-", linewidth=2.0),
-        "CNN-DQN": dict(color="tab:green", linestyle="-", linewidth=2.0),
-        "CNN-DDQN": dict(color="tab:red", linestyle="-", linewidth=2.0),
-        "MLP-PDDQN": dict(color="tab:cyan", linestyle="-", linewidth=2.0),
-        "CNN-PDDQN": dict(color="tab:pink", linestyle="-", linewidth=2.0),
-        # Legacy short labels (treated as MLP variants).
-        "DQN": dict(color="tab:blue", linestyle="-", linewidth=2.0),
-        "DDQN": dict(color="tab:orange", linestyle="-", linewidth=2.0),
-        # Baselines.
-        "Hybrid A*": dict(color="tab:purple", linestyle="-", linewidth=2.0),
-        "RRT*": dict(color="tab:brown", linestyle="-", linewidth=2.0),
-        "LO-HA*": dict(color="tab:olive", linestyle="-", linewidth=2.0),
-    }
-
-    def write_paths_figure(
-        *,
-        panels: list[tuple[str, int]],
-        out_path: Path,
-        suptitle: str,
-        multi_pair_titles: bool = False,
-    ) -> None:
-        n_panels = int(len(panels))
-        if n_panels <= 0:
-            return
-        cols = 1 if n_panels <= 1 else 2
-        rows_n = int(math.ceil(float(n_panels) / float(cols)))
-        fig, axes = plt.subplots(rows_n, cols, figsize=(5.2 * cols, 5.2 * rows_n))
-        axes = np.atleast_1d(axes).ravel()
-
-        for i, (env_name, run_idx) in enumerate(panels):
-            ax = axes[i]
-            env_base = str(env_name).split("::", 1)[0]
-            suite = str(env_name).split("::", 1)[1] if "::" in str(env_name) else ""
-            spec = get_map_spec(env_base)
-            grid = spec.obstacle_grid()
-            title = f"Env. ({env_base})"
-            if suite:
-                title = f"Env. ({env_base})/{suite}"
-            if multi_pair_titles:
-                title = f"Env. ({env_base}) #{int(run_idx)}"
-            plot_env(ax, grid, title=title)
-
-            meta = plot_meta.get((env_name, int(run_idx))) or plot_meta.get((env_name, 0), {})
-
-            spx = float(meta.get("plot_start_x", float(spec.start_xy[0])))
-            spy = float(meta.get("plot_start_y", float(spec.start_xy[1])))
-            gpx = float(meta.get("plot_goal_x", float(spec.goal_xy[0])))
-            gpy = float(meta.get("plot_goal_y", float(spec.goal_xy[1])))
-
-            ax.scatter(
-                [spx],
-                [spy],
-                marker="*",
-                s=140,
-                color="blue",
-                label="Start",
-            )
-            ax.text(spx - 1.0, spy - 1.0, "SP", fontsize=9, color="black")
-            ax.scatter(
-                [gpx],
-                [gpy],
-                marker="*",
-                s=140,
-                color="red",
-                label="Goal",
-            )
-            ax.text(gpx - 1.0, gpy - 1.0, "TP", fontsize=9, color="black")
-
-            tol = float(meta.get("goal_tol_cells", 0.0))
-            if tol > 0.0:
-                ax.add_patch(
-                    mpatches.Circle(
-                        (float(gpx), float(gpy)),
-                        radius=float(tol),
-                        fill=False,
-                        edgecolor="crimson",
-                        linestyle="--",
-                        linewidth=1.8,
-                        alpha=0.95,
-                        zorder=6,
-                    )
-                )
-
-            env_paths = paths_for_plot.get((env_name, int(run_idx)), {})
-            for algo_name, trace in env_paths.items():
-                path = trace.path_xy_cells
-                if not path:
-                    continue
-                pts = np.array(path, dtype=np.float32)
-                pts_s = chaikin_smooth(pts, iterations=2)
-                style = styles.get(algo_name, dict(color="black", linestyle="-", linewidth=1.5))
-                label = algo_name if trace.success else f"{algo_name} (fail)"
-                alpha = 1.0 if trace.success else 0.55
-                ax.plot(pts_s[:, 0], pts_s[:, 1], label=label, alpha=alpha, **style)
-                end_marker = "o" if trace.success else "x"
-                ax.scatter(
-                    [float(pts_s[-1, 0])],
-                    [float(pts_s[-1, 1])],
-                    marker=end_marker,
-                    s=28,
-                    color=style["color"],
-                    label="_nolegend_",
-                )
-
-                if float(meta.get("veh_length_cells", 0.0)) > 0.0 and float(meta.get("veh_width_cells", 0.0)) > 0.0:
-                    draw_vehicle_boxes(
-                        ax,
-                        trace,
-                        length_cells=float(meta["veh_length_cells"]),
-                        width_cells=float(meta["veh_width_cells"]),
-                        color=str(style["color"]),
-                    )
-
-            ax.legend(fontsize=8, loc="lower right")
-
-        for ax in axes[n_panels:]:
-            ax.axis("off")
-
-        fig.suptitle(str(suptitle))
-        fig.tight_layout(rect=(0, 0, 1, 0.96))
-        fig.savefig(out_path, dpi=200)
-        plt.close(fig)
-
-    def write_controls_figure(
-        *,
-        panels: list[tuple[str, int]],
-        out_path: Path,
-        suptitle: str,
-        multi_pair_titles: bool = False,
-    ) -> None:
-        n_panels = int(len(panels))
-        if n_panels <= 0:
-            return
-        if not any(bool(controls_for_plot.get((env_name, int(run_idx)), {})) for env_name, run_idx in panels):
-            return
-
-        fig, axes = plt.subplots(n_panels, 2, figsize=(10.8, 3.2 * n_panels), squeeze=False)
-
-        for i, (env_name, run_idx) in enumerate(panels):
-            ax_v = axes[i, 0]
-            ax_d = axes[i, 1]
-
-            env_base = str(env_name).split("::", 1)[0]
-            suite = str(env_name).split("::", 1)[1] if "::" in str(env_name) else ""
-            title = f"Env. ({env_base})"
-            if suite:
-                title = f"Env. ({env_base})/{suite}"
-            if multi_pair_titles:
-                title = f"Env. ({env_base}) #{int(run_idx)}"
-
-            ctrl = controls_for_plot.get((env_name, int(run_idx)), {})
-            env_paths = paths_for_plot.get((env_name, int(run_idx)), {})
-            if not ctrl:
-                ax_v.axis("off")
-                ax_d.axis("off")
-                ax_v.text(0.5, 0.5, f"{title}\n(no control traces)", ha="center", va="center", fontsize=9)
-                continue
-
-            for algo_name, tr in ctrl.items():
-                style = styles.get(algo_name, dict(color="black", linestyle="-", linewidth=1.5))
-                ok = True
-                if algo_name in env_paths:
-                    ok = bool(env_paths[algo_name].success)
-                label = algo_name if ok else f"{algo_name} (fail)"
-                alpha = 1.0 if ok else 0.55
-                ax_v.plot(tr.t_s, tr.v_m_s, label=label, alpha=alpha, **style)
-                ax_d.plot(tr.t_s, np.degrees(tr.delta_rad), label=label, alpha=alpha, **style)
-
-            ax_v.set_title(f"{title}: Speed")
-            ax_v.set_xlabel("t (s)")
-            ax_v.set_ylabel("v (m/s)")
-            ax_v.grid(True, alpha=0.22, linewidth=0.6)
-
-            ax_d.set_title(f"{title}: Steering")
-            ax_d.set_xlabel("t (s)")
-            ax_d.set_ylabel("delta (deg)")
-            ax_d.grid(True, alpha=0.22, linewidth=0.6)
-            ax_d.legend(fontsize=8, loc="best")
-
-        fig.suptitle(str(suptitle))
-        fig.tight_layout(rect=(0, 0, 1, 0.95))
-        fig.savefig(out_path, dpi=200)
-        plt.close(fig)
-
-    envs_to_plot = list(args.envs)[:4]
-    panels: list[tuple[str, int]] = []
-    env0_base = str(envs_to_plot[0]).split("::", 1)[0] if envs_to_plot else ""
-    multi_pair_fig = (
-        bool(getattr(args, "random_start_goal", False))
-        and int(len(args.envs)) == 1
-        and int(args.runs) >= 4
-        and str(env0_base) in set(FOREST_ENV_ORDER) | set(REALMAP_ENV_ORDER)
-    )
-    if envs_to_plot and multi_pair_fig:
-        base = int(getattr(args, "plot_run_idx", 0))
-        panels = [(str(envs_to_plot[0]), (base + k) % int(args.runs)) for k in range(4)]
-    else:
-        for env_name in envs_to_plot:
-            env_base = str(env_name).split("::", 1)[0]
-            run_idx = 0
-            if bool(getattr(args, "random_start_goal", False)) and str(env_base) in set(FOREST_ENV_ORDER) | set(REALMAP_ENV_ORDER):
-                run_idx = int(getattr(args, "plot_run_idx", 0))
-            panels.append((str(env_name), int(run_idx)))
-
-    fig12_path = out_dir / "fig12_paths.png"
-    write_paths_figure(
-        panels=panels,
-        out_path=fig12_path,
-        suptitle="Simulation results of different path-planning methods",
-        multi_pair_titles=bool(multi_pair_fig),
-    )
-
-    print(f"Wrote: {fig12_path}")
-
-    fig13_path = out_dir / "fig13_controls.png"
-    write_controls_figure(
-        panels=panels,
-        out_path=fig13_path,
-        suptitle="Speed and steering of different path-planning methods",
-        multi_pair_titles=bool(multi_pair_fig),
-    )
-    if fig13_path.exists():
-        print(f"Wrote: {fig13_path}")
-
-    # Optional: one figure per run index (short + long in the same image).
-    if bool(getattr(args, "plot_pair_runs", False)) and bool(getattr(args, "random_start_goal", False)) and bool(
-        getattr(args, "rand_two_suites", False)
-    ):
-        per_run_cap = int(getattr(args, "plot_pair_runs_max", 10))
-        per_run_n = int(args.runs)
-        if per_run_cap > 0:
-            per_run_n = min(int(per_run_n), int(per_run_cap))
-
-        pairs_by_base: dict[str, dict[str, str]] = {}
-        for env_name in args.envs:
-            env_case = str(env_name)
-            if "::" not in env_case:
-                continue
-            base, suite = env_case.split("::", 1)
-            base = str(base).strip()
-            suite = str(suite).strip()
-            if suite not in {"short", "long"}:
-                continue
-            pairs_by_base.setdefault(base, {})[suite] = env_case
-
-        for base, suite_map in pairs_by_base.items():
-            if "short" not in suite_map or "long" not in suite_map:
-                continue
-            base_slug = _safe_slug(base)
-            for run_idx in range(int(per_run_n)):
-                out_path = out_dir / f"fig12_paths_{base_slug}_run_{run_idx:02d}.png"
-                write_paths_figure(
-                    panels=[(suite_map["short"], int(run_idx)), (suite_map["long"], int(run_idx))],
-                    out_path=out_path,
-                    suptitle=f"Simulation results of different path-planning methods (run {run_idx})",
-                )
-                print(f"Wrote: {out_path}")
 
     print(f"Wrote: {out_dir / 'table2_kpis.csv'}")
     print(f"Wrote: {out_dir / 'table2_kpis_raw.csv'}")

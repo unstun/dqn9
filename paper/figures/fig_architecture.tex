@@ -1,0 +1,292 @@
+% fig_architecture.tex  --  CNN-DDQN+MD Q-network architecture (SCI quality)
+% Usage: \input{figures/fig_architecture.tex}
+% Requires: \usepackage{tikz}
+%           \usetikzlibrary{positioning, arrows.meta, fit, calc, backgrounds}
+
+\begin{figure*}[!htbp]
+\centering
+%
+% ---- Semantic colour palette ----
+\definecolor{Cconv}{HTML}{4A90D9}   % CNN conv layers
+\definecolor{Cmha}{HTML}{26A69A}    % spatial attention
+\definecolor{Cfc}{HTML}{66BB6A}     % fully connected
+\definecolor{Ccat}{HTML}{FFD54F}    % concatenation
+\definecolor{Cval}{HTML}{EF5350}    % value stream
+\definecolor{Cadv}{HTML}{43A047}    % advantage stream
+\definecolor{Cqagg}{HTML}{FF9800}   % Q aggregation
+\definecolor{Cmask}{HTML}{C62828}   % action mask
+\definecolor{Cout}{HTML}{7E57C2}    % output
+\definecolor{Cocc}{HTML}{90A4AE}    % occupancy channel
+\definecolor{Cgdf}{HTML}{FFB74D}    % goal-distance channel
+\definecolor{Cedt}{HTML}{42A5F5}    % EDT channel
+%
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    arr/.style  = {->, thick, black!60},
+    dlb/.style  = {font=\scriptsize, text=black!55, align=center},
+    glb/.style  = {font=\footnotesize\itshape},
+]
+%
+% ==================== 3-D CUBOID MACRO ====================
+%   \cub{name}{x}{y}{height}{front-width}{depth}{colour}
+%   height → spatial dimension  (shrinks through layers)
+%   depth  → channel count      (grows through layers)
+\def\cub#1#2#3#4#5#6#7{%
+    \pgfmathsetmacro{\cubH}{(#4)/2}%
+    \pgfmathsetmacro{\cubW}{(#5)/2}%
+    \pgfmathsetmacro{\cubDx}{(#6)*0.28}%
+    \pgfmathsetmacro{\cubDy}{(#6)*0.16}%
+    % --- right-side face (darkened) ---
+    \fill[#7!55!black, draw=black!30, line width=0.3pt]
+        ({#2+\cubW},{#3-\cubH})
+        -- ({#2+\cubW+\cubDx},{#3-\cubH+\cubDy})
+        -- ({#2+\cubW+\cubDx},{#3+\cubH+\cubDy})
+        -- ({#2+\cubW},{#3+\cubH}) -- cycle;
+    % --- top face (lightened) ---
+    \fill[#7!15!white, draw=black!30, line width=0.3pt]
+        ({#2-\cubW},{#3+\cubH})
+        -- ({#2-\cubW+\cubDx},{#3+\cubH+\cubDy})
+        -- ({#2+\cubW+\cubDx},{#3+\cubH+\cubDy})
+        -- ({#2+\cubW},{#3+\cubH}) -- cycle;
+    % --- front face ---
+    \fill[#7!85, draw=black!30, line width=0.3pt]
+        ({#2-\cubW},{#3-\cubH}) rectangle ({#2+\cubW},{#3+\cubH});
+    % --- named anchors ---
+    \coordinate (#1)    at (#2, #3);
+    \coordinate (#1-l)  at ({#2-\cubW},          {#3});
+    \coordinate (#1-r)  at ({#2+\cubW+\cubDx},   {#3+\cubDy/2});
+    \coordinate (#1-t)  at ({#2+\cubDx/2},        {#3+\cubH+\cubDy/2});
+    \coordinate (#1-b)  at ({#2},                 {#3-\cubH});
+    \coordinate (#1-bl) at ({#2-\cubW},           {#3-\cubH});
+    \coordinate (#1-tr) at ({#2+\cubW+\cubDx},   {#3+\cubH+\cubDy});
+}
+%
+% ==================== LAYOUT CONSTANTS ====================
+\def\cnnY{1.8}     % CNN branch centre
+\def\scaY{-0.6}    % scalar branch
+\def\midY{0.6}     % concat / shared-FC / Q-agg
+\def\valY{2.3}     % value stream
+\def\advY{-1.1}    % advantage stream
+%
+% ==================== INPUT: 2 MAP CHANNELS ===============
+%   back → front: GDF (amber), Occ (grey)
+\cub{gdf}{0.42}{\cnnY}{2.4}{0.06}{0.10}{Cgdf}
+\cub{occ}{0.22}{\cnnY}{2.4}{0.06}{0.10}{Cocc}
+%
+\node[dlb, above=0pt] at (occ-t) {O};
+\node[dlb, above=0pt] at (gdf-t) {G};
+\node[dlb, below=5pt] at (0.32, {\cnnY-1.2})
+    {$2{\times}12{\times}12$};
+%
+% ==================== INPUT: SCALARS ======================
+\node[draw, rounded corners=2pt, fill=gray!8, thick,
+      minimum width=1.2cm, minimum height=0.50cm,
+      align=center, font=\footnotesize]
+    (sca) at (0.32, \scaY)
+    {Scalars\\[-2pt]{\scriptsize 11-d}};
+%
+%
+% ==================== CNN BACKBONE ========================
+%
+% Conv1 — 2→32, 3×3, s=1 → 32×12×12
+\cub{c1}{2.6}{\cnnY}{2.4}{0.20}{0.55}{Cconv}
+\node[font=\footnotesize\bfseries, text=white] at (c1) {32};
+\node[dlb, below=5pt] at (c1-b) {Conv$_1$\\$3{\times}3$};
+%
+% Conv2 — 32→64, 3×3, s=2 → 64×6×6
+\cub{c2}{4.6}{\cnnY}{1.5}{0.20}{0.85}{Cconv}
+\node[font=\footnotesize\bfseries, text=white] at (c2) {64};
+\node[dlb, below=5pt] at (c2-b) {Conv$_2$\\$3{\times}3,\;s{=}2$};
+%
+% Conv3 — 64→64, 3×3, s=2 → 64×3×3
+\cub{c3}{6.4}{\cnnY}{0.9}{0.20}{0.85}{Cconv}
+\node[font=\scriptsize\bfseries, text=white] at (c3) {64};
+\node[dlb, below=5pt] at (c3-b) {Conv$_3$\\$3{\times}3,\;s{=}2$};
+%
+% Spatial MHA — 4 heads
+\cub{mha}{8.0}{\cnnY}{0.9}{0.20}{0.85}{Cmha}
+\node[font=\scriptsize\bfseries, text=white] at (mha) {4h};
+\node[dlb, below=5pt] at (mha-b) {Spatial\\[-1pt]MHA};
+%
+% ---- dimension annotations along the top ----
+\node[font=\tiny, text=black!40, above=1pt] at (c1-t) {$12^2$};
+\node[font=\tiny, text=black!40, above=1pt] at (c2-t) {$6^2$};
+\node[font=\tiny, text=black!40, above=1pt] at (c3-t) {$3^2$};
+%
+% ---- CNN arrows ----
+\draw[arr] (gdf-r) -- (c1-l);
+\draw[arr] (c1-r)  -- (c2-l);
+\draw[arr] (c2-r)  -- (c3-l);
+\draw[arr] (c3-r)  -- (mha-l);
+%
+%
+% ==================== FLATTEN =============================
+\node[draw, rounded corners=2pt, fill=Cconv!10, thick,
+      minimum height=0.50cm, minimum width=0.65cm,
+      font=\footnotesize, align=center]
+    (flat) at (9.6, \cnnY) {Flat};
+\node[dlb, below=2pt] at (flat.south) {576};
+\draw[arr] (mha-r) -- (flat.west);
+%
+%
+% ==================== CONCATENATION =======================
+\node[draw, circle, fill=Ccat!35, thick,
+      minimum size=0.55cm, inner sep=0pt, font=\normalsize]
+    (cat) at (11.2, \midY) {$\oplus$};
+\node[dlb, below=2pt] at (cat.south) {587};
+%
+%   flat (above) ↘ cat ;  sca (below) ↗ cat
+\draw[arr, rounded corners=4pt] (flat.east) -| (cat);
+\draw[arr, rounded corners=4pt] (sca.east)  -| (cat);
+%
+%
+% ==================== SHARED FC TRUNK =====================
+\node[draw, rounded corners=2pt, fill=Cfc!18, thick,
+      minimum height=0.55cm, minimum width=1.3cm,
+      font=\footnotesize, align=center]
+    (sfc) at (13.0, \midY)
+    {FC(256)+ReLU};
+\draw[arr] (cat) -- (sfc);
+%
+%
+% ==================== DUELING HEAD ========================
+%
+% ---- fork point ----
+\coordinate (fork) at ($(sfc.east)+(0.4,0)$);
+%
+% ---- Value stream ----
+\node[draw, rounded corners=3pt, fill=Cval!15, thick,
+      minimum width=1.6cm, minimum height=0.65cm,
+      font=\footnotesize, align=center]
+    (val) at (16.0, \valY)
+    {Value\\[-2pt]{\scriptsize $V(s)\!\to\!\mathbb{R}^1$}};
+%
+% ---- Advantage stream ----
+\node[draw, rounded corners=3pt, fill=Cadv!15, thick,
+      minimum width=1.6cm, minimum height=0.65cm,
+      font=\footnotesize, align=center]
+    (adv) at (16.0, \advY)
+    {Advantage\\[-2pt]{\scriptsize $A(s,a)\!\to\!\mathbb{R}^{35}$}};
+%
+% ---- Y-fork arrows ----
+\draw[arr, rounded corners=4pt] (sfc.east) -- (fork) |- (val.west);
+\draw[arr, rounded corners=4pt] (fork) |- (adv.west);
+%
+%
+% ==================== Q AGGREGATION =======================
+\node[draw, rounded corners=3pt, fill=Cqagg!20, thick,
+      minimum width=1.6cm, minimum height=0.65cm,
+      font=\footnotesize, align=center]
+    (qagg) at (18.8, \midY)
+    {$Q{=}V{+}A{-}\overline{A}$\\[-2pt]{\scriptsize 35\;Q-values}};
+%
+\draw[arr, rounded corners=4pt]
+    (val.east) -- ++(0.3,0) |- ($(qagg.west)+(0, 0.08)$);
+\draw[arr, rounded corners=4pt]
+    (adv.east) -- ++(0.3,0) |- ($(qagg.west)+(0,-0.08)$);
+%
+%
+% ==================== ACTION MASK (7×5 GRID) ==============
+\def\gX{20.8}      % grid left x
+\def\gY{-0.10}     % grid bottom y  (centred ≈ \midY)
+\def\gS{0.22}      % cell size
+%
+% ---- all cells (valid = green) ----
+\foreach \r in {0,...,6}{
+    \foreach \c in {0,...,4}{
+        \fill[Cadv!15, draw=black!15, line width=0.15pt]
+            ({\gX+\c*\gS}, {\gY+\r*\gS})
+            rectangle ++({\gS-0.02}, {\gS-0.02});
+    }
+}
+%
+% ---- masked cells (red background + × mark) ----
+\foreach \r/\c in {0/0,0/1,0/3,0/4, 1/0,1/4, 5/0,5/4, 6/0,6/1,6/3,6/4}{
+    \fill[Cmask!12, draw=black!15, line width=0.15pt]
+        ({\gX+\c*\gS}, {\gY+\r*\gS})
+        rectangle ++({\gS-0.02}, {\gS-0.02});
+    \draw[Cmask, line width=0.35pt]
+        ({\gX+\c*\gS+0.04}, {\gY+\r*\gS+0.04})
+        -- ++({\gS-0.10}, {\gS-0.10});
+    \draw[Cmask, line width=0.35pt]
+        ({\gX+\c*\gS+\gS-0.06}, {\gY+\r*\gS+0.04})
+        -- ++({-\gS+0.10}, {\gS-0.10});
+}
+%
+% ---- grid axis labels ----
+\node[dlb, below=4pt] at ({\gX+2.5*\gS}, \gY) {$5\;a$};
+\node[dlb, rotate=90]  at ({\gX-0.16}, {\gY+3.5*\gS})
+    {$7\;\dot{\delta}$};
+%
+% ---- kinematic mask input ----
+\node[draw, rounded corners=2pt, fill=Cmask!8, thick,
+      minimum width=0.9cm, minimum height=0.40cm,
+      font=\scriptsize, align=center]
+    (kin) at ({\gX+2.5*\gS}, {\gY-0.80})
+    {Kin.\ Mask\\[-2pt]{\tiny bool\;35-d}};
+\draw[arr] (kin) -- ({\gX+2.5*\gS}, {\gY-0.02});
+%
+% ---- Q → grid ----
+\draw[arr] (qagg.east) -- ({\gX-0.05}, {\gY+3.5*\gS});
+%
+%
+% ==================== OUTPUT ==============================
+\node[draw, rounded corners=3pt, fill=Cout!12, thick,
+      minimum width=0.7cm, minimum height=0.55cm,
+      font=\footnotesize, align=center]
+    (out) at (23.5, \midY)
+    {$a^*$\\[-2pt]{\scriptsize $(\dot{\delta},\,a)$}};
+%
+\draw[arr] ({\gX+5*\gS}, {\gY+3.5*\gS})
+    -- node[above, font=\scriptsize, text=black!50] {argmax}
+    (out.west);
+%
+%
+% ==================== BACKGROUND GROUPS ===================
+\begin{scope}[on background layer]
+    %
+    % CNN Feature Extractor
+    \node[draw=Cconv!40, dashed, rounded corners=5pt,
+          inner sep=7pt, fill=Cconv!3,
+          fit=(c1-bl)(c1-tr)(mha-tr)(flat),
+          label={[glb, Cconv!60]above:CNN Feature Extractor}] {};
+    %
+    % Dueling Head (MD)
+    \node[draw=Cqagg!50, dashed, rounded corners=5pt,
+          inner sep=7pt, fill=Cqagg!3,
+          fit=(val)(adv)(qagg),
+          label={[glb, Cqagg!70]above:Dueling Head (MD)}] {};
+    %
+    % Action Masking
+    \coordinate (mask-bl) at ({\gX-0.12}, {\gY-0.12});
+    \coordinate (mask-tr) at ({\gX+5*\gS+0.10}, {\gY+7*\gS+0.10});
+    \node[draw=Cmask!35, dashed, rounded corners=5pt,
+          inner sep=7pt, fill=Cmask!2,
+          fit=(mask-bl)(mask-tr)(kin)(out),
+          label={[glb, Cmask!50]above:Action Masking}] {};
+    %
+\end{scope}
+%
+\end{tikzpicture}%
+}% end resizebox
+%
+\caption{%
+Architecture of the CNN-DDQN+MD Q-network.
+A convolutional branch extracts spatial features from two
+$12{\times}12$ map channels
+(occupancy, goal distance field)
+through three convolution layers with ReLU activations
+and spatial multi-head attention (MHA),
+yielding a 576-dimensional feature vector.
+This vector is concatenated with 11 scalar state features
+(pose, velocity, steering angle, goal bearing)
+and processed by a shared FC layer before splitting
+into a value stream~$V(s)$ and an advantage stream~$A(s,a)$
+following the dueling architecture.
+The head produces 35 joint Q-values
+($7$ steering rates\,$\times$\,$5$ accelerations),
+and a kinematic admissibility mask zeroes infeasible actions
+before argmax policy extraction.}
+\label{fig:architecture}
+\end{figure*}

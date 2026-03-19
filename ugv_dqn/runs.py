@@ -1,19 +1,19 @@
-"""Timestamped experiment-run directory management.
+"""带时间戳的实验运行目录管理。
 
-Directory convention
---------------------
-runs/<experiment_name>/train_YYYYMMDD_HHMMSS/          <- one training run
-                       train_.../models/<env>/          <- saved checkpoints
-                       train_.../infer/YYYYMMDD_HHMMSS/ <- inference output
-                       latest.txt                       <- points to most recent run
-
-Provides
+目录约定
 --------
-- resolve_experiment_dir()      Bare name -> runs/<name>/; path -> as-is.
-- create_run_dir()              Create a new timestamped run directory.
-- latest_run_dir()              Find latest run (via latest.txt or timestamp sort).
-- latest_run_dir_with_models()  Find latest run that contains models/.
-- resolve_models_dir()          Flexible resolution from experiment name / run / models path.
+runs/<experiment_name>/train_YYYYMMDD_HHMMSS/          <- 单次训练运行
+                       train_.../models/<env>/          <- 保存的 checkpoint
+                       train_.../infer/YYYYMMDD_HHMMSS/ <- 推理输出
+                       latest.txt                       <- 指向最近一次运行
+
+提供
+----
+- resolve_experiment_dir()      裸名称 -> runs/<name>/；路径 -> 原样使用。
+- create_run_dir()              创建带时间戳的新运行目录。
+- latest_run_dir()              查找最近的运行目录（通过 latest.txt 或时间戳排序）。
+- latest_run_dir_with_models()  查找包含 models/ 的最近运行目录。
+- resolve_models_dir()          从实验名称 / 运行目录 / models 路径灵活解析。
 """
 
 from __future__ import annotations
@@ -43,11 +43,11 @@ def _run_dir_sort_key(name: str) -> tuple[str, int] | None:
 
 
 def resolve_experiment_dir(out: Path, *, runs_root: Path = Path("runs")) -> Path:
-    """Resolve an output experiment directory.
+    """解析输出实验目录。
 
-    Convention:
-    - If `out` is a bare name like "outputs_repro_1000", store under `runs/<name>/`.
-    - If `out` is a path (contains separators / starts with '.' / is absolute), use as-is.
+    约定：
+    - 若 `out` 是裸名称（如 "outputs_repro_1000"），存储在 `runs/<name>/` 下。
+    - 若 `out` 是路径（包含分隔符 / 以 '.' 开头 / 是绝对路径），原样使用。
     """
     out = Path(out)
     if out.is_absolute():
@@ -77,7 +77,7 @@ def _iter_run_dirs(experiment_dir: Path) -> list[Path]:
 
 
 def latest_run_dir(experiment_dir: Path) -> Path | None:
-    """Return the latest timestamped run directory under `experiment_dir`."""
+    """返回 `experiment_dir` 下最新的带时间戳运行目录。"""
     latest_file = experiment_dir / "latest.txt"
     if latest_file.exists():
         name = latest_file.read_text(encoding="utf-8").strip()
@@ -91,7 +91,7 @@ def latest_run_dir(experiment_dir: Path) -> Path | None:
 
 
 def latest_run_dir_with_models(experiment_dir: Path) -> Path | None:
-    """Return the latest run directory under `experiment_dir` that contains `models/`."""
+    """返回 `experiment_dir` 下包含 `models/` 的最新运行目录。"""
     candidate = latest_run_dir(experiment_dir)
     if candidate is not None and (candidate / "models").is_dir():
         return candidate
@@ -129,13 +129,13 @@ def create_run_dir(
 
 
 def resolve_models_dir(models: Path, *, runs_root: Path = Path("runs")) -> Path:
-    """Resolve a models directory for inference.
+    """解析用于推理的 models 目录。
 
-    Accepts:
-    - experiment name (bare): uses latest run under `runs/<name>/models`
-    - experiment dir path: uses latest run under `<dir>/models`
-    - run dir path: uses `<run>/models`
-    - models dir path: uses it directly
+    接受以下输入：
+    - 实验名称（裸名称）：使用 `runs/<name>/` 下最新运行的 models
+    - 实验目录路径：使用 `<dir>/` 下最新运行的 models
+    - 运行目录路径：使用 `<run>/models`
+    - models 目录路径：直接使用
     """
     raw = Path(models)
 
@@ -146,7 +146,7 @@ def resolve_models_dir(models: Path, *, runs_root: Path = Path("runs")) -> Path:
     if raw != mapped:
         candidates.append(raw)
     else:
-        # Back-compat: if user passes e.g. "outputs_repro_1000/models", prefer checking "runs/..." too.
+        # 向后兼容：若用户传入如 "outputs_repro_1000/models"，也尝试在 "runs/..." 下查找
         if not raw.is_absolute() and raw.parts and raw.parts[0] != Path(runs_root).name:
             candidates.append(Path(runs_root) / raw)
 

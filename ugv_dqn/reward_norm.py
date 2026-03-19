@@ -1,7 +1,7 @@
-"""Running reward normalization (Welford online mean/std).
+"""在线奖励归一化（Welford 在线均值/标准差）。
 
-V8→V9: normalize at sampling time, not at collection time.
-Keeps clip as a safety net on the *normalized* value.
+V8→V9：在采样时进行归一化，而非在收集时。
+clip 作为归一化值的安全上下限。
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ import torch
 
 
 class RunningRewardNormalizer:
-    """Welford online running mean/std for reward normalization."""
+    """基于 Welford 在线算法的运行均值/标准差，用于奖励归一化。"""
 
     def __init__(self, clip: float = 5.0, eps: float = 1e-8):
         self.clip = float(clip)
@@ -27,7 +27,7 @@ class RunningRewardNormalizer:
         return max(float(np.sqrt(self._M2 / self._count)), self.eps)
 
     def update(self, reward: float) -> None:
-        """Update running stats (call on raw reward, including demos)."""
+        """更新运行统计量（对原始奖励调用，包括示范数据）。"""
         self._count += 1
         delta = reward - self._mean
         self._mean += delta / self._count
@@ -35,14 +35,14 @@ class RunningRewardNormalizer:
         self._M2 += delta * delta2
 
     def normalize(self, reward: float) -> float:
-        """Normalize + clip. Call update() first."""
+        """归一化 + 裁剪。需先调用 update()。"""
         if self._count < 2:
             return float(np.clip(reward, -self.clip, self.clip))
         normed = (reward - self._mean) / self.std
         return float(np.clip(normed, -self.clip, self.clip))
 
     def normalize_tensor(self, rewards: torch.Tensor) -> torch.Tensor:
-        """Vectorized normalize + clip for a batch of rewards (no stats update)."""
+        """向量化归一化 + 裁剪，用于一批奖励（不更新统计量）。"""
         if self._count < 2:
             return rewards.clamp(-self.clip, self.clip)
         normed = (rewards - self._mean) / self.std

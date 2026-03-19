@@ -113,6 +113,8 @@ class RRTStarPlanner:
         # Spline parameters (kept for compatibility with the paper nomenclature)
         gamma: float = 0.35,
         max_neighbors: int = 10,
+        # Optional pre-built collision checker (e.g. EDTCollisionChecker).
+        collision_checker=None,
     ):
         self.map = grid_map
         self.footprint = footprint
@@ -141,9 +143,12 @@ class RRTStarPlanner:
         self.gamma = max(0.0, min(1.0, float(gamma)))
         self.max_neighbors = max(1, int(max_neighbors))
         self.rng = np.random.default_rng(rng_seed)
-        self.collision_checker = GridFootprintChecker(
-            grid_map, footprint, theta_bins=theta_bins, padding=collision_padding
-        )
+        if collision_checker is not None:
+            self.collision_checker = collision_checker
+        else:
+            self.collision_checker = GridFootprintChecker(
+                grid_map, footprint, theta_bins=theta_bins, padding=collision_padding
+            )
 
     def plan(
         self,
@@ -158,24 +163,25 @@ class RRTStarPlanner:
         start_time = time.perf_counter()
         remediations: List[str] = []
 
-        if self._pose_collides(start.x, start.y, start.theta):
-            return [], {
-                "nodes": 1,
-                "iterations": 0,
-                "time": time.perf_counter() - start_time,
-                "success": False,
-                "failure_reason": "start_in_collision",
-                "remediations": remediations,
-            }
-        if self._pose_collides(goal.x, goal.y, goal.theta):
-            return [], {
-                "nodes": 1,
-                "iterations": 0,
-                "time": time.perf_counter() - start_time,
-                "success": False,
-                "failure_reason": "goal_in_collision",
-                "remediations": remediations,
-            }
+        if self_check:
+            if self._pose_collides(start.x, start.y, start.theta):
+                return [], {
+                    "nodes": 1,
+                    "iterations": 0,
+                    "time": time.perf_counter() - start_time,
+                    "success": False,
+                    "failure_reason": "start_in_collision",
+                    "remediations": remediations,
+                }
+            if self._pose_collides(goal.x, goal.y, goal.theta):
+                return [], {
+                    "nodes": 1,
+                    "iterations": 0,
+                    "time": time.perf_counter() - start_time,
+                    "success": False,
+                    "failure_reason": "goal_in_collision",
+                    "remediations": remediations,
+                }
 
         if try_direct_connect:
             direct_edge = self._get_bezier_curve(start, goal)

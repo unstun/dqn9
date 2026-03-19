@@ -1,4 +1,4 @@
-"""Helper: parse success rates from table2_kpis_mean.csv for checkpoint SR screening."""
+"""辅助脚本：从 table2_kpis_mean.csv 解析成功率，用于 checkpoint SR 筛选。"""
 import csv
 import sys
 
@@ -28,5 +28,5 @@ def get(key):
     return "N/A"
 
 
-# Output: cnn-pddqn,cnn-ddqn,cnn-dqn,mlp-pddqn,mlp-ddqn,mlp-dqn
+# 输出：cnn-pddqn,cnn-ddqn,cnn-dqn,mlp-pddqn,mlp-ddqn,mlp-dqn
 print(f"{get('cnn-pddqn')},{get('cnn-ddqn')},{get('cnn-dqn')},{get('mlp-pddqn')},{get('mlp-ddqn')},{get('mlp-dqn')}")

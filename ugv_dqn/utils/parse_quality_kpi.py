@@ -1,4 +1,4 @@
-"""Helper: parse composite scores from table2_kpis_mean_filtered.csv for checkpoint screening."""
+"""辅助脚本：从 table2_kpis_mean_filtered.csv 解析综合评分，用于 checkpoint 筛选。"""
 import csv
 import sys
 
