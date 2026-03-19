@@ -172,7 +172,7 @@
 \begin{equation}
   r_{\text{slope}} = \frac{1}{|\mathcal{N}(\mathbf{p}_i)|}\sum_{\mathbf{p}_j \in \mathcal{N}(\mathbf{p}_i)} \mathbb{I}(\theta_{ij} > \theta_{\max})
 \end{equation}
-其中$\mathbb{I}(\cdot)$为指示函数。当$r_{\text{slope}} \leq \lambda$时，所在的局部地形虽然粗糙但仍在地面无人车的通过能力范围内，将$\mathbf{p}_i$标记为可通行；反之标记为不可通行。
+其中$\mathbb{I}(\cdot)$为指示函数。当$r_{\text{slope}} \leq \lambda$时，所在的局部地形虽然粗糙但仍在地面无人车的通过能力范围内，将$\mathbf{p}_i$标记为可通行；反之标记为不可通行。完成可通行性标注后，将所有标记为不可通行的点投影至$xy$平面，以分辨率$\Delta c = \SI{0.1}{m}$生成二维占据栅格地图，作为后续马尔可夫决策过程建模的环境输入。
 
 \subsection{地面无人车路径规划}
 
@@ -241,7 +241,10 @@
 \label{fig:map_channels}
 \end{figure}
 
-如图~\ref{fig:map_channels}所示，第一层通道 $\mathbf{O}_t$ 为全局障碍物地图，以二值化形式表征可通行区域与空间障碍物分布。为有效保留障碍物边界的几何锐度，该通道采用最近邻插值（Nearest-neighbor Interpolation）进行下采样。第二层通道 $\mathbf{G}_t$ 为 Dijkstra 目标距离场，编码了各自由空间栅格到目标点的测地线距离（Geodesic Distance），不可达区域采用极值上界进行掩码填充。该通道通过双线性插值（Bilinear Interpolation）下采样，为策略网络提供平滑且连续的全局导航梯度，为长视野导航提供稠密方向引导。上述两层通道的像素值均被独立归一化至 $[-1, 1]$ 区间。
+如图~\ref{fig:map_channels}所示，第一层通道 $\mathbf{O}_t$ 为全局障碍物地图
+第二层通道 $\mathbf{G}_t$ 为 Dijkstra 目标距离场，
+
+上述两层通道的像素值均被独立归一化至 $[-1, 1]$ 区间。
 
 为避免地图通道与标量特征之间的信息冗余，障碍物安全裕度未在地图通道中重复编码，而是通过欧氏距离变换（Euclidean Distance Transform）提取当前位置到最近障碍物的距离，以截断归一化的标量特征 $d_{\min}$ 输入网络，在降低计算复杂度的同时保留障碍物距离信息。
 
@@ -334,6 +337,32 @@
   \end{cases}
 \end{equation}
 
+表~\ref{tab:reward_params}~汇总了奖励函数的全部超参数及其取值。
+
+\begin{table}[!htbp]
+\centering
+\caption{奖励函数超参数}
+\label{tab:reward_params}
+\begin{tabular}{llll}
+\toprule
+符号 & 数值 & 含义 \\
+\midrule
+$k_p$           & 12.0   & 进度奖励系数 \\
+$k_\tau$        & 0.2    & 时间步惩罚 \\
+$k_\delta$      & 1.5    & 转向平滑系数 \\
+$k_a$           & 0.2    & 加速度平滑系数 \\
+$k_\kappa$      & 0.2    & 曲率惩罚系数 \\
+$k_o$           & 1.5    & 障碍物排斥系数 \\
+$\bar{r}_o$     & 10.0   & 障碍物惩罚饱和上界 \\
+$\varepsilon$   & $10^{-3}$ & 防除零常数 \\
+$d_s$           & \SI{0.20}{m} & 安全距离阈值 \\
+$R_{\text{goal}}$ & 400.0 & 到达目标奖励 \\
+$R_{\text{col}}$  & 200.0 & 碰撞惩罚 \\
+$R_{\text{stuck}}$& 300.0 & 停滞超时惩罚 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsubsection{MD-DDQN 路径规划架构}\label{sec:network}
 
 本文设计的 Q 网络需同时处理两类异构输入——多通道地图张量与低维标量特征，并输出 $|\mathcal{A}|=35$ 维离散动作空间中各动作的 Q 值。为此，网络架构由四个核心模块级联构成，如图~\ref{fig:architecture}~所示：第一，三层卷积骨干从 $2\times12\times12$ 的双通道地图张量中逐层提取空间层次特征；第二，空间多头自注意力模块在卷积输出上建模远距离空间依赖，捕获障碍物分布与目标距离场之间的全局上下文信息；第三，卷积-注意力特征经展平后与 11 维标量特征拼接，通过共享全连接层馈入 Dueling 价值分解头部，将 Q 函数显式分离为状态价值与动作优势；第四，运动学感知的动作掩码在 Q 值输出端屏蔽不可行动作，确保策略始终满足碰撞和转向约束。下文依次介绍各模块的设计细节。
@@ -344,11 +373,32 @@
 
 Q 网络的整体架构如图~\ref{fig:architecture}~所示。网络接收 $2\times12\times12$ 的多通道地图张量作为输入，两个通道分别编码占据栅格与 Dijkstra 目标距离场。第一个隐藏层将 32 个 $3\times3$ 滤波器以步幅~1 与输入地图卷积并应用 ReLU 激活，保持空间分辨率不变；第二个隐藏层将 64 个 $3\times3$ 滤波器以步幅~2 卷积，将特征图从 $12\times12$ 缩减至 $6\times6$；第三个卷积层同样使用 64 个 $3\times3$ 滤波器、步幅~2，进一步下采样至 $3\times3$。三层渐进式空间压缩在保留障碍物与目标距离场的空间结构的同时，将地图编码为 $64\times3\times3=576$ 维的紧凑特征向量。
 
-卷积特征经展平后与 11 维标量特征（位姿、速度、转向角、目标方位）拼接，形成 $576+11=587$ 维的融合向量，再经共享全连接层（256 个 ReLU 单元）处理后馈入 Dueling 输出头部。
+卷积特征经展平后与 11 维标量特征（位姿、速度、转向角、目标方位）拼接，形成 $576+11=587$ 维的融合向量，再经共享全连接层（256 个 ReLU 单元）处理后馈入 Dueling 输出头部。表~\ref{tab:network_spec}~汇总了各层的配置与输出维度。
+
+\begin{table}[!htbp]
+\centering
+\caption{CNN-MD-DDQN 网络层级规格}
+\label{tab:network_spec}
+\begin{tabular}{lllll}
+\toprule
+层 & 类型 & 配置 & 输出维度 & 激活 \\
+\midrule
+Conv1   & Conv2D  & $32\!\times\!3\!\times\!3$, $s\!=\!1$ & $32\!\times\!12\!\times\!12$ & ReLU \\
+Conv2   & Conv2D  & $64\!\times\!3\!\times\!3$, $s\!=\!2$ & $64\!\times\!6\!\times\!6$   & ReLU \\
+Conv3   & Conv2D  & $64\!\times\!3\!\times\!3$, $s\!=\!2$ & $64\!\times\!3\!\times\!3$   & ReLU \\
+MHA     & Spatial MHA & $h\!=\!4$, $d\!=\!64$ & $64\!\times\!3\!\times\!3$ & — \\
+Flatten & —      & —    & 576  & — \\
+Concat  & —      & $576+11$ & 587  & — \\
+Shared  & FC      & $587\!\to\!256$ & 256  & ReLU \\
+V-stream & FC$\times$2 & $256\!\to\!256\!\to\!1$  & 1  & Linear \\
+A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{空间多头自注意力}\label{sec:mha}
 
-卷积网络通过局部感受野逐层提取空间特征，但有限的感受野限制了对远距离空间位置之间依赖关系的建模。为捕获全局上下文信息，本文在第三层卷积输出之后引入空间多头自注意力（Spatial Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使网络能够感知障碍物分布与目标距离场之间的全局空间结构。
+卷积网络通过局部感受野逐层提取空间特征。经三层卷积（步幅 1-2-2）后，理论感受野为 $13\times13$，已覆盖 $12\times12$ 输入的全部区域，但有效感受野通常远小于理论值，导致特征图边缘位置难以有效关注对侧信息。为捕获全局上下文信息，本文在第三层卷积输出之后引入空间多头自注意力（Spatial Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使网络能够感知障碍物分布与目标距离场之间的全局空间结构。
 
 \paragraph{Dueling 价值分解}\label{sec:md}
 
@@ -373,7 +423,30 @@ Q 值更新采用 Double DQN 算法~\cite{van2016deep}，由在线网络选择�
   \mathcal{L}_{\mathrm{TD}} = \frac{1}{|\mathcal{B}|}
     \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr),
 \end{equation}
-其中 $\mathcal{B}$ 为从容量 $2\times10^{5}$ 的经验回放缓冲区中采样的 128 条转移。折扣因子 $\gamma=0.995$，优化器为 Adam~\cite{kingma2015adam}，学习率 $5\times10^{-4}$，梯度裁剪范数为 10。
+其中 $\mathcal{B}$ 为从容量 $2\times10^{5}$ 的经验回放缓冲区中采样的 128 条转移。折扣因子 $\gamma=0.995$，优化器为 Adam~\cite{kingma2015adam}，学习率 $5\times10^{-4}$，梯度裁剪范数为 10。表~\ref{tab:train_params}~汇总了全部训练超参数。
+
+\begin{table}[!htbp]
+\centering
+\caption{训练超参数}
+\label{tab:train_params}
+\begin{tabular}{ll}
+\toprule
+参数 & 数值 \\
+\midrule
+优化器                    & Adam~\cite{kingma2015adam} \\
+学习率                    & $5\times10^{-4}$ \\
+折扣因子 $\gamma$         & 0.995 \\
+批量大小                  & 128 \\
+经验回放容量              & $2\times10^{5}$ \\
+目标网络更新间隔          & 1000 步 \\
+梯度裁剪范数              & 10 \\
+$\varepsilon$-贪心调度    & $1.0 \to 0.01$（线性衰减） \\
+DQfD 预训练步数           & 40\,000 \\
+训练回合数                & 10\,000 \\
+决策步长 $dt$             & \SI{0.05}{s} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{DQfD 预训练}\label{sec:dqfd}
 
@@ -412,7 +485,11 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 
 \subsubsection{动作掩码}\label{sec:masking}
 
-为在训练和推理过程中均强制执行硬安全约束，本文基于短时域前向仿真采用动作掩码机制~\cite{huang2022closer}。
+为在训练和推理过程中均强制执行硬安全约束，本文基于短时域前向仿真采用动作掩码机制~\cite{huang2022closer}。定义状态$s$下的可接纳动作集$\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$和对应的二值掩码向量$\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，其中$m_a(s) = 1$当且仅当$a \in \mathcal{A}_{\mathrm{adm}}(s)$。被掩码的 Q 值为
+\begin{equation}\label{eq:masked_q}
+  \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty),
+\end{equation}
+确保策略仅从可接纳动作中选择。$\mathcal{A}_{\mathrm{adm}}(s)$的具体判定准则如下。
 
 \textit{可行性评估。}
 给定当前状态，对候选动作 $a$ 使用运动学模型执行 $H=15$ 个时间步的恒定控制前向仿真，每步碰撞判定均在\textbf{原始地图分辨率}（$\SI{0.1}{m}$）的欧氏距离变换场上进行双圆足迹检测，确保掩码精度不受观测地图降采样的影响。当满足以下任一条件时，该动作被视为\emph{可接纳的}：
@@ -442,6 +519,39 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
   y = r + \gamma\,Q_{\theta^{-}}\!(s',a^{*}).
 \end{equation}
 该机制防止 Q 值从运动学不可行或碰撞倾向的后继动作中反向传播，有助于训练过程的稳定收敛。
+
+算法~\ref{alg:training}~概述了完整的训练流程。
+
+\begin{algorithm}[!htbp]
+\caption{MD-DDQN 训练流程}
+\label{alg:training}
+\begin{algorithmic}[1]
+\Require 占据栅格地图 $\mathcal{G}$，Dijkstra 距离场 $D$，专家演示集 $\mathcal{D}_E$
+\Ensure 训练后的策略网络 $Q_\theta$
+\State 将 $\mathcal{D}_E$ 填充至回放缓冲区 $\mathcal{R}$（永久标志）
+\Statex \textbf{// 阶段一：DQfD 预训练}
+\For{$i = 1$ \textbf{to} $N_{\mathrm{pre}}$}
+    \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \mathcal{L}_{\mathrm{TD}} + \lambda_{\mathrm{M}}\mathcal{L}_{\mathrm{margin}} + \lambda_{\mathrm{CE}}\mathcal{L}_{\mathrm{CE}}$
+    \State $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}_{\mathrm{pre}}$
+\EndFor
+\Statex \textbf{// 阶段二：在线训练}
+\For{episode $= 1$ \textbf{to} $N_{\mathrm{ep}}$}
+    \State 随机采样起终点，初始化 $s_0$
+    \While{未终止}
+        \State 计算 $\mathbf{m}(s_t)$ \Comment{动作掩码，公式~(\ref{eq:masked_q})}
+        \If{$\mathrm{rand}() < \varepsilon$}
+            \State $a_t \sim \mathrm{Uniform}(\mathcal{A}_{\mathrm{adm}}(s_t))$
+        \Else
+            \State $a_t \leftarrow \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s_t)} Q_\theta(s_t, a)$
+        \EndIf
+        \State 执行 $a_t$，观测 $(s_{t+1}, r_{t+1})$
+        \State 存储 $(s_t, a_t, r_{t+1}, s_{t+1}, \mathbf{m}(s_{t+1}))$ 至 $\mathcal{R}$
+        \State 采样 $\mathcal{B}$，以掩码 TD 目标（公式~\ref{eq:masked_target}）计算 $\mathcal{L}$，更新 $\theta$
+        \State 每 $T_{\mathrm{target}}$ 步：$\theta^{-} \leftarrow \theta$
+    \EndWhile
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 % ══════════════════════════════════════════════════════════════
 \section{实验与结果}\label{sec:experiments}
