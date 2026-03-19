@@ -187,3 +187,4 @@ ls $PROJ/runs/$EXP/train_*/infer/*/table2_kpis.csv 2>/dev/null && echo DONE || e
 - **SSH 执行必须** `--cwd`：`conda run --cwd $PROJ -n $ENV python ...`
 - 联网调研：WebFetch/WebSearch 不混批，每批≤2；付费墙用浏览器工具。
 - LaTeX：`xelatex` 支持中文注释；提交版用 `pdflatex`；缺包 `sudo tlmgr install <pkg>`。
+- **论文写作规范**：写论文前必须先读 `paper/writing_rules.md`，遵守其中的术语、行文、段落规范。禁止捏造术语、过度包装简单概念、使用推销性语言。
