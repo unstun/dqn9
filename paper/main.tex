@@ -266,57 +266,56 @@
 \begin{equation}\label{eq:reward_total}
   R_t = r_1 + r_2 + r_3 + r_4 + r_5
 \end{equation}
-其中$r_1$为进度奖励，$r_2$为时间惩罚，$r_3$为运动学平滑性惩罚，$r_4$为安全距离惩罚，$r_5$为终端奖励。
+其中$r_1$为进度奖励，$r_2$为时间步惩罚，$r_3$为平滑性惩罚，$r_4$为障碍物惩罚，$r_5$为终端奖励。
 
 \textit{A.~进度奖励$r_1$}
 
-基于势函数奖励塑形理论~\cite{ng1999policy}设计进度奖励，在提供稠密方向引导的同时保证最优策略不变。定义势函数$\Phi(s) = -D(s)$，其中$D(s)$为状态$s$到目标的测地线距离，则进度奖励为相邻状态势函数之差：
+进度奖励鼓励车辆向目标靠近，每步奖励正比于该步前后到目标的Dijkstra距离之差：
 \begin{equation}\label{eq:reward_prog}
-  r_1 = k_p \bigl(\Phi(s_{t+1}) - \Phi(s_t)\bigr)
-      = k_p \bigl(D_t - D_{t+1}\bigr)
+  r_1 = k_p \bigl(D_t - D_{t+1}\bigr)
 \end{equation}
-$r_1$严格满足$F(s,a,s')=\gamma\Phi(s')-\Phi(s)$的PBRS形式（此处$\gamma\approx1$），因此不改变最优策略。Dijkstra距离场为该势函数提供全局方向梯度。
+其中$D_t$为第$t$步车辆位置到目标的Dijkstra最短路径距离，$k_p=12.0$。车辆靠近目标时$D_t > D_{t+1}$，$r_1 > 0$；远离目标时$r_1 < 0$。该奖励等价于以$\Phi(s)=-D(s)$为势函数的奖励塑形~\cite{ng1999policy}，不改变最优策略。
 
 \textit{B.~时间惩罚$r_2$}
 
-每步施加恒定惩罚以抑制冗余路径：
+每步施加恒定惩罚$k_\tau=0.2$，鼓励地面无人车尽快到达目标：
 \begin{equation}\label{eq:reward_time}
   r_2 = -k_\tau
 \end{equation}
 
-\textit{C.~运动学平滑性惩罚$r_3$}
+\textit{C.~平滑性惩罚$r_3$}
 
-阿克曼转向车辆对控制输入的平滑性要求较高。转向角的剧烈变化加速转向机构磨损，纵向加加速度增加传动系统负载，大曲率行驶提高侧翻风险。运动学平滑性惩罚$r_3$由转向平滑、加速度平滑与曲率惩罚三项组成：
+为获得平滑的控制输出，$r_3$对转向角变化、加速度变化和曲率分别施加惩罚：
 \begin{equation}\label{eq:reward_smooth}
   r_3 = r_{3\delta} + r_{3a} + r_{3\kappa}
 \end{equation}
 
-转向平滑项$r_{3\delta}$惩罚相邻时刻前轮转角的变化幅度：
+$r_{3\delta}$惩罚相邻时刻的转向角变化量，$k_\delta=1.5$：
 \begin{equation}\label{eq:reward_steer}
   r_{3\delta} = -k_\delta\bigl(\delta_{t+1}-\delta_t\bigr)^2
 \end{equation}
 
-加速度平滑项$r_{3a}$抑制加加速度，并引入速度缩放因子以避免在低速起步阶段过度惩罚初始加速：
+$r_{3a}$惩罚加速度的变化，乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小，$k_a=0.2$：
 \begin{equation}\label{eq:reward_acc}
   r_{3a} = -k_a\bigl(a_t - a_{t-1}\bigr)^2\!\left(\frac{v_{t+1}}{v_{\max}}\right)^{\!2}
 \end{equation}
 
-曲率惩罚项$r_{3\kappa}$抑制大转角动作：
+$r_{3\kappa}$惩罚大转向角，$k_\kappa=0.2$：
 \begin{equation}\label{eq:reward_curv}
   r_{3\kappa} = -k_\kappa \tan^2\!\delta_{t+1}
 \end{equation}
 
-\textit{D.~安全距离惩罚$r_4$}
+\textit{D.~障碍物惩罚$r_4$}
 
-借鉴人工势场法的反距离排斥力形式设计障碍物惩罚。定义车体障碍物余量$d_{\text{obs}}(s) = \min(d_1 - r,\; d_2 - r)$，其中$d_1$、$d_2$分别为前、后圆心到最近障碍边界的距离，$r$为碰撞检测圆半径。当$d_{\text{obs}}$降至安全阈值$d_s$以下时，排斥惩罚为
+定义障碍物间距$d_{\text{obs}}(s) = \min(d_1 - r,\; d_2 - r)$，其中$d_1$、$d_2$为前、后碰撞检测圆心到最近障碍边界的距离，$r$为圆半径。当$d_{\text{obs}} < d_s$时，惩罚为
 \begin{equation}\label{eq:reward_obs}
   r_4 = -\min\!\left(\bar{r}_o,\;\; k_o\!\left(\frac{1}{d_{\text{obs}}+\varepsilon}-\frac{1}{d_s+\varepsilon}\right)\right),\quad d_{\text{obs}} < d_s
 \end{equation}
-其中$\varepsilon$为防止除零的小常数，$\bar{r}_o$为惩罚饱和上界。该函数在$d_{\text{obs}} = d_s$处连续衰减为零，在$d_{\text{obs}} \to 0$时趋于$\bar{r}_o$。
+其中$k_o=1.5$，$\varepsilon=10^{-3}$为防止除零的小常数，$d_s=\SI{0.20}{m}$为安全距离阈值，$\bar{r}_o=10.0$为惩罚上界。$d_{\text{obs}} = d_s$时惩罚为零，$d_{\text{obs}} \to 0$时惩罚趋于$\bar{r}_o$。
 
 \textit{E.~终端奖励$r_5$}
 
-回合终止时给予固定奖惩：
+回合终止时给予固定奖惩，$R_{\text{goal}}=400$，$R_{\text{col}}=200$，$R_{\text{stuck}}=300$：
 \begin{equation}\label{eq:reward_term}
   r_5 =
   \begin{cases}
@@ -325,32 +324,6 @@ $r_1$严格满足$F(s,a,s')=\gamma\Phi(s')-\Phi(s)$的PBRS形式（此处$\gamma
     -R_{\text{stuck}} & \text{停滞超时}
   \end{cases}
 \end{equation}
-
-表~\ref{tab:reward_params}~列出了奖励函数的超参数及取值。
-
-\begin{table}[!htbp]
-\centering
-\caption{奖励函数超参数}
-\label{tab:reward_params}
-\begin{tabular}{llll}
-\toprule
-符号 & 数值 & 含义 \\
-\midrule
-$k_p$           & 12.0   & 进度奖励系数 \\
-$k_\tau$        & 0.2    & 时间步惩罚 \\
-$k_\delta$      & 1.5    & 转向平滑系数 \\
-$k_a$           & 0.2    & 加速度平滑系数 \\
-$k_\kappa$      & 0.2    & 曲率惩罚系数 \\
-$k_o$           & 1.5    & 障碍物排斥系数 \\
-$\bar{r}_o$     & 10.0   & 障碍物惩罚饱和上界 \\
-$\varepsilon$   & $10^{-3}$ & 防除零常数 \\
-$d_s$           & \SI{0.20}{m} & 安全距离阈值 \\
-$R_{\text{goal}}$ & 400.0 & 到达目标奖励 \\
-$R_{\text{col}}$  & 200.0 & 碰撞惩罚 \\
-$R_{\text{stuck}}$& 300.0 & 停滞超时惩罚 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsubsection{MD-DDQN 路径规划架构}\label{sec:network}
 
