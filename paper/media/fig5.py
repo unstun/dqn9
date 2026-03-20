@@ -45,7 +45,9 @@ cost_fill = np.nanmax(cost[np.isfinite(cost)]) * 1.05
 cost_display = np.where(np.isfinite(cost), cost, cost_fill)
 
 # ── 绘图 ─────────────────────────────────────────────────────────────
-fig, axes = plt.subplots(1, 2, figsize=(7, 3.3))
+# gridspec_kw 给右图多留 colorbar 空间，但两个 Axes 本身等宽
+fig, axes = plt.subplots(1, 2, figsize=(8, 3.3),
+                         gridspec_kw={"width_ratios": [1, 1.18]})
 
 def draw_grid_lines(ax, n):
     for i in range(n + 1):
@@ -77,12 +79,12 @@ ax.imshow(np.ma.masked_where(grid == 0, grid.astype(float)),
           origin="lower", cmap="gray_r", interpolation="nearest", alpha=0.8)
 draw_grid_lines(ax, N)
 mark_se(ax)
-fig.colorbar(im, ax=ax, shrink=0.85, label="Distance (m)")
+fig.colorbar(im, ax=ax, shrink=0.85, label="Distance (m)", pad=0.03)
 ax.set_xlabel("(b) Goal distance field", fontsize=10)
 ax.set_xticks([])
 ax.set_yticks([])
 
-# 图例
+# 图例（右上角带框）
 legend_elements = [
     mpatches.Patch(facecolor="black", edgecolor="gray", label="Obstacle"),
     plt.Line2D([0], [0], marker="o", color="w", markerfacecolor="#2196F3",
@@ -90,11 +92,11 @@ legend_elements = [
     plt.Line2D([0], [0], marker="*", color="w", markerfacecolor="#F44336",
                markersize=10, label="Goal"),
 ]
-fig.legend(handles=legend_elements, loc="upper center", ncol=3,
-           fontsize=8, frameon=False, bbox_to_anchor=(0.5, 1.02))
+axes[0].legend(handles=legend_elements, loc="upper right",
+               fontsize=7, frameon=True, fancybox=False,
+               edgecolor="gray", facecolor="white", framealpha=0.9)
 
 plt.tight_layout()
-plt.subplots_adjust(top=0.90)
 
 OUT = Path(__file__).resolve().parent
 fig.savefig(str(OUT / "fig5.png"), dpi=300, bbox_inches="tight", pad_inches=0.1)

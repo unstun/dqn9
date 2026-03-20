@@ -18,7 +18,7 @@
     "kpi_time_mode": "rollout",
     "device": "cuda",
     "cuda_device": 0,
-    "seed": 42,
+    "seed": 200,
     "rl_algos": ["cnn-ddqn"],
     "models": "abl_resolution_n16",
     "out": "abl_resolution_n16_infer",
