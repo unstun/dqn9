@@ -142,7 +142,7 @@
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.55\columnwidth]{fig2.pdf}
+\includegraphics[width=0.35\columnwidth]{fig2.pdf}
 \caption{地面无人车实验平台}
 \label{fig:platform}
 \end{figure}
@@ -218,7 +218,7 @@
 
 \paragraph{（1）状态空间}
 
-路径规划要求智能体同时掌握自身运动状态和周围的空间布局，观测因此由一个标量向量和一张多通道地图组成：
+地面无人车需要同时获取自身运动学状态和周围环境，观测由标量向量与双通道地图两部分组成：
 \begin{equation}
   o_t = \left( \mathbf{F}_t, \mathbf{M}_t \right)
 \end{equation}
@@ -227,9 +227,9 @@
 \begin{equation}
   \mathbf{F}_t = \big[ x, y, g_x, g_y , \sin\theta, \cos\theta, v, \delta, \phi, \alpha, d_{\min} \big]
 \end{equation}
-其中 $(x, y)$ 为自车全局位置，$(g_x, g_y)$ 为目标点坐标，$(\sin\theta, \cos\theta)$ 将偏航角编码为连续量，$v$ 和 $\delta$ 分别是纵向车速与前轮转角。$\phi$ 取自 Dijkstra 距离场在当前位置的插值，$\alpha$ 为目标相对方位角，$d_{\min}$ 则通过欧氏距离变换得到当前位置到最近障碍物的距离。
+其中 $(x, y)$ 为在全局坐标系下的位置，$(g_x, g_y)$ 是目标位置，航向角以 $(\sin\theta, \cos\theta)$ 表示，$v$ 和 $\delta$ 分别是纵向车速与前轮转角。$\phi$ 为代价场下到终点的距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为通过欧氏距离变换得到的车体表面到最近障碍物的最小间隙。
 
-地图部分 $\mathbf{M}_t \in \mathbb{R}^{2 \times N \times N}$（$N = 12$）由全局栅格地图降采样后按通道维度拼接而成：
+地图部分由全局栅格地图降采样后堆叠两个通道形成：
 \begin{equation}
   \mathbf{M}_t = \big[ \mathbf{O}_t; \mathbf{G}_t \big]
 \end{equation}
@@ -237,19 +237,14 @@
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\columnwidth]{fig5.pdf}
-\caption{多通道地图张量的两层特征图示意。(a)~占据栅格 $\mathbf{O}_t$：黑色区域为障碍物，白色为可通行区域；(b)~Dijkstra目标距离场 $\mathbf{G}_t$：颜色编码从各自由空间栅格沿无碰撞路径到达目标点的测地线距离，白色区域为不可达障碍物。}
+\caption{双通道地图张量的特征图示意。(a)~占据栅格 $\mathbf{O}_t$：黑色区域为障碍物，白色为可通行区域；(b)~Dijkstra目标距离场 $\mathbf{G}_t$：颜色编码从各自由空间栅格沿无碰撞路径到达目标点的测地线距离，白色区域为不可达障碍物。}
 \label{fig:map_channels}
 \end{figure}
 
-两层通道如图~\ref{fig:map_channels}所示：$\mathbf{O}_t$ 是全局占据栅格，$\mathbf{G}_t$ 是 Dijkstra 目标距离场。两者的像素值各自独立归一化到 $[-1, 1]$。值得注意的是，障碍物安全裕度并未在地图通道中重复编码——$d_{\min}$ 已经以标量形式携带了这一信息，再放入地图只会增加冗余。
-
-在空间观测的范围选择上，本文没有采用自车中心（Ego-centric）的局部裁剪，而是让智能体在每个时刻都观测整张降采样后的全局地图。这样做的好处很直接：智能体可以一次看到目标位置和所有狭窄通道之间的拓扑关系，不存在滑动窗口把关键通路截断的问题。推理时，$\mathbf{M}_t$ 先经卷积编码器提取空间特征，再与 $\mathbf{F}_t$ 拼接送入全连接层，输出各离散动作的 $Q$ 值。
-
-这里有一个关键的分工：$N \times N$ 低分辨率地图负责宏观路径结构——哪里是通行走廊、哪里是障碍物密集区，卷积网络从中提取这些信息；而逐棵障碍物的精细碰撞回避交给动作掩码在原始地图分辨率上处理，详见第~\ref{sec:masking}~节。这种分工之所以可行，与 Dijkstra 距离场的一个性质有关：$\mathbf{G}_t$ 在原始 $W \times H$ 分辨率上经八连通 Dijkstra 算法计算，记录了绕行障碍物的最短路径距离。一棵孤立障碍物的物理尺寸可能远小于降采样后的一个像素，但它对距离场的扰动范围远大于自身尺寸，双线性插值降采样后梯度方向依然指向正确的绕障路径。换言之，低分辨率卷积输入和原始分辨率动作掩码各司其职，一起保证避障的可靠性。
-
+如图~\ref{fig:map_channels}所示，$\mathbf{O}_t$ 是全局占据栅格，$\mathbf{G}_t$ 是代价场。
 \paragraph{（2）动作空间}
 
-首先构造一个动作查找表$\mathbf{T}\in\mathbb{R}^{35\times2}$，每个动作对应一组$[\dot{\delta},\, a]$。动作空间可表示为两个离散集合的笛卡尔积：
+定义离散动作空间$A$，共含35个动作，每个动作对应一组$[\dot{\delta},\, a]$。$A$可表示为两个离散集合的笛卡尔积：
 \begin{equation}
   A = \{(\dot{\delta}_i, a_j) \mid \dot{\delta}_i \in \Delta_{\dot{\delta}},\, a_j \in \Delta_a\},\quad |A|=7\times5=35
 \end{equation}

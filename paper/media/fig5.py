@@ -92,7 +92,7 @@ legend_elements = [
     plt.Line2D([0], [0], marker="*", color="w", markerfacecolor="#F44336",
                markersize=10, label="Goal"),
 ]
-axes[0].legend(handles=legend_elements, loc="upper right",
+axes[0].legend(handles=legend_elements, loc="upper left",
                fontsize=7, frameon=True, fancybox=False,
                edgecolor="gray", facecolor="white", framealpha=0.9)
 
