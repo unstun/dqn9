@@ -262,60 +262,49 @@
 
 \paragraph{（3）奖励函数的设计}
 
-每个时间步的总奖励由五项组成：
+在 MDP 框架中，奖励函数用于评估智能体每步动作的价值。多数已有研究仅在到达目标或发生碰撞时给予非零奖励，其余时刻奖励为零，导致奖励信号稀疏，智能体难以从中获得有效的学习梯度。为此，本文设计了一种复合奖励函数$R_t$，使智能体在每次状态转移后均能获得反馈信号。每个时间步的总奖励由五项组成：
 \begin{equation}\label{eq:reward_total}
   R_t = r_1 + r_2 + r_3 + r_4 + r_5
 \end{equation}
-其中$r_1$为进度奖励，$r_2$为时间步惩罚，$r_3$为平滑性惩罚，$r_4$为障碍物惩罚，$r_5$为终端奖励。
+其中$r_1$为进度奖励，$r_2$为时间步惩罚，$r_3$为平滑性惩罚，$r_4$为障碍物惩罚，$r_5$为终端奖励。下面分别说明各项的设计。
 
-\textit{A.~进度奖励$r_1$}
-
-进度奖励鼓励车辆向目标靠近，每步奖励正比于该步前后到目标的Dijkstra距离之差：
+进度奖励$r_1$引导车辆向目标靠近，每步奖励正比于该步前后到目标的 Dijkstra 距离之差：
 \begin{equation}\label{eq:reward_prog}
   r_1 = k_p \bigl(D_t - D_{t+1}\bigr)
 \end{equation}
-其中$D_t$为第$t$步车辆位置到目标的Dijkstra最短路径距离，$k_p=12.0$。车辆靠近目标时$D_t > D_{t+1}$，$r_1 > 0$；远离目标时$r_1 < 0$。该奖励等价于以$\Phi(s)=-D(s)$为势函数的奖励塑形~\cite{ng1999policy}，不改变最优策略。
+其中$D_t$为第$t$步车辆位置到目标的 Dijkstra 最短路径距离，$k_p=12.0$为增益系数。车辆靠近目标时$D_t > D_{t+1}$，$r_1$为正；远离目标时$r_1$为负。
 
-\textit{B.~时间惩罚$r_2$}
-
-每步施加恒定惩罚$k_\tau=0.2$，鼓励地面无人车尽快到达目标：
+时间步惩罚$r_2$在每步施加恒定负值，促使车辆尽快到达目标：
 \begin{equation}\label{eq:reward_time}
   r_2 = -k_\tau
 \end{equation}
+其中$k_\tau=0.2$。
 
-\textit{C.~平滑性惩罚$r_3$}
-
-为获得平滑的控制输出，$r_3$对转向角变化、加速度变化和曲率分别施加惩罚：
+平滑性惩罚$r_3$约束控制输出的平滑程度，由转向角变化、加速度变化和曲率三项构成：
 \begin{equation}\label{eq:reward_smooth}
   r_3 = r_{3\delta} + r_{3a} + r_{3\kappa}
 \end{equation}
-
-$r_{3\delta}$惩罚相邻时刻的转向角变化量，$k_\delta=1.5$：
+其中$r_{3\delta}$惩罚相邻时刻的转向角变化量：
 \begin{equation}\label{eq:reward_steer}
   r_{3\delta} = -k_\delta\bigl(\delta_{t+1}-\delta_t\bigr)^2
 \end{equation}
-
-$r_{3a}$惩罚加速度的变化，乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小，$k_a=0.2$：
+其中$k_\delta=1.5$。$r_{3a}$惩罚加速度的变化，并乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小：
 \begin{equation}\label{eq:reward_acc}
   r_{3a} = -k_a\bigl(a_t - a_{t-1}\bigr)^2\!\left(\frac{v_{t+1}}{v_{\max}}\right)^{\!2}
 \end{equation}
-
-$r_{3\kappa}$惩罚大转向角，$k_\kappa=0.2$：
+其中$k_a=0.2$。$r_{3\kappa}$惩罚大转向角：
 \begin{equation}\label{eq:reward_curv}
   r_{3\kappa} = -k_\kappa \tan^2\!\delta_{t+1}
 \end{equation}
+其中$k_\kappa=0.2$。上述三项共同作用，抑制急转弯和突变加速，使规划路径更加平滑。
 
-\textit{D.~障碍物惩罚$r_4$}
-
-定义障碍物间距$d_{\text{obs}}(s) = \min(d_1 - r,\; d_2 - r)$，其中$d_1$、$d_2$为前、后碰撞检测圆心到最近障碍边界的距离，$r$为圆半径。当$d_{\text{obs}} < d_s$时，惩罚为
+障碍物惩罚$r_4$在车辆接近障碍物时产生。定义障碍物间距$d_{\text{obs}}(s) = \min(d_1 - r,\; d_2 - r)$，其中$d_1$、$d_2$分别为前、后碰撞检测圆心到最近障碍边界的距离，$r$为圆半径。当$d_{\text{obs}} < d_s$时：
 \begin{equation}\label{eq:reward_obs}
-  r_4 = -\min\!\left(\bar{r}_o,\;\; k_o\!\left(\frac{1}{d_{\text{obs}}+\varepsilon}-\frac{1}{d_s+\varepsilon}\right)\right),\quad d_{\text{obs}} < d_s
+  r_4 = -\min\!\left(\bar{r}_o,\;\; k_o\!\left(\frac{1}{d_{\text{obs}}+\varepsilon}-\frac{1}{d_s+\varepsilon}\right)\right)
 \end{equation}
-其中$k_o=1.5$，$\varepsilon=10^{-3}$为防止除零的小常数，$d_s=\SI{0.20}{m}$为安全距离阈值，$\bar{r}_o=10.0$为惩罚上界。$d_{\text{obs}} = d_s$时惩罚为零，$d_{\text{obs}} \to 0$时惩罚趋于$\bar{r}_o$。
+其中$k_o=1.5$，$\varepsilon=10^{-3}$防止除零，$d_s=\SI{0.20}{m}$为安全距离阈值，$\bar{r}_o=10.0$为惩罚上界。该函数在$d_{\text{obs}} = d_s$时惩罚为零，随$d_{\text{obs}}$减小单调递增，趋近于上界$\bar{r}_o$。当$d_{\text{obs}} \geq d_s$时$r_4 = 0$。
 
-\textit{E.~终端奖励$r_5$}
-
-回合终止时给予固定奖惩，$R_{\text{goal}}=400$，$R_{\text{col}}=200$，$R_{\text{stuck}}=300$：
+终端奖励$r_5$在回合终止时给予固定奖惩：
 \begin{equation}\label{eq:reward_term}
   r_5 =
   \begin{cases}
@@ -324,6 +313,7 @@ $r_{3\kappa}$惩罚大转向角，$k_\kappa=0.2$：
     -R_{\text{stuck}} & \text{停滞超时}
   \end{cases}
 \end{equation}
+其中$R_{\text{goal}}=400$，$R_{\text{col}}=200$，$R_{\text{stuck}}=300$。到达目标给予最大正奖励，碰撞和停滞给予负惩罚，三者量级的差异反映了到达目标相对于避免失败的更高优先级。
 
 \subsubsection{MD-DDQN 路径规划架构}\label{sec:network}
 
