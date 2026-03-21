@@ -325,7 +325,7 @@ Q 网络接收多通道地图张量与标量特征两类输入，输出 $|\mathc
 
 Q 网络的整体架构如图~\ref{fig:architecture}~所示。网络接收 $2\times12\times12$ 的多通道地图张量作为输入，两个通道分别编码占据栅格与 Dijkstra 目标距离场。第一个隐藏层将 32 个 $3\times3$ 滤波器以步幅~1 与输入地图卷积并应用 ReLU 激活，保持空间分辨率不变；第二个隐藏层将 64 个 $3\times3$ 滤波器以步幅~2 卷积，将特征图从 $12\times12$ 缩减至 $6\times6$；第三个卷积层同样使用 64 个 $3\times3$ 滤波器、步幅~2，进一步下采样至 $3\times3$。三层卷积逐层下采样，将地图编码为 $64\times3\times3=576$ 维的特征向量。
 
-卷积特征经展平后与 11 维标量特征（位姿、速度、转向角、目标方位）拼接，形成 $576+11=587$ 维的融合向量，再经共享全连接层（256 个 ReLU 单元）处理后馈入 Dueling 输出头部。表~\ref{tab:network_spec}~汇总了各层的配置与输出维度。
+卷积特征经展平后与 11 维标量特征拼接，形成 $576+11=587$ 维的融合向量。标量特征包括车辆与目标位置各 2 维、航向角三角编码 2 维、速度、转向角、Dijkstra 目标距离、目标相对方位角和最近障碍物距离各 1 维，全部归一化至 $[-1,1]$。融合向量再经两层共享全连接层（各 256 个 ReLU 单元）处理后馈入 Dueling 输出头部。表~\ref{tab:network_spec}~汇总了各层的配置与输出维度。
 
 \begin{table}[!htbp]
 \centering
@@ -341,7 +341,8 @@ Conv3   & Conv2D  & $64\!\times\!3\!\times\!3$, $s\!=\!2$ & $64\!\times\!3\!\tim
 MHA     & MHA & $h\!=\!4$, $d\!=\!64$ & $64\!\times\!3\!\times\!3$ & — \\
 Flatten & —      & —    & 576  & — \\
 Concat  & —      & $576+11$ & 587  & — \\
-Shared  & FC      & $587\!\to\!256$ & 256  & ReLU \\
+Shared1 & FC      & $587\!\to\!256$ & 256  & ReLU \\
+Shared2 & FC      & $256\!\to\!256$ & 256  & ReLU \\
 V-stream & FC$\times$2 & $256\!\to\!256\!\to\!1$  & 1  & Linear \\
 A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
 \bottomrule
@@ -350,7 +351,7 @@ A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
 
 \paragraph{多头自注意力}\label{sec:mha}
 
-卷积网络通过局部感受野逐层提取空间特征。经三层卷积（步幅 1-2-2）后，理论感受野为 $13\times13$，已覆盖 $12\times12$ 输入的全部区域，但有效感受野通常远小于理论值，导致特征图边缘位置难以有效关注对侧信息。为捕获全局上下文信息，本文在第三层卷积输出之后引入多头自注意力（Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使网络能够感知障碍物分布与目标距离场之间的全局空间结构。
+卷积网络通过局部感受野逐层提取空间特征。经三层卷积（步幅 1-2-2）后，理论感受野为 $9\times9$，仅覆盖 $12\times12$ 输入面积的 56\%，且有效感受野通常远小于理论值，导致特征图边缘位置难以有效关注对侧信息。为捕获全局上下文信息，本文在第三层卷积输出之后引入多头自注意力（Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使网络能够感知障碍物分布与目标距离场之间的全局空间结构。
 
 \paragraph{Dueling 网络架构}\label{sec:md}
 
@@ -365,10 +366,10 @@ A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
 
 \paragraph{学习算法与优化}\label{sec:ddqn}
 
-Q 值更新采用 Double DQN 算法~\cite{van2016deep}，由在线网络选择动作、目标网络评估价值，以缓解标准 Q 学习的过估计偏差：
+Q 值更新采用 Double DQN 算法~\cite{van2016deep}，由在线网络选择动作、目标网络评估价值，以缓解标准 Q 学习的过估计偏差。为加速信用分配，采用 $n=3$ 步回报：
 \begin{equation}\label{eq:ddqn_target}
-  a^{*} = \arg\max_{a'}\;Q_{\theta}(s',a'), \qquad
-  y = r + \gamma\,Q_{\theta^{-}}\!(s',a^{*}),
+  a^{*} = \arg\max_{a'}\;Q_{\theta}(s_{t+n},a'), \qquad
+  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}),
 \end{equation}
 其中 $\theta$ 和 $\theta^{-}$ 分别为在线网络和目标网络的参数，目标网络每 $T_{\mathrm{target}}=1000$ 步执行硬拷贝更新。训练损失采用 Huber 损失~\cite{huber1964robust}：
 \begin{equation}\label{eq:huber}
@@ -392,7 +393,8 @@ Q 值更新采用 Double DQN 算法~\cite{van2016deep}，由在线网络选择�
 经验回放容量              & $2\times10^{5}$ \\
 目标网络更新间隔          & 1000 步 \\
 梯度裁剪范数              & 10 \\
-$\varepsilon$-贪心调度    & $1.0 \to 0.01$（线性衰减） \\
+$n$-step 回报             & 3 \\
+$\varepsilon$-贪心调度    & $0.6 \to 0.01$（线性衰减，2000 回合） \\
 DQfD 预训练步数           & 40\,000 \\
 训练回合数                & 10\,000 \\
 决策步长 $dt$             & \SI{0.05}{s} \\
@@ -405,10 +407,10 @@ DQfD 预训练步数           & 40\,000 \\
 为加速训练并提供稳定的行为先验，本文采用 DQfD 方法~\cite{hester2018deep}。专家演示通过在训练地图上运行 Hybrid A* 规划器~\cite{dolgov2010path}生成，使用与训练相同的运动学模型和碰撞检测。演示转移存储在经验回放缓冲区中，带有永久标志以防止在在线训练期间被覆盖。
 
 \textit{预训练阶段。}
-在在线交互开始之前，Q 网络在演示数据上进行 $N_{\mathrm{pre}}=40{,}000$ 步梯度更新的预训练，使用复合损失：
+在在线交互开始之前，Q 网络在演示数据上进行 $N_{\mathrm{pre}}=40{,}000$ 步梯度更新的预训练。由于预训练阶段仅有专家演示可用，尚无环境交互产生的转移对，损失函数仅包含间隔损失与行为克隆损失：
 \begin{equation}\label{eq:dqfd_pretrain}
-  \mathcal{L}_{\mathrm{pre}} = \mathcal{L}_{\mathrm{TD}}
-    + \lambda_{\mathrm{M}}\,\mathcal{L}_{\mathrm{margin}}
+  \mathcal{L}_{\mathrm{pre}} =
+    \lambda_{\mathrm{M}}\,\mathcal{L}_{\mathrm{margin}}
     + \lambda_{\mathrm{CE}}\,\mathcal{L}_{\mathrm{CE}},
 \end{equation}
 其中 $\lambda_{\mathrm{M}}=1.0$，$\lambda_{\mathrm{CE}}=1.0$。
@@ -466,9 +468,9 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \textit{TD 目标掩码。}
 动作掩码同样应用于 TD 目标计算中的下一状态 Q 值（公式~\ref{eq:ddqn_target}）。下一状态的可接纳掩码 $\mathbf{m}'$ 与每个转移一起存储在经验回放缓冲区中。在目标计算时，不可行的下一动作被掩码掉：
 \begin{equation}\label{eq:masked_target}
-  a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s')}Q_{\theta}(s',a'),
+  a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
   \qquad
-  y = r + \gamma\,Q_{\theta^{-}}\!(s',a^{*}).
+  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
 \end{equation}
 该机制防止 Q 值从运动学不可行或碰撞倾向的后继动作中反向传播，有助于训练过程的稳定收敛。
 
@@ -483,7 +485,7 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \State 将 $\mathcal{D}_E$ 填充至回放缓冲区 $\mathcal{R}$（永久标志）
 \Statex \textbf{// 阶段一：DQfD 预训练}
 \For{$i = 1$ \textbf{to} $N_{\mathrm{pre}}$}
-    \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \mathcal{L}_{\mathrm{TD}} + \lambda_{\mathrm{M}}\mathcal{L}_{\mathrm{margin}} + \lambda_{\mathrm{CE}}\mathcal{L}_{\mathrm{CE}}$
+    \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \lambda_{\mathrm{M}}\mathcal{L}_{\mathrm{margin}} + \lambda_{\mathrm{CE}}\mathcal{L}_{\mathrm{CE}}$
     \State $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}_{\mathrm{pre}}$
 \EndFor
 \Statex \textbf{// 阶段二：在线训练}
