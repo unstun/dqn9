@@ -55,7 +55,7 @@ ls $PROJ/runs/$EXP/train_*/infer/*/table2_kpis.csv 2>/dev/null && echo DONE || e
 
 | 中文                              | 英文                | 禁用                 | 说明                                                                                       |
 | --------------------------------- | ------------------- | -------------------- | ------------------------------------------------------------------------------------------ |
-| Dijkstra代价场 / 到达目标的代价场 | goal distance field | cost-to-go field/map | Dijkstra 预计算的绕障最短路径距离场；"cost-to-go"在 DRL 语境下易与 RL 值函数混淆，禁止使用 |
+| Dijkstra 目标距离图 | goal distance map | cost-to-go field/map, 目标距离场 | Dijkstra 预计算的绕障最短路径距离图；"cost-to-go"在 DRL 语境下易与 RL 值函数混淆，禁止使用；"场"改"图"以匹配论文用语 |
 | MD                                | MHA + Duel          | —                   | Multi-Head Attention + Dueling Network 的组合简称                                          |
 
 - 观测通道描述：occupancy, **goal distance**
