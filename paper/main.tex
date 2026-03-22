@@ -522,11 +522,29 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \end{figure}
 
 \FloatBarrier
-\subsection{实验设置}\label{ssec:setup}
+\subsection{对比算法与评价指标}\label{ssec:setup}
 
-实验在第~\ref{ssec:real_scene_setup}~节的真实林地栅格地图上进行。以固定随机种子从自由空间中采样 50 组起终点对，经 Dijkstra 可达性验证后，按测地线距离分为远距离（$\geq\SI{18}{m}$）和近距离（$\SI{6}{m}$--$\SI{14}{m}$）两组。所有算法使用同一碰撞检测配置。
+\subsubsection{对比算法}
 
-成功率在全部 50 组任务上统计。路径质量仅在三种算法对同一起终点对均成功的子集上计算，报告路径长度、平均曲率和计算时间。
+为全面评估 MD-DDQN 的规划性能，选取两种代表性经典规划器作为对比基线，分别覆盖基于采样和基于搜索两大类方法。
+
+\textbf{RRT*}~\cite{karaman2011sampling}是 RRT 的渐近最优变体，通过随机采样与重连操作在构型空间中逐步构建无碰撞路径树。该算法具有概率完备性，理论上随采样数增加可收敛至最优路径，但在稠密障碍物环境中收敛速度较慢。
+
+\textbf{LO-HA*}（Lattice-Optimized Hybrid A*）结合了 Hybrid A*~\cite{dolgov2010path}的启发式搜索与 Lattice 运动基元~\cite{pivtoraiko2009differentially}的运动学约束，在离散化状态空间上搜索动力学可行路径。该算法能生成满足车辆运动学约束的平滑路径，但计算复杂度随地图面积和航向离散化程度的增加而急剧增长。
+
+两种基线算法均使用与 MD-DDQN 完全相同的双圆碰撞检测器，超时阈值设为 $\SI{10}{s}$，确保对比条件的一致性。
+
+\subsubsection{评价指标}
+
+实验从两个维度评估算法性能：成功率和路径质量。
+
+\textbf{成功率}定义为算法在给定起终点对上成功生成无碰撞路径的比例，在全部 50 组任务上统计。对于经典规划器，超过 $\SI{10}{s}$ 未返回结果视为失败。
+
+路径质量通过三项指标衡量。\textbf{路径长度}为路径的累计弧长，反映路径的全局效率。\textbf{平均曲率}定义为路径上各点曲率的算术平均值，值越小表示路径越平滑，对实际车辆的跟踪控制越友好。\textbf{计算时间}为算法从接收查询到返回完整路径的耗时。路径质量仅在三种算法对同一起终点对均成功的子集上计算，以消除失败路径对质量指标的混杂影响。
+
+\subsubsection{实验协议}
+
+实验在第~\ref{ssec:real_scene_setup}~节所述的真实林地栅格地图上进行。以固定随机种子从自由空间中采样 50 组起终点对，经 Dijkstra 可达性验证后，按测地线距离分为远距离（$\geq\SI{18}{m}$）和近距离（$\SI{6}{m}$--$\SI{14}{m}$）两组。远距离任务要求车辆穿越地图中多个稠密障碍物区域，考验算法的长程规划能力；近距离任务则侧重评估局部避障与路径平滑性。
 
 \FloatBarrier
 \subsection{核心对比实验}\label{ssec:core}
@@ -537,8 +555,6 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \caption{真实林地地图 realmap\_a 上的代表性路径轨迹。蓝色实线为 MD-DDQN，红色虚线为 LO-HA*，绿色点线为 RRT*，三者使用相同的起终点对。DRL 地面无人车在穿越狭窄通道时生成了更平滑、更直接的路径。}
 \label{fig:trajectory}
 \end{figure*}
-
-本实验将 MD-DDQN与两种经典规划器——RRT* 和 Lattice-Optimized Hybrid A*（LO-HA*）进行对比。每组实验随机生成50组起终点对，经 Dijkstra 可达性验证确保路径可行。经典规划器的超时阈值为 $\SI{10}{s}$。
 
 \subsubsection{成功率结果}
 
