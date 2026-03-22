@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD-DDQN Network Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .architecture-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .legend h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .export-note {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MD-DDQN Network Architecture</h1>
+        
+        <svg class="architecture-svg" viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- 渐变定义 -->
+                <linearGradient id="convGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#5DADE2;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2E86AB;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="convTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#85C1E9;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="convSide" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#2E86AB;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#1B4F72;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="mhaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#48C9B0;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#1ABC9C;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="fcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#82E0AA;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#58D68D;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="valueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#F1948A;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#E74C3C;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="advGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#58D68D;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#27AE60;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="qGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#F8C471;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#F39C12;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="maskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#F5B7B1;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#E74C3C;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="outputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#BB8FCE;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#9B59B6;stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- 阴影滤镜 -->
+                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+                </filter>
+                
+                <!-- 箭头标记 -->
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+                </marker>
+            </defs>
+            
+            <!-- 背景组标签 -->
+            <g opacity="0.15">
+                <rect x="180" y="80" width="480" height="60" rx="5" fill="#5DADE2"/>
+                <text x="420" y="115" text-anchor="middle" font-size="14" fill="#2E86AB" font-weight="bold" font-style="italic">CNN Feature Extractor</text>
+                
+                <rect x="980" y="80" width="200" height="60" rx="5" fill="#F39C12"/>
+                <text x="1080" y="115" text-anchor="middle" font-size="14" fill="#D68910" font-weight="bold" font-style="italic">Dueling Head (MD)</text>
+                
+                <rect x="1220" y="120" width="150" height="60" rx="5" fill="#E74C3C"/>
+                <text x="1295" y="155" text-anchor="middle" font-size="14" fill="#C0392B" font-weight="bold" font-style="italic">Action Masking</text>
+            </g>
+            
+            <!-- 输入层 - 占据通道 -->
+            <g transform="translate(40, 180)">
+                <!-- 3D效果的输入块 -->
+                <polygon points="0,30 15,15 35,15 20,30" fill="#BDC3C7" stroke="#7F8C8D" stroke-width="1"/>
+                <polygon points="20,30 35,15 35,95 20,110" fill="#95A5A6" stroke="#7F8C8D" stroke-width="1"/>
+                <rect x="0" y="30" width="20" height="80" fill="#D5DBDB" stroke="#7F8C8D" stroke-width="1"/>
+                <text x="10" y="75" text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="bold">O</text>
+                <text x="10" y="130" text-anchor="middle" font-size="11" fill="#555">Occ</text>
+            </g>
+            
+            <!-- 输入层 - Goal Distance通道 -->
+            <g transform="translate(75, 180)">
+                <polygon points="0,30 15,15 35,15 20,30" fill="#F9E79F" stroke="#D4AC0D" stroke-width="1"/>
+                <polygon points="20,30 35,15 35,95 20,110" fill="#F4D03F" stroke="#D4AC0D" stroke-width="1"/>
+                <rect x="0" y="30" width="20" height="80" fill="#FCF3CF" stroke="#D4AC0D" stroke-width="1"/>
+                <text x="10" y="75" text-anchor="middle" font-size="16" fill="#B7950B" font-weight="bold">G</text>
+                <text x="10" y="130" text-anchor="middle" font-size="11" fill="#555">GDF</text>
+            </g>
+            
+            <!-- 输入尺寸标注 -->
+            <text x="67" y="335" text-anchor="middle" font-size="10" fill="#666">2×12×12</text>
+            
+            <!-- 标量输入 -->
+            <g transform="translate(40, 360)">
+                <rect x="0" y="0" width="55" height="30" rx="3" fill="#ECF0F1" stroke="#BDC3C7" stroke-width="1"/>
+                <text x="27" y="12" text-anchor="middle" font-size="9" fill="#555">Scalars</text>
+                <text x="27" y="24" text-anchor="middle" font-size="8" fill="#777">11-d</text>
+            </g>
+            
+            <!-- Conv1 块 -->
+            <g transform="translate(160, 190)">
+                <polygon points="0,25 20,5 80,5 60,25" fill="url(#convTop)" stroke="#2471A3" stroke-width="1.5"/>
+                <polygon points="60,25 80,5 80,85 60,105" fill="url(#convSide)" stroke="#2471A3" stroke-width="1.5"/>
+                <rect x="0" y="25" width="60" height="80" fill="url(#convGradient)" stroke="#2471A3" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="30" y="70" text-anchor="middle" font-size="20" fill="white" font-weight="bold">32</text>
+                <text x="30" y="125" text-anchor="middle" font-size="10" fill="#2471A3">Conv₁ 3×3</text>
+            </g>
+            
+            <!-- Conv2 块 -->
+            <g transform="translate(280, 210)">
+                <polygon points="0,20 15,5 60,5 45,20" fill="url(#convTop)" stroke="#2471A3" stroke-width="1.5"/>
+                <polygon points="45,20 60,5 60,65 45,80" fill="url(#convSide)" stroke="#2471A3" stroke-width="1.5"/>
+                <rect x="0" y="20" width="45" height="60" fill="url(#convGradient)" stroke="#2471A3" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="22" y="55" text-anchor="middle" font-size="16" fill="white" font-weight="bold">64</text>
+                <text x="22" y="100" text-anchor="middle" font-size="9" fill="#2471A3">Conv₂ s=2</text>
+            </g>
+            
+            <!-- Conv3 块 -->
+            <g transform="translate(380, 225)">
+                <polygon points="0,15 12,3 45,3 33,15" fill="url(#convTop)" stroke="#2471A3" stroke-width="1.5"/>
+                <polygon points="33,15 45,3 45,48 33,60" fill="url(#convSide)" stroke="#2471A3" stroke-width="1.5"/>
+                <rect x="0" y="15" width="33" height="45" fill="url(#convGradient)" stroke="#2471A3" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="16" y="42" text-anchor="middle" font-size="13" fill="white" font-weight="bold">64</text>
+                <text x="16" y="80" text-anchor="middle" font-size="9" fill="#2471A3">Conv₃ s=2</text>
+            </g>
+            
+            <!-- MHA 块 -->
+            <g transform="translate(460, 230)">
+                <polygon points="0,15 10,5 35,5 25,15" fill="#76D7C4" stroke="#117A8B" stroke-width="1.5"/>
+                <polygon points="25,15 35,5 35,40 25,50" fill="#1ABC9C" stroke="#117A8B" stroke-width="1.5"/>
+                <rect x="0" y="15" width="25" height="35" fill="url(#mhaGradient)" stroke="#117A8B" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="12" y="38" text-anchor="middle" font-size="11" fill="white" font-weight="bold">4h</text>
+                <text x="12" y="72" text-anchor="middle" font-size="9" fill="#117A8B">MHA</text>
+            </g>
+            
+            <!-- Flatten -->
+            <g transform="translate(520, 235)">
+                <rect x="0" y="0" width="40" height="40" rx="5" fill="#5DADE2" stroke="#2471A3" stroke-width="1.5"/>
+                <text x="20" y="16" text-anchor="middle" font-size="9" fill="white">Flatten</text>
+                <text x="20" y="30" text-anchor="middle" font-size="8" fill="white">576</text>
+            </g>
+            
+            <!-- Concatenation 圆形 -->
+            <g transform="translate(600, 230)">
+                <circle cx="25" cy="25" r="22" fill="#F4D03F" stroke="#B7950B" stroke-width="2" filter="url(#shadow)"/>
+                <text x="25" y="32" text-anchor="middle" font-size="20" fill="#7D6608" font-weight="bold">⊕</text>
+                <text x="25" y="65" text-anchor="middle" font-size="9" fill="#555">587</text>
+            </g>
+            
+            <!-- Shared FC -->
+            <g transform="translate(680, 225)">
+                <rect x="0" y="0" width="80" height="50" rx="6" fill="url(#fcGradient)" stroke="#1E8449" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="40" y="22" text-anchor="middle" font-size="11" fill="white" font-weight="bold">FC(256)</text>
+                <text x="40" y="38" text-anchor="middle" font-size="10" fill="white">ReLU</text>
+            </g>
+            
+            <!-- Value Stream -->
+            <g transform="translate(820, 140)">
+                <rect x="0" y="0" width="70" height="60" rx="6" fill="url(#valueGradient)" stroke="#922B21" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="35" y="24" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Value</text>
+                <text x="35" y="42" text-anchor="middle" font-size="10" fill="white">V(s)→ℝ¹</text>
+            </g>
+            
+            <!-- Advantage Stream -->
+            <g transform="translate(820, 280)">
+                <rect x="0" y="0" width="70" height="60" rx="6" fill="url(#advGradient)" stroke="#1E8449" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="35" y="24" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Advantage</text>
+                <text x="35" y="42" text-anchor="middle" font-size="10" fill="white">A(s,a)→ℝ³⁵</text>
+            </g>
+            
+            <!-- Q Aggregation -->
+            <g transform="translate(930, 200)">
+                <rect x="0" y="0" width="100" height="70" rx="6" fill="url(#qGradient)" stroke="#D68910" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="50" y="28" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Q=V+A-Ā</text>
+                <text x="50" y="50" text-anchor="middle" font-size="10" fill="white">35 Q-values</text>
+            </g>
+            
+            <!-- Action Mask Grid -->
+            <g transform="translate(1080, 160)">
+                <!-- 网格背景 -->
+                <rect x="-5" y="-5" width="140" height="200" rx="5" fill="#FEF9E7" stroke="#D68910" stroke-width="2"/>
+                <text x="65" y="-15" text-anchor="middle" font-size="11" fill="#D68910" font-weight="bold">Kin. Mask</text>
+                <text x="65" y="205" text-anchor="middle" font-size="9" fill="#666">bool 35-d</text>
+                
+                <!-- 7×5 网格 -->
+                <g id="maskGrid">
+                    <!-- 第0行 - 部分掩码 -->
+                    <rect x="0" y="0" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="3" y1="3" x2="19" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="19" y1="3" x2="3" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="24" y="0" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="27" y1="3" x2="43" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="43" y1="3" x2="27" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="48" y="0" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="72" y="0" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="75" y1="3" x2="91" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="91" y1="3" x2="75" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="96" y="0" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="99" y1="3" x2="115" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="115" y1="3" x2="99" y2="19" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <!-- 第1行 -->
+                    <rect x="0" y="24" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="3" y1="27" x2="19" y2="43" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="19" y1="27" x2="3" y2="43" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="24" y="24" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="48" y="24" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="72" y="24" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="96" y="24" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="99" y1="27" x2="115" y2="43" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="115" y1="27" x2="99" y2="43" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <!-- 第2-4行 全部有效 -->
+                    <rect x="0" y="48" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="24" y="48" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="48" y="48" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="72" y="48" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="96" y="48" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="0" y="72" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="24" y="72" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="48" y="72" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="72" y="72" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="96" y="72" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="0" y="96" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="24" y="96" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="48" y="96" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="72" y="96" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="96" y="96" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <!-- 第5行 -->
+                    <rect x="0" y="120" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="3" y1="123" x2="19" y2="139" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="19" y1="123" x2="3" y2="139" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="24" y="120" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="48" y="120" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    <rect x="72" y="120" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="96" y="120" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="99" y1="123" x2="115" y2="139" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="115" y1="123" x2="99" y2="139" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <!-- 第6行 - 部分掩码 -->
+                    <rect x="0" y="144" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="3" y1="147" x2="19" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="19" y1="147" x2="3" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="24" y="144" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="27" y1="147" x2="43" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="43" y1="147" x2="27" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="48" y="144" width="22" height="22" fill="#ABEBC6" stroke="#27AE60" stroke-width="1"/>
+                    
+                    <rect x="72" y="144" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="75" y1="147" x2="91" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="91" y1="147" x2="75" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    
+                    <rect x="96" y="144" width="22" height="22" fill="#F5B7B1" stroke="#E74C3C" stroke-width="1"/>
+                    <line x1="99" y1="147" x2="115" y2="163" stroke="#C0392B" stroke-width="2"/>
+                    <line x1="115" y1="147" x2="99" y2="163" stroke="#C0392B" stroke-width="2"/>
+                </g>
+                
+                <!-- 轴标签 -->
+                <text x="125" y="85" text-anchor="start" font-size="10" fill="#666" font-style="italic">5 a</text>
+                <text x="50" y="180" text-anchor="middle" font-size="10" fill="#666" font-style="italic">7 δ̇</text>
+            </g>
+            
+            <!-- Output -->
+            <g transform="translate(1260, 210)">
+                <rect x="0" y="0" width="60" height="60" rx="6" fill="url(#outputGradient)" stroke="#6C3483" stroke-width="1.5" filter="url(#shadow)"/>
+                <text x="30" y="26" text-anchor="middle" font-size="14" fill="white" font-weight="bold">a*</text>
+                <text x="30" y="46" text-anchor="middle" font-size="11" fill="white">(δ̇,a)</text>
+            </g>
+            
+            <!-- 连接线 -->
+            <g stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)">
+                <!-- 输入到Conv1 -->
+                <line x1="95" y1="250" x2="160" y2="250" />
+                
+                <!-- Conv1到Conv2 -->
+                <line x1="220" y1="250" x2="280" y2="250" />
+                
+                <!-- Conv2到Conv3 -->
+                <line x1="325" y1="250" x2="380" y2="250" />
+                
+                <!-- Conv3到MHA -->
+                <line x1="413" y1="250" x2="460" y2="250" />
+                
+                <!-- MHA到Flatten -->
+                <line x1="485" y1="250" x2="520" y2="255" />
+                
+                <!-- Flatten到Concat -->
+                <line x1="560" y1="255" x2="600" y2="255" />
+                
+                <!-- Scalars到Concat -->
+                <line x1="95" y1="375" x2="600" y2="270" />
+                
+                <!-- Concat到Shared FC -->
+                <line x1="650" y1="255" x2="680" y2="250" />
+                
+                <!-- Shared FC到Value -->
+                <line x1="760" y1="240" x2="820" y2="170" />
+                
+                <!-- Shared FC到Advantage -->
+                <line x1="760" y1="260" x2="820" y2="310" />
+                
+                <!-- Value到Q Aggregation -->
+                <line x1="890" y1="170" x2="930" y2="220" />
+                
+                <!-- Advantage到Q Aggregation -->
+                <line x1="890" y1="310" x2="930" y2="250" />
+                
+                <!-- Q Aggregation到Mask -->
+                <line x1="1030" y1="235" x2="1080" y2="250" />
+                
+                <!-- Mask到Output -->
+                <line x1="1215" y1="250" x2="1260" y2="240" />
+            </g>
+        </svg>
+        
+        <div class="legend">
+            <h3>Architecture Components</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #5DADE2, #2E86AB);"></div>
+                    <span>CNN Conv Layers (3×3, stride 1/2)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #48C9B0, #1ABC9C);"></div>
+                    <span>Multi-Head Attention (4 heads)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #82E0AA, #58D68D);"></div>
+                    <span>Fully Connected Layers</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #F1948A, #E74C3C);"></div>
+                    <span>Value Stream V(s)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #58D68D, #27AE60);"></div>
+                    <span>Advantage Stream A(s,a)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #F8C471, #F39C12);"></div>
+                    <span>Q Aggregation (Dueling)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F5B7B1; border: 2px solid #E74C3C;"></div>
+                    <span>Masked Actions (Invalid)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ABEBC6; border: 2px solid #27AE60;"></div>
+                    <span>Valid Actions</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="downloadSVG()">Download SVG</button>
+            <button onclick="downloadPNG()">Download PNG</button>
+        </div>
+        
+        <p class="export-note">
+            Input: 2×12×12 map channels (Occupancy + Goal Distance Field) + 11-d scalar features | 
+            Output: 35 Q-values (7 steering rates × 5 accelerations) with kinematic mask
+        </p>
+    </div>
+    
+    <script>
+        function downloadSVG() {
+            const svg = document.querySelector('.architecture-svg');
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'md_ddqn_architecture.svg';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function downloadPNG() {
+            const svg = document.querySelector('.architecture-svg');
+            const svgData = new XMLSerializer().serializeToString(svg);
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            canvas.width = 2800;
+            canvas.height = 1000;
+            
+            const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(svgBlob);
+            
+            img.onload = function() {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                const pngUrl = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = pngUrl;
+                link.download = 'md_ddqn_architecture.png';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            img.src = url;
+        }
+    </script>
+</body>
+</html>
