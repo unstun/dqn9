@@ -29,7 +29,7 @@
 12) Conda 环境：`ros2py310`
 13) 所有训练/推理参数通过 `configs/*.json` 管理。
 14) 自检/训练/推理：`conda run --cwd /home/sun/phdproject/dqn/DQN9 -n ros2py310 python {train,infer}.py {--self-check | --profile <name>}`输出目录：`runs/`；文档：`README.md`、`runtxt.md`。
-15) 每次需要联网时使用 Playwright（`npx playwright`）。联网搜索默认使用 DuckDuckGo MCP。
+15) 每次需要联网时使用 Playwright MCP 工具。DuckDuckGo MCP 已弃用，不再使用。
 16) **代码包名**：`ugv_dqn`（不是 `amr_dqn`）。所有 import 使用 `from ugv_dqn.xxx import ...`。
 17) **学术问题必须先读论文**：回答任何与本项目相关的学术问题前，必须先读 `paper/main.tex` 及相关章节，基于论文实际内容回答，严禁凭印象或通用知识敷衍作答。
 18) **复杂任务默认多 Agent 集群**：涉及多文件修改、跨模块调研、论文+代码联动等复杂任务时，默认启用多 Agent 并行（`Agent` 工具），将独立子任务分派给专用 subagent 并发执行，最大化效率。简单单文件任务无需启用。
