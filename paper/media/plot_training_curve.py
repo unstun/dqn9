@@ -78,12 +78,16 @@ ax = axes[1]
 full_ok = df_full[df_full["success_rate"] > 0].copy()
 nodqfd_ok = df_nodqfd[df_nodqfd["success_rate"] > 0].copy()
 
-ax.plot(full_ok["episode"], full_ok["avg_path_length"],
-        "o-", color=COLOR_FULL, markersize=2.5, linewidth=1.2,
-        label="Full (AM + DQfD)")
-ax.plot(nodqfd_ok["episode"], nodqfd_ok["avg_path_length"],
-        "s-", color=COLOR_NODQFD, markersize=2.5, linewidth=1.2,
-        label="w/o DQfD")
+# 原始数据（淡色散点）
+ax.scatter(full_ok["episode"], full_ok["avg_path_length"],
+           color=COLOR_FULL, s=8, alpha=0.2, zorder=2)
+ax.scatter(nodqfd_ok["episode"], nodqfd_ok["avg_path_length"],
+           color=COLOR_NODQFD, s=8, alpha=0.2, zorder=2)
+# 滑动平均（实线）
+ax.plot(full_ok["episode"], rolling_mean(full_ok["avg_path_length"]),
+        "-", color=COLOR_FULL, linewidth=1.8, label="Full (AM + DQfD)", zorder=3)
+ax.plot(nodqfd_ok["episode"], rolling_mean(nodqfd_ok["avg_path_length"]),
+        "-", color=COLOR_NODQFD, linewidth=1.8, label="w/o DQfD", zorder=3)
 ax.set_xlabel("Training episode")
 ax.set_ylabel("Evaluation path length (m)")
 ax.set_xlim(0, 10200)
