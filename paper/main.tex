@@ -331,7 +331,7 @@
 
 给定可接纳集与 Q 值，动作选择采用多级回退流程。训练时以概率~$\epsilon$ 从 $\mathcal{A}_{\mathrm{adm}}(s)$ 中均匀采样以保持探索。否则，优先选择 Q 值最高的贪心动作 $a_{0}=\arg\max_{a}Q(s,a)$；若 $a_0$ 不可接纳，则在按 Q 值降序排列的前~$K$ 个动作中搜索第一个可接纳动作；若仍无满足条件的动作，回退到掩码 argmax $\arg\max_{a\in\mathcal{A}_{\mathrm{adm}}}Q(s,a)$。若掩码 argmax 仍无可接纳动作，则放弃进度约束，在全部无碰撞动作中选择测地线目标距离最小的动作以维持朝目标推进。若进一步连无碰撞动作也不存在，则选择单步仿真后障碍物安全距离最大的动作作为最终兜底；该动作仍可能导致碰撞，此时环境终止当前回合并施加碰撞惩罚。这一层级设计使智能体在 Q 值最优性与碰撞安全之间逐级回退。
 
-训练与推理共享上述级联选择逻辑，区别在于可接纳性判定的严格程度。推理时同时检查碰撞安全与进度约束（$\epsilon_{\mathrm{prog}}>0$），确保每步动作既无碰撞又朝目标推进。训练时仅检查碰撞安全，将进度阈值置为 $\epsilon_{\mathrm{prog}}=0$。这一设计的考量在于：若训练时也强制进度约束，掩码将部分替代奖励函数的目标导向作用，阻碍 Q 网络从奖励信号中通过奖励信号学习趋近目标的策略。因此，训练阶段将方向引导的职责完全交给奖励函数，掩码仅负责碰撞安全；推理阶段再叠加进度约束作为额外的安全裕度。
+训练与推理共享上述级联选择逻辑，区别在于可接纳性判定的严格程度。推理时同时检查碰撞安全与进度约束（$\epsilon_{\mathrm{prog}}>0$），确保每步动作既无碰撞又朝目标推进。训练时仅检查碰撞安全，将进度阈值置为 $\epsilon_{\mathrm{prog}}=0$。这一设计的考量在于：若训练时也强制进度约束，掩码将部分替代奖励函数的目标导向作用，阻碍 Q 网络通过奖励信号学习趋近目标的策略。因此，训练阶段将方向引导的职责完全交给奖励函数，掩码仅负责碰撞安全；推理阶段再叠加进度约束作为额外的安全裕度。
 
 动作掩码还需应用于 Double DQN 的 TD 目标计算，以保持值函数估计与受限策略的一致性。每个转移存入经验回放时，下一状态的可接纳掩码~$\mathbf{m}'$ 一并存储。计算 TD 目标时，下一状态的不可行动作被掩码排除：
 \begin{equation}\label{eq:masked_target}
@@ -430,10 +430,10 @@ DQfD 预训练步数           & 40\,000 \\
 
 \subsubsection{DQfD 预训练}\label{sec:dqfd}
 
-为加速训练并提供稳定的行为先验，本文采用 DQfD 方法~\cite{hester2018deep}。专家演示由基于 Dijkstra 目标距离图的短视野贪心控制器生成：对每个离散动作执行恒定动作的多步前向模拟，选择末端测地线目标距离最小且无碰撞的动作，使用与训练相同的自行车运动学模型和碰撞检测。演示转移存储在经验回放缓冲区中，带有永久标志以防止在在线训练期间被覆盖。
+为加速训练并提供行为先验，本文借鉴 DQfD~\cite{hester2018deep} 的预训练框架，并对损失函数进行简化与扩展：省略原始 DQfD 的 $n$-step TD 回报和 $L_2$ 正则化项，额外引入交叉熵监督损失以增强行为克隆效果。专家演示由基于 Dijkstra 目标距离图的短视野贪心控制器生成：对每个离散动作执行恒定动作的前向推演，选择末端测地线目标距离最小且无碰撞的动作，使用与训练相同的自行车运动学模型和碰撞检测。演示样本存储在经验回放缓冲区中，在在线训练期间始终保留而不被覆盖~\cite{hester2018deep}。
 
 \textit{预训练阶段。}
-在在线交互开始之前，Q 网络在演示数据上进行 $N_{\mathrm{pre}}=40{,}000$ 步梯度更新的预训练。由于预训练阶段仅有专家演示可用，尚无环境交互产生的转移对，损失函数仅包含间隔损失与行为克隆损失：
+在在线交互开始之前，Q 网络在演示数据上进行 $N_{\mathrm{pre}}=40{,}000$ 步梯度更新的预训练。由于预训练阶段仅有专家演示可用，尚无环境交互产生的样本，损失函数仅包含大间隔分类损失与交叉熵监督损失：
 \begin{equation}\label{eq:dqfd_pretrain}
   \mathcal{L}_{\mathrm{pre}} =
     \lambda_{\mathrm{M}}\,\mathcal{L}_{\mathrm{margin}}
@@ -441,17 +441,17 @@ DQfD 预训练步数           & 40\,000 \\
 \end{equation}
 其中 $\lambda_{\mathrm{M}}=1.0$，$\lambda_{\mathrm{CE}}=1.0$。
 
-\textit{大间隔损失。}
-间隔损失确保专家动作的 Q 值与所有其他动作之间保持间隔~\cite{hester2018deep}：
+\textit{大间隔分类损失。}
+大间隔分类损失（large margin classification loss）确保专家动作的 Q 值与所有其他动作之间保持间隔~\cite{hester2018deep}：
 \begin{equation}\label{eq:margin_loss}
   \mathcal{L}_{\mathrm{margin}} = \frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
     \max\!\bigl(0,\;\max_{a\neq a_{i}^{E}}Q(s_i,a) + m - Q(s_i,a_{i}^{E})\bigr),
 \end{equation}
-其中 $a_{i}^{E}$ 为专家动作，$m=0.8$ 为间隔常数。
+其中 $a_{i}^{E}$ 为专家动作，$m=0.8$ 为间隔参数。
 
-\textit{行为克隆损失。}
-交叉熵损失对演示转移提供额外的监督：
+\textit{交叉熵监督损失。}
+原始 DQfD 仅使用大间隔分类损失进行演示监督。本文额外引入交叉熵损失，以 softmax 归一化 Q 值的形式对演示样本提供更强的行为克隆信号：
 \begin{equation}\label{eq:ce_loss}
   \mathcal{L}_{\mathrm{CE}} = -\frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
@@ -459,9 +459,9 @@ DQfD 预训练步数           & 40\,000 \\
 \end{equation}
 
 \textit{在线训练。}
-在在线交互阶段使用相同的复合损失
+在在线交互阶段使用相同的总损失
 $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathrm{margin}}
-+\lambda_{\mathrm{CE}}\,\mathcal{L}_{\mathrm{CE}}$，其中间隔损失和交叉熵损失仅应用于每个小批量中的演示转移。
++\lambda_{\mathrm{CE}}\,\mathcal{L}_{\mathrm{CE}}$，其中大间隔分类损失和交叉熵监督损失仅应用于每个小批量中的演示样本。
 
 算法~\ref{alg:training}~概述了完整的训练流程。
 
@@ -471,7 +471,7 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \begin{algorithmic}[1]
 \Require 占据栅格地图 $\mathcal{G}$，Dijkstra 距离场 $D$，专家演示集 $\mathcal{D}_E$
 \Ensure 训练后的策略网络 $Q_\theta$
-\State 将 $\mathcal{D}_E$ 填充至回放缓冲区 $\mathcal{R}$（永久标志）
+\State 将 $\mathcal{D}_E$ 填充至回放缓冲区 $\mathcal{R}$（始终保留）
 \Statex \textbf{// 阶段一：DQfD 预训练}
 \For{$i = 1$ \textbf{to} $N_{\mathrm{pre}}$}
     \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \lambda_{\mathrm{M}}\mathcal{L}_{\mathrm{margin}} + \lambda_{\mathrm{CE}}\mathcal{L}_{\mathrm{CE}}$
