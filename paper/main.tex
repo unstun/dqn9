@@ -112,7 +112,7 @@
 
 将深度强化学习应用于导航的一个关键挑战在于有效训练信号的设计。稀疏的目标到达奖励在大状态空间中导致收敛缓慢。基于势函数的奖励塑形 PBRS~\cite{ng1999policy}提供了一种原则性的方法来注入领域知识而不改变最优策略：塑形奖励被定义为连续状态之间势函数的差值。导航中一种自然的势函数是通过 Dijkstra 算法在栅格占用图上计算的\emph{测地线目标距离}，该距离编码了障碍物感知的目标邻近度，并在整个地图中产生稠密且信息丰富的梯度。
 
-当演示器——如经典规划器——可用时，DQfD~\cite{hester2018deep}通过预填充经验回放缓冲区中的专家转移并利用时序差分、监督和正则化损失的组合对网络进行预训练来加速训练。DQfD 在 Atari 游戏和机器人操作中表现出色~\cite{hester2018deep}，但其在复杂环境中运动学受约束车辆导航中的应用仍未被充分探索。课程学习策略~\cite{bengio2009curriculum}提供了互补的优势，通过逐步增加任务难度来促进学习，但需要精心设计进度调度方案。
+当演示器——如经典规划器——可用时，Deep Q-learning from Demonstrations (DQfD)~\cite{hester2018deep}通过预填充经验回放缓冲区中的专家转移并利用时序差分、监督和正则化损失的组合对网络进行预训练来加速训练。DQfD 在 Atari 游戏和机器人操作中表现出色~\cite{hester2018deep}，但其在复杂环境中运动学受约束车辆导航中的应用仍未被充分探索。课程学习策略~\cite{bengio2009curriculum}提供了互补的优势，通过逐步增加任务难度来促进学习，但需要精心设计进度调度方案。
 
 \subsection{强化学习中的动作掩码}\label{sec:related:mask}
 
@@ -197,7 +197,7 @@
 \label{fig:kinematics}
 \end{figure}
 
-\subsubsection{碰撞检测}
+\subsubsection{碰撞检测}\label{sec:collision}
 
 由于地面无人车具有不可忽略的物理尺寸，路径规划过程中需考虑完整车体与障碍物之间的碰撞关系。矩形足迹虽能精确描述车体轮廓，但其碰撞判定涉及多边形相交运算，计算开销较大。为此，本文采用双圆足迹近似车体包络，如图~\ref{fig:dual_circle} 所示：沿车体纵轴布置两个半径为~$r$ 的圆，分别覆盖前、后关键区域，完全包络车体矩形轮廓。环境预先计算欧式距离，记录每个栅格中心到最近障碍物中心的欧氏距离。碰撞检测时，计算两圆心处的距离值~$d_1$、$d_2$，与圆的半径进行比较：
 \begin{equation}
@@ -298,32 +298,73 @@
 \end{equation}
 其中$k_\kappa=0.2$。上述三项共同作用，抑制急转弯和突变加速，使规划路径更加平滑。
 
-障碍物惩罚$r_4$在车辆接近障碍物时产生。定义障碍物间距$d_{\text{obs}}(s) = \min(d_1 - r,\; d_2 - r)$，其中$d_1$、$d_2$分别为前、后碰撞检测圆心到最近障碍物的欧氏距离，$r$为圆半径。当$d_{\text{obs}} < d_s$时：
+障碍物惩罚$r_4$使车辆在接近障碍物时受到递增的排斥信号。车辆采用\cref{sec:collision}所述的双圆碰撞检测模型，前、后圆心到最近障碍物的欧氏距离分别为$d_1$、$d_2$，圆半径为$r$。取两圆的最小净间距
+\begin{equation}\label{eq:d_obs}
+  d_{\text{obs}} = \min(d_1 - r,\; d_2 - r)
+\end{equation}
+作为车辆与障碍物之间的安全裕度。当$d_{\text{obs}}$小于安全距离阈值$d_s$时，惩罚按反比函数增长：
 \begin{equation}\label{eq:reward_obs}
   r_4 = -\min\!\left(\bar{r}_o,\;\; k_o\!\left(\frac{1}{d_{\text{obs}}+\varepsilon}-\frac{1}{d_s+\varepsilon}\right)\right)
 \end{equation}
-其中$k_o=1.5$，$\varepsilon=10^{-3}$防止除零，$d_s=\SI{0.20}{m}$为安全距离阈值，$\bar{r}_o=10.0$为惩罚上界。该函数在$d_{\text{obs}} = d_s$时惩罚为零，随$d_{\text{obs}}$减小单调递增，趋近于上界$\bar{r}_o$。当$d_{\text{obs}} \geq d_s$时$r_4 = 0$。
+该形式借鉴人工势场中排斥力随距离反比递增的思想：在$d_{\text{obs}} = d_s$处惩罚恰好为零，$d_{\text{obs}}$越小惩罚越大，上界$\bar{r}_o = 10.0$防止数值发散。其余参数取$k_o = 1.5$，$\varepsilon = 10^{-3}$，$d_s = \SI{0.20}{m}$。当$d_{\text{obs}} \geq d_s$时$r_4 = 0$。
 
 终端奖励$r_5$在回合终止时给予固定奖惩：
 \begin{equation}\label{eq:reward_term}
   r_5 =
   \begin{cases}
-    +R_{\text{goal}}  & \text{到达目标} \\[2pt]
-    -R_{\text{col}}   & \text{碰撞} \\[2pt]
-    -R_{\text{stuck}} & \text{停滞超时}
+    +R_{\mathrm{g}}  & \text{到达目标} \\[2pt]
+    -R_{\mathrm{c}}   & \text{碰撞} \\[2pt]
+    -R_{\mathrm{s}} & \text{停滞超时}
   \end{cases}
 \end{equation}
-其中$R_{\text{goal}}=400$，$R_{\text{col}}=200$，$R_{\text{stuck}}=300$。到达目标给予最大正奖励，碰撞和停滞给予负惩罚，三者量级的差异反映了到达目标相对于避免失败的更高优先级。
+其中$R_{\mathrm{g}}=400$，$R_{\mathrm{c}}=200$，$R_{\mathrm{s}}=300$。到达目标给予最大正奖励，碰撞和停滞给予负惩罚。
 
-\subsubsection{MD-DDQN 路径规划架构}\label{sec:network}
+\subsubsection{动作掩码}\label{sec:masking}
 
-Q 网络接收多通道地图张量与标量特征两类输入，输出 $|\mathcal{A}|=35$ 维离散动作空间中各动作的 Q 值。如图~\ref{fig:architecture}~所示，网络由四部分组成：卷积骨干、多头自注意力模块、Dueling 输出头部与动作掩码。下文依次介绍各模块的设计细节。
+训练与推理均通过动作掩码强制安全约束~\cite{huang2022closer}。定义状态$s$下的可接纳动作集$\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$和对应的二值掩码向量$\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，其中$m_a(s) = 1$当且仅当$a \in \mathcal{A}_{\mathrm{adm}}(s)$。被掩码的 Q 值为
+\begin{equation}\label{eq:masked_q}
+  \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty),
+\end{equation}
+使策略只能从可接纳动作中选择。$\mathcal{A}_{\mathrm{adm}}(s)$的判定准则如下。
+
+\textit{可行性评估。}
+给定当前状态，对候选动作 $a$ 使用运动学模型执行 $H=15$ 个时间步的恒定控制前向仿真。每步碰撞判定在\textbf{原始地图分辨率}（$\SI{0.1}{m}$）的欧氏距离变换场上进行双圆足迹检测，而非在降采样后的观测地图上进行，以保持掩码精度。当满足以下任一条件时，该动作被视为\emph{可接纳的}：
+\begin{enumerate}
+  \item 在整个前向仿真轨迹上未检测到碰撞，且测地线目标距离至少减少一个最小进度阈值，即 $D_{0}-D_{H}\geq\epsilon_{\mathrm{prog}}$；
+  \item 无碰撞且仿真期间直接到达目标；
+  \item 无碰撞且当前状态不存在满足上述进度条件的动作时，允许倒车动作通过，以避免在死胡同中卡死。
+\end{enumerate}
+
+\textit{动作选择流水线。}
+训练和推理共享以下动作选择流水线：
+\begin{enumerate}
+  \item 计算所有动作的 Q 值 $Q(s,a)$。
+  \item 仅在训练时，以概率 $\epsilon$ 从可接纳动作中均匀采样。
+  \item 选择贪心动作 $a_{0}=\arg\max_{a}Q(s,a)$。若 $a_{0}$ 可接纳，则返回 $a_{0}$。
+  \item 在按 Q 值排序的前 $K$ 个动作中搜索，返回第一个可接纳的动作。
+  \item 回退到掩码 argmax：$\arg\max_{a\in\mathcal{A}_{\mathrm{adm}}}Q(s,a)$。
+  \item 若无可接纳动作，则选择单步仿真后障碍物安全距离最大的动作作为启发式回退。该动作仍可能导致碰撞，此时环境将立即终止当前回合并施加碰撞惩罚。
+\end{enumerate}
+训练和推理共享上述级联回退逻辑，区别仅在可行性评估的严格程度：推理时同时检查碰撞安全与进度约束；训练时仅检查碰撞安全，即 $\epsilon_{\mathrm{prog}}=0$，放宽进度要求，使 Q 网络从奖励信号中学习前进策略。
+
+\textit{TD 目标掩码。}
+动作掩码同样应用于 Double DQN 的 TD 目标计算（见公式~\ref{eq:ddqn_target}）中的下一状态 Q 值。下一状态的可接纳掩码 $\mathbf{m}'$ 与每个转移一起存储在经验回放缓冲区中。在目标计算时，不可行的下一动作被掩码掉：
+\begin{equation}\label{eq:masked_target}
+  a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
+  \qquad
+  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
+\end{equation}
+这使 TD 目标仅基于可行动作计算，与受限动作空间 MDP 的 Bellman 方程一致。
+
+\subsubsection{MD-DDQN 网络与训练}\label{sec:network}
+
+Q 网络接收多通道地图张量与标量特征两类输入，输出 $|\mathcal{A}|=35$ 维离散动作空间中各动作的 Q 值。如图~\ref{fig:architecture}~所示，网络由三部分组成：卷积骨干、多头自注意力模块与 Dueling 输出头部。输出的 Q 值经第~\ref{sec:masking}~节所述的动作掩码筛选后得到最终动作。下文依次介绍各模块的设计细节及学习算法。
 
 \input{figures/fig_architecture}
 
-\paragraph{深度卷积网络}
+\paragraph{(1) 深度卷积网络}
 
-Q 网络的整体架构如图~\ref{fig:architecture}~所示。网络接收 $2\times12\times12$ 的多通道地图张量作为输入，两个通道分别编码占据栅格与 Dijkstra 目标距离图。第一个隐藏层将 32 个 $3\times3$ 滤波器以步幅~1 与输入地图卷积并应用 ReLU 激活，保持空间分辨率不变；第二个隐藏层将 64 个 $3\times3$ 滤波器以步幅~2 卷积，将特征图从 $12\times12$ 缩减至 $6\times6$；第三个卷积层同样使用 64 个 $3\times3$ 滤波器、步幅~2，进一步下采样至 $3\times3$。三层卷积逐层下采样，将地图编码为 $64\times3\times3=576$ 维的特征向量。
+网络接收 $2\times12\times12$ 的多通道地图张量作为输入，两个通道分别编码占据栅格与 Dijkstra 目标距离图。第一个隐藏层将 32 个 $3\times3$ 滤波器以步幅~1 与输入地图卷积并应用 ReLU 激活，保持空间分辨率不变；第二个隐藏层将 64 个 $3\times3$ 滤波器以步幅~2 卷积，将特征图从 $12\times12$ 缩减至 $6\times6$；第三个卷积层同样使用 64 个 $3\times3$ 滤波器、步幅~2，进一步下采样至 $3\times3$。三层卷积逐层下采样，将地图编码为 $64\times3\times3$ 的特征图，随后经多头自注意力模块（详见下文）处理后展平为 576 维特征向量。
 
 卷积特征经展平后与 11 维标量特征拼接，形成 $576+11=587$ 维的融合向量。标量特征包括车辆与目标位置各 2 维、航向角三角编码 2 维、速度、转向角、Dijkstra 目标距离、目标相对方位角和最近障碍物距离各 1 维，全部归一化至 $[-1,1]$。融合向量再经两层共享全连接层（各 256 个 ReLU 单元）处理后馈入 Dueling 输出头部。表~\ref{tab:network_spec}~汇总了各层的配置与输出维度。
 
@@ -349,22 +390,22 @@ A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
 \end{tabular}
 \end{table}
 
-\paragraph{多头自注意力}\label{sec:mha}
+\paragraph{(2) 多头自注意力}\label{sec:mha}
 
-卷积网络通过局部感受野逐层提取空间特征。经三层卷积（步幅 1-2-2）后，理论感受野为 $9\times9$，仅覆盖 $12\times12$ 输入面积的 56\%，且有效感受野通常远小于理论值~\cite{luo2016understanding}，导致特征图边缘位置难以有效关注对侧信息。为捕获全局上下文信息，本文在第三层卷积输出之后引入多头自注意力（Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使网络能够建模障碍物分布与目标距离图之间的长程空间依赖。
+卷积网络通过局部感受野逐层提取空间特征。经三层卷积（步幅 1-2-2）后，理论感受野为 $9\times9$，仅覆盖 $12\times12$ 输入面积的 56\%，且有效感受野通常远小于理论值~\cite{luo2016understanding}，导致特征图边缘位置难以有效关注对侧信息。为捕获全局上下文信息，本文在第三层卷积输出之后引入多头自注意力（Multi-Head Attention，MHA）模块~\cite{vaswani2017attention}。该模块将 $64\times3\times3$ 的特征图沿空间维度展开为 $H'W'=9$ 个 token，每个 token 为对应空间位置的 64 维特征向量，以 $h=4$ 个注意力头执行缩放点积自注意力，并经残差连接与层归一化后恢复原始空间维度。通过注意力权重，特征图上任意两个位置可直接建立关联，使特征图中任意远距离空间位置之间可直接交换信息。
 
-\paragraph{Dueling 网络架构}\label{sec:md}
+\paragraph{(3) Dueling 网络架构}\label{sec:md}
 
 在 $|\mathcal{A}|=35$ 维的离散动作空间中，对于许多状态，动作选择对环境的影响差异甚微，此时准确估计状态本身的价值比区分各动作的 Q 值更为重要~\cite{wang2016dueling}。Dueling 架构（Dueling Architecture）将 Q 网络分离为两个流：价值流输出标量状态价值 $V(s;\theta,\beta)$，优势流输出各动作相对优势 $A(s,a;\theta,\alpha)$，两者通过聚合层合并：
 \begin{equation}\label{eq:dueling_q}
   Q(s,a) = V(s;\theta,\beta) + \Bigl(A(s,a;\theta,\alpha)
            - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha)\Bigr),
 \end{equation}
-其中 $\theta$ 为共享特征层参数，$\beta$ 和 $\alpha$ 分别为价值流和优势流的参数。直接将 $V$ 与 $A$ 相加存在不可辨识性问题：对 $V$ 加任意常数 $c$ 同时对 $A$ 减去 $c$，$Q$ 值不变。减去优势均值使优势流的输出以零为中心，缓解了该问题并提升了优化稳定性~\cite{wang2016dueling}。该分解的主要优势在于实现了跨动作的学习泛化：价值流在每次 TD 更新中均被优化，无需遍历所有动作即可改善状态价值估计。
+其中 $\theta$ 为共享特征层参数，$\beta$ 和 $\alpha$ 分别为价值流和优势流的参数。直接将 $V$ 与 $A$ 相加存在不可辨识性问题：对 $V$ 加任意常数 $c$ 同时对 $A$ 减去 $c$，$Q$ 值不变。减去优势均值使优势流的输出以零为中心，缓解了该问题并提升了优化稳定性~\cite{wang2016dueling}。该分解使价值流在每次 TD 更新中均被优化，无需遍历所有动作即可改善状态价值估计。
 
-本文将多头自注意力与 Dueling 架构组合使用，简称 MD。MHA 捕获卷积特征的全局空间依赖，Dueling 架构在35维动作空间中实现跨动作的学习泛化，两者分别作用于特征提取与输出头部。消融实验详见第~\ref{ssec:abl_module}~节，证实 MD 组合在路径质量方面一致优于单独使用 MHA 或 Dueling 的变体。
+本文将多头自注意力与 Dueling 架构组合使用，简称 MD。MHA 捕获卷积特征的全局空间依赖，Dueling 架构在 35 维动作空间中实现跨动作泛化，两者分别作用于特征提取与输出头部。消融实验详见第~\ref{ssec:abl_module}~节，证实 MD 组合在路径质量方面一致优于单独使用 MHA 或 Dueling 的变体。
 
-\paragraph{学习算法与优化}\label{sec:ddqn}
+\paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 
 Q 值更新采用 Double DQN 算法~\cite{van2016deep}，由在线网络选择动作、目标网络评估价值，以缓解标准 Q 学习的过估计偏差。为加速信用分配，采用 $n=3$ 步回报~\cite{sutton1988learning}：
 \begin{equation}\label{eq:ddqn_target}
@@ -437,43 +478,6 @@ DQfD 预训练步数           & 40\,000 \\
 $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathrm{margin}}
 +\lambda_{\mathrm{CE}}\,\mathcal{L}_{\mathrm{CE}}$，其中间隔损失和交叉熵损失仅应用于每个小批量中的演示转移。
 
-\subsubsection{动作掩码}\label{sec:masking}
-
-为在训练和推理过程中均强制执行硬安全约束，本文基于短时域前向仿真采用动作掩码机制~\cite{huang2022closer}。定义状态$s$下的可接纳动作集$\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$和对应的二值掩码向量$\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，其中$m_a(s) = 1$当且仅当$a \in \mathcal{A}_{\mathrm{adm}}(s)$。被掩码的 Q 值为
-\begin{equation}\label{eq:masked_q}
-  \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty),
-\end{equation}
-确保策略仅从可接纳动作中选择。$\mathcal{A}_{\mathrm{adm}}(s)$的具体判定准则如下。
-
-\textit{可行性评估。}
-给定当前状态，对候选动作 $a$ 使用运动学模型执行 $H=15$ 个时间步的恒定控制前向仿真，每步碰撞判定均在\textbf{原始地图分辨率}（$\SI{0.1}{m}$）的欧氏距离变换场上进行双圆足迹检测，确保掩码精度不受观测地图降采样的影响。当满足以下任一条件时，该动作被视为\emph{可接纳的}：
-\begin{enumerate}
-  \item 在整个前向仿真轨迹上未检测到碰撞，且测地线目标距离至少减少一个最小进度阈值，即 $D_{0}-D_{H}\geq\epsilon_{\mathrm{prog}}$；
-  \item 无碰撞且仿真期间直接到达目标；
-  \item 无碰撞且当前状态不存在满足上述进度条件的动作时，允许倒车动作通过，以避免在死胡同中卡死。
-\end{enumerate}
-
-\textit{动作选择流水线。}
-训练和推理共享以下动作选择流水线：
-\begin{enumerate}
-  \item 计算所有动作的 Q 值 $Q(s,a)$。
-  \item 仅在训练时，以概率 $\epsilon$ 从可接纳动作中均匀采样。
-  \item 选择贪心动作 $a_{0}=\arg\max_{a}Q(s,a)$。若 $a_{0}$ 可接纳，则返回 $a_{0}$。
-  \item 在按 Q 值排序的前 $K$ 个动作中搜索，返回第一个可接纳的动作。
-  \item 回退到掩码 argmax：$\arg\max_{a\in\mathcal{A}_{\mathrm{adm}}}Q(s,a)$。
-  \item 若无可接纳动作，则选择单步仿真后障碍物安全距离最大的动作作为启发式回退。该动作仍可能导致碰撞，此时环境将立即终止当前回合并施加碰撞惩罚。
-\end{enumerate}
-上述流水线在训练和推理中共享相同的级联回退逻辑，唯一区别在于可行性评估的严格程度：推理时应用完整的碰撞安全与进度约束；训练时仅强制碰撞安全，即 $\epsilon_{\mathrm{prog}}=0$，以允许 Q 网络从奖励信号中自主学习前进策略，避免掩码过度约束探索空间。
-
-\textit{TD 目标掩码。}
-动作掩码同样应用于 TD 目标计算中的下一状态 Q 值（公式~\ref{eq:ddqn_target}）。下一状态的可接纳掩码 $\mathbf{m}'$ 与每个转移一起存储在经验回放缓冲区中。在目标计算时，不可行的下一动作被掩码掉：
-\begin{equation}\label{eq:masked_target}
-  a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
-  \qquad
-  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
-\end{equation}
-该机制确保 TD 目标仅从可行动作中计算，与受限动作空间 MDP 的 Bellman 方程一致，避免从不可行的后继动作中引入虚假的 Q 值估计。
-
 算法~\ref{alg:training}~概述了完整的训练流程。
 
 \begin{algorithm}[!htbp]
@@ -535,15 +539,9 @@ $\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\lambda_{\mathrm{M}}\,\mathcal{L}_{\mathr
 \FloatBarrier
 \subsection{实验设置}\label{ssec:setup}
 
-\subsubsection{环境与训练配置}
+实验在第~\ref{ssec:real_scene_setup}~节的真实林地栅格地图上进行。以固定随机种子从自由空间中采样 50 组起终点对，经 Dijkstra 可达性验证后，按测地线距离分为远距离（$\geq\SI{18}{m}$）和近距离（$\SI{6}{m}$--$\SI{14}{m}$）两组。所有算法使用同一碰撞检测配置。
 
-实验在第~\ref{ssec:real_scene_setup}~节所建立的真实林地栅格地图上进行，地图覆盖约 $\SI{41}{m} \times \SI{13}{m}$，分辨率 $\SI{0.1}{m}$。图中密集的树干形成了多处狭窄通道与死角，构成了具有代表性的受限导航场景。所有算法共用同一双圆 EDT 碰撞检测器，碰撞判定标准一致。
-
-所有 DRL 变体共享同一组训练配置：$10\,000$ 回合在线训练、$40\,000$ 步 DQfD 预训练、奖励塑形系数 $k_t = 0.2$，训练在单块 NVIDIA RTX 4090 GPU 上完成。
-
-\subsubsection{评估协议}\label{sssec:protocol}
-
-每组实验随机生成 50 组起终点对，经 Dijkstra 算法确认可达，并按最短路径距离分为远距离（$\geq\SI{18}{m}$）和近距离（$\SI{6}{m}$--$\SI{14}{m}$）两组。成功率在全部 50 组任务上统计。路径质量仅在 MD-DDQN、RRT* 与 LO-HA* 三者对同一起终点对均规划成功的子集上计算，报告路径长度、平均曲率和计算时间。该过滤使子集内成功率恒为 100\%，从而将路径质量与成功率解耦，分别独立评估。
+成功率在全部 50 组任务上统计。路径质量仅在三种算法对同一起终点对均成功的子集上计算，报告路径长度、平均曲率和计算时间。
 
 \FloatBarrier
 \subsection{核心对比实验}\label{ssec:core}
