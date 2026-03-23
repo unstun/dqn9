@@ -1388,10 +1388,11 @@ class UGVBicycleEnv(gym.Env):
         horizon_steps: int,
         min_od_m: float = 0.0,
     ) -> int:
-        """Hybrid A* 引导不可用时的回退动作选择器。
+        """基于目标距离图的贪心动作选择器。
 
-        选择短视野恒定动作 rollout 后 goal distance 最低的无碰撞动作，
-        仅作为最后手段保持 rollout 持续推进。
+        对所有离散动作做短视野恒定动作 rollout，选取末端 goal distance
+        最低且全程无碰撞的动作。同时作为 cost_to_go 专家的主逻辑
+        和 Hybrid A* 专家不可用时的回退策略。
         """
 
         h = max(1, int(horizon_steps))

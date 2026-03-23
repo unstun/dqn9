@@ -321,7 +321,7 @@
 
 \subsubsection{动作掩码}\label{sec:masking}
 
-奖励塑形为 Q 网络提供了方向引导，但无法保证每步所选动作的安全性。在 $|\mathcal{A}|=35$ 的离散动作空间中，自行车运动学的非完整约束使得任意状态下均可能存在多个导致碰撞的动作。动作掩码~\cite{huang2022closer}在策略输出端排除这些不可行选项。定义状态~$s$ 下的可接纳动作集 $\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$ 与二值掩码 $\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，$m_a(s)=1$ 当且仅当 $a \in \mathcal{A}_{\mathrm{adm}}(s)$，将不可接纳动作的 Q 值置为负无穷：
+奖励塑形为 Q 网络提供了方向引导，但无法保证每步所选动作的安全性。在 $|\mathcal{A}|=35$ 的离散动作空间中，自行车运动学的非完整约束使得任意状态下均可能存在多个导致碰撞的动作。动作掩码在策略输出端排除这些不可行选项~\cite{vinyals2017starcraft}。定义状态~$s$ 下的可接纳动作集 $\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$ 与二值掩码 $\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，$m_a(s)=1$ 当且仅当 $a \in \mathcal{A}_{\mathrm{adm}}(s)$，将不可接纳动作的 Q 值置为负无穷：
 \begin{equation}\label{eq:masked_q}
   \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty),
 \end{equation}
@@ -329,25 +329,23 @@
 
 可接纳性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测窗口为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可接纳。
 
-仅满足碰撞安全仍不够，不加方向约束时智能体可能反复选取无碰撞但不朝目标前进的动作。因此可接纳条件额外要求仿真终点处目标距离较起点减小，即 $D_0 - D_H \geq \epsilon_{\mathrm{prog}}$。推理阶段 $\epsilon_{\mathrm{prog}}>0$，每步须朝目标推进。训练阶段将 $\epsilon_{\mathrm{prog}}$ 放松为零，仅要求目标距离不增加，因为强制正向进度会使掩码替代奖励函数的引导作用，妨碍策略学习。当所有动作在当前约束下均不可接纳时，依次放宽进度要求直至仅保留碰撞安全条件，保证策略始终有输出。
-
-动作掩码同样作用于 Double DQN 的 TD 目标。转移样本存入经验回放时一并记录下一状态的掩码~$\mathbf{m}'$，使 TD 目标仅在可接纳动作上计算：
+动作掩码同样作用于 Double DQN 的 TD 目标，使动作选择仅在可接纳动作上进行：
 \begin{equation}\label{eq:masked_target}
   a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
   \qquad
   y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
 \end{equation}
-这与状态依赖动作空间下的 Bellman 最优性方程一致。不施加此掩码时，目标网络可能对不可行动作赋予虚高 Q 值，导致 Bellman 备份与受限策略不一致。
+不施加此掩码时，目标网络可能选中不可行动作并赋予虚高 Q 值，导致训练不稳定。
 
 \subsubsection{MD-DDQN 网络与训练}\label{sec:network}
 
-Q 网络接收多通道地图张量与标量特征两类输入，输出 $|\mathcal{A}|=35$ 维离散动作空间中各动作的 Q 值。如图~\ref{fig:architecture}~所示，网络由三部分组成：卷积神经网络、多头自注意力模块与 Dueling 输出头部。输出的 Q 值经第~\ref{sec:masking}~节所述的动作掩码筛选后得到最终动作。
+Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标量特征向量两类输入，输出各离散动作的 Q 值。如图~\ref{fig:architecture}~所示，网络由三部分组成：卷积神经网络、多头自注意力模块与 Dueling 输出头部。输出的 Q 值经第~\ref{sec:masking}~节所述的动作掩码筛选后得到最终动作。
 
 \input{figures/fig_architecture}
 
 \paragraph{(1) 卷积神经网络}
 
-地图输入为 $2\times12\times12$ 的双通道张量，分别编码占据栅格与 Dijkstra 目标距离图（第~\ref{sec:reward}~节），后者将各位置到目标的绕障最短距离编码在观测中。标量输入为 11 维向量，包含车辆位姿、运动状态与目标信息，归一化至 $[-1,1]$。卷积骨干提取空间特征后，经多头自注意力模块处理并展平，与标量拼接送入共享全连接层与 Dueling 输出头部，具体规格见表~\ref{tab:network_spec}。
+地图输入为 $2\times12\times12$ 的二通道栅格，第一通道为占据栅格，第二通道为 Dijkstra 目标距离图，编码各栅格到目标的绕障最短距离。标量输入为 11 维向量，包含车辆位姿、运动状态与目标信息，归一化至 $[-1,1]$。卷积骨干由三层卷积组成，逐层降低空间分辨率并增加通道数，详见表~\ref{tab:network_spec}。
 
 \begin{table}[!htbp]
 \centering
@@ -426,7 +424,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 \subsubsection{DQfD 预训练}\label{sec:dqfd}
 
-稠密障碍物环境中随机策略几乎无法到达目标，智能体在训练初期缺乏正向奖励。为此，在线交互开始前先利用专家演示对 Q 网络预训练 $N_{\mathrm{pre}}=40{,}000$ 步，使其具备基本的路径规划能力。
+在树干密集分布的林地环境中，通行条件苛刻，随机策略几乎无法到达目标，智能体在训练初期缺乏正向奖励。为此，在线交互开始前先利用专家演示对 Q 网络预训练 $N_{\mathrm{pre}}=40{,}000$ 步，使其具备基本的路径规划能力。
 
 预训练损失沿用 DQfD~\cite{hester2018deep} 的大间隔分类损失，省略原方法中的 $n$-step TD 回报与 $L_2$ 正则化，并新增交叉熵损失项。每步从演示缓冲区采样小批量 $\mathcal{B}_{\mathrm{D}}$，损失函数为
 \begin{equation}\label{eq:dqfd_pretrain}
@@ -449,7 +447,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 在线交互开始后，总损失增加 TD 项：$\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\mathcal{L}_{\mathrm{margin}}+\mathcal{L}_{\mathrm{CE}}$。其中 $\mathcal{L}_{\mathrm{margin}}$ 与 $\mathcal{L}_{\mathrm{CE}}$ 仅对小批量中的演示样本计算，防止在线经验覆盖已习得的专家知识。
 
-\textit{专家演示生成。} 演示由基于 Dijkstra 目标距离图（第~\ref{sec:reward}~节）的贪心策略产生：在当前状态对每个离散动作做单步前向仿真，选取末端测地线距离最小且无碰撞的动作。仿真采用与训练环境相同的自行车运动学模型与碰撞检测。演示样本存入回放缓冲区，在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
+\textit{专家演示生成。} 演示由基于 Dijkstra 目标距离图（第~\ref{sec:reward}~节）的贪心策略产生：对每个离散动作执行固定步数的恒定动作 rollout，以自行车运动学模型向前仿真 $H=15$ 步，选取 rollout 末端目标距离最小且全程无碰撞的动作。仿真采用与训练环境相同的运动学模型与碰撞检测。演示样本存入回放缓冲区，在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
 
 \begin{algorithm}[!htbp]
 \caption{MD-DDQN 训练流程}
