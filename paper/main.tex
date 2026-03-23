@@ -354,11 +354,13 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
-上述卷积骨干的理论感受野为 $9\times9$，面积覆盖率仅 $9^2/12^2\approx56\%$，且有效感受野呈高斯衰减，实际远小于理论值~\cite{luo2016understanding}。路径规划要求智能体综合观测窗口内的全局障碍物分布做出转向决策，仅靠局部感受野难以满足这一需求。受关系深度强化学习~\cite{zambaldi2019deep}的启发，本文将卷积输出的 $3\times3$ 特征图中每个空间位置视为一个实体，将 9 个实体编入矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$（$C$ 为卷积输出通道数）后施加多头缩放点积自注意力~\cite{vaswani2017attention}：
+Zambaldi 等~\cite{zambaldi2019deep}在关系深度强化学习中将卷积特征图的空间位置视为实体并施加自注意力，使智能体能够捕获实体间的成对关系。本文借鉴该思路，在卷积骨干之后引入多头缩放点积自注意力~\cite{vaswani2017attention}。
+
+卷积输出的 $3\times3$ 特征图被展平为 9 个空间 token，编入矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。$\boldsymbol{E}$ 经三组可学习矩阵分别投影为查询 $\boldsymbol{Q}$、键 $\boldsymbol{K}$ 与值 $\boldsymbol{V}$，注意力输出为
 \begin{equation}\label{eq:mha}
   \boldsymbol{Z} = \mathrm{softmax}\!\Bigl(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\Bigr)\boldsymbol{V}
 \end{equation}
-其中 $\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}$ 分别由 $\boldsymbol{E}$ 经可学习矩阵投影得到，$d_k$ 为键向量维度。4 个注意力头独立执行上述计算后拼接，经线性投影、残差连接与层归一化输出。自注意力使 9 个空间位置中的任意两个在单层内直接交互，弥补了卷积逐层传递信息带来的全局感知不足。
+其中 $d_k$ 为键向量维度。本文采用 4 个注意力头，各头独立计算式~\eqref{eq:mha}后拼接并经线性投影映射回原始维度。输出经残差连接与层归一化后送入下游模块，使任意两个空间位置在单层内即可直接交互。
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
