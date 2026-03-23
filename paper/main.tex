@@ -327,7 +327,9 @@
 \end{equation}
 使 $\epsilon$-贪心策略在训练与推理中均只从可接纳动作中选择。
 
-可接纳性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测窗口为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可接纳。
+可接纳性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测时域为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可接纳。
+
+训练与推理共享同一动作选择机制。首先计算全部动作的 Q 值，取 Q 值最大的动作 $a_0 = \arg\max_a Q(s,a)$ 并通过前向仿真检查其可接纳性；若~$a_0$ 不可接纳，依次检查 Q 值排名前~$K$ 的候选动作；若仍无可接纳动作，则计算完整的可接纳掩码并取 $a^{*} = \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s)} Q(s,a)$；最终回退为基于目标距离图的截断 rollout 贪心选择。$\epsilon$-贪心探索时，随机动作同样限定在可接纳集合内，确保探索阶段的动作始终满足可接纳约束。训练与推理的唯一区别在于进度条件的严格程度：训练时将进度阈值~$\epsilon_p$ 设为零，仅强制无碰撞约束，使 Q 网络从奖励信号中自主学习前进方向；推理时启用完整的进度约束，确保每步动作均朝目标前进。
 
 动作掩码同样作用于 Double DQN 的 TD 目标，使动作选择仅在可接纳动作上进行：
 \begin{equation}\label{eq:masked_target}
@@ -345,29 +347,7 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(1) 卷积神经网络}
 
-地图输入为 $2\times12\times12$ 的二通道栅格，第一通道为占据栅格，第二通道为 Dijkstra 目标距离图，编码各栅格到目标的绕障最短距离。标量输入为 11 维向量，包含车辆位姿、运动状态与目标信息，归一化至 $[-1,1]$。卷积骨干由三层卷积组成，逐层降低空间分辨率并增加通道数，详见表~\ref{tab:network_spec}。
-
-\begin{table}[!htbp]
-\centering
-\caption{CNN-MD-DDQN 网络层级规格}
-\label{tab:network_spec}
-\begin{tabular}{lllll}
-\toprule
-层 & 类型 & 配置 & 输出维度 & 激活 \\
-\midrule
-Conv1   & Conv2D  & $32\!\times\!3\!\times\!3$, $s\!=\!1$ & $32\!\times\!12\!\times\!12$ & ReLU \\
-Conv2   & Conv2D  & $64\!\times\!3\!\times\!3$, $s\!=\!2$ & $64\!\times\!6\!\times\!6$   & ReLU \\
-Conv3   & Conv2D  & $64\!\times\!3\!\times\!3$, $s\!=\!2$ & $64\!\times\!3\!\times\!3$   & ReLU \\
-MHA     & MHA & $h\!=\!4$, $d\!=\!64$ & $64\!\times\!3\!\times\!3$ & — \\
-Flatten & —      & —    & 576  & — \\
-Concat  & —      & $576+11$ & 587  & — \\
-Shared1 & FC      & $587\!\to\!256$ & 256  & ReLU \\
-Shared2 & FC      & $256\!\to\!256$ & 256  & ReLU \\
-V-stream & FC$\times$2 & $256\!\to\!256\!\to\!1$  & 1  & Linear \\
-A-stream & FC$\times$2 & $256\!\to\!256\!\to\!35$ & 35 & Linear \\
-\bottomrule
-\end{tabular}
-\end{table}
+智能体需同时感知局部障碍物分布与朝向目标的方向信息，网络以 $12\times12$ 的二通道栅格地图获取这两类空间观测：占据通道标记可通行与不可通行区域，目标距离通道将各栅格到目标的 Dijkstra 绕障最短距离编码为连续值。标量分支接收 11 维向量，包含车辆位姿、运动状态与目标方位，归一化至 $[-1,1]$。卷积骨干包含三层 $3\!\times\!3$ 卷积，通道数从 2 递增至 32、64、64，步幅依次为 1、2、2，将空间分辨率从 $12\!\times\!12$ 压缩至 $3\!\times\!3$。
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
@@ -426,12 +406,12 @@ DQfD 预训练步数           & 40\,000 \\
 
 在树干密集分布的林地环境中，通行条件苛刻，随机策略几乎无法到达目标，智能体在训练初期缺乏正向奖励。为此，在线交互开始前先利用专家演示对 Q 网络预训练 $N_{\mathrm{pre}}=40{,}000$ 步，使其具备基本的路径规划能力。
 
-预训练损失沿用 DQfD~\cite{hester2018deep} 的大间隔分类损失，省略原方法中的 $n$-step TD 回报与 $L_2$ 正则化，并新增交叉熵损失项。每步从演示缓冲区采样小批量 $\mathcal{B}_{\mathrm{D}}$，损失函数为
+预训练损失沿用 DQfD~\cite{hester2018deep} 的大间隔分类损失，并新增交叉熵损失项。预训练总损失由两项组成：
 \begin{equation}\label{eq:dqfd_pretrain}
   \mathcal{L}_{\mathrm{pre}} =
     \mathcal{L}_{\mathrm{margin}} + \mathcal{L}_{\mathrm{CE}}.
 \end{equation}
-大间隔分类损失要求专家动作 $a_{i}^{E}$ 对应的 Q 值比其余动作中的最大值高出至少 $m$：
+大间隔分类损失要求演示小批量 $\mathcal{B}_{\mathrm{D}}$ 中专家动作 $a_{i}^{E}$ 对应的 Q 值比其余动作中的最大值高出至少 $m$：
 \begin{equation}\label{eq:margin_loss}
   \mathcal{L}_{\mathrm{margin}} = \frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
