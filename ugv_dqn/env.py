@@ -1678,7 +1678,6 @@ class UGVBicycleEnv(gym.Env):
         *,
         lookahead_points: int = 3,
         horizon_steps: int = 4,
-        w_target: float = 0.5,
         w_heading: float = 0.4,
         w_clearance: float = 0.2,
         w_speed: float = 0.0,
@@ -1686,8 +1685,10 @@ class UGVBicycleEnv(gym.Env):
     ) -> int:
         """SS-RRT* 引导专家（用于 DQfD 演示 / 引导探索）。
 
-        逻辑与 expert_action_hybrid_astar 相同：每回合计算一次参考路径，
-        之后用 pure-pursuit 风格跟踪 + 短视野安全掩码选择离散控制。
+        每回合计算一次 SS-RRT* 参考路径，之后用 pure-pursuit 风格跟踪
+        选择离散控制。打分仅依赖路径跟踪（到 lookahead 目标的距离 +
+        航向误差 + 安全距离），不使用 Dijkstra 目标距离图。
+        规划失败返回 -1。
         """
         path = self._rrt_star_path(start_xy=self._ha_start_xy, seed=int(seed))
         if len(path) < 2:
@@ -1727,20 +1728,19 @@ class UGVBicycleEnv(gym.Env):
             horizon_steps=h,
         )
 
-        cost = self._cost_to_goal_pose_m_vec(x, y, psi)
+        # 纯路径跟踪打分：仅依赖 SS-RRT* 参考路径，不使用 Dijkstra 目标距离图。
         dist_tgt = np.hypot(float(tx_m) - x, float(ty_m) - y)
         tgt_heading = np.arctan2(float(ty_m) - y, float(tx_m) - x)
         heading_err = self._wrap_angle_rad_np(tgt_heading - psi)
 
-        score = -cost
-        score += -float(w_target) * dist_tgt - float(w_heading) * np.abs(heading_err)
+        score = -dist_tgt - float(w_heading) * np.abs(heading_err)
         score += float(w_clearance) * min_od
 
         if float(w_speed) != 0.0:
             v_max = float(self.model.v_max_m_s)
             score += float(w_speed) * (v / max(1e-9, float(v_max)))
 
-        invalid = coll | (~np.isfinite(score)) | (~np.isfinite(cost))
+        invalid = coll | (~np.isfinite(score))
         score = np.where(invalid, -float("inf"), score)
         best_action = int(np.argmax(score))
         if not math.isfinite(float(score[best_action])):

@@ -171,8 +171,7 @@ def forest_expert_action(
         return env.expert_action_rrt_star(
             lookahead_points=5,
             horizon_steps=max(15, h),
-            w_target=0.2,
-            w_heading=0.2,
+            w_heading=0.4,
             w_clearance=float(w_clearance),
             w_speed=0.0,
             seed=int(getattr(env, '_episode_seed', 0)),
