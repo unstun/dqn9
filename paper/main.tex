@@ -354,13 +354,13 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
-Zambaldi 等~\cite{zambaldi2019deep}在关系深度强化学习中将卷积特征图的空间位置视为实体并施加自注意力，使智能体能够捕获实体间的成对关系。本文借鉴该思路，在卷积骨干之后引入多头缩放点积自注意力~\cite{vaswani2017attention}。
+卷积层的感受野随深度线性增长，难以在有限层数内建立远距离空间位置之间的依赖。Zambaldi 等~\cite{zambaldi2019deep}在关系深度强化学习中将卷积特征图的各空间位置视为实体，通过自注意力捕获实体间的成对关系。本文沿用这一将空间位置作为注意力 token 的做法，在卷积层之后引入多头缩放点积自注意力~\cite{vaswani2017attention}，以补偿有限感受野对全局空间推理的限制。
 
-卷积输出的 $3\times3$ 特征图被展平为 9 个空间 token，编入矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。$\boldsymbol{E}$ 经三组可学习矩阵分别投影为查询 $\boldsymbol{Q}$、键 $\boldsymbol{K}$ 与值 $\boldsymbol{V}$，注意力输出为
+卷积输出的 $3\times3$ 特征图被展平为 9 个空间 token，构成矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。$\boldsymbol{E}$ 经三组可学习投影矩阵分别映射为查询、键与值：$\boldsymbol{Q}=\boldsymbol{E}\boldsymbol{W}^Q$，$\boldsymbol{K}=\boldsymbol{E}\boldsymbol{W}^K$，$\boldsymbol{V}=\boldsymbol{E}\boldsymbol{W}^V$。单头注意力输出为
 \begin{equation}\label{eq:mha}
   \boldsymbol{Z} = \mathrm{softmax}\!\Bigl(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\Bigr)\boldsymbol{V}
 \end{equation}
-其中 $d_k$ 为键向量维度。本文采用 4 个注意力头，各头独立计算式~\eqref{eq:mha}后拼接并经线性投影映射回原始维度。输出经残差连接与层归一化后送入下游模块，使任意两个空间位置在单层内即可直接交互。
+其中 $d_k$ 为键向量维度。本文采用 4 个注意力头，各头以独立参数计算式~\eqref{eq:mha}，所得结果拼接后经线性投影映射回原始维度。该输出经残差连接与层归一化后送入 Dueling 分支，使障碍物与目标等远距离空间要素在单层内即可直接关联。
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
