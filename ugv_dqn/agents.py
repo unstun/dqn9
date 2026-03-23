@@ -459,7 +459,7 @@ class DQNFamilyAgent:
             self.q_target.load_state_dict(self.q.state_dict())
         return int(trained)
 
-    def update(self, *, rew_normalizer: object | None = None) -> dict[str, float]:
+    def update(self, *, rew_normalizer: object | None = None, training_progress: float = 0.0) -> dict[str, float]:
         if len(self.replay) < self.config.batch_size:
             return {}
 
@@ -519,7 +519,9 @@ class DQNFamilyAgent:
         td_loss = losses.mean()
 
         # 专家大 margin 损失（DQfD）。仅应用于 `demo` 转移。
-        demo_lambda = float(getattr(self.config, "demo_lambda", 0.0))
+        # 随训练进度线性衰减：训练初期全量引导，后期完全放手。
+        demo_decay = float(max(0.0, 1.0 - float(np.clip(training_progress, 0.0, 1.0))))
+        demo_lambda = float(getattr(self.config, "demo_lambda", 0.0)) * demo_decay
         demo_margin = float(getattr(self.config, "demo_margin", 0.0))
         margin_loss = torch.tensor(0.0, device=self.device)
         if demo_lambda > 0.0 and demo_margin > 0.0:
@@ -531,8 +533,8 @@ class DQNFamilyAgent:
                 margin = torch.relu(q_max_other + float(demo_margin) - q_values)
                 margin_loss = (margin * demo_mask).mean()
 
-        # 演示转移上的专家行为克隆损失（在静态地图上起到强稳定器作用）。
-        demo_ce_lambda = float(getattr(self.config, "demo_ce_lambda", 0.0))
+        # 演示转移上的专家行为克隆损失（同样随训练进度线性衰减）。
+        demo_ce_lambda = float(getattr(self.config, "demo_ce_lambda", 0.0)) * demo_decay
         ce_loss = torch.tensor(0.0, device=self.device)
         if demo_ce_lambda > 0.0:
             demo_mask = demos.float().clamp(0.0, 1.0)

@@ -9,7 +9,7 @@
     moving_average()                   训练曲线平滑。
 DQfD 专家支持：
     forest_demo_target()               预填充 demo 数量。
-    forest_expert_action()             向 Hybrid A* 专家查询单步动作。
+    forest_expert_action()             向专家（SS-RRT*/Hybrid A*/cost-to-go）查询单步动作。
     collect_forest_demos()             批量填充经验回放池（专家演示）。
 
 核心：
@@ -155,11 +155,9 @@ def forest_expert_action(
     h = max(1, int(horizon_steps))
     expert = str(forest_expert).lower().strip()
     if expert == "auto":
-        expert = "hybrid_astar"
+        expert = "rrt_star"
 
     if expert == "hybrid_astar":
-        # 更安全的 Hybrid A* 跟踪，用于演示/引导探索。
-        # 短视距的激进跟踪器在较难的地图上（尤其是 forest_a）容易碰撞。
         return env.expert_action_hybrid_astar(
             lookahead_points=5,
             horizon_steps=max(15, h),
@@ -169,10 +167,21 @@ def forest_expert_action(
             w_speed=0.0,
         )
 
+    if expert == "rrt_star":
+        return env.expert_action_rrt_star(
+            lookahead_points=5,
+            horizon_steps=max(15, h),
+            w_target=0.2,
+            w_heading=0.2,
+            w_clearance=float(w_clearance),
+            w_speed=0.0,
+            seed=int(getattr(env, '_episode_seed', 0)),
+        )
+
     if expert in {"cost_to_go", "ctg"}:
         return env.expert_action_cost_to_go(horizon_steps=max(15, h), min_od_m=0.0)
 
-    raise ValueError("forest_expert must be one of: auto, hybrid_astar, cost_to_go")
+    raise ValueError("forest_expert must be one of: auto, rrt_star, hybrid_astar, cost_to_go")
 
 
 # ===========================================================================
@@ -198,7 +207,7 @@ def collect_forest_demos(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     expert = str(forest_expert).lower().strip()
     if expert == "auto":
-        expert = "cost_to_go" if bool(forest_random_start_goal) else "hybrid_astar"
+        expert = "rrt_star"
 
     obs_dim = int(env.observation_space.shape[0])
     n = max(0, int(target))
@@ -235,6 +244,7 @@ def collect_forest_demos(
         truncated = False
         reached = False
         ep: list[tuple[np.ndarray, int, float, np.ndarray, bool, bool, np.ndarray]] = []
+        expert_failed = False
         while not (done or truncated):
             a = forest_expert_action(
                 env,
@@ -242,11 +252,19 @@ def collect_forest_demos(
                 horizon_steps=int(forest_demo_horizon),
                 w_clearance=float(forest_demo_w_clearance),
             )
+            if a < 0:
+                # 专家规划失败，丢弃整个 episode。
+                expert_failed = True
+                break
             next_obs, reward, done, truncated, info = env.step(int(a))
             next_mask = forest_compute_next_mask(env, horizon_steps=int(forest_adm_horizon))
             reached = bool(reached or bool(info.get("reached", False)))
             ep.append((obs, int(a), float(reward), next_obs, bool(done), bool(truncated), next_mask))
             obs = next_obs
+
+        if bool(expert_failed):
+            demo_ep += 1
+            continue
 
         if bool(reached):
             if int(added + len(ep)) > int(n):
@@ -382,7 +400,7 @@ def train_one(
             raise RuntimeError("forest_expert_action called for non-forest env")
         expert = str(forest_expert).lower().strip()
         if expert == "auto":
-            expert = "cost_to_go" if bool(forest_random_start_goal) else "hybrid_astar"
+            expert = "rrt_star"
         return forest_expert_action(
             env,
             forest_expert=str(expert),
@@ -662,7 +680,19 @@ def train_one(
                 p_exp = float(np.clip(p_exp, 0.0, 1.0))
                 if explore_rng.random() < p_exp:
                     action = forest_expert_action_local()
-                    used_expert = True
+                    if action < 0:
+                        # 专家规划失败，回退到 agent 自身决策，不标记为专家步骤。
+                        if forest_action_shield:
+                            action = forest_select_action(
+                                env, agent, obs,
+                                episode=ep, explore=True,
+                                horizon_steps=adm_h, topk=topk_k,
+                                training_mode=True,
+                            )
+                        else:
+                            action = agent.act(obs, episode=ep, explore=True)
+                    else:
+                        used_expert = True
                 else:
                     if forest_action_shield:
                         action = forest_select_action(
@@ -728,8 +758,9 @@ def train_one(
                 next_action_mask=nm,
             )
         ep_losses: list[dict[str, float]] = []
+        train_progress = float(ep) / float(max(1, episodes - 1))
         for _ in range(int(pending_updates)):
-            loss_info = agent.update(rew_normalizer=rew_normalizer)
+            loss_info = agent.update(rew_normalizer=rew_normalizer, training_progress=train_progress)
             if loss_info:
                 ep_losses.append(loss_info)
 
