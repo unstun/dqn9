@@ -329,15 +329,18 @@
 
 可行性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测时域为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可行。
 
-训练与推理共享同一动作选择机制。首先计算全部动作的 Q 值，取 Q 值最大的动作 $a_0 = \arg\max_a Q(s,a)$ 并通过前向仿真检查其可行性；若~$a_0$ 不可行，依次检查 Q 值排名前~$K$ 的候选动作；若仍无可行动作，则计算完整的可行掩码并取 $a^{*} = \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s)} Q(s,a)$；最终回退为基于目标距离图的截断 rollout 贪心选择。$\epsilon$-贪心探索时，随机动作同样限定在可行集合内，确保探索阶段的动作始终满足可行约束。训练与推理的唯一区别在于进度条件的严格程度：训练时将进度阈值~$\epsilon_p$ 设为零，仅强制无碰撞约束，使 Q 网络从奖励信号中自主学习前进方向；推理时启用完整的进度约束，确保每步动作均朝目标前进。
+训练与推理共享同一动作选择机制。首先取 Q 值最大的动作 $a_0 = \arg\max_a Q(s,a)$ 并通过前向仿真检查其可行性；若~$a_0$ 不可行，依次检查 Q 值排名前~$K$ 的候选动作；若仍无可行动作，则对全部动作计算可行掩码，取 $a^{*} = \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s)} Q(s,a)$；若可行集为空，则放宽约束至仅保留无碰撞动作并重新选择；当上述所有策略均失败时，选取目标距离最小且无碰撞的动作；若所有动作均导致碰撞，则选取障碍物距离最大的动作并承受碰撞惩罚。
 
-动作掩码同样作用于 Double DQN 的 TD 目标，使动作选择仅在可行动作上进行：
+动作掩码同样作用于 Double DQN 的时序差分目标，使动作选择仅在可行动作上进行：
 \begin{equation}\label{eq:masked_target}
-  a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
-  \qquad
-  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
+  \left\{
+  \begin{aligned}
+    a^{*} &= \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a') \\
+    y_t &= \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*})
+  \end{aligned}
+  \right.
 \end{equation}
-不施加此掩码时，目标网络可能选中不可行动作并赋予虚高 Q 值，导致训练不稳定；第~\ref{ssec:abl_amdqfd}~节的消融实验验证了这一效应。
+若不在目标中施加掩码，式~\eqref{eq:masked_target}~中的 $\arg\max$ 可能落在不可行动作上，使目标 Q 值虚高并导致训练不稳定~\cite{van2016deep}。
 
 \subsubsection{MD-DDQN 网络与训练}\label{sec:network}
 
