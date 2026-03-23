@@ -299,6 +299,111 @@ def rollout_agent(
     )
 
 
+def rollout_expert(
+    env: UGVBicycleEnv,
+    *,
+    max_steps: int,
+    seed: int,
+    reset_options: dict[str, object] | None = None,
+    horizon_steps: int = 15,
+    collect_controls: bool = False,
+    collect_trace: bool = False,
+) -> RolloutResult:
+    """基于 cost-to-go 贪心专家的 rollout（与 DQfD 演示生成使用相同的专家策略）。"""
+    t0 = time.perf_counter()
+    obs, _info0 = env.reset(seed=seed, options=reset_options)
+    path: list[tuple[float, float]] = [(float(env.start_xy[0]), float(env.start_xy[1]))]
+    dt_s = float(env.model.dt)
+    h = max(1, int(horizon_steps))
+
+    # 控制序列记录
+    t_series: list[float] | None = None
+    v_series: list[float] | None = None
+    delta_series: list[float] | None = None
+    if bool(collect_controls):
+        t_series = [0.0]
+        v_series = [float(env._v_m_s)]
+        delta_series = [float(env._delta_rad)]
+
+    # 逐步轨迹记录
+    trace_rows: list[dict[str, object]] | None = None
+    if bool(collect_trace):
+        trace_rows = [{
+            "step": 0,
+            "x_m": float(env._x_m),
+            "y_m": float(env._y_m),
+            "theta_rad": float(env._psi_rad),
+            "v_m_s": float(env._v_m_s),
+            "delta_rad": float(env._delta_rad),
+            "action": -1,
+            "delta_dot_rad_s": 0.0,
+            "a_m_s2": 0.0,
+            "od_m": float(getattr(env, "_last_od_m", 0.0)),
+            "collision": False,
+            "reached": False,
+            "stuck": False,
+            "reward": 0.0,
+        }]
+
+    done = False
+    truncated = False
+    steps = 0
+    reached = False
+
+    while not (done or truncated) and steps < max_steps:
+        steps += 1
+        a = env.expert_action_cost_to_go(horizon_steps=h, min_od_m=0.0)
+        obs, rew, done, truncated, info = env.step(a)
+        x, y = info["agent_xy"]
+        path.append((float(x), float(y)))
+        if trace_rows is not None:
+            _a_id = int(a)
+            _dd = float(env.action_table[_a_id, 0])
+            _aa = float(env.action_table[_a_id, 1])
+            px, py, pth = info.get("pose_m", (env._x_m, env._y_m, env._psi_rad))
+            trace_rows.append({
+                "step": int(steps),
+                "x_m": float(px),
+                "y_m": float(py),
+                "theta_rad": float(pth),
+                "v_m_s": float(info.get("v_m_s", env._v_m_s)),
+                "delta_rad": float(info.get("delta_rad", env._delta_rad)),
+                "action": _a_id,
+                "delta_dot_rad_s": _dd,
+                "a_m_s2": _aa,
+                "od_m": float(info.get("od_m", float("nan"))),
+                "collision": bool(info.get("collision", False)),
+                "reached": bool(info.get("reached", False)),
+                "stuck": bool(info.get("stuck", False)),
+                "reward": float(rew),
+            })
+        if t_series is not None and v_series is not None and delta_series is not None:
+            t_series.append(float(steps) * dt_s)
+            v_series.append(float(info.get("v_m_s", float(env._v_m_s))))
+            delta_series.append(float(info.get("delta_rad", float(env._delta_rad))))
+        if info.get("reached"):
+            reached = True
+            break
+
+    compute_time_s = float(time.perf_counter() - t0)
+    controls = None
+    if t_series is not None and v_series is not None and delta_series is not None:
+        controls = ControlTrace(
+            t_s=np.asarray(t_series, dtype=np.float64),
+            v_m_s=np.asarray(v_series, dtype=np.float64),
+            delta_rad=np.asarray(delta_series, dtype=np.float64),
+        )
+    return RolloutResult(
+        path_xy_cells=path,
+        compute_time_s=compute_time_s,
+        reached=bool(reached),
+        steps=int(steps),
+        path_time_s=float(steps) * dt_s,
+        controls=controls,
+        trace_rows=trace_rows,
+    )
+
+
 def rollout_agent_plan_then_track(
     env: UGVBicycleEnv,
     agent: DQNFamilyAgent,
@@ -817,6 +922,17 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Skip loading/running RL agents (useful for baseline-only evaluation).",
     )
+    ap.add_argument(
+        "--expert-baseline",
+        action="store_true",
+        help="Include cost-to-go greedy expert as a baseline (same expert used for DQfD demo generation).",
+    )
+    ap.add_argument(
+        "--expert-horizon",
+        type=int,
+        default=15,
+        help="Expert rollout horizon steps (default: 15, matching training demo generation).",
+    )
     ap.add_argument("--baseline-timeout", type=float, default=5.0, help="Planner timeout (seconds).")
     ap.add_argument("--hybrid-max-nodes", type=int, default=200_000, help="Hybrid A* node budget.")
     ap.add_argument("--rrt-max-iter", type=int, default=5_000, help="RRT* iteration budget.")
@@ -1174,8 +1290,8 @@ def main(argv: list[str] | None = None) -> int:
         if mapped not in baselines:
             baselines.append(mapped)
 
-    if bool(args.skip_rl) and not baselines:
-        raise SystemExit("--skip-rl requires at least one baseline via --baselines (e.g., --baselines all).")
+    if bool(args.skip_rl) and not baselines and not bool(getattr(args, "expert_baseline", False)):
+        raise SystemExit("--skip-rl requires at least one baseline via --baselines or --expert-baseline.")
 
     if bool(getattr(args, "rand_two_suites", False)):
         if not bool(getattr(args, "random_start_goal", False)):
@@ -1818,6 +1934,102 @@ def main(argv: list[str] | None = None) -> int:
                             **mk_dict,
                         }
                     )
+
+        # =====================================================================
+        # Expert baseline（cost-to-go 贪心专家）
+        # =====================================================================
+        if bool(getattr(args, "expert_baseline", False)) and isinstance(env, UGVBicycleEnv):
+            expert_pretty = "Expert (CTG)"
+            expert_kpis: list[KPI] = []
+            expert_times: list[float] = []
+            expert_success = 0
+            expert_h = int(getattr(args, "expert_horizon", 15))
+
+            for i in range(int(args.runs)):
+                roll = rollout_expert(
+                    env,
+                    max_steps=args.max_steps,
+                    seed=int(args.seed) + 80_000 + int(i),
+                    reset_options=reset_options_list[i] if i < len(reset_options_list) else None,
+                    horizon_steps=expert_h,
+                    collect_controls=bool(int(i) in control_run_indices),
+                    collect_trace=_save_traces,
+                )
+                expert_times.append(float(roll.compute_time_s))
+                if int(i) in path_run_indices:
+                    env_paths_by_run[int(i)][expert_pretty] = PathTrace(path_xy_cells=roll.path_xy_cells, success=bool(roll.reached))
+                if roll.controls is not None and int(i) in control_run_indices:
+                    controls_for_plot.setdefault((env_name, int(i)), {})[str(expert_pretty)] = roll.controls
+
+                start_xy = (int(spec.start_xy[0]), int(spec.start_xy[1]))
+                goal_xy = (int(spec.goal_xy[0]), int(spec.goal_xy[1]))
+                opts = reset_options_list[i] if i < len(reset_options_list) else None
+                if isinstance(opts, dict) and "start_xy" in opts and "goal_xy" in opts:
+                    sx, sy = opts["start_xy"]  # type: ignore[misc]
+                    gx, gy = opts["goal_xy"]  # type: ignore[misc]
+                    start_xy = (int(sx), int(sy))
+                    goal_xy = (int(gx), int(gy))
+
+                # --save-traces：写入专家轨迹 CSV + JSON
+                if _save_traces and roll.trace_rows is not None:
+                    _tr_dir = out_dir / "traces"
+                    _tr_dir.mkdir(parents=True, exist_ok=True)
+                    _csv_name = f"{_safe_slug(env_case)}__{_safe_slug(expert_pretty)}__run{int(i)}.csv"
+                    pd.DataFrame(roll.trace_rows).to_csv(_tr_dir / _csv_name, index=False)
+                    _save_trace_json(
+                        _tr_dir, _csv_name,
+                        algorithm=str(expert_pretty), cell_size_m=float(cell_size_m),
+                        env_base=str(env_base), env_case=str(env_case),
+                        start_xy=start_xy, goal_xy=goal_xy, run_idx=int(i),
+                    )
+
+                raw_corners = float(num_path_corners(roll.path_xy_cells, angle_threshold_deg=13.0))
+                smoothed = smooth_path(roll.path_xy_cells, iterations=2)
+                smoothed_m = [(float(x) * float(cell_size_m), float(y) * float(cell_size_m)) for x, y in smoothed]
+                run_kpi = KPI(
+                    avg_path_length=float(path_length(smoothed)) * float(cell_size_m),
+                    path_time_s=float(roll.path_time_s),
+                    avg_curvature_1_m=float(avg_abs_curvature(smoothed_m)),
+                    planning_time_s=float(roll.compute_time_s),
+                    tracking_time_s=0.0,
+                    inference_time_s=float(roll.compute_time_s),
+                    num_corners=raw_corners,
+                    max_corner_deg=float(max_corner_degree(smoothed)),
+                )
+                rows_runs.append(
+                    {
+                        "Environment": str(env_label),
+                        "Algorithm": str(expert_pretty),
+                        "run_idx": int(i),
+                        "start_x": int(start_xy[0]),
+                        "start_y": int(start_xy[1]),
+                        "goal_x": int(goal_xy[0]),
+                        "goal_y": int(goal_xy[1]),
+                        "success_rate": 1.0 if bool(roll.reached) else 0.0,
+                        **dict(run_kpi.__dict__),
+                    }
+                )
+                if bool(roll.reached):
+                    expert_success += 1
+                    expert_kpis.append(run_kpi)
+                if env_pbar is not None:
+                    env_pbar.set_postfix_str(f"{expert_pretty} run {int(i) + 1}/{int(args.runs)}")
+                    env_pbar.update(1)
+
+            k = mean_kpi(expert_kpis)
+            k_dict = dict(k.__dict__)
+            if expert_times:
+                k_dict["planning_time_s"] = float(np.mean(expert_times))
+                k_dict["tracking_time_s"] = 0.0
+                k_dict["inference_time_s"] = float(np.mean(expert_times))
+            rows.append(
+                {
+                    "Environment": str(env_label),
+                    "Algorithm": str(expert_pretty),
+                    "success_rate": float(expert_success) / float(max(1, int(args.runs))),
+                    **k_dict,
+                }
+            )
 
         if baselines:
             grid_map = grid_map_from_obstacles(grid_y0_bottom=grid, cell_size_m=float(cell_size_m))
