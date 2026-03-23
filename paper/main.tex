@@ -350,11 +350,15 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(1) 卷积神经网络}
 
-网络以 $12\times12$ 二通道栅格地图作为空间输入，标量分支接收 11 维向量。卷积骨干包含三层 $3\!\times\!3$ 卷积，通道数从 2 递增至 32、64、64，步幅依次为 1、2、2，将空间分辨率从 $12\!\times\!12$ 压缩至 $3\!\times\!3$。
+网络以 $12\times12$ 二通道栅格地图作为空间输入，标量分支接收 11 维向量。卷积骨干包含三层 $3\!\times\!3$ 卷积，通道数从 2 递增至 32、64、64，stride依次为 1、2、2，将空间分辨率从 $12\!\times\!12$ 压缩至 $3\!\times\!3$。
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
-经三层卷积（步幅 1-2-2）后，理论感受野为 $9\times9$，仅覆盖 $12\times12$ 输入的 56\%，且有效感受野通常远小于理论值~\cite{luo2016understanding}。本文在第三层卷积后加入 4 头自注意力模块~\cite{vaswani2017attention}，将 $3\times3=9$ 个空间位置视为 token 序列，经自注意力、残差连接与层归一化后保持原空间维度，使任意两位置间可直接交换信息。
+上述卷积骨干的理论感受野为 $9\times9$，面积覆盖率仅 $9^2/12^2\approx56\%$，且有效感受野呈高斯衰减，实际远小于理论值~\cite{luo2016understanding}。路径规划要求智能体综合观测窗口内的全局障碍物分布做出转向决策，仅靠局部感受野难以满足这一需求。受关系深度强化学习~\cite{zambaldi2019deep}的启发，本文将卷积输出的 $3\times3$ 特征图中每个空间位置视为一个实体，将 9 个实体编入矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$（$C$ 为卷积输出通道数）后施加多头缩放点积自注意力~\cite{vaswani2017attention}：
+\begin{equation}\label{eq:mha}
+  \boldsymbol{Z} = \mathrm{softmax}\!\Bigl(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\Bigr)\boldsymbol{V}
+\end{equation}
+其中 $\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}$ 分别由 $\boldsymbol{E}$ 经可学习矩阵投影得到，$d_k$ 为键向量维度。4 个注意力头独立执行上述计算后拼接，经线性投影、残差连接与层归一化输出。自注意力使 9 个空间位置中的任意两个在单层内直接交互，弥补了卷积逐层传递信息带来的全局感知不足。
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
