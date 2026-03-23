@@ -116,7 +116,7 @@
 
 \subsection{强化学习中的动作掩码}\label{sec:related:mask}
 
-除奖励设计外，确保学习策略遵守物理和安全约束同样重要。在许多现实控制问题中，给定状态下存在一部分无效或不安全的动作。Huang 和 Onta\~{n}\'on~\cite{huang2022closer}对无效动作掩码 IAM 进行了系统研究，表明在 softmax 之前将不可行动作的 logit 置零——等价地将其 Q 值设为 $-\infty$——能够保持策略梯度的收敛保证，同时显著加速训练。动作掩码已在组合博弈~\cite{huang2022closer}和多智能体场景中得到广泛采用，但其在面向运动学受约束导航的基于价值深度强化学习中的集成——其中掩码同时编码碰撞避免和转向角限制——尚未受到充分关注。
+除奖励设计外，确保学习策略遵守物理和安全约束同样重要。在许多现实控制问题中，给定状态下存在一部分无效或不安全的动作。Huang 和 Onta\~{n}\'on~\cite{huang2022closer}对策略梯度算法中的无效动作掩码（Invalid Action Masking, IAM）进行了系统研究，表明在 softmax 之前将不可行动作的 logit 设为负无穷——使对应概率降为零——能够保持策略梯度的收敛保证，同时显著加速训练。在基于价值的方法中，等价操作为将不可行动作的 Q 值设为 $-\infty$，从而在 $\arg\max$ 选择中排除这些动作。动作掩码已在即时策略游戏~\cite{huang2022closer}和多智能体场景中得到广泛采用，但其在面向运动学受约束导航的基于价值深度强化学习中的集成——其中掩码同时编码碰撞避免和转向角限制——尚未受到充分关注。
 
 安全约束强化学习方法，如通过拉格朗日松弛求解的约束 MDP~\cite{altman1999constrained}，提供了实现安全行为的替代路径。然而，这些方法引入了额外的优化复杂度，而动作掩码以可忽略的计算开销强制执行硬约束。
 
@@ -321,23 +321,23 @@
 
 \subsubsection{动作掩码}\label{sec:masking}
 
-奖励塑形为 Q 网络提供了方向引导，但无法保证每步所选动作的安全性。在 $|\mathcal{A}|=35$ 的离散动作空间中，自行车运动学的非完整约束使得任意状态下均可能存在多个导致碰撞的动作。动作掩码在策略输出端排除这些不可行选项~\cite{vinyals2017starcraft}。定义状态~$s$ 下的可接纳动作集 $\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$ 与二值掩码 $\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，$m_a(s)=1$ 当且仅当 $a \in \mathcal{A}_{\mathrm{adm}}(s)$，将不可接纳动作的 Q 值置为负无穷：
+奖励塑形为 Q 网络提供了方向引导，但无法保证每步所选动作的安全性。在 $|\mathcal{A}|=35$ 的离散动作空间中，运动学的非完整约束使得任意状态下均可能存在多个导致碰撞的动作。动作掩码在策略输出端排除这些不可行动作~\cite{huang2022closer}。定义状态~$s$ 下的可行动作集$\mathcal{A}_{\mathrm{adm}}(s) \subseteq \mathcal{A}$ 与二值掩码 $\mathbf{m}(s) \in \{0,1\}^{|\mathcal{A}|}$，$m_a(s)=1$ 当且仅当 $a \in \mathcal{A}_{\mathrm{adm}}(s)$，将不可行动作的 Q 值置为负无穷：
 \begin{equation}\label{eq:masked_q}
-  \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty),
+  \tilde{Q}(s,a) = Q(s,a) + (1 - m_a(s)) \cdot (-\infty)
 \end{equation}
-使 $\epsilon$-贪心策略在训练与推理中均只从可接纳动作中选择。
+使 $\epsilon$-贪心策略在训练与推理中均只从可行动作中选择。
 
-可接纳性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测时域为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可接纳。
+可行性由前向仿真判定。对候选动作~$a$，以当前状态为起点，在自行车运动学模型下以恒定控制输入执行 $H$ 步仿真，预测时域为 $H \cdot \Delta t$。仿真轨迹逐步经第~\ref{sec:collision}~节的双圆碰撞模型检测，任一步碰撞即判定该动作不可行。
 
-训练与推理共享同一动作选择机制。首先计算全部动作的 Q 值，取 Q 值最大的动作 $a_0 = \arg\max_a Q(s,a)$ 并通过前向仿真检查其可接纳性；若~$a_0$ 不可接纳，依次检查 Q 值排名前~$K$ 的候选动作；若仍无可接纳动作，则计算完整的可接纳掩码并取 $a^{*} = \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s)} Q(s,a)$；最终回退为基于目标距离图的截断 rollout 贪心选择。$\epsilon$-贪心探索时，随机动作同样限定在可接纳集合内，确保探索阶段的动作始终满足可接纳约束。训练与推理的唯一区别在于进度条件的严格程度：训练时将进度阈值~$\epsilon_p$ 设为零，仅强制无碰撞约束，使 Q 网络从奖励信号中自主学习前进方向；推理时启用完整的进度约束，确保每步动作均朝目标前进。
+训练与推理共享同一动作选择机制。首先计算全部动作的 Q 值，取 Q 值最大的动作 $a_0 = \arg\max_a Q(s,a)$ 并通过前向仿真检查其可行性；若~$a_0$ 不可行，依次检查 Q 值排名前~$K$ 的候选动作；若仍无可行动作，则计算完整的可行掩码并取 $a^{*} = \arg\max_{a \in \mathcal{A}_{\mathrm{adm}}(s)} Q(s,a)$；最终回退为基于目标距离图的截断 rollout 贪心选择。$\epsilon$-贪心探索时，随机动作同样限定在可行集合内，确保探索阶段的动作始终满足可行约束。训练与推理的唯一区别在于进度条件的严格程度：训练时将进度阈值~$\epsilon_p$ 设为零，仅强制无碰撞约束，使 Q 网络从奖励信号中自主学习前进方向；推理时启用完整的进度约束，确保每步动作均朝目标前进。
 
-动作掩码同样作用于 Double DQN 的 TD 目标，使动作选择仅在可接纳动作上进行：
+动作掩码同样作用于 Double DQN 的 TD 目标，使动作选择仅在可行动作上进行：
 \begin{equation}\label{eq:masked_target}
   a^{*} = \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a'),
   \qquad
   y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}).
 \end{equation}
-不施加此掩码时，目标网络可能选中不可行动作并赋予虚高 Q 值，导致训练不稳定。
+不施加此掩码时，目标网络可能选中不可行动作并赋予虚高 Q 值，导致训练不稳定；第~\ref{ssec:abl_amdqfd}~节的消融实验验证了这一效应。
 
 \subsubsection{MD-DDQN 网络与训练}\label{sec:network}
 
@@ -427,7 +427,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 在线交互开始后，总损失增加 TD 项：$\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\mathcal{L}_{\mathrm{margin}}+\mathcal{L}_{\mathrm{CE}}$。其中 $\mathcal{L}_{\mathrm{margin}}$ 与 $\mathcal{L}_{\mathrm{CE}}$ 仅对小批量中的演示样本计算，防止在线经验覆盖已习得的专家知识。
 
-\textit{专家演示生成。} 演示由基于 Dijkstra 目标距离图（第~\ref{sec:reward}~节）的贪心策略产生：对每个离散动作执行固定步数的恒定动作 rollout，以自行车运动学模型向前仿真 $H=15$ 步，选取 rollout 末端目标距离最小且全程无碰撞的动作。仿真采用与训练环境相同的运动学模型与碰撞检测。演示样本存入回放缓冲区，在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
+\textit{专家演示生成。} 演示由基于 Dijkstra 目标距离图（第~\ref{sec:reward}~节）的贪心策略产生：对每个离散动作执行固定步数的恒定动作 rollout，以自行车运动学模型向前仿真 $H=15$ 步，选取 rollout 末端目标距离最小且全程无碰撞的动作。仿真采用与训练环境相同的运动学模型与碰撞检测。仅保留成功到达目标的回合作为演示，存入回放缓冲区并在在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
 
 \begin{algorithm}[!htbp]
 \caption{MD-DDQN 训练流程}
@@ -438,7 +438,7 @@ DQfD 预训练步数           & 40\,000 \\
 \State 将 $\mathcal{D}_E$ 填充至回放缓冲区 $\mathcal{R}$（始终保留）
 \Statex \textbf{// 阶段一：DQfD 预训练}
 \For{$i = 1$ \textbf{to} $N_{\mathrm{pre}}$}
-    \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \lambda_{\mathrm{M}}\mathcal{L}_{\mathrm{margin}} + \lambda_{\mathrm{CE}}\mathcal{L}_{\mathrm{CE}}$
+    \State 从 $\mathcal{R}$ 采样 $\mathcal{B}$，计算 $\mathcal{L}_{\mathrm{pre}} = \mathcal{L}_{\mathrm{margin}} + \mathcal{L}_{\mathrm{CE}}$（公式~\ref{eq:dqfd_pretrain}）
     \State $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}_{\mathrm{pre}}$
 \EndFor
 \Statex \textbf{// 阶段二：在线训练}
@@ -453,7 +453,7 @@ DQfD 预训练步数           & 40\,000 \\
         \EndIf
         \State 执行 $a_t$，观测 $(s_{t+1}, r_{t+1})$
         \State 存储 $(s_t, a_t, r_{t+1}, s_{t+1}, \mathbf{m}(s_{t+1}))$ 至 $\mathcal{R}$
-        \State 采样 $\mathcal{B}$，以掩码 TD 目标（公式~\ref{eq:masked_target}）计算 $\mathcal{L}$，更新 $\theta$
+        \State 采样 $\mathcal{B}$，计算 $\mathcal{L} = \mathcal{L}_{\mathrm{TD}} + \mathcal{L}_{\mathrm{margin}} + \mathcal{L}_{\mathrm{CE}}$，更新 $\theta$ \Comment{TD 目标使用公式~(\ref{eq:masked_target})}
         \State 每 $T_{\mathrm{target}}$ 步：$\theta^{-} \leftarrow \theta$
     \EndWhile
 \EndFor
