@@ -364,14 +364,12 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
-在 35 维离散动作空间中，许多状态下各动作的影响差异甚微，准确估计状态价值比区分各动作更重要~\cite{wang2016dueling}。Dueling 架构将 Q 函数分解为状态价值 $V(s;\theta,\beta)$ 与动作优势 $A(s,a;\theta,\alpha)$，其中 $\theta$ 为共享层参数：
+本文在输出层引入 Dueling 架构~\cite{wang2016dueling}，将 Q 函数分解为状态价值 $V(s;\theta,\beta)$ 与动作优势 $A(s,a;\theta,\alpha)$，其中 $\theta$ 为共享层参数：
 \begin{equation}\label{eq:dueling_q}
   Q(s,a) = V(s;\theta,\beta) + \Bigl(A(s,a;\theta,\alpha)
-           - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha)\Bigr),
+           - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha)\Bigr)
 \end{equation}
-单独的 $V+A$ 分解并不唯一——对 $V$ 加任意常数并从 $A$ 中减去同一常数不影响 $Q$。式中减去优势均值将 $A$ 约束为零均值，消除该不确定性~\cite{wang2016dueling}。该分解使每次 TD 更新均改善状态价值估计，无需遍历全部动作。
-
-本文将 MHA 与 Dueling 组合使用，简称 MD：MHA 补偿有限感受野，Dueling 提高大动作空间下的状态价值估计效率，分别作用于特征层与输出层。消融实验（第~\ref{ssec:abl_module}~节）验证了该组合的有效性。
+式中减去优势均值将 $A$ 约束为零均值，以消除 $V$-$A$ 分解的不可辨识性~\cite{wang2016dueling}。在 35 维离散动作空间中，大量状态下各动作对应的 Q 值差异较小，此时准确的状态价值估计比逐一区分动作优势更为关键。与单流架构仅更新所选动作的 Q 值不同，上述分解使得每次 TD 更新均直接改善 $V$ 的估计。MD 组合的有效性由第~\ref{ssec:abl_module}~节的消融实验验证。
 
 \paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 

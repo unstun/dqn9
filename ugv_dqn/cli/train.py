@@ -1218,6 +1218,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=False,
         help="Ablation: drop the EDT clearance channel from CNN input (keep only occ + cost). Default: False.",
     )
+    ap.add_argument(
+        "--scalar-only",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Ablation: use only 11-dim scalar obs (no map channels). Default: False.",
+    )
     return ap
 
 
@@ -1419,6 +1425,7 @@ def main(argv: list[str] | None = None) -> int:
             reward_k_o=float(getattr(args, "reward_k_o", 1.5)),
             reward_k_v=float(getattr(args, "reward_k_v", 2.0)),
             edt_collision_margin=getattr(args, "edt_collision_margin", "diag"),
+            scalar_only=bool(getattr(args, "scalar_only", False)),
         )
         forest_demo_data = None
         if bool(args.forest_demo_prefill) and int(args.learning_starts) > 0:

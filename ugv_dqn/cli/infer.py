@@ -1080,6 +1080,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=False,
         help="Ablation: drop the EDT clearance channel from CNN input (keep only occ + cost). Default: False.",
     )
+    ap.add_argument(
+        "--scalar-only",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Ablation: use only 11-dim scalar obs (no map channels). Default: False.",
+    )
     return ap
 
 
@@ -1315,6 +1321,7 @@ def main(argv: list[str] | None = None) -> int:
             goal_tolerance_m=float(args.goal_tolerance),
             goal_speed_tol_m_s=float(args.goal_speed_tol),
             edt_collision_margin=getattr(args, "edt_collision_margin", "diag"),
+            scalar_only=bool(getattr(args, "scalar_only", False)),
         )
         cell_size_m = 0.1
         grid = spec.obstacle_grid()

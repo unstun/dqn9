@@ -459,6 +459,7 @@ class UGVBicycleEnv(gym.Env):
         # 比 "half" 模式（碰撞边距 = 0.5 * cell_size）更保守，碰撞率更低，
         # 尤其在狭窄走廊场景下显著提升成功率。默认使用 "diag"。
         edt_collision_margin: str = "diag",
+        scalar_only: bool = False,
     ) -> None:
         super().__init__()
 
@@ -483,8 +484,9 @@ class UGVBicycleEnv(gym.Env):
         self.n_sectors = int(n_sectors)
         if self.n_sectors < 1:
             raise ValueError("n_sectors must be >= 1")
+        self.scalar_only = bool(scalar_only)
         self.obs_map_size = int(obs_map_size)
-        if self.obs_map_size < 4:
+        if not self.scalar_only and self.obs_map_size < 4:
             raise ValueError("obs_map_size must be >= 4")
         self.od_cap_m = float(od_cap_m)
         if not (self.od_cap_m > 0):
@@ -603,24 +605,31 @@ class UGVBicycleEnv(gym.Env):
         #
         # 保持宽高比降采样，使非正方形地图（如 410×129）保持正确的空间关系。
         # 填充值语义正确：占据=1，最大代价=1，零安全距离=0。
-        _n = int(self.obs_map_size)
-        occ_ds = _downsample_map_preserve_aspect(
-            self._grid.astype(np.float32, copy=False), _n,
-            interpolation=cv2.INTER_NEAREST, pad_value=1.0,
-        )
-        self._obs_occ_flat = (2.0 * occ_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
+        if self.scalar_only:
+            # 消融实验：仅保留 11 维标量特征，去除全部地图通道。
+            self._obs_occ_flat = np.array([], dtype=np.float32)
+            self._obs_cost_flat = np.array([], dtype=np.float32)
+            self._obs_edt_flat = np.array([], dtype=np.float32)
+            obs_dim = 11
+        else:
+            _n = int(self.obs_map_size)
+            occ_ds = _downsample_map_preserve_aspect(
+                self._grid.astype(np.float32, copy=False), _n,
+                interpolation=cv2.INTER_NEAREST, pad_value=1.0,
+            )
+            self._obs_occ_flat = (2.0 * occ_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
 
-        cost = np.minimum(self._cost_to_goal_m, float(self._cost_fill_m)).astype(np.float32, copy=False)
-        cost01 = np.clip(cost / max(1e-6, float(self._cost_norm_m)), 0.0, 1.0).astype(np.float32, copy=False)
-        cost_ds = _downsample_map_preserve_aspect(cost01, _n, pad_value=1.0)
-        self._obs_cost_flat = (2.0 * cost_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
+            cost = np.minimum(self._cost_to_goal_m, float(self._cost_fill_m)).astype(np.float32, copy=False)
+            cost01 = np.clip(cost / max(1e-6, float(self._cost_norm_m)), 0.0, 1.0).astype(np.float32, copy=False)
+            cost_ds = _downsample_map_preserve_aspect(cost01, _n, pad_value=1.0)
+            self._obs_cost_flat = (2.0 * cost_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
 
-        # EDT 安全距离图：归一化到最近障碍物的距离，上限为 od_cap_m。
-        edt01 = np.clip(self._dist_m / max(1e-6, float(self.od_cap_m)), 0.0, 1.0).astype(np.float32, copy=False)
-        edt_ds = _downsample_map_preserve_aspect(edt01, _n, pad_value=0.0)
-        self._obs_edt_flat = (2.0 * edt_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
+            # EDT 安全距离图：归一化到最近障碍物的距离，上限为 od_cap_m。
+            edt01 = np.clip(self._dist_m / max(1e-6, float(self.od_cap_m)), 0.0, 1.0).astype(np.float32, copy=False)
+            edt_ds = _downsample_map_preserve_aspect(edt01, _n, pad_value=0.0)
+            self._obs_edt_flat = (2.0 * edt_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
 
-        obs_dim = 11 + 3 * int(self.obs_map_size) * int(self.obs_map_size)
+            obs_dim = 11 + 3 * int(self.obs_map_size) * int(self.obs_map_size)
         self.observation_space = gym.spaces.Box(
             low=-1.0, high=1.0, shape=(obs_dim,), dtype=np.float32
         )
@@ -736,12 +745,13 @@ class UGVBicycleEnv(gym.Env):
         self._curriculum_start_cost_m = float(start_cost)
 
         # 降采样归一化 goal distance field，用于全局地图观测。
-        cost = np.minimum(self._cost_to_goal_m, float(self._cost_fill_m)).astype(np.float32, copy=False)
-        cost01 = np.clip(cost / max(1e-6, float(self._cost_norm_m)), 0.0, 1.0).astype(np.float32, copy=False)
-        cost_ds = _downsample_map_preserve_aspect(
-            cost01, int(self.obs_map_size), pad_value=1.0,
-        )
-        self._obs_cost_flat = (2.0 * cost_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
+        if not self.scalar_only:
+            cost = np.minimum(self._cost_to_goal_m, float(self._cost_fill_m)).astype(np.float32, copy=False)
+            cost01 = np.clip(cost / max(1e-6, float(self._cost_norm_m)), 0.0, 1.0).astype(np.float32, copy=False)
+            cost_ds = _downsample_map_preserve_aspect(
+                cost01, int(self.obs_map_size), pad_value=1.0,
+            )
+            self._obs_cost_flat = (2.0 * cost_ds.reshape(-1) - 1.0).astype(np.float32, copy=False)
 
     def _sample_random_start_goal(
         self,

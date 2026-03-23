@@ -179,6 +179,7 @@ class DQNFamilyAgent:
                 }
         else:
             # 当存在第 3 个地图通道（EDT）时去除它：11+3*N² → 11+2*N²。
+            # scalar_only 模式下 obs_dim=11，无地图通道，无需裁剪。
             map_rem = int(obs_dim) - 11
             if map_rem > 0 and map_rem % 3 == 0:
                 n_sq = map_rem // 3
