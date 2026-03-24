@@ -504,6 +504,7 @@ def rollout_tracked_path_mpc(
     w_clearance: float = 3.0,
     w_delta_rate: float = 1.0,
     w_v_rate: float = 0.5,
+    obstacle_safety_margin: float = 0.5,
     collect_controls: bool = False,
 ) -> RolloutResult:
     """传统优化式 MPC 路径跟踪器，用于基线算法路径（仅限 forest 环境）。
@@ -575,6 +576,11 @@ def rollout_tracked_path_mpc(
     dd_max = float(env.model.delta_dot_max_rad_s)
     a_max = float(env.model.a_max_m_s2)
     cell_m = float(env.cell_size_m)
+
+    # 双圆足迹参数 + diag 碰撞边距，与 env 碰撞检测对齐
+    fp_x1 = float(env.footprint.x1_m)
+    fp_x2 = float(env.footprint.x2_m)
+    r_col = float(env.footprint.radius_m) + float(env._half_cell_m)
 
     # warm start 缓存：上一步解平移作为下一步初始猜测
     prev_sol: np.ndarray | None = None
@@ -705,14 +711,18 @@ def rollout_tracked_path_mpc(
                     J += float(w_delta_rate) * ((delta_seq[0] - delta0) ** 2)
                     J += float(w_v_rate) * ((v_seq[0] - v0) ** 2)
 
-                # 障碍物惩罚：通过 EDT 查询
-                xi = x_next / cell_m
-                yi = y_next / cell_m
-                od = bilinear_sample_2d(env._dist_m, x=xi, y=yi, default=0.0)
-                r_footprint = float(env.footprint.radius_m)
-                clearance = od - r_footprint
-                if clearance < 0.5:
-                    J += float(w_clearance) * ((0.5 - clearance) ** 2)
+                # 障碍物惩罚：双圆足迹 + diag 碰撞边距，与 env 碰撞检测一致
+                cos_psi = math.cos(psi_next)
+                sin_psi = math.sin(psi_next)
+                c1x = x_next + cos_psi * fp_x1
+                c1y = y_next + sin_psi * fp_x1
+                c2x = x_next + cos_psi * fp_x2
+                c2y = y_next + sin_psi * fp_x2
+                d1 = bilinear_sample_2d(env._dist_m, x=c1x / cell_m, y=c1y / cell_m, default=0.0)
+                d2 = bilinear_sample_2d(env._dist_m, x=c2x / cell_m, y=c2y / cell_m, default=0.0)
+                clearance = min(d1, d2) - r_col
+                if clearance < obstacle_safety_margin:
+                    J += float(w_clearance) * ((obstacle_safety_margin - clearance) ** 2)
 
                 x_k, y_k, psi_k, v_k = x_next, y_next, psi_next, v_next
                 cur_delta = delta_next
@@ -987,6 +997,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--baseline-timeout", type=float, default=5.0, help="Planner timeout (seconds).")
     ap.add_argument("--hybrid-max-nodes", type=int, default=200_000, help="Hybrid A* node budget.")
     ap.add_argument("--rrt-max-iter", type=int, default=5_000, help="RRT* iteration budget.")
+    ap.add_argument("--ha-smooth", type=int, default=1,
+                    help="Hybrid A* CG trajectory smoothing (Dolgov §3): 1=enable, 0=disable.")
     ap.add_argument("--loha-lo-iterations", type=int, default=0,
                     help="LO-HA* LOA outer-loop iterations (0=skip LOA, use default params).")
     ap.add_argument("--edt-collision-margin", type=str, default="half",
@@ -2149,6 +2161,7 @@ def main(argv: list[str] | None = None) -> int:
                         timeout_s=float(args.baseline_timeout),
                         max_nodes=int(args.hybrid_max_nodes),
                         collision_checker=_baseline_edt_checker,
+                        smooth=bool(getattr(args, "ha_smooth", 1)),
                     )
 
                     if _ha_split:

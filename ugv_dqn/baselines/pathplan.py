@@ -114,7 +114,16 @@ def plan_hybrid_astar(
     max_nodes: int = 200_000,
     collision_padding: float | None = None,
     collision_checker=None,
+    smooth: bool = True,
 ) -> PlannerResult:
+    """运行 Hybrid A* 规划 + 可选的 Dolgov §3 CG 轨迹平滑。
+
+    当 smooth=True 时，对 A* 搜索结果执行:
+      §3.1 共轭梯度平滑 (障碍避让 + 曲率约束 + 路径光滑性)
+      §3.2 碰撞安全锚固
+      §3.3 Voronoi 势场排斥
+      §3.4 非参数轨迹插值 + 二次精细化
+    """
     cell_size_m = float(grid_map.resolution)
     st = float(start_theta_rad) if start_theta_rad is not None else _default_start_theta(start_xy, goal_xy, cell_size_m=cell_size_m)
     start = AckermannState(float(start_xy[0]) * cell_size_m, float(start_xy[1]) * cell_size_m, st)
@@ -136,6 +145,29 @@ def plan_hybrid_astar(
     dt = float(stats.get("time", t1 - t0))
 
     if path:
+        # --- Dolgov §3 CG 轨迹平滑 ---
+        if smooth and len(path) >= 3:
+            from ugv_dqn.third_party.pathplan.hybrid_a_star.smoother import (
+                SmootherParams,
+                smooth_hybrid_astar_path,
+            )
+            t_smooth_start = time.perf_counter()
+            try:
+                path = smooth_hybrid_astar_path(
+                    path,
+                    grid_map,
+                    min_turn_radius=params.min_turn_radius,
+                    collision_checker=collision_checker,
+                    params=SmootherParams(kappa_max=1.0 / params.min_turn_radius),
+                )
+                stats["smooth_time"] = float(time.perf_counter() - t_smooth_start)
+                stats["smoothed"] = True
+            except Exception as exc:
+                # 平滑失败时回退到原始路径，不中断流程
+                stats["smooth_error"] = str(exc)
+                stats["smoothed"] = False
+            dt = float(time.perf_counter() - t0)
+
         pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
         return PlannerResult(path_xy_cells=pts, time_s=dt, success=True, stats=stats)
     return PlannerResult(
