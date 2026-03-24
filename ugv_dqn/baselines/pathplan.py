@@ -119,6 +119,11 @@ def plan_hybrid_astar(
     rs_heuristic_max_dist: float = 15.0,
     xy_resolution: float = 0.0,
     step_length: float = 0.3,
+    # ── Dang 2022 多曲率 RS 解析扩展参数 ──
+    curvature_step: float = 0.05,
+    max_curvature_ratio: float = 2.0,
+    sigma1: float = 0.4,
+    sigma2: float = 0.6,
 ) -> PlannerResult:
     """运行 Hybrid A* 规划 + 可选的 Dolgov §3 CG 轨迹平滑。
 
@@ -148,6 +153,11 @@ def plan_hybrid_astar(
         reeds_shepp_heuristic_max_dist=float(rs_heuristic_max_dist),
         collision_padding=collision_padding,
         collision_checker=collision_checker,
+        # Dang 2022 多曲率 RS 参数
+        curvature_step=float(curvature_step),
+        max_curvature_ratio=float(max_curvature_ratio),
+        sigma1=float(sigma1),
+        sigma2=float(sigma2),
     )
 
     t0 = time.perf_counter()
@@ -355,6 +365,7 @@ def plan_lo_hybrid_astar(
         goal_theta_tol=float(goal_theta_tol_rad),
         collision_padding=collision_padding,
         collision_checker=collision_checker,
+        curvature_step=0.0,  # 参考路径: 禁用多曲率扫描以加速
     )
     _ref_path, _ref_stats = _ref_planner.plan(start, goal, timeout=2.0, max_nodes=50_000, self_check=False)
     L_ref = float(_ref_stats.get("path_length", 0.0)) if _ref_path else 0.0

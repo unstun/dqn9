@@ -10,6 +10,7 @@ from ..primitives import MotionPrimitive, default_primitives, primitive_cost
 from ..robot import AckermannParams, AckermannState, sample_constant_steer_motion
 
 from .holonomic_heuristic import dijkstra_2d_cost_to_go
+from .obstacle_field import query_distance
 from .reeds_shepp import reeds_shepp_shortest_path
 
 
@@ -52,6 +53,14 @@ class HybridAStarPlanner:
         analytic_expansion: bool = True,
         analytic_expansion_interval: int = 8,
         analytic_expansion_distance_scale: float = 10.0,
+        # ── Dang 2022 多曲率 RS 解析扩展参数 ──
+        # curvature_step: 曲率扫描步长 (rad/m)，0 则退化为单曲率
+        curvature_step: float = 0.05,
+        # max_curvature_ratio: 最大曲率 = 最小曲率 × ratio
+        max_curvature_ratio: float = 2.0,
+        # Dang 2022 Eq.3 权重: G = σ₁·v + σ₂·m
+        sigma1: float = 0.4,
+        sigma2: float = 0.6,
         # Heuristic configuration (thesis §6.2).
         use_holonomic_heuristic: bool = True,
         allow_diagonal: bool = True,
@@ -82,6 +91,12 @@ class HybridAStarPlanner:
         self.analytic_expansion = bool(analytic_expansion)
         self.analytic_expansion_interval = max(1, int(analytic_expansion_interval))
         self.analytic_expansion_distance_scale = max(1e-6, float(analytic_expansion_distance_scale))
+
+        # ── Dang 2022 多曲率 RS 参数 ──
+        self.curvature_step = max(0.0, float(curvature_step))
+        self.max_curvature_ratio = max(1.0, float(max_curvature_ratio))
+        self.sigma1 = max(0.0, float(sigma1))
+        self.sigma2 = max(0.0, float(sigma2))
 
         self.use_holonomic_heuristic = bool(use_holonomic_heuristic)
         self.allow_diagonal = bool(allow_diagonal)
@@ -187,14 +202,30 @@ class HybridAStarPlanner:
         return max(1, int(round(self.analytic_expansion_interval * scale)))
 
     def _try_analytic_expansion(self, state: AckermannState, goal: AckermannState) -> Optional[Tuple[List[AckermannState], List[MotionPrimitive]]]:
-        """Dang et al. (2022) 多曲率 RS 解析展开。
+        """Dang et al. (2022) 多曲率 RS 解析展开 (§3)。
 
-        生成多条不同转弯半径的 RS 路径，用代价函数
-        G = σ₁·v + σ₂·m (碰撞风险 + 运动代价) 选优。
+        以等步长 Δκ 扫描曲率区间 [κ_min, κ_max]，对每个候选曲率
+        生成 RS 路径并做碰撞检测，用代价函数选优：
+            G = σ₁·v + σ₂·m          (Eq. 3)
+        其中
+            v = 碰撞风险 (EDT 距离近似 Voronoi 场代价)
+            m = lₚ + sₚ + cₚ         (Eq. 4: 路径长度 + 转向角 + 转向切换)
         """
+        # ── 构建候选曲率列表 ──
         r_min = self.params.min_turn_radius
-        # 多曲率候选: 1.0x, 1.3x, 1.6x, 2.0x 最小转弯半径
-        radii = [r_min, r_min * 1.3, r_min * 1.6, r_min * 2.0]
+        kappa_min = 1.0 / max(r_min * self.max_curvature_ratio, 1e-9)  # 最松曲率
+        kappa_max = 1.0 / max(r_min, 1e-9)                              # 最紧曲率
+
+        if self.curvature_step > 0.0 and kappa_max > kappa_min:
+            # Dang 2022: 等曲率步长扫描
+            n_steps = max(1, int(round((kappa_max - kappa_min) / self.curvature_step)))
+            radii = []
+            for i in range(n_steps + 1):
+                kappa = kappa_min + (kappa_max - kappa_min) * i / n_steps
+                radii.append(1.0 / max(kappa, 1e-9))
+        else:
+            # 退化: 单曲率 (与标准 Hybrid A* 一致)
+            radii = [r_min]
 
         best_result = None
         best_cost = float("inf")
@@ -203,24 +234,61 @@ class HybridAStarPlanner:
             result = self._try_rs_with_radius(state, goal, radius)
             if result is None:
                 continue
-            states, actions = result
-            # Dang 2022 代价函数 G = σ₁·v + σ₂·m
-            # v: 碰撞风险 (路径上最小障碍距离的倒数)
-            # m: 运动代价 (路径总长度)
-            path_len = sum(abs(a.step) for a in actions)
-            min_clearance = self._path_min_clearance(states)
-            collision_risk = 1.0 / max(min_clearance, 0.01)
-            cost = 0.4 * collision_risk + 0.6 * path_len
+            endpoints, actions, dense_samples = result
+
+            # ── Dang 2022 Eq. 3-4 代价函数 (用稠密采样点评估碰撞风险) ──
+            cost = self._dang2022_cost(dense_samples, actions)
             if cost < best_cost:
                 best_cost = cost
-                best_result = (states, actions)
+                best_result = (endpoints, actions)
 
         return best_result
 
+    def _dang2022_cost(self, states: List[AckermannState], actions: List[MotionPrimitive]) -> float:
+        """Dang 2022 Eq. 3: G = σ₁·v + σ₂·m
+
+        v — 碰撞风险代价 (EDT 均值距离倒数近似 Voronoi 场, Eq. 2)
+            NOTE: 原文 Eq.2 使用 Voronoi 边距离 dᵥ，此处用 EDT 距离近似，
+            丢失了通道中心线信息。在窄通道中区分度可能不足。
+        m — 运动代价 (Eq. 4): m = w₁·lₚ + w₂·sₚ + w₃·cₚ
+            lₚ: 路径总长度 (m)
+            sₚ: 绝对转向角之和 (rad)
+            cₚ: 转向方向切换次数
+            NOTE: 三分量量纲不同 (m / rad / 无量纲)，w₁/w₂/w₃ 负责归一化。
+        """
+        # ── v: 碰撞风险 (路径上平均 EDT 距离的倒数) ──
+        mean_clearance = self._path_mean_clearance(states)
+        v = 1.0 / max(mean_clearance, 0.01)
+
+        # ── m: 运动代价 (Eq. 4): m = w₁·lₚ + w₂·sₚ + w₃·cₚ ──
+        l_p = 0.0   # 路径总长度 (m)
+        s_p = 0.0   # 绝对转向角之和 (rad)
+        c_p = 0     # 转向方向切换次数
+        prev_steer_sign = 0
+        for a in actions:
+            l_p += abs(a.step)
+            s_p += abs(a.steering)
+            cur_sign = (1 if a.steering > 1e-9 else (-1 if a.steering < -1e-9 else 0))
+            if prev_steer_sign != 0 and cur_sign != 0 and cur_sign != prev_steer_sign:
+                c_p += 1
+            if cur_sign != 0:
+                prev_steer_sign = cur_sign
+        # Dang 2022 Eq.4 权重 (原文 w₁=w₂=w₃ 未显式给值，此处取 1.0)
+        _w1, _w2, _w3 = 1.0, 1.0, 1.0
+        m = _w1 * l_p + _w2 * s_p + _w3 * float(c_p)
+
+        return self.sigma1 * v + self.sigma2 * m
+
     def _try_rs_with_radius(
         self, state: AckermannState, goal: AckermannState, turning_radius: float,
-    ) -> Optional[Tuple[List[AckermannState], List[MotionPrimitive]]]:
-        """尝试用指定转弯半径生成 RS 路径并验证碰撞。"""
+    ) -> Optional[Tuple[List[AckermannState], List[MotionPrimitive], List[AckermannState]]]:
+        """尝试用指定转弯半径生成 RS 路径并验证碰撞。
+
+        返回 (segment_endpoints, actions, dense_samples):
+          - segment_endpoints: 各段终点 (用于路径重建，与 actions 一一对应)
+          - actions: 各段运动基元
+          - dense_samples: 沿路径的所有碰撞检测采样点 (用于代价评估)
+        """
         rs = reeds_shepp_shortest_path(state.as_tuple(), goal.as_tuple(), turning_radius)
         if rs is None:
             return None
@@ -229,7 +297,8 @@ class HybridAStarPlanner:
         max_steer_for_r = math.atan(self.params.wheelbase / max(turning_radius, 1e-9))
 
         cur = state
-        extra_states: List[AckermannState] = []
+        endpoints: List[AckermannState] = []
+        dense_samples: List[AckermannState] = [state]
         extra_actions: List[MotionPrimitive] = []
         for seg_type, seg_len in zip(rs.segment_types, rs.segment_lengths):
             seg_len = float(seg_len)
@@ -258,29 +327,33 @@ class HybridAStarPlanner:
             if self.collision_checker.collides_path(seg_states):
                 return None
             cur = seg_states[-1]
-            extra_states.append(cur)
+            endpoints.append(cur)
+            dense_samples.extend(seg_states[1:])
             extra_actions.append(MotionPrimitive(steering=steering, direction=direction, step=step_len, weight=1.0))
 
-        if not extra_states:
+        if not endpoints:
             return None
-        if not self._goal_reached(extra_states[-1], goal):
+        if not self._goal_reached(endpoints[-1], goal):
             return None
-        extra_states[-1] = goal
-        return extra_states, extra_actions
+        endpoints[-1] = goal
+        dense_samples[-1] = goal
+        return endpoints, extra_actions, dense_samples
 
-    def _path_min_clearance(self, states: List[AckermannState]) -> float:
-        """路径上最小障碍间隙 (用于 Dang 2022 碰撞风险代价)。"""
+    def _path_mean_clearance(self, states: List[AckermannState]) -> float:
+        """路径上平均障碍间隙 (用于 Dang 2022 碰撞风险代价)。
+
+        使用均值而非最小值：min 操作易被单点极值主导，导致不同候选
+        路径的代价区分度不足。均值能更平滑地反映整条路径的障碍抵近程度。
+        """
         if not hasattr(self, "_obs_dist_field"):
-            # 惰性计算障碍距离场
             from .obstacle_field import compute_obstacle_distance_field
             self._obs_dist_field = compute_obstacle_distance_field(self.map)
-        from .obstacle_field import query_distance
-        min_d = float("inf")
+        if not states:
+            return 0.0
+        total_d = 0.0
         for s in states:
-            d = query_distance(self._obs_dist_field, self.map, s.x, s.y)
-            if d < min_d:
-                min_d = d
-        return float(min_d)
+            total_d += query_distance(self._obs_dist_field, self.map, s.x, s.y)
+        return total_d / len(states)
 
     def plan(
         self,
