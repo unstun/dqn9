@@ -375,13 +375,15 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 网络结构确定后，需定义 Q 值的学习目标与优化方式。本文采用 Double DQN~\cite{van2016deep}构造目标值，由在线网络 $\theta$ 选择动作，目标网络 $\theta^{-}$ 评估该动作的价值，以抑制标准 Q-learning 的过估计偏差。在此基础上引入 $n$ 步回报~\cite{sutton1988learning}，将目标值扩展为
 \begin{equation}\label{eq:ddqn_target}
-  a^{*} = \arg\max_{a'}\;Q_{\theta}(s_{t+n},a'), \qquad
-  y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*}),
+  \begin{dcases}
+    a^{*} = \arg\max_{a'}\;Q_{\theta}(s_{t+n},a') \\
+    y_t = \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*})
+  \end{dcases}
 \end{equation}
 其中目标网络 $\theta^{-}$ 每 1000 步与在线网络同步。训练时在经验回放缓冲区中均匀采样小批量 $\mathcal{B}$，以 Huber 损失~\cite{huber1964robust}最小化 TD 误差：
 \begin{equation}\label{eq:huber}
   \mathcal{L}_{\mathrm{TD}} = \frac{1}{|\mathcal{B}|}
-    \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr),
+    \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr)
 \end{equation}
 Huber 损失对较大的 TD 误差施加线性而非二次惩罚，降低离群样本对梯度的影响，有助于稳定训练过程。全部超参数及其取值见表~\ref{tab:train_params}。
 
@@ -476,7 +478,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.65\columnwidth]{image14.png}
+\includegraphics[width=0.45\columnwidth]{image14.png}
 \caption{东北林业大学森林试验场真实场景}
 \label{fig:real_forest_scene}
 \end{figure}
