@@ -1178,8 +1178,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument(
         "--goal-tolerance",
         type=float,
-        default=1.0,
-        help="Goal position tolerance in meters (env.goal_tolerance_m). Default: 1.0.",
+        default=0.3,
+        help="Goal position tolerance in meters (env.goal_tolerance_m). Default: 0.3.",
     )
     ap.add_argument(
         "--goal-speed-tol",

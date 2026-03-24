@@ -40,7 +40,7 @@ BASE_CONFIG = {
     "rand_reject_unreachable": True,
     "filter_all_succeed": False,
     "max_steps": 600,
-    "goal_tolerance": 1.0,
+    "goal_tolerance": 0.3,
     "goal_speed_tol": 999.0,
     "edt_collision_margin": "diag",
     "baseline_timeout": 10.0,

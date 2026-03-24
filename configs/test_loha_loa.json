@@ -17,7 +17,7 @@
     "rand_reject_unreachable": true,
     "filter_all_succeed": false,
     "max_steps": 600,
-    "goal_tolerance": 1.0,
+    "goal_tolerance": 0.3,
     "goal_speed_tol": 999.0,
     "edt_collision_margin": "diag",
     "baseline_timeout": 30.0,

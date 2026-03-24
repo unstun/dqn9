@@ -33,6 +33,7 @@ from ugv_dqn.third_party.pathplan import (
     RRTStarPlanner,
     TwoCircleFootprint,
 )
+from ugv_dqn.third_party.pathplan.primitives import default_primitives
 
 
 @dataclass(frozen=True)
@@ -115,6 +116,9 @@ def plan_hybrid_astar(
     collision_padding: float | None = None,
     collision_checker=None,
     smooth: bool = False,
+    rs_heuristic_max_dist: float = 15.0,
+    xy_resolution: float = 0.0,
+    step_length: float = 0.3,
 ) -> PlannerResult:
     """运行 Hybrid A* 规划 + 可选的 Dolgov §3 CG 轨迹平滑。
 
@@ -129,12 +133,19 @@ def plan_hybrid_astar(
     start = AckermannState(float(start_xy[0]) * cell_size_m, float(start_xy[1]) * cell_size_m, st)
     goal = AckermannState(float(goal_xy[0]) * cell_size_m, float(goal_xy[1]) * cell_size_m, float(goal_theta_rad))
 
+    # 可配置的搜索分辨率和运动原语步长
+    effective_xy_res = float(xy_resolution) if float(xy_resolution) > 0 else None
+    prims = default_primitives(params, step_length=float(step_length)) if float(step_length) != 0.3 else None
+
     planner = HybridAStarPlanner(
         grid_map,
         footprint,
         params,
+        primitives=prims,
+        xy_resolution=effective_xy_res,
         goal_xy_tol=float(goal_xy_tol_m),
         goal_theta_tol=float(goal_theta_tol_rad),
+        reeds_shepp_heuristic_max_dist=float(rs_heuristic_max_dist),
         collision_padding=collision_padding,
         collision_checker=collision_checker,
     )
@@ -168,7 +179,13 @@ def plan_hybrid_astar(
                 stats["smoothed"] = False
             dt = float(time.perf_counter() - t0)
 
-        pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
+        # 优先使用弧线采样点 (trace_poses) 以获得平滑轨迹，
+        # 回退到节点列表 (path) 作为兜底。
+        trace_poses = stats.get("trace_poses")
+        if trace_poses and len(trace_poses) >= 2:
+            pts = [(float(x) / cell_size_m, float(y) / cell_size_m) for x, y, _th in trace_poses]
+        else:
+            pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
         return PlannerResult(path_xy_cells=pts, time_s=dt, success=True, stats=stats)
     return PlannerResult(
         path_xy_cells=[(float(start_xy[0]), float(start_xy[1]))],
@@ -247,7 +264,11 @@ def plan_rrt_star(
 
         success = bool(stats.get("success", bool(path)))
         if success and path:
-            pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
+            trace_poses = stats.get("trace_poses")
+            if trace_poses and len(trace_poses) >= 2:
+                pts = [(float(x) / cell_size_m, float(y) / cell_size_m) for x, y, _th in trace_poses]
+            else:
+                pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
             return PlannerResult(
                 path_xy_cells=pts,
                 time_s=float(time.perf_counter() - start_time),
@@ -458,7 +479,11 @@ def plan_lo_hybrid_astar(
 
     dt = time.perf_counter() - start_time
     if path:
-        pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
+        trace_poses = stats.get("trace_poses")
+        if trace_poses and len(trace_poses) >= 2:
+            pts = [(float(x) / cell_size_m, float(y) / cell_size_m) for x, y, _th in trace_poses]
+        else:
+            pts = [(float(s.x) / cell_size_m, float(s.y) / cell_size_m) for s in path]
         return PlannerResult(path_xy_cells=pts, time_s=dt, success=True, stats=stats)
     return PlannerResult(
         path_xy_cells=[(float(start_xy[0]), float(start_xy[1]))],

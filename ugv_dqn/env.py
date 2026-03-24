@@ -435,9 +435,8 @@ class UGVBicycleEnv(gym.Env):
         od_cap_m: float = 2.0,
         safe_distance_m: float = 0.20,
         safe_speed_distance_m: float = 0.20,
-        # 稍宽松的到达容差提高了离散控制和短视野安全屏障下的鲁棒性
-        # （论文中的 0.30m 在离散动作下很难精确到达）。
-        goal_tolerance_m: float = 1,
+        # 0.3 m 与 DRL 导航文献主流设置一致（Cimurs et al.; ROS 2 Nav2 默认 0.25 m）
+        goal_tolerance_m: float = 0.3,
         goal_angle_tolerance_deg: float = 180.0,
         goal_speed_tol_m_s: float = 999.0,
         reward_k_p: float = 12.0,

@@ -999,6 +999,12 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--rrt-max-iter", type=int, default=5_000, help="RRT* iteration budget.")
     ap.add_argument("--ha-smooth", type=int, default=1,
                     help="Hybrid A* CG trajectory smoothing (Dolgov §3): 1=enable, 0=disable.")
+    ap.add_argument("--ha-rs-heuristic-max-dist", type=float, default=15.0,
+                    help="Hybrid A*: RS heuristic disabled when holonomic h > this (meters). 0=always on.")
+    ap.add_argument("--ha-xy-resolution", type=float, default=0.0,
+                    help="Hybrid A*: search grid resolution (meters). 0=use map cell_size.")
+    ap.add_argument("--ha-step-length", type=float, default=0.3,
+                    help="Hybrid A*: motion primitive step length (meters).")
     ap.add_argument("--loha-lo-iterations", type=int, default=0,
                     help="LO-HA* LOA outer-loop iterations (0=skip LOA, use default params).")
     ap.add_argument("--edt-collision-margin", type=str, default="half",
@@ -1241,8 +1247,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument(
         "--goal-tolerance",
         type=float,
-        default=1.0,
-        help="Goal position tolerance in meters (env.goal_tolerance_m). Default: 1.0.",
+        default=0.3,
+        help="Goal position tolerance in meters (env.goal_tolerance_m). Default: 0.3.",
     )
     ap.add_argument(
         "--goal-speed-tol",
@@ -1317,9 +1323,12 @@ def main(argv: list[str] | None = None) -> int:
             f"Unknown --rl-algos value(s): {', '.join(unknown)}. Choose from: "
             f"{' '.join(canonical_all)} (or 'all'). Legacy aliases: dqn ddqn iddqn cnn-iddqn."
         )
-    if not rl_algos:
+    if not rl_algos and not getattr(args, "baselines", []):
         raise SystemExit(f"No RL algorithms selected (choose from: {' '.join(canonical_all)}).")
     args.rl_algos = rl_algos
+    # 无 RL 算法时自动跳过模型解析
+    if not rl_algos:
+        args.skip_rl = True
 
     baseline_aliases = {
         "hybrid_astar": "hybrid_astar",
@@ -2162,6 +2171,9 @@ def main(argv: list[str] | None = None) -> int:
                         max_nodes=int(args.hybrid_max_nodes),
                         collision_checker=_baseline_edt_checker,
                         smooth=bool(getattr(args, "ha_smooth", 1)),
+                        rs_heuristic_max_dist=float(getattr(args, "ha_rs_heuristic_max_dist", 15.0)),
+                        xy_resolution=float(getattr(args, "ha_xy_resolution", 0.0)),
+                        step_length=float(getattr(args, "ha_step_length", 0.3)),
                     )
 
                     if _ha_split:

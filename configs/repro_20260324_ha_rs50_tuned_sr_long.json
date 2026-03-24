@@ -1,9 +1,12 @@
 {
-  "_comment": "AM-DQfD ablation infer: w/o AM sr_long, 50 runs",
+  "_comment": "Ablation: HA* with RS heuristic max_dist=50 + xy_res=0.2 + step=0.5, sr_long, 50 runs",
   "infer": {
     "envs": ["realmap_a"],
-    "baselines": [],
+    "baselines": ["hybrid_astar"],
+    "expert_baseline": false,
+    "rl_algos": [],
     "rl_mpc_track": false,
+    "forest_baseline_rollout": false,
     "random_start_goal": true,
     "rand_two_suites": false,
     "runs": 50,
@@ -15,15 +18,15 @@
     "goal_tolerance": 0.3,
     "goal_speed_tol": 999.0,
     "edt_collision_margin": "diag",
+    "baseline_timeout": 10.0,
     "kpi_time_mode": "rollout",
-    "device": "cuda",
-    "cuda_device": 0,
-    "seed": 100,
-    "rl_algos": ["cnn-ddqn"],
-    "models": "abl_amdqfd_noAM",
-    "out": "abl_amdqfd_infer_noAM",
+    "device": "cpu",
+    "seed": 42,
+    "out": "repro_20260324_ha_rs50_tuned_sr_long",
     "rand_min_cost_m": 18.0,
     "rand_max_cost_m": 0.0,
-    "cnn_drop_edt": true
+    "ha_rs_heuristic_max_dist": 50.0,
+    "ha_xy_resolution": 0.2,
+    "ha_step_length": 0.5
   }
 }

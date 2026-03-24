@@ -239,7 +239,7 @@ def check_bicycle_reachable(
     start_xy: tuple[int, int],
     goal_xy: tuple[int, int],
     cell_size_m: float,
-    goal_tolerance_m: float = 1.0,
+    goal_tolerance_m: float = 0.3,
 ) -> bool:
     """独立于参评算法的 bicycle-kinematic 可达性检查。
 
