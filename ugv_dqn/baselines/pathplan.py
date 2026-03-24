@@ -114,7 +114,7 @@ def plan_hybrid_astar(
     max_nodes: int = 200_000,
     collision_padding: float | None = None,
     collision_checker=None,
-    smooth: bool = True,
+    smooth: bool = False,
 ) -> PlannerResult:
     """运行 Hybrid A* 规划 + 可选的 Dolgov §3 CG 轨迹平滑。
 

@@ -181,32 +181,10 @@ def smooth_hybrid_astar_path(
     else:
         xs = xs_new
 
-    # --- §3.4 非参数轨迹插值 ---
-    xs_interp = _nonparametric_interpolate(xs, grid_map.resolution)
-
-    # --- 二次 CG 精细化 (插值后的高分辨率路径) ---
-    anchored_interp = np.zeros(len(xs_interp), dtype=bool)
-    anchored_interp[0] = True
-    anchored_interp[-1] = True
-    # 锚固原始航迹点位置
-    for i in range(N):
-        # 找到插值路径中最近的点
-        dists = np.linalg.norm(xs_interp - xs[i], axis=1)
-        nearest = np.argmin(dists)
-        anchored_interp[nearest] = True
-
-    p_fine = SmootherParams(
-        w_obs=p.w_obs, w_curv=p.w_curv, w_smooth=p.w_smooth, w_voronoi=p.w_voronoi,
-        d_obs_max=p.d_obs_max, kappa_max=kappa_max,
-        max_iterations=min(200, p.max_iterations),
-        alpha_decay=p.alpha_decay, min_step=p.min_step,
-        anchor_max_iter=0,
-    )
-    xs_final = _cg_optimize(
-        xs_interp, anchored_interp, grid_map,
-        d_obs_field, d_voro_field, rho_v_field,
-        kappa_max=kappa_max, params=p_fine,
-    )
+    # --- §3.4 非参数轨迹插值 (仅超采样，不做二次 CG) ---
+    # 论文原文在插值后做二次 CG 精细化，但实测在密集点上 CG 容易发散。
+    # 保守策略：仅对粗分辨率路径做 CG，然后线性插值到目标分辨率。
+    xs_final = _nonparametric_interpolate(xs, grid_map.resolution)
 
     # --- 重建 AckermannState 路径 ---
     result = []
