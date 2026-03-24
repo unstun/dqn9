@@ -987,6 +987,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--baseline-timeout", type=float, default=5.0, help="Planner timeout (seconds).")
     ap.add_argument("--hybrid-max-nodes", type=int, default=200_000, help="Hybrid A* node budget.")
     ap.add_argument("--rrt-max-iter", type=int, default=5_000, help="RRT* iteration budget.")
+    ap.add_argument("--loha-lo-iterations", type=int, default=0,
+                    help="LO-HA* LOA outer-loop iterations (0=skip LOA, use default params).")
     ap.add_argument("--edt-collision-margin", type=str, default="half",
                     choices=["half", "diag"],
                     help="EDT collision margin: 'half'=0.5*cell (default), 'diag'=sqrt(2)/2*cell.")
@@ -2655,7 +2657,7 @@ def main(argv: list[str] | None = None) -> int:
                         goal_theta_tol_rad=goal_theta_tol_rad,
                         timeout_s=float(args.baseline_timeout),
                         max_nodes=int(args.hybrid_max_nodes),
-                        lo_iterations=0,
+                        lo_iterations=int(getattr(args, "loha_lo_iterations", 0)),
                         collision_checker=_baseline_edt_checker,
                     )
 

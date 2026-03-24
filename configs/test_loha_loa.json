@@ -1,0 +1,33 @@
+{
+  "_comment": "Quick test: LO-HA* with LOA enabled (5 iterations) vs lo_iterations=0",
+  "infer": {
+    "envs": ["realmap_a"],
+    "baselines": ["lo_hybrid_astar"],
+    "expert_baseline": false,
+    "rl_algos": ["cnn-ddqn"],
+    "cnn_drop_edt": true,
+    "models": "abl_diag10k_kt02_cnn_ddqn_md/train_20260315_120749",
+    "rl_mpc_track": false,
+    "forest_baseline_rollout": false,
+    "random_start_goal": true,
+    "rand_two_suites": false,
+    "runs": 5,
+    "plot_pair_runs": false,
+    "rand_tries": 600,
+    "rand_reject_unreachable": true,
+    "filter_all_succeed": false,
+    "max_steps": 600,
+    "goal_tolerance": 1.0,
+    "goal_speed_tol": 999.0,
+    "edt_collision_margin": "diag",
+    "baseline_timeout": 30.0,
+    "loha_lo_iterations": 5,
+    "kpi_time_mode": "rollout",
+    "device": "cuda",
+    "cuda_device": 0,
+    "seed": 42,
+    "out": "test_loha_loa",
+    "rand_min_cost_m": 18.0,
+    "rand_max_cost_m": 0.0
+  }
+}
