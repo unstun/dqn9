@@ -1184,6 +1184,29 @@ class UGVBicycleEnv(gym.Env):
         a = float(np.clip(float(a_m_s2), -a_max, +a_max))
         return self._step_with_controls(delta_dot=delta_dot, a=a)
 
+    def step_continuous_direct(self, *, delta_rad: float, v_m_s: float):
+        """传统 MPC 控制接口：直接指定目标转向角 δ 和目标速度 v。
+
+        内部将 (δ, v) 转换为 (δ̇, a) 后调用 _step_with_controls。
+        转换公式：δ̇ = (δ_target - δ_current) / dt，a = (v_target - v_current) / dt，
+        并裁剪到执行器限幅。
+        """
+        dt = float(self.model.dt)
+        delta_max = float(self.model.delta_max_rad)
+        v_max = float(self.model.v_max_m_s)
+        dd_max = float(self.model.delta_dot_max_rad_s)
+        a_max = float(self.model.a_max_m_s2)
+
+        # 裁剪目标值到物理限幅
+        delta_target = float(np.clip(float(delta_rad), -delta_max, +delta_max))
+        v_target = float(np.clip(float(v_m_s), 0.0, +v_max))
+
+        # 转换为速率控制量
+        delta_dot = float(np.clip((delta_target - float(self._delta_rad)) / dt, -dd_max, +dd_max))
+        a = float(np.clip((v_target - float(self._v_m_s)) / dt, -a_max, +a_max))
+
+        return self._step_with_controls(delta_dot=delta_dot, a=a)
+
     def _agent_xy_for_plot(self) -> tuple[float, float]:
         return (float(self._x_m) / self.cell_size_m, float(self._y_m) / self.cell_size_m)
 
@@ -1391,6 +1414,79 @@ class UGVBicycleEnv(gym.Env):
             active &= ~(coll_now | reached_now)
 
         return x, y, psi, v, min_od, coll, reached
+
+    def _rollout_direct_controls_sequence(
+        self,
+        *,
+        delta_rad_seq: np.ndarray,
+        v_m_s_seq: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, float, bool]:
+        """传统 MPC 用：给定 (δ, v) 控制序列，前向仿真并返回轨迹。
+
+        参数：
+            delta_rad_seq: shape (H,) — 每步目标转向角
+            v_m_s_seq:     shape (H,) — 每步目标速度
+
+        返回：
+            x_traj, y_traj, psi_traj, v_traj: shape (H+1,) 含初始状态
+            min_od: 全程最小障碍物距离
+            collision: 是否发生碰撞
+        """
+        dt = float(self.model.dt)
+        wheelbase = float(self.model.wheelbase_m)
+        delta_max = float(self.model.delta_max_rad)
+        v_max = float(self.model.v_max_m_s)
+        dd_max = float(self.model.delta_dot_max_rad_s)
+        a_max = float(self.model.a_max_m_s2)
+
+        delta_seq = np.clip(np.asarray(delta_rad_seq, dtype=np.float64), -delta_max, +delta_max)
+        v_seq = np.clip(np.asarray(v_m_s_seq, dtype=np.float64), 0.0, v_max)
+        h = int(delta_seq.shape[0])
+
+        # 轨迹数组（含初始状态）
+        x_traj = np.empty(h + 1, dtype=np.float64)
+        y_traj = np.empty(h + 1, dtype=np.float64)
+        psi_traj = np.empty(h + 1, dtype=np.float64)
+        v_traj = np.empty(h + 1, dtype=np.float64)
+
+        x_traj[0] = float(self._x_m)
+        y_traj[0] = float(self._y_m)
+        psi_traj[0] = float(self._psi_rad)
+        v_traj[0] = float(self._v_m_s)
+        cur_delta = float(self._delta_rad)
+
+        min_od = float("inf")
+        collision = False
+
+        for k in range(h):
+            # (δ, v) → (δ̇, a)，裁剪到执行器限幅
+            delta_dot = np.clip((float(delta_seq[k]) - cur_delta) / dt, -dd_max, +dd_max)
+            accel = np.clip((float(v_seq[k]) - v_traj[k]) / dt, -a_max, +a_max)
+
+            # 自行车模型积分
+            v_next = np.clip(v_traj[k] + accel * dt, -v_max, v_max)
+            delta_next = np.clip(cur_delta + delta_dot * dt, -delta_max, +delta_max)
+            psi_k = psi_traj[k]
+            x_next = x_traj[k] + v_next * math.cos(psi_k) * dt
+            y_next = y_traj[k] + v_next * math.sin(psi_k) * dt
+            psi_next = psi_k + (v_next / wheelbase) * math.tan(delta_next) * dt
+
+            x_traj[k + 1] = x_next
+            y_traj[k + 1] = y_next
+            psi_traj[k + 1] = psi_next
+            v_traj[k + 1] = v_next
+            cur_delta = delta_next
+
+            # 碰撞检测
+            od, coll_step = self._od_and_collision_at_pose_m_vec(
+                np.array([x_next]), np.array([y_next]), np.array([psi_next])
+            )
+            min_od = min(min_od, float(od[0]))
+            if bool(coll_step[0]):
+                collision = True
+                break
+
+        return x_traj, y_traj, psi_traj, v_traj, min_od, collision
 
     def _fallback_action_short_rollout(
         self,

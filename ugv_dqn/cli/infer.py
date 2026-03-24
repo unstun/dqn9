@@ -55,6 +55,7 @@ import gymnasium as gym
 import numpy as np
 import pandas as pd
 import torch
+from scipy.optimize import minimize as scipy_minimize
 
 from ugv_dqn.agents import AgentConfig, DQNFamilyAgent, parse_rl_algo
 from ugv_dqn.baselines.pathplan import (
@@ -67,7 +68,7 @@ from ugv_dqn.baselines.pathplan import (
     plan_rrt_star,
     point_footprint,
 )
-from ugv_dqn.env import UGVBicycleEnv
+from ugv_dqn.env import UGVBicycleEnv, bilinear_sample_2d
 from ugv_dqn.forest_policy import forest_select_action
 from ugv_dqn.maps import FOREST_ENV_ORDER, REALMAP_ENV_ORDER, get_map_spec
 from ugv_dqn.maps.forest import check_bicycle_reachable
@@ -495,20 +496,20 @@ def rollout_tracked_path_mpc(
     reset_options: dict[str, object] | None = None,
     time_mode: str = "rollout",
     trace_path: Path | None = None,
-    lookahead_points: int = 5,
+    lookahead_points: int = 10,
     horizon_steps: int = 15,
     n_candidates: int = 512,
-    w_target: float = 0.2,
-    w_heading: float = 0.2,
-    w_clearance: float = 0.8,
-    w_speed: float = 0.0,
-    w_control: float = 0.01,
+    w_track: float = 5.0,
+    w_heading: float = 2.0,
+    w_clearance: float = 3.0,
+    w_delta_rate: float = 1.0,
+    w_v_rate: float = 0.5,
     collect_controls: bool = False,
 ) -> RolloutResult:
-    """连续控制 MPC 风格的路径跟踪器，用于基线算法路径（仅限 forest 环境）。
+    """传统优化式 MPC 路径跟踪器，用于基线算法路径（仅限 forest 环境）。
 
-    该跟踪器不使用离散 `action_table`，而是采样连续控制候选 `(delta_dot, a)`，
-    通过短时域 rollout 评估，并使用 `UGVBicycleEnv.step_continuous(...)` 应用最优控制。
+    控制变量为 (δ, v)（转向角、速度），使用 scipy SLSQP 求解有限时域
+    约束优化问题，每步只执行第一个控制量（滚动时域）。
     """
     time_mode = str(time_mode).lower().strip()
     if time_mode not in {"rollout", "policy"}:
@@ -563,128 +564,178 @@ def rollout_tracked_path_mpc(
             controls=controls,
         )
 
-    # 预计算参考路径弧长（米），用于基于进度的跟踪。
-    ref_xy = np.asarray(ref_path_xy_cells, dtype=np.float64)
-    if ref_xy.shape[0] >= 2:
-        d = np.diff(ref_xy, axis=0)
-        ds = np.hypot(d[:, 0], d[:, 1]) * float(env.cell_size_m)
-        ref_s_m = np.concatenate([np.array([0.0], dtype=np.float64), np.cumsum(ds, dtype=np.float64)], axis=0)
-    else:
-        ref_s_m = np.zeros((ref_xy.shape[0],), dtype=np.float64)
-
-    n = max(16, int(n_candidates))
+    # ---- 模型参数 ----
+    ref_xy_m = np.asarray(ref_path_xy_cells, dtype=np.float64) * float(env.cell_size_m)
     h = max(1, int(horizon_steps))
     la = max(1, int(lookahead_points))
+    dt = float(env.model.dt)
+    wheelbase = float(env.model.wheelbase_m)
     v_max = float(env.model.v_max_m_s)
+    delta_max = float(env.model.delta_max_rad)
     dd_max = float(env.model.delta_dot_max_rad_s)
     a_max = float(env.model.a_max_m_s2)
-    rng = getattr(env, "_rng", np.random.default_rng(int(seed)))
+    cell_m = float(env.cell_size_m)
 
-    def choose_controls(progress_idx: int) -> tuple[float, float, int]:
-        x_cells = float(env._x_m) / float(env.cell_size_m)
-        y_cells = float(env._y_m) / float(env.cell_size_m)
+    # warm start 缓存：上一步解平移作为下一步初始猜测
+    prev_sol: np.ndarray | None = None
 
-        # 查找最近的参考路径索引（在前一索引附近窗口搜索）。
-        start_i = max(0, int(progress_idx) - 25)
-        end_i = min(len(ref_path_xy_cells), int(progress_idx) + 250)
-        if end_i <= start_i:
-            start_i, end_i = 0, len(ref_path_xy_cells)
-        best_i = start_i
-        best_d2 = float("inf")
-        for i in range(start_i, end_i):
-            px, py = ref_path_xy_cells[i]
-            d2 = (float(px) - x_cells) ** 2 + (float(py) - y_cells) ** 2
+    def _find_nearest_idx(progress_idx: int) -> int:
+        """在参考路径上找到距离当前位置最近的索引（单调递增）。"""
+        x_m, y_m = float(env._x_m), float(env._y_m)
+        lo = max(0, int(progress_idx) - 25)
+        hi = min(len(ref_path_xy_cells), int(progress_idx) + 250)
+        if hi <= lo:
+            lo, hi = 0, len(ref_path_xy_cells)
+        best_i, best_d2 = lo, float("inf")
+        for i in range(lo, hi):
+            rx, ry = ref_xy_m[i, 0], ref_xy_m[i, 1]
+            d2 = (rx - x_m) ** 2 + (ry - y_m) ** 2
             if d2 < best_d2:
                 best_d2 = d2
                 best_i = i
-        # 单调递增的进度避免在自交叉/环路处"卡住"。
-        progress_idx = max(int(progress_idx), int(best_i))
+        return max(int(progress_idx), int(best_i))
 
-        tgt_i = min(int(progress_idx) + la, len(ref_path_xy_cells) - 1)
-        tx_cells, ty_cells = ref_path_xy_cells[tgt_i]
-        tx_m = float(tx_cells) * float(env.cell_size_m)
-        ty_m = float(ty_cells) * float(env.cell_size_m)
+    def _get_ref_window(progress_idx: int) -> np.ndarray:
+        """提取从 progress_idx 开始的 h+1 个参考点（米），不足则外推。"""
+        end_i = min(len(ref_xy_m), int(progress_idx) + h * la + 1)
+        window = ref_xy_m[int(progress_idx) : end_i]
+        if window.shape[0] < h + 1:
+            # 用最后一段方向线性外推
+            last = window[-1] if window.shape[0] > 0 else ref_xy_m[-1]
+            if window.shape[0] >= 2:
+                direction = window[-1] - window[-2]
+            else:
+                direction = np.array([0.0, 0.0])
+            norm = float(np.linalg.norm(direction))
+            if norm > 1e-6:
+                direction = direction / norm * cell_m
+            pad_n = h + 1 - window.shape[0]
+            pad = last[None, :] + np.arange(1, pad_n + 1)[:, None] * direction[None, :]
+            window = np.concatenate([window, pad], axis=0)
+        # 在 h+1 个点上均匀采样（沿弧长）
+        indices = np.linspace(0, window.shape[0] - 1, h + 1).astype(int)
+        return window[indices]
 
-        # 连续控制候选值。
-        delta_dot = rng.uniform(-dd_max, +dd_max, size=(n,)).astype(np.float64, copy=False)
-        accel = rng.uniform(-a_max, +a_max, size=(n,)).astype(np.float64, copy=False)
+    def choose_controls_mpc(progress_idx: int) -> tuple[float, float, int]:
+        """传统 MPC 求解：min J(δ_0..δ_{H-1}, v_0..v_{H-1}) s.t. 自行车运动学。"""
+        nonlocal prev_sol
 
-        # 确定性锚点（有助于稳定性/可复现性）。
-        anchors = np.array(
-            [
-                (0.0, 0.0),
-                (0.0, +a_max),
-                (0.0, -a_max),
-                (+dd_max, 0.0),
-                (-dd_max, 0.0),
-            ],
-            dtype=np.float64,
+        progress_idx = _find_nearest_idx(progress_idx)
+        ref_window = _get_ref_window(progress_idx)  # (h+1, 2)
+
+        # 当前状态
+        x0 = float(env._x_m)
+        y0 = float(env._y_m)
+        psi0 = float(env._psi_rad)
+        v0 = float(env._v_m_s)
+        delta0 = float(env._delta_rad)
+
+        # 接近目标时降速
+        gx_m = float(env.goal_xy[0]) * cell_m
+        gy_m = float(env.goal_xy[1]) * cell_m
+        d_goal = math.hypot(x0 - gx_m, y0 - gy_m)
+        decel_radius = 3.0 * float(env.goal_tolerance_m)
+        v_cruise = v_max * min(1.0, d_goal / max(1e-6, decel_radius))
+        v_cruise = max(0.1, v_cruise)
+
+        # 决策变量：[δ_0, ..., δ_{H-1}, v_0, ..., v_{H-1}]，共 2H 维
+        # bounds
+        lb_delta = np.full(h, -delta_max)
+        ub_delta = np.full(h, +delta_max)
+        lb_v = np.full(h, 0.0)
+        ub_v = np.full(h, v_cruise)
+        bounds = list(zip(lb_delta, ub_delta)) + list(zip(lb_v, ub_v))
+
+        # 初始猜测：warm start 或匀速直行
+        if prev_sol is not None and prev_sol.shape[0] == 2 * h:
+            x0_guess = np.empty(2 * h, dtype=np.float64)
+            # 平移：丢弃第 0 步，末尾复制最后一步
+            x0_guess[:h - 1] = prev_sol[1:h]
+            x0_guess[h - 1] = prev_sol[h - 1]
+            x0_guess[h:2 * h - 1] = prev_sol[h + 1:2 * h]
+            x0_guess[2 * h - 1] = prev_sol[2 * h - 1]
+        else:
+            # 默认：转向角=当前值，速度=巡航速度
+            x0_guess = np.concatenate([
+                np.full(h, delta0),
+                np.full(h, min(v_cruise, v0 + a_max * dt * h * 0.5)),
+            ])
+        # 裁剪到 bounds
+        for i, (lo_b, hi_b) in enumerate(bounds):
+            x0_guess[i] = np.clip(x0_guess[i], lo_b, hi_b)
+
+        def cost_and_forward(u: np.ndarray) -> float:
+            """代价函数：前向仿真 + 跟踪误差 + 控制平滑性 + 障碍物惩罚。"""
+            delta_seq = u[:h]
+            v_seq = u[h:]
+
+            x_k, y_k, psi_k, v_k = x0, y0, psi0, v0
+            cur_delta = delta0
+            J = 0.0
+
+            for k in range(h):
+                # (δ, v) → (δ̇, a)，裁剪到执行器限幅
+                dd = np.clip((delta_seq[k] - cur_delta) / dt, -dd_max, +dd_max)
+                acc = np.clip((v_seq[k] - v_k) / dt, -a_max, +a_max)
+
+                # 自行车模型积分一步
+                v_next = np.clip(v_k + acc * dt, -v_max, v_max)
+                delta_next = np.clip(cur_delta + dd * dt, -delta_max, +delta_max)
+                x_next = x_k + v_next * math.cos(psi_k) * dt
+                y_next = y_k + v_next * math.sin(psi_k) * dt
+                psi_next = psi_k + (v_next / wheelbase) * math.tan(delta_next) * dt
+
+                # 参考点跟踪误差
+                ref_x, ref_y = ref_window[k + 1, 0], ref_window[k + 1, 1]
+                dx_err = x_next - ref_x
+                dy_err = y_next - ref_y
+                J += float(w_track) * (dx_err * dx_err + dy_err * dy_err)
+
+                # 航向误差：期望朝向下一参考点
+                desired_heading = math.atan2(ref_y - y_k, ref_x - x_k)
+                heading_err = psi_next - desired_heading
+                heading_err = (heading_err + math.pi) % (2.0 * math.pi) - math.pi
+                J += float(w_heading) * (heading_err * heading_err)
+
+                # 控制平滑性：转向角变化率 + 速度变化率
+                if k > 0:
+                    J += float(w_delta_rate) * ((delta_seq[k] - delta_seq[k - 1]) ** 2)
+                    J += float(w_v_rate) * ((v_seq[k] - v_seq[k - 1]) ** 2)
+                else:
+                    J += float(w_delta_rate) * ((delta_seq[0] - delta0) ** 2)
+                    J += float(w_v_rate) * ((v_seq[0] - v0) ** 2)
+
+                # 障碍物惩罚：通过 EDT 查询
+                xi = x_next / cell_m
+                yi = y_next / cell_m
+                od = bilinear_sample_2d(env._dist_m, x=xi, y=yi, default=0.0)
+                r_footprint = float(env.footprint.radius_m)
+                clearance = od - r_footprint
+                if clearance < 0.5:
+                    J += float(w_clearance) * ((0.5 - clearance) ** 2)
+
+                x_k, y_k, psi_k, v_k = x_next, y_next, psi_next, v_next
+                cur_delta = delta_next
+
+            return J
+
+        result = scipy_minimize(
+            cost_and_forward,
+            x0_guess,
+            method="SLSQP",
+            bounds=bounds,
+            options={"maxiter": 50, "ftol": 1e-6, "disp": False},
         )
-        delta_dot[: anchors.shape[0]] = anchors[:, 0]
-        accel[: anchors.shape[0]] = anchors[:, 1]
 
-        # 使用恒定控制的时域 rollout 评估候选（在环境中向量化）。
-        x, y, psi, v, min_od, coll, reached = env._rollout_constant_actions_end_state(
-            delta_dot_rad_s=delta_dot,
-            a_m_s2=accel,
-            horizon_steps=h,
-        )
-        cost1 = env._cost_to_goal_pose_m_vec(x, y, psi)
-        dist_tgt = np.hypot(float(tx_m) - x, float(ty_m) - y)
-        tgt_heading = np.arctan2(float(ty_m) - y, float(tx_m) - x)
-        heading_err = env._wrap_angle_rad_np(tgt_heading - psi)
+        prev_sol = result.x.copy()
+        opt_delta = float(result.x[0])
+        opt_v = float(result.x[h])
 
-        # 评分（越高越好）。
-        score = -cost1
-        score += -float(w_target) * dist_tgt - float(w_heading) * np.abs(heading_err)
-        score += float(w_clearance) * min_od
-        # 进度奖励：沿参考弧长前进的米数。
-        if int(progress_idx) < int(ref_s_m.shape[0]):
-            start_s = float(ref_s_m[int(progress_idx)])
-            proj_start = int(progress_idx)
-            proj_end = min(len(ref_path_xy_cells), int(progress_idx) + 250)
-            if proj_end <= proj_start:
-                proj_start, proj_end = 0, len(ref_path_xy_cells)
-            window = ref_xy[int(proj_start) : int(proj_end)]
-            if window.shape[0] > 0:
-                x_pred_cells = x / float(env.cell_size_m)
-                y_pred_cells = y / float(env.cell_size_m)
-                dx = window[:, 0][None, :] - x_pred_cells[:, None]
-                dy = window[:, 1][None, :] - y_pred_cells[:, None]
-                nearest = np.argmin(dx * dx + dy * dy, axis=1)
-                nearest_idx = (int(proj_start) + nearest.astype(np.int32, copy=False)).astype(np.int32, copy=False)
-                nearest_idx = np.clip(nearest_idx, 0, int(ref_s_m.shape[0]) - 1)
-                progress_m = np.maximum(0.0, ref_s_m[nearest_idx] - float(start_s))
-                score += 1.0 * progress_m
-        if float(w_speed) != 0.0 and float(v_max) > 1e-6:
-            score += float(w_speed) * (v / float(v_max))
-        if float(w_control) != 0.0:
-            dd_n = delta_dot / max(1e-9, float(dd_max))
-            a_n = accel / max(1e-9, float(a_max))
-            score -= float(w_control) * (dd_n * dd_n + a_n * a_n)
+        # 转换为 (δ̇, a) 用于 step_continuous
+        delta_dot = float(np.clip((opt_delta - delta0) / dt, -dd_max, +dd_max))
+        accel = float(np.clip((opt_v - v0) / dt, -a_max, +a_max))
 
-        # 接近目标时减速：靠近目标时优先选择低终端速度。
-        _gx_m = float(env.goal_xy[0]) * float(env.cell_size_m)
-        _gy_m = float(env.goal_xy[1]) * float(env.cell_size_m)
-        _d_goal_now = float(np.hypot(float(env._x_m) - _gx_m, float(env._y_m) - _gy_m))
-        _decel_r = 3.0 * float(env.goal_tolerance_m)
-        if _d_goal_now < _decel_r:
-            score -= 2.0 * (v / max(1e-9, float(v_max)))
-
-        ok = (~coll) & np.isfinite(cost1)
-        ok_reached = ok & reached
-        if bool(ok_reached.any()):
-            idx = np.nonzero(ok_reached)[0]
-            best = int(idx[int(np.argmax(score[idx]))])
-            return float(delta_dot[best]), float(accel[best]), int(progress_idx)
-        if bool(ok.any()):
-            idx = np.nonzero(ok)[0]
-            best = int(idx[int(np.argmax(score[idx]))])
-            return float(delta_dot[best]), float(accel[best]), int(progress_idx)
-
-        # 兜底策略：选择间隙最大的候选，即使看起来不太好。
-        best = int(np.argmax(min_od))
-        return float(delta_dot[best]), float(accel[best]), int(progress_idx)
+        return delta_dot, accel, int(progress_idx)
 
     inference_time_s = 0.0
     t_rollout0 = time.perf_counter()
@@ -696,7 +747,7 @@ def rollout_tracked_path_mpc(
     while not (done or truncated) and steps < max_steps:
         steps += 1
         t0 = time.perf_counter() if time_mode == "policy" else None
-        delta_dot, accel, progress_idx = choose_controls(progress_idx)
+        delta_dot, accel, progress_idx = choose_controls_mpc(progress_idx)
         if t0 is not None:
             inference_time_s += float(time.perf_counter() - t0)
         obs, _, done, truncated, info = env.step_continuous(delta_dot_rad_s=float(delta_dot), a_m_s2=float(accel))
