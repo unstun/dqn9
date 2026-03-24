@@ -1,10 +1,11 @@
-"""均匀经验回放缓冲区。
+"""均匀经验回放缓冲区，支持 DQfD 示范数据保护。
 
 将 (obs, action, reward, next_obs, done, next_action_mask, demo_flag, n_steps)
 存储在预分配的 numpy 数组中，以实现缓存友好的随机采样。
 
-demo_flag 仅用于标记专家示范转移，供 DQfD margin/CE 损失识别；
-不再对 demo 槽位做覆盖保护，旧 demo 会被新数据自然淘汰。
+DQfD 保护机制：当缓冲区已满且非示范 transition 将覆盖示范槽位时，
+缓冲区会向前扫描找到一个非示范槽位进行覆写。这确保了专家示范数据
+在整个训练过程中始终可用于 margin/CE 损失计算。
 """
 
 from __future__ import annotations
@@ -61,6 +62,18 @@ class ReplayBuffer:
         n_steps: int = 1,
     ) -> None:
         i = self._idx
+        # DQfD 式保护机制：保留示范 transition，使其在长时间训练中
+        # 始终可用于监督损失计算。
+        #
+        # 若缓冲区已满且即将用非示范 transition 覆盖示范槽位，
+        # 则向前搜索下一个非示范槽位进行覆写。
+        if self._size >= self.capacity and (not bool(demo)) and float(self._demos[i]) > 0.5:
+            j = int(i)
+            for _ in range(int(self.capacity)):
+                if float(self._demos[j]) <= 0.5:
+                    i = int(j)
+                    break
+                j = (int(j) + 1) % int(self.capacity)
         self._obs[i] = obs
         self._actions[i] = int(action)
         self._rewards[i] = float(reward)

@@ -648,8 +648,6 @@ class UGVBicycleEnv(gym.Env):
         self._last_collision = False
         self._stuck_pos_history: list[tuple[float, float]] = []
         self._ha_path_cache: dict[tuple[int, int, int, int], list[tuple[float, float]]] = {}
-        self._rrt_path_cache: dict[tuple[int, int, int, int, int], list[tuple[float, float]]] = {}
-        self._rrt_progress_idx: int = 0
         self._ha_progress_idx: int = 0
         self._ha_start_xy: tuple[int, int] = self.start_xy
 
@@ -847,7 +845,6 @@ class UGVBicycleEnv(gym.Env):
         super().reset(seed=seed)
         if seed is not None:
             self._rng = np.random.default_rng(seed)
-        self._episode_seed = int(seed) if seed is not None else int(self._rng.integers(0, 2**31))
 
         self._steps = 0
 
@@ -1009,7 +1006,6 @@ class UGVBicycleEnv(gym.Env):
         self._stuck_pos_history = [(float(self._x_m), float(self._y_m))]
         self._ha_start_xy = (int(ha_start_xy[0]), int(ha_start_xy[1]))
         self._ha_progress_idx = int(ha_progress_idx)
-        self._rrt_progress_idx = 0
 
         obs = self._observe()
         info = {"agent_xy": self._agent_xy_for_plot(), "pose_m": (self._x_m, self._y_m, self._psi_rad)}
@@ -1610,141 +1606,6 @@ class UGVBicycleEnv(gym.Env):
         best_action = int(np.argmax(score))
         if not math.isfinite(float(score[best_action])):
             return self._fallback_action_short_rollout(horizon_steps=int(horizon_steps), min_od_m=0.0)
-
-        return int(best_action)
-
-    # ------------------------------------------------------------------
-    # SS-RRT* 参考路径规划 + 跟踪专家
-    # ------------------------------------------------------------------
-
-    def _rrt_star_path(
-        self,
-        *,
-        start_xy: tuple[int, int],
-        seed: int = 0,
-        timeout_s: float = 5.0,
-        max_iter: int = 5_000,
-    ) -> list[tuple[float, float]]:
-        """SS-RRT* 参考路径（带缓存）。与 _hybrid_astar_path 接口一致。"""
-        key = (int(start_xy[0]), int(start_xy[1]),
-               int(self.goal_xy[0]), int(self.goal_xy[1]),
-               int(seed))
-        cached = self._rrt_path_cache.get(key)
-        if cached is not None:
-            return cached
-
-        try:
-            from ugv_dqn.baselines.pathplan import (
-                default_ackermann_params,
-                forest_two_circle_footprint,
-                grid_map_from_obstacles,
-                plan_rrt_star,
-            )
-        except Exception:
-            self._rrt_path_cache[key] = []
-            return []
-
-        grid_map = grid_map_from_obstacles(
-            grid_y0_bottom=self._grid,
-            cell_size_m=float(self.cell_size_m),
-        )
-        params = default_ackermann_params(
-            wheelbase_m=float(self.model.wheelbase_m),
-            delta_max_rad=float(self.model.delta_max_rad),
-            v_max_m_s=float(self.model.v_max_m_s),
-        )
-        footprint = forest_two_circle_footprint()
-
-        res = plan_rrt_star(
-            grid_map=grid_map,
-            footprint=footprint,
-            params=params,
-            start_xy=(int(start_xy[0]), int(start_xy[1])),
-            goal_xy=(int(self.goal_xy[0]), int(self.goal_xy[1])),
-            seed=int(seed),
-            goal_theta_rad=0.0,
-            start_theta_rad=None,
-            goal_xy_tol_m=float(self.goal_tolerance_m),
-            goal_theta_tol_rad=float(math.pi),
-            timeout_s=float(timeout_s),
-            max_iter=int(max_iter),
-        )
-        path = list(res.path_xy_cells) if res.success else []
-        self._rrt_path_cache[key] = path
-        return path
-
-    def expert_action_rrt_star(
-        self,
-        *,
-        lookahead_points: int = 3,
-        horizon_steps: int = 4,
-        w_heading: float = 0.4,
-        w_clearance: float = 0.2,
-        w_speed: float = 0.0,
-        seed: int = 0,
-    ) -> int:
-        """SS-RRT* 引导专家（用于 DQfD 演示 / 引导探索）。
-
-        每回合计算一次 SS-RRT* 参考路径，之后用 pure-pursuit 风格跟踪
-        选择离散控制。打分仅依赖路径跟踪（到 lookahead 目标的距离 +
-        航向误差 + 安全距离），不使用 Dijkstra 目标距离图。
-        规划失败返回 -1。
-        """
-        path = self._rrt_star_path(start_xy=self._ha_start_xy, seed=int(seed))
-        if len(path) < 2:
-            # SS-RRT* 规划失败，返回 -1 告知调用方本 episode 无可用专家轨迹。
-            return -1
-
-        x_cells = float(self._x_m) / float(self.cell_size_m)
-        y_cells = float(self._y_m) / float(self.cell_size_m)
-
-        # 在上一索引附近的有限窗口内寻找最近路径点索引。
-        start_i = max(0, int(self._rrt_progress_idx) - 25)
-        end_i = min(len(path), int(self._rrt_progress_idx) + 250)
-        if end_i <= start_i:
-            start_i, end_i = 0, len(path)
-        best_i = start_i
-        best_d2 = float("inf")
-        for i in range(start_i, end_i):
-            px, py = path[i]
-            d2 = (float(px) - x_cells) ** 2 + (float(py) - y_cells) ** 2
-            if d2 < best_d2:
-                best_d2 = d2
-                best_i = i
-        self._rrt_progress_idx = int(best_i)
-
-        la = max(1, int(lookahead_points))
-        tgt_i = min(int(best_i) + la, len(path) - 1)
-        tx_cells, ty_cells = path[tgt_i]
-        tx_m = float(tx_cells) * float(self.cell_size_m)
-        ty_m = float(ty_cells) * float(self.cell_size_m)
-
-        h = max(1, int(horizon_steps))
-        delta_dot = self.action_table[:, 0]
-        accel = self.action_table[:, 1]
-        x, y, psi, v, min_od, coll, _reached = self._rollout_constant_actions_end_state(
-            delta_dot_rad_s=delta_dot,
-            a_m_s2=accel,
-            horizon_steps=h,
-        )
-
-        # 纯路径跟踪打分：仅依赖 SS-RRT* 参考路径，不使用 Dijkstra 目标距离图。
-        dist_tgt = np.hypot(float(tx_m) - x, float(ty_m) - y)
-        tgt_heading = np.arctan2(float(ty_m) - y, float(tx_m) - x)
-        heading_err = self._wrap_angle_rad_np(tgt_heading - psi)
-
-        score = -dist_tgt - float(w_heading) * np.abs(heading_err)
-        score += float(w_clearance) * min_od
-
-        if float(w_speed) != 0.0:
-            v_max = float(self.model.v_max_m_s)
-            score += float(w_speed) * (v / max(1e-9, float(v_max)))
-
-        invalid = coll | (~np.isfinite(score))
-        score = np.where(invalid, -float("inf"), score)
-        best_action = int(np.argmax(score))
-        if not math.isfinite(float(score[best_action])):
-            return -1
 
         return int(best_action)
 
