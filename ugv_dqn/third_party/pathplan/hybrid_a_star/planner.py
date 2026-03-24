@@ -187,9 +187,46 @@ class HybridAStarPlanner:
         return max(1, int(round(self.analytic_expansion_interval * scale)))
 
     def _try_analytic_expansion(self, state: AckermannState, goal: AckermannState) -> Optional[Tuple[List[AckermannState], List[MotionPrimitive]]]:
-        rs = reeds_shepp_shortest_path(state.as_tuple(), goal.as_tuple(), self.params.min_turn_radius)
+        """Dang et al. (2022) 多曲率 RS 解析展开。
+
+        生成多条不同转弯半径的 RS 路径，用代价函数
+        G = σ₁·v + σ₂·m (碰撞风险 + 运动代价) 选优。
+        """
+        r_min = self.params.min_turn_radius
+        # 多曲率候选: 1.0x, 1.3x, 1.6x, 2.0x 最小转弯半径
+        radii = [r_min, r_min * 1.3, r_min * 1.6, r_min * 2.0]
+
+        best_result = None
+        best_cost = float("inf")
+
+        for radius in radii:
+            result = self._try_rs_with_radius(state, goal, radius)
+            if result is None:
+                continue
+            states, actions = result
+            # Dang 2022 代价函数 G = σ₁·v + σ₂·m
+            # v: 碰撞风险 (路径上最小障碍距离的倒数)
+            # m: 运动代价 (路径总长度)
+            path_len = sum(abs(a.step) for a in actions)
+            min_clearance = self._path_min_clearance(states)
+            collision_risk = 1.0 / max(min_clearance, 0.01)
+            cost = 0.4 * collision_risk + 0.6 * path_len
+            if cost < best_cost:
+                best_cost = cost
+                best_result = (states, actions)
+
+        return best_result
+
+    def _try_rs_with_radius(
+        self, state: AckermannState, goal: AckermannState, turning_radius: float,
+    ) -> Optional[Tuple[List[AckermannState], List[MotionPrimitive]]]:
+        """尝试用指定转弯半径生成 RS 路径并验证碰撞。"""
+        rs = reeds_shepp_shortest_path(state.as_tuple(), goal.as_tuple(), turning_radius)
         if rs is None:
             return None
+
+        # 该半径对应的最大转向角
+        max_steer_for_r = math.atan(self.params.wheelbase / max(turning_radius, 1e-9))
 
         cur = state
         extra_states: List[AckermannState] = []
@@ -203,10 +240,10 @@ class HybridAStarPlanner:
             if seg_type == "S":
                 steering = 0.0
             elif seg_type == "L":
-                steering = self.params.max_steer
+                steering = max_steer_for_r
             elif seg_type == "R":
-                steering = -self.params.max_steer
-            else:  # pragma: no cover - defensive
+                steering = -max_steer_for_r
+            else:
                 raise ValueError(f"Unknown Reeds–Shepp segment type: {seg_type!r}")
 
             seg_states, _ = sample_constant_steer_motion(
@@ -228,9 +265,22 @@ class HybridAStarPlanner:
             return None
         if not self._goal_reached(extra_states[-1], goal):
             return None
-        # Snap the final pose to the exact goal for clean plotting/metrics.
         extra_states[-1] = goal
         return extra_states, extra_actions
+
+    def _path_min_clearance(self, states: List[AckermannState]) -> float:
+        """路径上最小障碍间隙 (用于 Dang 2022 碰撞风险代价)。"""
+        if not hasattr(self, "_obs_dist_field"):
+            # 惰性计算障碍距离场
+            from .obstacle_field import compute_obstacle_distance_field
+            self._obs_dist_field = compute_obstacle_distance_field(self.map)
+        from .obstacle_field import query_distance
+        min_d = float("inf")
+        for s in states:
+            d = query_distance(self._obs_dist_field, self.map, s.x, s.y)
+            if d < min_d:
+                min_d = d
+        return float(min_d)
 
     def plan(
         self,
