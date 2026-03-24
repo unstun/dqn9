@@ -2888,6 +2888,22 @@ def main(argv: list[str] | None = None) -> int:
         for run_idx, run_paths in env_paths_by_run.items():
             paths_for_plot[(env_name, int(run_idx))] = dict(run_paths)
 
+    # 保存路径数据供离线绘图
+    if paths_for_plot:
+        import pickle as _pkl
+        _paths_save = {}
+        for (ename, ridx), alg_paths in paths_for_plot.items():
+            for alg_name, pt in alg_paths.items():
+                _paths_save[(ename, ridx, alg_name)] = {
+                    "xy_cells": pt.path_xy_cells,
+                    "success": pt.success,
+                }
+        _pkl_path = out_dir / "paths_for_plot.pkl"
+        with open(_pkl_path, "wb") as _f:
+            _pkl.dump({"paths": _paths_save, "cell_size_m": float(cell_size_m),
+                   "obstacle_grid": grid}, _f)
+        print(f"Wrote: {_pkl_path}")
+
     table = pd.DataFrame(rows_runs)
     # 美化列顺序
     table = table[
