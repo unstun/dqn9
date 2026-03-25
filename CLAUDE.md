@@ -83,7 +83,19 @@ ls $PROJ/runs/$EXP/train_*/infer/*/table2_kpis.csv 2>/dev/null && echo DONE || e
 - 远端项目路径：`$HOME/DQN9/`
 - 远端 Conda：`$HOME/miniconda3/bin/conda`，环境 `ros2py310`
 
-## 4. 踩坑
+## 4. 远端实验轮次识别
+
+远端 `runs/` 目录中同一变体可能存在多轮推理结果，**通过时间戳区分 goal_tolerance 版本**：
+
+| 训练时间戳 | 推理时间戳 | goal_tolerance | 说明 |
+|-----------|-----------|:--------------:|------|
+| `train_20260325_01xxxx` | `20260325_08xxxx` | **1.0m** | 旧容差，rsync 前的配置 |
+| `train_20260325_12xxxx` | `20260325_18xxxx` | **0.3m** | 新容差，文献对齐 |
+
+- 以 `20260325_18xxxx` 时间戳的推理结果为 0.3m 版本
+- `.1` 后缀目录为旧版（goal_tolerance=1.0m 时期）的推理结果
+
+## 5. 踩坑
 
 - **SSH 执行必须** `--cwd`：`conda run --cwd $PROJ -n $ENV python ...`
 - LaTeX：`xelatex` 支持中文注释；提交版用 `pdflatex`；缺包 `sudo tlmgr install <pkg>`。

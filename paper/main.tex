@@ -373,7 +373,9 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 
-本文采用 Double DQN~\cite{van2016deep}结合 $n$ 步回报~\cite{sutton1988learning}构造学习目标，如式~\eqref{eq:masked_target}~所示；若轨迹在 $n$ 步内终止则截断 bootstrap 项。训练时在经验回放缓冲区中均匀采样小批量 $\mathcal{B}$，以 Huber 损失~\cite{huber1964robust}最小化 TD 误差：
+学习目标的构造分为两步。首先，采用 Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，以抑制单网络 $\max$ 算子引起的系统性价值过估计。其次，将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning}，即累加 $n$ 步实际奖励后再以目标网络估值补全；若轨迹在 $n$ 步内终止，则直接丢弃估值项，仅保留已观测的奖励。完整表达式见式~\eqref{eq:masked_target}。
+
+网络参数通过最小化时序差分误差进行更新。训练时从经验回放缓冲区中均匀随机采样小批量 $\mathcal{B}$，以 Huber 损失~\cite{huber1964robust}度量预测 $Q$ 值与学习目标之间的偏差：
 \begin{equation}\label{eq:huber}
   \mathcal{L}_{\mathrm{TD}} = \frac{1}{|\mathcal{B}|}
     \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr)
