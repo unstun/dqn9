@@ -1573,22 +1573,10 @@ def main(argv: list[str] | None = None) -> int:
         if multi_pair_plot:
             plot_run_indices = [(int(plot_run_idx) + k) % int(args.runs) for k in range(4)]
 
-        # 绘图：仅存储特定 run 索引的路径轨迹以控制内存。
-        # - `plot_run_indices` 驱动主 Fig.12/Fig.13 面板。
-        # - `plot_pair_runs` 需要每次运行的路径图，但不需要控制轨迹。
-        path_run_indices: set[int] = set(plot_run_indices)
+        # 存储全部 run 的路径轨迹，用于离线绘图和 CSV 导出。
+        # control_run_indices 仍只存绘图面板所需的子集以节省内存。
+        path_run_indices: set[int] = set(range(int(args.runs)))
         control_run_indices: set[int] = set(plot_run_indices)
-        if (
-            bool(getattr(args, "plot_pair_runs", False))
-            and bool(getattr(args, "random_start_goal", False))
-            and bool(getattr(args, "rand_two_suites", False))
-            and int(args.runs) > 0
-        ):
-            per_run_cap = int(getattr(args, "plot_pair_runs_max", 10))
-            per_run_n = int(args.runs)
-            if per_run_cap > 0:
-                per_run_n = min(int(per_run_n), int(per_run_cap))
-            path_run_indices.update(range(int(per_run_n)))
 
         for idx in sorted(path_run_indices):
             env_paths_by_run.setdefault(int(idx), {})
@@ -2915,21 +2903,31 @@ def main(argv: list[str] | None = None) -> int:
         for run_idx, run_paths in env_paths_by_run.items():
             paths_for_plot[(env_name, int(run_idx))] = dict(run_paths)
 
-    # 保存路径数据供离线绘图
+    # ── 保存路径数据：CSV（轨迹点）+ pkl（栅格元数据） ──
     if paths_for_plot:
+        import csv as _csv
         import pickle as _pkl
-        _paths_save = {}
-        for (ename, ridx), alg_paths in paths_for_plot.items():
-            for alg_name, pt in alg_paths.items():
-                _paths_save[(ename, ridx, alg_name)] = {
-                    "xy_cells": pt.path_xy_cells,
-                    "success": pt.success,
-                }
-        _pkl_path = out_dir / "paths_for_plot.pkl"
-        with open(_pkl_path, "wb") as _f:
-            _pkl.dump({"paths": _paths_save, "cell_size_m": float(cell_size_m),
-                   "obstacle_grid": grid}, _f)
-        print(f"Wrote: {_pkl_path}")
+
+        # 1) paths_all.csv —— 每个坐标点一行，可直接画图
+        _csv_path = out_dir / "paths_all.csv"
+        with open(_csv_path, "w", newline="", encoding="utf-8") as _f:
+            _w = _csv.writer(_f)
+            _w.writerow(["env", "run_idx", "algo", "point_idx", "x_m", "y_m", "success"])
+            for (ename, ridx), alg_paths in sorted(paths_for_plot.items()):
+                for alg_name, pt in alg_paths.items():
+                    _succ = int(pt.success)
+                    for pidx, (cx, cy) in enumerate(pt.path_xy_cells):
+                        _w.writerow([str(ename), int(ridx), str(alg_name), int(pidx),
+                                     round(float(cx) * float(cell_size_m), 6),
+                                     round(float(cy) * float(cell_size_m), 6),
+                                     _succ])
+        print(f"Wrote: {_csv_path}")
+
+        # 2) map_meta.pkl —— 障碍物栅格 + 栅格尺寸（二维数组不适合 CSV）
+        _meta_path = out_dir / "map_meta.pkl"
+        with open(_meta_path, "wb") as _f:
+            _pkl.dump({"cell_size_m": float(cell_size_m), "obstacle_grid": grid}, _f)
+        print(f"Wrote: {_meta_path}")
 
     table = pd.DataFrame(rows_runs)
     # 美化列顺序
