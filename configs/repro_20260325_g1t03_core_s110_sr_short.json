@@ -2,7 +2,7 @@
   "_comment": "g1t03 core comparison: MD-DDQN(V1, train1.0m->infer0.3m) vs baselines, seed=110, sr_short, 50runs",
   "infer": {
     "envs": ["realmap_a"],
-    "baselines": ["rrt_star", "lo_hybrid_astar"],
+    "baselines": ["hybrid_astar", "rrt_star"],
     "rl_algos": ["cnn-ddqn"],
     "rl_mpc_track": false,
     "random_start_goal": true,
