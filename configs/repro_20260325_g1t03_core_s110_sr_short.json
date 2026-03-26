@@ -5,6 +5,7 @@
     "baselines": ["hybrid_astar", "rrt_star"],
     "rl_algos": ["cnn-ddqn"],
     "rl_mpc_track": false,
+    "forest_baseline_rollout": false,
     "random_start_goal": true,
     "rand_two_suites": false,
     "runs": 50,
