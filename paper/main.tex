@@ -369,18 +369,18 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
   Q(s,a) = V(s;\theta,\beta) + \Bigl(A(s,a;\theta,\alpha)
            - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha)\Bigr)
 \end{equation}
-式中减去优势均值将 $A$ 约束为零均值，以消除 $V$-$A$ 分解的不可辨识性~\cite{wang2016dueling}。在 35 维离散动作空间中，大量状态下各动作对应的 Q 值差异较小，准确的状态价值估计比逐一区分动作优势更为关键~\cite{wang2016dueling}。与单流架构仅更新所选动作的 Q 值不同，上述分解使得每次 TD 更新均直接改善 $V$ 的估计~\cite{wang2016dueling}。MD 组合的有效性由第~\ref{ssec:abl_module}~节的消融实验验证。
+若直接令 $Q = V + A$，对 $V$ 加任意常数并从 $A$ 减去相同常数不改变 $Q$ 的输出，导致分解不唯一；减去优势均值后该平移自由度被消除，$V$ 与 $A$ 各自具有确定的语义~\cite{wang2016dueling}。在本文的 35 维离散动作空间中，多数状态下仅少数动作具有显著优势差异，准确估计 $V$ 比逐一评估各动作更有效。与单流架构仅更新所选动作的 Q 值不同，该分解使每次 TD 更新直接改善 $V$ 的估计。
 
 \paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 
-学习目标的构造采用两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，以抑制单网络 $\max$ 算子引起的系统性价值过估计。在此基础上，将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning}，累加 $n$ 步实际奖励后以目标网络估值补全；若轨迹在 $n$ 步内终止则仅保留已观测的奖励~\cite{sutton1988learning}。完整表达式见式~\eqref{eq:masked_target}。
+学习目标包含两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，抑制单网络 $\max$ 算子的价值过估计。进一步将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning,sutton2018reinforcement}，累加 $n$ 步实际奖励后以目标网络估值补全；若轨迹在 $n$ 步内终止则仅保留已观测的奖励~\cite{sutton2018reinforcement}。完整表达式见式~\eqref{eq:masked_target}。
 
-沿用 DQN~\cite{mnih2015human}的训练范式，从经验回放缓冲区中均匀随机采样小批量 $\mathcal{B}$，以 Huber 损失~\cite{huber1964robust}度量预测 $Q$ 值与学习目标之间的偏差：
+训练时从经验回放缓冲区均匀采样小批量 $\mathcal{B}$~\cite{mnih2015human}，以 Huber 损失~\cite{huber1964robust}度量预测 $Q$ 值与目标之间的偏差：
 \begin{equation}\label{eq:huber}
   \mathcal{L}_{\mathrm{TD}} = \frac{1}{|\mathcal{B}|}
     \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr)
 \end{equation}
-其中 $y_i$ 在反向传播时视为常量~\cite{mnih2015human}。由于 DQfD 预训练~\cite{hester2018deep}使网络在在线交互前已具备基本能力，$\varepsilon$ 初值设为 $0.6$，低于 Mnih 等人~\cite{mnih2015human}采用的标准初值 $1.0$。全部超参数及其取值见表~\ref{tab:train_params}。
+其中 $y_i$ 在反向传播时视为常量~\cite{mnih2015human}。由于 DQfD 预训练~\cite{hester2018deep}已赋予网络基本的路径规划能力，$\varepsilon$ 初值设为 $0.6$，低于 Mnih 等人~\cite{mnih2015human}的标准初值 $1.0$。超参数取值见表~\ref{tab:train_params}。
 
 \begin{table}[!htbp]
 \centering
