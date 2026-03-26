@@ -24,7 +24,7 @@
     "rl_algos": [
       "mlp-ddqn"
     ],
-    "models": "abl_scalar_only/train_20260323_194448",
+    "models": "abl_scalar_only/train_20260323_222945",
     "out": "abl_scalar_only_infer_g1t03_s110",
     "rand_min_cost_m": 18.0,
     "rand_max_cost_m": 0.0,
