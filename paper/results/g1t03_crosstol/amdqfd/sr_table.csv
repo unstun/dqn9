@@ -1,0 +1,4 @@
+Variant,Long SR (%),Long Success,Long Total,Short SR (%),Short Success,Short Total
+Full (AM+DQfD),76,38,50,60,30,50
+w/o DQfD,42,21,50,34,17,50
+w/o AM,58,29,50,68,34,50

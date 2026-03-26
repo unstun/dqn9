@@ -1,0 +1,4 @@
+Variant,Path Length (m),Curvature (1/m),Compute Time (s),N
+Full (AM+DQfD),9.49,0.1729,0.5727,30
+w/o DQfD,10.591,0.1836,0.655,17
+w/o AM,9.385,0.1777,0.3438,34

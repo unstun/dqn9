@@ -1,0 +1,8 @@
+Environment,Algorithm name,Run index,Start x,Start y,Goal x,Goal y,Success rate,Average path length (m),Path time (s),Average curvature (1/m),Planning time (s),Tracking time (s),Number of path corners,Compute time (s),Max corner degree (°),Planning cost (m),Composite score
+Env. (realmap_a),CNN-DDQN+Duel,0,221,33,11,43,1.0,20.9931,11.15,0.129903,1.0767,0.0,0,1.0767,5,21.531,0.0
+Env. (realmap_a),CNN-DDQN+Duel,1,371,47,69,12,1.0,30.7025,16.1,0.113325,1.12571,0.0,0,1.12571,2,31.265,0.0
+Env. (realmap_a),CNN-DDQN+Duel,2,54,14,328,35,1.0,27.8994,14.6,0.122002,0.66609,0.0,0,0.66609,3,28.232,0.0
+Env. (realmap_a),CNN-DDQN+Duel,3,62,40,271,15,1.0,21.4437,11.45,0.140664,0.86136,0.0,0,0.86136,3,21.874,0.0
+Env. (realmap_a),CNN-DDQN+Duel,4,24,22,333,21,1.0,30.7706,18.1,0.057909,0.72138,0.0,0,0.72138,1,31.131,0.0
+Env. (realmap_a),CNN-DDQN+Duel,5,186,17,391,43,1.0,20.9163,11.1,0.140344,0.41279,0.0,0,0.41279,4,21.123,0.0
+Env. (realmap_a),CNN-DDQN+Duel,6,380,65,198,33,1.0,19.5406,10.55,0.211286,0.81236,0.0,0,0.81236,4,19.947,0.0
