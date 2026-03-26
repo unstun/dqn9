@@ -373,14 +373,14 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 
-学习目标包含两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，抑制单网络 $\max$ 算子的价值过估计。进一步将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning,sutton2018reinforcement}，累加 $n$ 步实际奖励后以目标网络估值补全；若轨迹在 $n$ 步内终止则仅保留已观测的奖励~\cite{sutton2018reinforcement}。完整表达式见式~\eqref{eq:masked_target}。
+学习目标在时序差分框架上包含两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，抑制单网络 $\max$ 算子的价值过估计。此外，将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning,sutton2018reinforcement}，累加 $n$ 步实际奖励后以目标网络估值补全；若轨迹在 $n$ 步内终止则仅保留已观测的奖励~\cite{sutton2018reinforcement}。完整表达式见式~\eqref{eq:masked_target}。
 
 训练时从经验回放缓冲区均匀采样小批量 $\mathcal{B}$~\cite{mnih2015human}，以 Huber 损失~\cite{huber1964robust}度量预测 $Q$ 值与目标之间的偏差：
 \begin{equation}\label{eq:huber}
   \mathcal{L}_{\mathrm{TD}} = \frac{1}{|\mathcal{B}|}
     \sum_{i\in\mathcal{B}} \ell_{\mathrm{Huber}}\!\bigl(Q_{\theta}(s_i,a_i)-y_i\bigr)
 \end{equation}
-其中 $y_i$ 在反向传播时视为常量~\cite{mnih2015human}。由于 DQfD 预训练~\cite{hester2018deep}已赋予网络基本的路径规划能力，$\varepsilon$ 初值设为 $0.6$，低于 Mnih 等人~\cite{mnih2015human}的标准初值 $1.0$。超参数取值见表~\ref{tab:train_params}。
+其中 $y_i$ 在反向传播时视为常量~\cite{mnih2015human}。探索策略方面，由于 DQfD 预训练~\cite{hester2018deep}已赋予网络基本的路径规划能力，$\varepsilon$ 初值设为 $0.6$，低于 Mnih 等人~\cite{mnih2015human}的标准初值 $1.0$。超参数取值见表~\ref{tab:train_params}。
 
 \begin{table}[!htbp]
 \centering
