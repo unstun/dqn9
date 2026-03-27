@@ -335,12 +335,14 @@
 \begin{equation}\label{eq:masked_target}
   \left\{
   \begin{aligned}
-    a^{*} &= \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+n})}Q_{\theta}(s_{t+n},a') \\
-    y_t &= \sum_{k=0}^{n-1}\gamma^{k}r_{t+k} + \gamma^{n}\,Q_{\theta^{-}}\!(s_{t+n},a^{*})
+    m &= \min(n,\, T - t) \\
+    a^{*} &= \arg\max_{a'\in\mathcal{A}_{\mathrm{adm}}(s_{t+m})}Q_{\theta}(s_{t+m},a') \\
+    y_t &= \sum_{k=0}^{m-1}\gamma^{k}r_{t+k}
+           + (1 - d_{t+m})\,\gamma^{m}\,Q_{\theta^{-}}\!(s_{t+m},a^{*})
   \end{aligned}
   \right.
 \end{equation}
-若不在目标中施加掩码，式~\eqref{eq:masked_target}~中的 $\arg\max$ 可能落在不可行动作上，使目标 Q 值虚高并导致训练不稳定~\cite{van2016deep}。
+其中 $T$ 为回合终止时刻，$d_{t+m}$ 在 $s_{t+m}$ 为终止状态时取 $1$、否则取 $0$；回合在 $n$ 步内终止时 $m < n$ 且 $d_{t+m}=1$，目标退化为已观测奖励之和。若不在目标中施加掩码，式~\eqref{eq:masked_target}~中的 $\arg\max$ 可能落在不可行动作上，使目标 Q 值虚高并导致训练不稳定~\cite{van2016deep}。
 
 \subsubsection{MD-DDQN 网络与训练}\label{sec:network}
 
@@ -373,7 +375,7 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(4) 学习算法与优化}\label{sec:ddqn}
 
-学习目标在时序差分框架上包含两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，抑制单网络 $\max$ 算子的价值过估计。此外，将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning,sutton2018reinforcement}，累加 $n$ 步实际奖励后以目标网络估值补全；若轨迹在 $n$ 步内终止则仅保留已观测的奖励~\cite{sutton2018reinforcement}。完整表达式见式~\eqref{eq:masked_target}。
+学习目标在时序差分框架上包含两项改进。Double DQN~\cite{van2016deep}将动作选择与价值评估分别交由在线网络与目标网络完成，抑制单网络 $\max$ 算子的价值过估计。此外，将单步时序差分扩展为 $n$ 步回报~\cite{sutton1988learning,sutton2018reinforcement}，累加 $n$ 步实际奖励后以目标网络估值补全，完整表达式及终止截断处理见式~\eqref{eq:masked_target}。
 
 训练时从经验回放缓冲区均匀采样小批量 $\mathcal{B}$~\cite{mnih2015human}，以 Huber 损失~\cite{huber1964robust}度量预测 $Q$ 值与目标之间的偏差：
 \begin{equation}\label{eq:huber}
