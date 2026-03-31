@@ -218,7 +218,7 @@
 
 \paragraph{（1）状态空间}
 
-地面无人车需要同时获取自身运动学状态和周围环境，观测由标量向量与双通道地图两部分组成：
+观测 $o_t$ 由标量向量 $\mathbf{F}_t$ 与双通道地图张量 $\mathbf{M}_t$ 组成：
 \begin{equation}
   o_t = \left( \mathbf{F}_t, \mathbf{M}_t \right)
 \end{equation}
@@ -227,12 +227,13 @@
 \begin{equation}
   \mathbf{F}_t = \big[ x, y, g_x, g_y , \sin\theta, \cos\theta, v, \delta, \phi, \alpha, d_{\min} \big]
 \end{equation}
-其中 $(x, y)$ 为在全局坐标系下的位置，$(g_x, g_y)$ 是目标位置，航向角以 $(\sin\theta, \cos\theta)$ 表示，$v$ 和 $\delta$ 分别是纵向车速与前轮转角。$\phi$ 为目标距离图上当前位置到终点的测地线距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为通过欧氏距离变换得到的车体表面到最近障碍物的最小间隙。
+其中 $(x, y)$ 为车辆在全局坐标系下的位置，$(g_x, g_y)$ 为目标位置，航向角以 $(\sin\theta, \cos\theta)$ 双分量表示，$v$ 与 $\delta$ 分别为纵向车速与前轮转角，$\phi$ 为当前位置到目标的测地线距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为车体表面到最近障碍物的最小间隙。
 
-地图部分由全局栅格地图降采样后堆叠两个通道形成：
+地图张量 $\mathbf{M}_t$ 由全局栅格地图降采样后沿通道维度堆叠而成：
 \begin{equation}
   \mathbf{M}_t = \big[ \mathbf{O}_t; \mathbf{G}_t \big]
 \end{equation}
+其中 $\mathbf{O}_t$ 为占据栅格，$\mathbf{G}_t$ 为 Dijkstra 目标距离图，后者编码各自由空间栅格经无碰撞路径到达目标点的测地线距离，如图~\ref{fig:map_channels}所示。
 
 \begin{figure}[!htbp]
 \centering
@@ -240,8 +241,6 @@
 \caption{双通道地图张量的特征图示意。(a)~占据栅格 $\mathbf{O}_t$：黑色区域为障碍物，白色为可通行区域；(b)~Dijkstra目标距离图 $\mathbf{G}_t$：颜色编码从各自由空间栅格沿无碰撞路径到达目标点的测地线距离，白色区域为不可达障碍物。}
 \label{fig:map_channels}
 \end{figure}
-
-其中$\mathbf{O}_t$是全局占据栅格，$\mathbf{G}_t$是目标距离图。如图~\ref{fig:map_channels}所示，(b)~为常见栅格地图转化后的目标距离图，该图通过Dijkstra算法计算得到。
 \paragraph{（2）动作空间}
 
 定义离散动作空间$A$，共含35个动作，每个动作对应一组$[\dot{\delta},\, a]$。$A$可表示为两个离散集合的笛卡尔积：
