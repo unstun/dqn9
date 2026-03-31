@@ -47,7 +47,7 @@ cost_display = np.where(np.isfinite(cost), cost, cost_fill)
 # ── 绘图 ─────────────────────────────────────────────────────────────
 # gridspec_kw 给右图多留 colorbar 空间，但两个 Axes 本身等宽
 fig, axes = plt.subplots(1, 2, figsize=(8, 3.3),
-                         gridspec_kw={"width_ratios": [1, 1.18]})
+                         gridspec_kw={"width_ratios": [1, 1]})
 
 def draw_grid_lines(ax, n):
     for i in range(n + 1):
@@ -79,7 +79,6 @@ ax.imshow(np.ma.masked_where(grid == 0, grid.astype(float)),
           origin="lower", cmap="gray_r", interpolation="nearest", alpha=0.8)
 draw_grid_lines(ax, N)
 mark_se(ax)
-fig.colorbar(im, ax=ax, shrink=0.85, label="Distance (m)", pad=0.03)
 ax.set_xlabel("(b) Goal distance field", fontsize=10)
 ax.set_xticks([])
 ax.set_yticks([])
