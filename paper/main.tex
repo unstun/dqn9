@@ -227,7 +227,7 @@
 \begin{equation}
   \mathbf{F}_t = \big[ x, y, g_x, g_y , \sin\theta, \cos\theta, v, \delta, \phi, \alpha, d_{\min} \big]
 \end{equation}
-其中 $(x, y)$ 为在全局坐标系下的位置，$(g_x, g_y)$ 是目标位置，航向角以 $(\sin\theta, \cos\theta)$ 表示，$v$ 和 $\delta$ 分别是纵向车速与前轮转角。$\phi$ 为代价场下到终点的距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为通过欧氏距离变换得到的车体表面到最近障碍物的最小间隙。
+其中 $(x, y)$ 为在全局坐标系下的位置，$(g_x, g_y)$ 是目标位置，航向角以 $(\sin\theta, \cos\theta)$ 表示，$v$ 和 $\delta$ 分别是纵向车速与前轮转角。$\phi$ 为目标距离图上当前位置到终点的测地线距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为通过欧氏距离变换得到的车体表面到最近障碍物的最小间隙。
 
 地图部分由全局栅格地图降采样后堆叠两个通道形成：
 \begin{equation}
@@ -241,7 +241,7 @@
 \label{fig:map_channels}
 \end{figure}
 
-如图~\ref{fig:map_channels}所示，$\mathbf{O}_t$ 是全局占据栅格，$\mathbf{G}_t$ 是代价场。
+其中$\mathbf{O}_t$是全局占据栅格，$\mathbf{G}_t$是目标距离图。如图~\ref{fig:map_channels}所示，(b)~为常见栅格地图转化后的目标距离图，该图通过Dijkstra算法计算得到。
 \paragraph{（2）动作空间}
 
 定义离散动作空间$A$，共含35个动作，每个动作对应一组$[\dot{\delta},\, a]$。$A$可表示为两个离散集合的笛卡尔积：
