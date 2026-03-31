@@ -218,7 +218,7 @@
 
 \paragraph{（1）状态空间}
 
-观测 $o_t$ 由标量向量 $\mathbf{F}_t$ 与双通道地图张量 $\mathbf{M}_t$ 组成：
+观测 $o_t$ 由标量向量 $\mathbf{F}_t$ 与双通道地图 $\mathbf{M}_t$ 组成：
 \begin{equation}
   o_t = \left( \mathbf{F}_t, \mathbf{M}_t \right)
 \end{equation}
@@ -229,33 +229,33 @@
 \end{equation}
 其中 $(x, y)$ 为车辆在全局坐标系下的位置，$(g_x, g_y)$ 为目标位置，航向角以 $(\sin\theta, \cos\theta)$ 双分量表示，$v$ 与 $\delta$ 分别为纵向车速与前轮转角，$\phi$ 为当前位置到目标的测地线距离，$\alpha$ 为目标相对方位角，$d_{\min}$ 为车体表面到最近障碍物的最小间隙。
 
-地图张量 $\mathbf{M}_t$ 由全局栅格地图降采样后沿通道维度堆叠而成：
+地图部分 $\mathbf{M}_t$ 由双通道地图构成：
 \begin{equation}
   \mathbf{M}_t = \big[ \mathbf{O}_t; \mathbf{G}_t \big]
 \end{equation}
-其中 $\mathbf{O}_t$ 为占据栅格，$\mathbf{G}_t$ 为 Dijkstra 目标距离图，后者编码各自由空间栅格经无碰撞路径到达目标点的测地线距离，如图~\ref{fig:map_channels}所示。
+其中 $\mathbf{O}_t$ 为占据栅格，$\mathbf{G}_t$ 为通过Dijkstra计算得到的目标距离图，后者记录各栅格经无碰撞路径到达目标点的距离，如图~\ref{fig:map_channels}所示。
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\columnwidth]{fig5.pdf}
-\caption{双通道地图张量的特征图示意。(a)~占据栅格 $\mathbf{O}_t$：黑色区域为障碍物，白色为可通行区域；(b)~Dijkstra目标距离图 $\mathbf{G}_t$：颜色编码从各自由空间栅格沿无碰撞路径到达目标点的测地线距离，白色区域为不可达障碍物。}
+\caption{双通道地图输入的示意图。(a)~占据栅格 $\mathbf{O}_t$，其中黑色区域为障碍物，白色为可通行区域；(b)~目标距离图 $\mathbf{G}_t$，其中各栅格沿无碰撞路径到达目标点的距离。}
 \label{fig:map_channels}
 \end{figure}
 \paragraph{（2）动作空间}
 
-定义离散动作空间$A$，共含35个动作，每个动作对应一组$[\dot{\delta},\, a]$。$A$可表示为两个离散集合的笛卡尔积：
+本文采用离散动作空间。将转向角速度等间距离散为7个值、纵向加速度离散为5个值，二者组合构成动作空间$A$：
 \begin{equation}
   A = \{(\dot{\delta}_i, a_j) \mid \dot{\delta}_i \in \Delta_{\dot{\delta}},\, a_j \in \Delta_a\},\quad |A|=7\times5=35
 \end{equation}
-其中转向角速度离散集合为：
+其中转向角速度$\dot{\delta}_{\max}=60^\circ/\text{s}$，7个值均匀分布于$[-\dot{\delta}_{\max},\, \dot{\delta}_{\max}]$：
 \begin{equation}
   \Delta_{\dot{\delta}} = \left\{-\dot{\delta}_{\max},\, -\tfrac{2}{3}\dot{\delta}_{\max},\, -\tfrac{1}{3}\dot{\delta}_{\max},\, 0,\, \tfrac{1}{3}\dot{\delta}_{\max},\, \tfrac{2}{3}\dot{\delta}_{\max},\, \dot{\delta}_{\max}\right\}
 \end{equation}
-纵向加速度离散集合为：
+纵向加速度$a_{\max}=1.5\,\text{m/s}^2$，5个值均匀分布于$[-a_{\max},\, a_{\max}]$：
 \begin{equation}
   \Delta_a = \left\{-a_{\max},\, -\tfrac{1}{2}a_{\max},\, 0,\, \tfrac{1}{2}a_{\max},\, a_{\max}\right\}
 \end{equation}
-其中，$\dot{\delta}_{\max}=60^\circ/\text{s}$，$a_{\max}=1.5$\,m/s$^2$，并且时间步长$dt=0.05$\,s、最大速度$v_{\max}=2.0$\,m/s、最大转向角$\delta_{\max}=27^\circ$。
+控制步长$dt=0.05\,\text{s}$，最大速度$v_{\max}=2.0\,\text{m/s}$，最大前轮转角$\delta_{\max}=27^\circ$。
 
 
 

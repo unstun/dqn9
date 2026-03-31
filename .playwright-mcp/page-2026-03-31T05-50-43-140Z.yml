@@ -1,0 +1,1345 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]: Loading [MathJax]/jax/output/HTML-CSS/fonts/Gyre-Pagella/Symbols/Regular/Main.js
+  - generic [ref=e4]: 
+  - generic [ref=e6]: 
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e11]:
+          - link "MDPI Open Access Journals" [ref=e13] [cursor=pointer]:
+            - /url: /
+            - img "MDPI Open Access Journals" [ref=e14]
+          - list [ref=e16]:
+            - listitem [ref=e17]:
+              - link "Journals" [ref=e18] [cursor=pointer]:
+                - /url: /about/journals
+            - listitem [ref=e19]:
+              - link "Topics" [ref=e20] [cursor=pointer]:
+                - /url: /topics
+            - listitem [ref=e21]:
+              - link "Information" [ref=e22] [cursor=pointer]:
+                - /url: /authors
+            - listitem [ref=e23]:
+              - link "Author Services" [ref=e24] [cursor=pointer]:
+                - /url: /authors/english
+            - listitem [ref=e25]:
+              - link "Initiatives" [ref=e26] [cursor=pointer]:
+                - /url: /about/initiatives
+            - listitem [ref=e27]:
+              - link "About" [ref=e28] [cursor=pointer]:
+                - /url: /about
+          - generic [ref=e30]:
+            - link "Sign In / Sign Up" [ref=e31] [cursor=pointer]:
+              - /url: /user/login
+            - link "Submit" [ref=e32] [cursor=pointer]:
+              - /url: "            https://susy.mdpi.com/user/manuscripts/upload?journal=wevj\n    "
+        - generic [ref=e34]:
+          - generic [ref=e35]: error_outline
+          - text: You can access
+          - link "the new MDPI.com website here" [ref=e36] [cursor=pointer]:
+            - /url: https://www.mdpi.com/redirect/new_site?return=/2032-6653/16/3/138
+          - text: . Explore and share your feedback with us.
+          - link "close":
+            - /url: "#"
+            - generic [ref=e37] [cursor=pointer]: close
+        - generic [ref=e41]:
+          - generic [ref=e43]: "Search for Articles:"
+          - generic:
+            - textbox "Title / Keyword" [ref=e45]
+            - textbox "Author / Affiliation / Email" [ref=e47]
+            - generic [ref=e49]:
+              - generic [ref=e51] [cursor=pointer]: World Electric Vehicle Journal (WEVJ)
+              - generic [ref=e54]:
+                - textbox [ref=e56]
+                - list
+            - generic [ref=e58]:
+              - generic [ref=e60] [cursor=pointer]: All Article Types
+              - generic [ref=e63]:
+                - textbox [ref=e65]
+                - list
+            - button "Search" [ref=e67] [cursor=pointer]
+            - link "Advanced" [ref=e69] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - link "Journals" [ref=e73] [cursor=pointer]:
+              - /url: /about/journals
+            - text: /
+          - generic [ref=e74]:
+            - link "WEVJ" [ref=e75] [cursor=pointer]:
+              - /url: /journal/wevj
+            - text: /
+          - generic [ref=e76]:
+            - link "Volume 16" [ref=e77] [cursor=pointer]:
+              - /url: /2032-6653/16
+            - text: /
+          - generic [ref=e78]:
+            - link "Issue 3" [ref=e79] [cursor=pointer]:
+              - /url: /2032-6653/16/3
+            - text: /
+          - generic [ref=e80]:
+            - link "10.3390/wevj16030138" [ref=e81] [cursor=pointer]:
+              - /url: "#"
+            - text: /
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - link "wevj-logo" [ref=e86] [cursor=pointer]:
+              - /url: /journal/wevj
+              - img "wevj-logo" [ref=e87]
+            - generic [ref=e88]:
+              - link "Submit to this Journal" [ref=e89] [cursor=pointer]:
+                - /url: https://susy.mdpi.com/user/manuscripts/upload?form%5Bjournal_id%5D%3D354
+              - link "Review for this Journal" [ref=e90] [cursor=pointer]:
+                - /url: https://susy.mdpi.com/volunteer/journals/review
+              - link "Propose a Special Issue" [ref=e91] [cursor=pointer]:
+                - /url: /journalproposal/sendproposalspecialissue/wevj
+            - generic [ref=e92]:
+              - heading "Article Menu" [level=2] [ref=e94]
+              - list [ref=e95]:
+                - listitem [ref=e96]:
+                  - link "Academic Editor keyboard_arrow_up" [expanded] [ref=e97] [cursor=pointer]:
+                    - /url: "#academic_editors"
+                  - generic "Department of Chemical Engineering, University of Waterloo, Waterloo, ON N2L 3G1, Canada" [ref=e99]:
+                    - link "Michael Fowler" [ref=e101] [cursor=pointer]:
+                      - /url: https://sciprofiles.com/profile/140589?utm_source=mdpi.com&utm_medium=website&utm_campaign=avatar_name
+                      - img [ref=e102]
+                      - generic [ref=e103]: Michael Fowler
+                - listitem [ref=e104]:
+                  - link "Recommended Articles" [ref=e105] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e106]:
+                  - link "Related Info Link keyboard_arrow_down" [ref=e107] [cursor=pointer]:
+                    - /url: "#related"
+                  - text: insert_link
+                - listitem [ref=e108]:
+                  - link "More by Authors Links keyboard_arrow_down" [ref=e109] [cursor=pointer]:
+                    - /url: "#authors"
+                  - text: lens insert_link lens insert_link lens insert_link lens lens insert_link lens insert_link lens insert_link lens lens insert_link lens insert_link lens insert_link lens
+          - generic [ref=e111]:
+            - link "Article Views 4835" [ref=e113] [cursor=pointer]:
+              - /url: "#metrics"
+              - generic [ref=e114]:
+                - generic [ref=e115]: Article Views
+                - generic [ref=e116]: "4835"
+            - link "Citations 10" [ref=e118] [cursor=pointer]:
+              - /url: "#metrics"
+              - generic [ref=e119]:
+                - generic [ref=e120]: Citations
+                - generic [ref=e121]: "10"
+          - list [ref=e124]:
+            - listitem [ref=e125]:
+              - link "Table of Contents keyboard_arrow_up" [expanded] [ref=e126] [cursor=pointer]:
+                - /url: "#table_of_contents"
+              - list [ref=e128]:
+                - listitem [ref=e129]:
+                  - text: lens
+                  - link "Abstract" [ref=e130] [cursor=pointer]:
+                    - /url: "#html-abstract"
+                - listitem [ref=e131]:
+                  - text: lens
+                  - link "Introduction" [ref=e132] [cursor=pointer]:
+                    - /url: "#sec1-wevj-16-00138"
+                - listitem [ref=e133]:
+                  - text: lens
+                  - link "Overview of Deep Reinforcement Learning in Autonomous Driving" [ref=e134] [cursor=pointer]:
+                    - /url: "#sec2-wevj-16-00138"
+                - listitem [ref=e135]:
+                  - text: lens
+                  - link "Benchmarking—Urban Driving Simulator" [ref=e136] [cursor=pointer]:
+                    - /url: "#sec3-wevj-16-00138"
+                - listitem [ref=e137]:
+                  - text: lens
+                  - link "Related Work" [ref=e138] [cursor=pointer]:
+                    - /url: "#sec4-wevj-16-00138"
+                - listitem [ref=e139]:
+                  - text: lens
+                  - link "Materials and Methods" [ref=e140] [cursor=pointer]:
+                    - /url: "#sec5-wevj-16-00138"
+                - listitem [ref=e141]:
+                  - text: lens
+                  - link "Results and Discussion" [ref=e142] [cursor=pointer]:
+                    - /url: "#sec6-wevj-16-00138"
+                - listitem [ref=e143]:
+                  - text: lens
+                  - link "Conclusions" [ref=e144] [cursor=pointer]:
+                    - /url: "#sec7-wevj-16-00138"
+                - listitem [ref=e145]:
+                  - text: lens
+                  - link "Author Contributions" [ref=e146] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e147]:
+                  - text: lens
+                  - link "Funding" [ref=e148] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e149]:
+                  - text: lens
+                  - link "Data Availability Statement" [ref=e150] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e151]:
+                  - text: lens
+                  - link "Conflicts of Interest" [ref=e152] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e153]:
+                  - text: lens
+                  - link "References" [ref=e154] [cursor=pointer]:
+                    - /url: "#html-references_list"
+        - generic [ref=e155]:
+          - generic [ref=e156]:
+            - link "share Share" [ref=e157] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e158]: share
+              - generic [ref=e159]: Share
+            - link "announcement Help" [ref=e160] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e161]: announcement
+              - generic [ref=e162]: Help
+            - link "format_quote Cite" [ref=e163] [cursor=pointer]:
+              - /url: javascript:void(0);
+              - generic [ref=e164]: format_quote
+              - generic [ref=e165]: Cite
+            - link "question_answer Discuss in SciProfiles" [ref=e166] [cursor=pointer]:
+              - /url: https://sciprofiles.com/discussion-groups/public/10.3390/wevj16030138?utm_source=mpdi.com&utm_medium=publication&utm_campaign=discuss_in_sciprofiles
+              - generic [ref=e167]: question_answer
+              - generic [ref=e168]: Discuss in SciProfiles
+          - generic [ref=e172]:
+            - generic:
+              - generic [ref=e173]:
+                - generic [ref=e175] [cursor=pointer]: first_page
+                - generic [ref=e177] [cursor=pointer]: settings
+                - link "Order Article Reprints" [ref=e178] [cursor=pointer]:
+                  - /url: /2032-6653/16/3/138/reprints
+              - text:   
+            - article [ref=e179]:
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - generic [ref=e182] [cursor=pointer]: Open Access
+                  - generic [ref=e183]: Article
+                - heading "A Novel Approach to Autonomous Driving Using Double Deep Q-Network-Bsed Deep Reinforcement Learning" [level=1] [ref=e184]
+                - generic [ref=e185]:
+                  - text: by
+                  - generic [ref=e186]:
+                    - text: Ahmed Khlifi
+                    - superscript [ref=e187]: 1,2,*
+                    - link "" [ref=e188] [cursor=pointer]:
+                      - /url: mailto:ahmed.khelifi@issatgf.u-gafsa.tn
+                      - superscript [ref=e189]:
+                        - generic [ref=e190]: 
+                    - text: ","
+                  - generic [ref=e191]:
+                    - text: Mohamed Othmani
+                    - superscript [ref=e192]: 2,3,*
+                    - link "" [ref=e193] [cursor=pointer]:
+                      - /url: mailto:mohamed.othmani@fsgf.ugaf.tn
+                      - superscript [ref=e194]:
+                        - generic [ref=e195]: 
+                    - text: and
+                  - generic [ref=e196]:
+                    - text: Monji Kherallah
+                    - superscript [ref=e197]: 2,4
+                    - link "" [ref=e198] [cursor=pointer]:
+                      - /url: mailto:monji.kherallah@fss.usf.tn
+                      - superscript [ref=e199]:
+                        - generic [ref=e200]: 
+                    - link "ORCID" [ref=e201] [cursor=pointer]:
+                      - /url: https://orcid.org/0000-0002-4549-1005
+                      - img "ORCID" [ref=e202]
+                - generic [ref=e205]:
+                  - generic [ref=e206]:
+                    - superscript [ref=e208]: "1"
+                    - generic [ref=e209]: National Engineering School of Sfax, University of Sfax, Sfax 3029, Tunisia
+                  - generic [ref=e210]:
+                    - superscript [ref=e212]: "2"
+                    - generic [ref=e213]: Advanced Technologies for the Environment and Smart Cities ATES, Faculty of Sciences of Sfax, University of Sfax, Sfax 3029, Tunisia
+                  - generic [ref=e214]:
+                    - superscript [ref=e216]: "3"
+                    - generic [ref=e217]: Faculty of Sciences of Gafsa, University of Gafsa, Gafsa 2112, Tunisia
+                  - generic [ref=e218]:
+                    - superscript [ref=e220]: "4"
+                    - generic [ref=e221]: Faculty of Sciences of Sfax, University of Sfax, Sfax 3029, Tunisia
+                  - generic [ref=e222]:
+                    - superscript [ref=e224]: "*"
+                    - generic [ref=e225]: Authors to whom correspondence should be addressed.
+                - generic [ref=e226]:
+                  - emphasis [ref=e227]: World Electr. Veh. J.
+                  - text: 2025,
+                  - emphasis [ref=e228]: "16"
+                  - text: (3), 138;
+                  - link "https://doi.org/10.3390/wevj16030138" [ref=e229] [cursor=pointer]:
+                    - /url: https://doi.org/10.3390/wevj16030138
+                - generic [ref=e230]:
+                  - generic [ref=e231]: "Submission received: 11 January 2025"
+                  - text: /
+                  - generic [ref=e232]: "Revised: 21 February 2025"
+                  - text: /
+                  - generic [ref=e233]: "Accepted: 25 February 2025"
+                  - text: /
+                  - generic [ref=e234]: "Published: 1 March 2025"
+                - generic [ref=e236]:
+                  - generic [ref=e237] [cursor=pointer]:
+                    - text: Download
+                    - generic [ref=e238]: keyboard_arrow_down
+                  - link "Browse Figures" [ref=e240] [cursor=pointer]:
+                    - /url: "#"
+                  - generic:
+                    - link "<strong>Figure 1</strong><br/> <p>The agent–environment interaction in reinforcement learning, reprinted from Ref. [<a href=\"#B17-wevj-16-00138\" class=\"html-bibr\">17</a>].</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g001.png?1740829111
+                    - link "<strong>Figure 2</strong><br/> <p>CARLA driving simulator screenshots.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g002.png?1740829112
+                    - link "<strong>Figure 3</strong><br/> <p>Proposed model architecture.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g003.png?1740829114
+                    - link "<strong>Figure 4</strong><br/> <p>The proposed CNN-LSTM-DDQN architecture.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g004.png?1740829115
+                    - link "<strong>Figure 5</strong><br/> <p>The CARLA highway environment (Town 05).</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g005.png?1740829118
+                    - link "<strong>Figure 6</strong><br/> <p>Representation of reward vs. episode of DQN algorithm with 2000 episodes.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g006.png?1740829119
+                    - link "<strong>Figure 7</strong><br/> <p>Representation of epsilon decay values of DQN algorithm with 2000 episodes.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g007.png?1740829120
+                    - link "<strong>Figure 8</strong><br/> <p>Representation of reward vs. episode of proposed DDQN algorithm with 2000 episodes.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g008.png?1740829122
+                    - link "<strong>Figure 9</strong><br/> <p>Representation of epsilon decay values of proposed DDQN algorithm with 2000 episodes.</p>":
+                      - /url: https://pub.mdpi-res.com/wevj/wevj-16-00138/article_deploy/html/images/wevj-16-00138-g009.png?1740829123
+                  - link "Versions Notes" [ref=e241] [cursor=pointer]:
+                    - /url: /2032-6653/16/3/138/notes
+                - generic [ref=e244]:
+                  - paragraph
+                  - generic [ref=e245]:
+                    - generic [ref=e246]:
+                      - heading "Abstract" [level=2] [ref=e247]
+                      - text: Deep reinforcement learning (DRL) trains agents to make decisions by learning from rewards and penalties, using trial and error. It combines reinforcement learning (RL) with deep neural networks (DNNs), enabling agents to process large datasets and learn from complex environments. DRL has achieved notable success in gaming, robotics, decision-making, etc. However, real-world applications, such as self-driving cars, face challenges due to complex state and action spaces, requiring precise control. Researchers continue to develop new algorithms to improve performance in dynamic settings. A key algorithm, Deep Q-Network (DQN), uses neural networks to approximate the Q-value function but suffers from overestimation bias, leading to suboptimal outcomes. To address this, Double Deep Q-Network (DDQN) was introduced, which decouples action selection from evaluation, thereby reducing bias and promoting more stable learning. This study evaluates the effectiveness of DQN and DDQN in autonomous driving using the CARLA simulator. The key findings emphasize DDQN’s advantages in significantly reducing overestimation bias and enhancing policy performance, making it a more robust and reliable approach for complex real-world applications like self-driving cars. The results underscore DDQN’s potential to improve decision-making accuracy and stability in dynamic environments.
+                    - generic [ref=e249]:
+                      - text: "Keywords:"
+                      - link "deep reinforcement learning" [ref=e250] [cursor=pointer]:
+                        - /url: /search?q=deep+reinforcement+learning
+                      - text: ;
+                      - link "neural networks" [ref=e251] [cursor=pointer]:
+                        - /url: /search?q=neural+networks
+                      - text: ;
+                      - link "autonomous driving" [ref=e252] [cursor=pointer]:
+                        - /url: /search?q=autonomous+driving
+                      - text: ;
+                      - link "Deep Q-Network" [ref=e253] [cursor=pointer]:
+                        - /url: /search?q=Deep+Q-Network
+                      - text: ;
+                      - link "Double Deep Q-Network" [ref=e254] [cursor=pointer]:
+                        - /url: /search?q=Double+Deep+Q-Network
+                      - text: ;
+                      - link "CARLA simulator" [ref=e255] [cursor=pointer]:
+                        - /url: /search?q=CARLA+simulator
+                  - paragraph
+                - generic [ref=e256]:
+                  - generic [ref=e257]:
+                    - generic [ref=e258]:
+                      - heading "1. Introduction" [level=2] [ref=e259]
+                      - generic [ref=e260]:
+                        - text: Autonomous driving has been a topic of interest for many years, with various advancements being made to improve its safety and efficiency [
+                        - link "1" [ref=e261] [cursor=pointer]:
+                          - /url: "#B1-wevj-16-00138"
+                        - text: "]. However, developing a fully autonomous system presents several challenges, such as the need for real-time decision-making and adaptability to changing environments. One of the most promising technologies used in this field is deep reinforcement learning, a type of Machine Learning that uses neural networks and reward-based training to enable decision-making ["
+                        - link "2" [ref=e262] [cursor=pointer]:
+                          - /url: "#B2-wevj-16-00138"
+                        - text: "]. Despite these promising advancements, deep reinforcement learning also presents challenges and ethical implications ["
+                        - link "3" [ref=e263] [cursor=pointer]:
+                          - /url: "#B3-wevj-16-00138"
+                        - text: "]. For example, it raises concerns about responsibility if an autonomous vehicle causes an accident. Determining fault involves assessing whether the manufacturer, the software developer, or the vehicle owner is responsible. Moreover, there are concerns about the impact of autonomous driving on employment and the economy. Nonetheless, the potential benefits of DRL in this field are vast, and the technology continues to evolve. For instance, developing more advanced neural networks and integrating other technologies, such as computer vision and natural language processing, can further enhance the decision-making process of autonomous systems."
+                      - generic [ref=e264]:
+                        - text: Deep reinforcement learning enhances autonomous driving systems by allowing agents to learn from their mistakes and improve decision-making over time [
+                        - link "4" [ref=e265] [cursor=pointer]:
+                          - /url: "#B4-wevj-16-00138"
+                        - text: "]. For example, an agent can receive a reward for staying within the speed limit and a penalty for breaking it ["
+                        - link "5" [ref=e266] [cursor=pointer]:
+                          - /url: "#B5-wevj-16-00138"
+                        - text: "]. This reward-based training helps the agent learn from past experiences, making adapting to different road and weather conditions possible ["
+                        - link "6" [ref=e267] [cursor=pointer]:
+                          - /url: "#B6-wevj-16-00138"
+                        - text: "]. As a result, DRL has the potential to revolutionize autonomous driving by enhancing the system’s ability to respond effectively to diverse situations."
+                      - generic [ref=e268]:
+                        - text: This work aims to assess autonomous driving tasks in urban environments using DQN agents. To achieve this, several approaches based on DQN agents will be investigated. The DQN agent learns a policy, and a set of behaviors, for lane-following tasks by applying visual and driving characteristics obtained from in-vehicle sensors and a trajectory planner based on a model [
+                        - link "7" [ref=e269] [cursor=pointer]:
+                          - /url: "#B7-wevj-16-00138"
+                        - text: ","
+                        - link "8" [ref=e270] [cursor=pointer]:
+                          - /url: "#B8-wevj-16-00138"
+                        - text: ","
+                        - link "9" [ref=e271] [cursor=pointer]:
+                          - /url: "#B9-wevj-16-00138"
+                        - text: "]. This method comprehensively analyzes how deep reinforcement learning is transforming autonomous driving technology."
+                      - generic [ref=e272]:
+                        - text: An end-to-end autonomous system based on the Deep Q-learning algorithm offers several advantages over traditional approaches [
+                        - link "10" [ref=e273] [cursor=pointer]:
+                          - /url: "#B10-wevj-16-00138"
+                        - text: "]. Its simplicity lies in the seamless integration of perception, prediction, and planning into a unified model that can be trained together. Our study proposes an RL-based autonomous driving system, emphasizing more informative exploration and improved reward signaling. We will evaluate the performance of this system in urban environments using the DDQN approach combined with Long Short-Term Memory (LSTM) ["
+                        - link "11" [ref=e274] [cursor=pointer]:
+                          - /url: "#B11-wevj-16-00138"
+                        - text: "]."
+                      - generic [ref=e275]:
+                        - text: We will develop an intelligent driving agent capable of navigating complex environments along predetermined routes [
+                        - link "12" [ref=e276] [cursor=pointer]:
+                          - /url: "#B12-wevj-16-00138"
+                        - text: ","
+                        - link "13" [ref=e277] [cursor=pointer]:
+                          - /url: "#B13-wevj-16-00138"
+                        - text: "], such as those in the CARLA simulator, to validate our approach ["
+                        - link "14" [ref=e278] [cursor=pointer]:
+                          - /url: "#B14-wevj-16-00138"
+                        - text: "]. We will also analyze various design decisions to determine the best configurations for training autonomous driving agents using reinforcement learning. Additionally, we will demonstrate the training methods that can significantly impact the performance of a deep RL agent. Finally, we will validate our approach in various challenging traffic scenarios and show that our method outperforms previous state-of-the-art techniques."
+                    - generic [ref=e279]:
+                      - heading "2. Overview of Deep Reinforcement Learning in Autonomous Driving" [level=2] [ref=e280]
+                      - generic [ref=e281]:
+                        - heading "2.1. Reinforcement Learning" [level=3] [ref=e282]
+                        - generic [ref=e283]:
+                          - text: RL is a key artificial intelligence technique for tackling complex problems like robotics [
+                          - link "15" [ref=e284] [cursor=pointer]:
+                            - /url: "#B15-wevj-16-00138"
+                          - text: "], industry automation, natural language processing, and autonomous driving. In autonomous driving, RL trains vehicles to make decisions in dynamic environments. The vehicle, the agent, interacts with its surroundings, including roads, traffic, and pedestrians, by taking actions such as steering, accelerating, and braking. Each action earns rewards or penalties based on its safety and effectiveness, guiding the vehicle to improve over time."
+                        - generic [ref=e285]:
+                          - text: Autonomous driving with RL involves balancing exploration, i.e., trying new maneuvers, and exploitation, i.e., using proven strategies, to maximize rewards [
+                          - link "16" [ref=e286] [cursor=pointer]:
+                            - /url: "#B16-wevj-16-00138"
+                          - text: "]. Simulations play a vital role in training RL models safely before real-world deployment, addressing the challenges of complex, dynamic environments. Unlike supervised learning, where explicit examples are provided, RL relies on trial and error to optimize actions, using feedback to refine strategies and ensure safe, efficient performance. The general agent–environment interaction process in RL is shown in"
+                          - link "Figure 1" [ref=e287] [cursor=pointer]:
+                            - /url: "#fig_body_display_wevj-16-00138-f001"
+                          - text: .
+                        - generic [ref=e288]:
+                          - generic [ref=e290] [cursor=pointer]:
+                            - img "Wevj 16 00138 g001" [ref=e291]
+                            - link [ref=e292]:
+                              - /url: "#fig_body_display_wevj-16-00138-f001"
+                          - generic [ref=e293]:
+                            - text: Figure 1. The agent–environment interaction in reinforcement learning, reprinted from Ref. [
+                            - link "17" [ref=e294] [cursor=pointer]:
+                              - /url: "#B17-wevj-16-00138"
+                            - text: "]."
+                        - generic [ref=e295]:
+                          - text: The learning and decision-making in RL critically involve an interaction between the agent and the environment. A
+                          - subscript [ref=e296]: t
+                          - text: a given time step t, the environment is in a certain state, S
+                          - subscript [ref=e297]: t
+                          - text: ", from which the agent takes an action, A"
+                          - subscript [ref=e298]: t
+                          - text: ", according to its policy, which has assigned a strategy to map states to actions. The execution of action A"
+                          - subscript [ref=e299]: t
+                          - text: causes the environment to transition into the next state, S
+                          - subscript [ref=e300]: t+1
+                          - text: ", and gives the agent a reward R"
+                          - subscript [ref=e301]: t
+                          - text: . The agent then observes this reward and new state, S
+                          - subscript [ref=e302]: t+1
+                          - text: . At the next time step, t+1, an updated action, A
+                          - subscript [ref=e303]: t+1
+                          - text: ", is taken by the agent in response to its updated state. It goes on repeatedly that an agent selects an action, receives a reward, and observes the next state. It tries to maximize rewards over time, which can be measured regarding a sum of rewards, discounted rewards, or another metric concerning long-term benefit. This then creates an iterative feedback loop through which the agent can improve its policy and further develop its strategy in making decisions ["
+                          - link "18" [ref=e304] [cursor=pointer]:
+                            - /url: "#B18-wevj-16-00138"
+                          - text: "]."
+                      - generic [ref=e305]:
+                        - heading "2.2. Deep Reinforcement Learning" [level=3] [ref=e306]
+                        - generic [ref=e307]:
+                          - text: DRL has become a key approach for training autonomous vehicles to make complex decisions in dynamic environments [
+                          - link "19" [ref=e308] [cursor=pointer]:
+                            - /url: "#B19-wevj-16-00138"
+                          - text: "]. By combining reinforcement learning and deep learning, DRL allows vehicles to navigate, plan, and control effectively while handling tasks like lane changes, intersections, and obstacle avoidance. Training often occurs in simulated environments, enabling the safe exploration and refinement of strategies. Using reward systems, DRL optimizes decision-making by encouraging safe behaviors and penalizing unsafe actions ["
+                          - link "20" [ref=e309] [cursor=pointer]:
+                            - /url: "#B20-wevj-16-00138"
+                          - text: "]. Techniques like Convolutional Neural Networks process sensory data to enhance perception and planning. Despite its promise, challenges remain, such as ensuring generalization to new scenarios, improving safety mechanisms, and addressing computational efficiency. DRL’s hierarchical structures help tackle complex traffic scenarios, improving speed, trajectory, and collision avoidance, while algorithms like DQN are evaluated for maneuver planning. Simulations significantly reduce real-world testing needs, minimizing risks and enhancing algorithm performance."
+                      - generic [ref=e310]:
+                        - heading "2.3. Deep Q-Networks (DQNs)" [level=3] [ref=e311]
+                        - generic [ref=e312]:
+                          - text: DQNs combine Q-learning with deep neural networks to enable reinforcement learning agents to handle high-dimensional state spaces. By approximating the Q-value function using a neural network, DQNs allow agents to learn optimal policies directly from raw inputs, such as images or sensor data [
+                          - link "8" [ref=e313] [cursor=pointer]:
+                            - /url: "#B8-wevj-16-00138"
+                          - text: "]. This approach has been successfully applied in various domains, including playing video games, robotics, and autonomous driving, showcasing its ability to solve complex decision-making problems."
+                      - generic [ref=e314]:
+                        - heading "2.4. Double Deep Q-Networks (DDQNs)" [level=3] [ref=e315]
+                        - generic [ref=e316]:
+                          - text: DDQN is an enhancement to the original DQN algorithm designed to address the overestimation bias in Q-learning, which arises when the same network is used to select and evaluate actions, leading to inflated Q-values [
+                          - link "21" [ref=e317] [cursor=pointer]:
+                            - /url: "#B21-wevj-16-00138"
+                          - text: "]. Unlike DQN, DDQN employs two separate networks: an online network for action selection and a target network for Q-value evaluation. This decoupling reduces bias and improves learning stability and Q-Network (DDQN)-based deep reinforcement learning (DRL) algorithms to enhance decision-making and control. Several novel approaches have emerged, each addressing enhancing performance in complex environments by ensuring more accurate Q-value updates. Thus, recent advancements in autonomous driving have leveraged Double Deep specific challenges. Notable approaches include Dueling DDQN for lane-keeping, which improves stability by separately estimating state value and advantage functions ["
+                          - link "22" [ref=e318] [cursor=pointer]:
+                            - /url: "#B22-wevj-16-00138"
+                          - text: "], and Game-Theoretic DDQN for Intersection Control, enabling cooperative vehicle interactions ["
+                          - link "23" [ref=e319] [cursor=pointer]:
+                            - /url: "#B23-wevj-16-00138"
+                          - text: "]. The Double Broad Q-Network (DBQN) enhances overtaking decisions using a broad learning system ["
+                          - link "24" [ref=e320] [cursor=pointer]:
+                            - /url: "#B24-wevj-16-00138"
+                          - text: "], while Hierarchical Dueling DDQN improves sparse-reward learning for complex driving tasks ["
+                          - link "25" [ref=e321] [cursor=pointer]:
+                            - /url: "#B25-wevj-16-00138"
+                          - text: "]. Lastly, LK-TDDQN applies transfer learning to adapt lane-keeping strategies across environments ["
+                          - link "26" [ref=e322] [cursor=pointer]:
+                            - /url: "#B26-wevj-16-00138"
+                          - text: "]. These innovations demonstrate the versatility of DDQN-based DRL in autonomous driving."
+                    - generic [ref=e323]:
+                      - heading "3. Benchmarking—Urban Driving Simulator" [level=2] [ref=e324]
+                      - generic [ref=e325]: Simulation is a cost-effective and safe alternative to real-world testing for autonomous systems. It allows developers to quickly create and evaluate prototypes, iterate on designs, and explore various scenarios. Simulators also provide precise performance measurement tools, enabling the in-depth analysis and optimization of algorithms. This approach accelerates development and enhances safety by allowing for comprehensive testing in controlled virtual environments.
+                      - generic [ref=e326]:
+                        - text: CARLA (Car Learning to Act) is an open-source simulator for urban driving specifically designed for the study of autonomous vehicles [
+                        - link "27" [ref=e327] [cursor=pointer]:
+                          - /url: "#B27-wevj-16-00138"
+                        - text: "]. It was built from the ground up to simplify the creation, training, and evaluation of autonomous driving systems in urban environments. CARLA provides tools to perform detailed simulations and evaluate system performance. In addition to its open-source code and protocols, CARLA offers open digital assets, such as urban layouts, buildings, and vehicles, that users can use independently. The deep customization of sensor sets and environmental conditions is possible through the platform, enabling accurate simulation ["
+                        - link "28" [ref=e328] [cursor=pointer]:
+                          - /url: "#B28-wevj-16-00138"
+                        - text: ","
+                        - link "29" [ref=e329] [cursor=pointer]:
+                          - /url: "#B29-wevj-16-00138"
+                        - text: "]."
+                      - generic [ref=e330]:
+                        - text: Each town in CARLA possesses its own unique characteristics. Towns (
+                        - link "Figure 2" [ref=e331] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f002"
+                        - text: ) was utilized as the primary platform for training our agent and the performance evaluation.
+                      - generic [ref=e332]:
+                        - generic [ref=e334] [cursor=pointer]:
+                          - img "Wevj 16 00138 g002" [ref=e335]
+                          - link [ref=e336]:
+                            - /url: "#fig_body_display_wevj-16-00138-f002"
+                        - generic [ref=e337]: Figure 2. CARLA driving simulator screenshots.
+                    - generic [ref=e338]:
+                      - heading "4. Related Work" [level=2] [ref=e339]
+                      - generic [ref=e340]:
+                        - text: In recent years, deep reinforcement learning (DRL) has achieved great success in the field of autonomous vehicles. Due to this great success, several researchers have chosen to use it in their research. Their main challenge is to develop an intelligent agent that can on the one hand avoid obstacles and mitigate collisions of autonomous vehicles and on the other hand correct errors from autonomous driving pipeline tasks such as decision-making and motion planning. In this context, several approaches have used the DQN-based DRL algorithm that has demonstrated great effectiveness in ensuring safe navigation in various simulated dynamic environments, namely CARLA [
+                        - link "30" [ref=e341] [cursor=pointer]:
+                          - /url: "#B30-wevj-16-00138"
+                        - text: "]."
+                      - generic [ref=e342]:
+                        - text: Elallid et al., 2022 present an approach that uses the CARLA simulator that is designed to imitate real-world streets to train and validate autonomous vehicles [
+                        - link "9" [ref=e343] [cursor=pointer]:
+                          - /url: "#B9-wevj-16-00138"
+                        - text: "]. This employed method for controlling an AV in complicated environments is based on a DQN model. The car is equipped with a front-facing camera to take real-time pictures. The captured photos, which were originally 640 × 480 pixels in RGB, are first converted to grayscale levels and then resized to 192 × 256 pixels. These processed images are then passed through two dense couches with 512 and 256 neurons, enabling the model to generate 190 alternative actions. In the CARLA environment, a 389 m course with right turns and intersections was designed. Ten pedestrians and five vehicles were added to make the environment more dynamic and realistic. The model was trained for 5000 episodes, with a mini-batch size of 16, using a repetition memory system to learn from past experiences. The results show that the model learns effectively across episodes: average rewards increase as the success rate of actions improves, and the collision rate gradually decreases until reaching almost zero. This demonstrates that the AV learns to avoid accidents with other vehicles and pedestrians present in the environment, ensuring safe driving."
+                      - generic [ref=e344]:
+                        - text: Hossain et al. (2023) proposed a model based on a deep neural network to implement the DQN algorithm, used to approximate the Q-value function [
+                        - link "31" [ref=e345] [cursor=pointer]:
+                          - /url: "#B31-wevj-16-00138"
+                        - text: "]. This function evaluates the quality of each possible action in each state. The agent, representing the autonomous car, interacts with a simulated environment, where it receives observations, chooses actions, and learns to maximize cumulative rewards over time. The model architecture consists of several layers designed to process the observations of the environment and produce the Q-values associated with each possible action. The observations, constituting the input space, are represented by a 5 × 5 array describing the vehicles in the vicinity of the autonomous car. Each row of the table corresponds to a vehicle, with columns indicating the following characteristics: position (x, y) and speed (Vx, Vy). This information is processed by the neural network to determine the optimal action. The neural network is a Multi-Layer Perceptron (MLP) comprising several fully connected layers. These layers learn to identify complex relationships between vehicles, such as neighborhood and relative speed, to assess the quality of possible actions. Activation functions such as ReLU (Rectified Linear Unit) are used to introduce non-linearity and enable the model to better approximate the Q function. As an output, the network produces a vector of Q-values for each possible action in the environment. The action space comprises five possible actions: change lanes to the left (LANELEFT), stay put (IDLE), change lanes to the right (LANERIGHT), accelerate (FASTER), and slow down (SLOWER). Each Q-value represents the quality of the associated action in the current state of the environment. The agent then selects the action with the highest Q-value, corresponding to that which maximizes the expected cumulative reward. The reward function is designed to encourage fast and safe driving behavior. Thus, the agent receives a reward of 0.1 points when staying in the right lane and a reward of 0.4 points when maintaining a high speed. On the other hand, there is no specific penalty or incentive for lane changes, which therefore do not directly affect the reward (0 points). For each action performed, the agent receives these rewards, which incentivizes it to adopt a behavior that maximizes speed while avoiding collisions."
+                      - generic [ref=e346]:
+                        - text: Tammewar et al., 2023, studied the improvement in autonomous driving performance using DRL [
+                        - link "32" [ref=e347] [cursor=pointer]:
+                          - /url: "#B32-wevj-16-00138"
+                        - text: "]. The approach involves training a simulated vehicle to navigate autonomously on a racing track using the DQN algorithm. The system uses the CarRacing-v2 simulator which provides a top view of a randomly generated track. The vehicle receives visual information from a front camera and interacts with the environment via actions. The built model receives input images from the front camera, represented as RGB pixels (96 × 96 pixels in this case). The images are subsequently converted to grayscale to reduce computational complexity and focus the model’s attention on important structural aspects of the image, such as the contours of the track. These images are used to capture information about the vehicle’s environment (speed, direction, etc.). The inputs are then processed using CNNs to extract relevant features. To capture temporal dependencies and understand the dynamics of vehicle movement across images, a recurrent neural network (LSTM) is used after the CNN layers. The goal of this part is to allow the model to retain information over multiple time steps and to adjust its actions based on past trajectories. Rewards are assigned based on the coverage of track tiles, while penalties are applied when the vehicle goes off track. As an output, the model chooses among possible actions (acceleration, braking, steering) based on the extracted features. In the continuous version, the actions are represented by three parameters: direction (from −1 to 1), acceleration (from 0 to 1), and braking (from 0 to 1). These actions aim to help the vehicle navigate the track while maximizing the reward obtained. The results show that the DQN algorithm with epsilon decay (ε-decay) performed well and provided excellent stability and efficiency as well as cumulative scores over episodes for the autonomous navigation task."
+                      - generic [ref=e348]: In these approaches, although the agents were tested in various simulation environments, their performance may not generalize to other real-world environments with very different driving scenarios. Likewise, the policies learned may be too specialized for the specific conditions of the simulation (traffic, weather, road infrastructure), which limits their applicability in varied real-life situations.
+                    - generic [ref=e349]:
+                      - heading "5. Materials and Methods" [level=2] [ref=e350]
+                      - generic [ref=e351]: The main methodology of this work is to introduce a novel approach based on deep reinforcement learning, which will enable a car to drive autonomously in a virtual environment. Since the system is based on a computer-generated environment, the CARLA_0.9.13 simulator for autonomous cars is the environment used. Our research focused on the impact of various hyperparameters. The effects on the convergence and robustness of learning were studied using learning rates for each model. Our main performance measures were the consistency of training each model over a given number of episodes, with episode reward and learning stability as the primary measures. A controlled and reproducible comparison between models was facilitated by this approach, ensuring that any observed performance disparities were related to the intrinsic characteristics of the models and the chosen hyperparameters.
+                      - generic [ref=e352]:
+                        - text: In this work, we propose a novel architecture that combines CNNs, LSTM, and Deep Q-learning with a DDQN to tackle reinforcement learning tasks [
+                        - link "33" [ref=e353] [cursor=pointer]:
+                          - /url: "#B33-wevj-16-00138"
+                        - text: ","
+                        - link "34" [ref=e354] [cursor=pointer]:
+                          - /url: "#B34-wevj-16-00138"
+                        - text: ","
+                        - link "35" [ref=e355] [cursor=pointer]:
+                          - /url: "#B35-wevj-16-00138"
+                        - text: "]. This hybrid model leverages CNNs to extract spatial features from image data and LSTMs to capture the temporal dependencies in sequential data, making it particularly well suited for environments where inputs are image sequences (e.g., video frames)."
+                      - generic [ref=e356]:
+                        - text: The integration of DDQN enhances the reinforcement learning component by addressing the overestimation bias common in standard Q-learning [
+                        - link "14" [ref=e357] [cursor=pointer]:
+                          - /url: "#B14-wevj-16-00138"
+                        - text: "]. This allows the model to make more stable and accurate decisions in dynamic and complex environments. To prevent overfitting, dropout is applied within the convolutional layers, which is crucial when working with high-dimensional input data and limited training samples."
+                      - generic [ref=e358]:
+                        - text: The architecture is modular and flexible, enabling the configuration of key parameters such as the number of LSTM layers, hidden units, and CNN filters to adapt to various task complexities. By combining the strengths of CNNs, LSTMs, and DDQN, this approach presents a robust and efficient solution for reinforcement learning tasks involving sequential image data. The model’s structure is shown in
+                        - link "Figure 3" [ref=e359] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f003"
+                        - text: .
+                      - generic [ref=e360]:
+                        - generic [ref=e362] [cursor=pointer]:
+                          - img "Wevj 16 00138 g003" [ref=e363]
+                          - link [ref=e364]:
+                            - /url: "#fig_body_display_wevj-16-00138-f003"
+                        - generic [ref=e365]: Figure 3. Proposed model architecture.
+                      - generic [ref=e366]:
+                        - heading "5.1. Model Architecture and State Space" [level=3] [ref=e367]
+                        - generic [ref=e368]:
+                          - text: In our scenario, we process a stack of four RGB images captured by the front camera of the autonomous vehicle (AV). Initially, each image has 640 × 480 × 3 pixels. We resize them to 84 × 84 × 3 pixels, then convert them to grayscale. This transformation yields a new state, denoted as S
+                          - subscript [ref=e369]: t
+                          - text: ", with dimensions of 84 × 84 × 1, which are fed into the input of the neural network. The model combines convolutional layers with an LSTM, followed by fully connected layers for final predictions. By correcting the overestimation of action values that can occur in the original algorithm, DDQN enhances the conventional Q-learning algorithm."
+                        - generic [ref=e370]: The Q-values of each action in each state, which stand for the anticipated future benefit of performing that action in that state, are learned by the algorithm in typical Q-learning. However, when function approximation is used, which occurs frequently in large state spaces, these Q-values might become overstated. As a result, less-than-ideal decisions may be made.
+                        - generic [ref=e371]: By creating a second network that is used to choose the actions to be executed, DDQN resolves this problem. While the secondary network is used to assess the Q-value of the selected action, the primary network is utilized to estimate the Q-values of each action in each state. To reduce the overestimation of Q-values, the idea is to decouple the selection and evaluation of activities.
+                        - generic [ref=e372]: Our architecture is mainly based on multiple layers such as convolutional layers. The number of convolutional layers is four, as shown in the architecture figure. The first convolutional layer applies 32 convolutional filters with a kernel size of 8 × 8 and a stride size of 4. It reduces the spatial dimensions of the input while extracting the initial feature maps. A dropout with a probability of 0.4 is applied after the first convolutional layer to mitigate overfitting. The second convolutional layer uses 64 convolutional filters with a kernel size of 4 × 4 and a stride size of 2 to extract more features and reduce the spatial dimensions. A dropout with a probability of 0.4 is applied after the second convolutional layer. For the third convolutional layer, 64 convolutional filters with a kernel size of 3 × 3 and a stride size of 1 are used to add complexity to feature extraction. Two max pooling layers, each with a kernel size and stride of 2, are used to further downsample the feature maps and capture the most salient features. A fourth convolutional layer with 64 filters, a kernel size of 3 × 3, and a stride of 1 is used to refine the features.
+                        - generic [ref=e373]:
+                          - text: As shown in
+                          - link "Figure 4" [ref=e374] [cursor=pointer]:
+                            - /url: "#fig_body_display_wevj-16-00138-f004"
+                          - text: ", after the convolution and pooling operations, the spatial dimensions are flattened to prepare the data for the LSTM layer. The tensor is reshaped from (batch_size * seq_len, c, h, w) to (batch_size, seq_len, −1), where −1 automatically calculates the size of the flattened feature. Afterward, an LSTM layer captures the temporal dependencies in the sequence of image frames. It consists of hidden units lstm_hidden_size and layers num_lstm_layers. input_size is the flattened size of the output of the convolutional layers. Next, we find the first fully connected layer that transforms the LSTM output into a 512-dimensional vector. Finally, the last fully connected layer maps the 512-dimensional vector to a vector of size num_actions, representing the Q-values for each possible action in the reinforcement learning task."
+                        - generic [ref=e375]:
+                          - generic [ref=e377] [cursor=pointer]:
+                            - img "Wevj 16 00138 g004" [ref=e378]
+                            - link [ref=e379]:
+                              - /url: "#fig_body_display_wevj-16-00138-f004"
+                          - generic [ref=e380]: Figure 4. The proposed CNN-LSTM-DDQN architecture.
+                        - generic [ref=e381]:
+                          - text: For the forward pass, the input x is processed through the convolutional layers, followed by the LSTM layer to capture temporal dependencies, and finally through the fully connected layers to produce the Q-values. In this model, we aim to design a robust architecture for reinforcement learning tasks involving image sequences, exploiting the strengths of convolutional and recurrent neural networks to process and learn from complex temporal data. The architecture of our system is a DDQN with the inputs and outputs shown in
+                          - link "Table 1" [ref=e382] [cursor=pointer]:
+                            - /url: "#table_body_display_wevj-16-00138-t001"
+                          - text: ":"
+                        - generic [ref=e383]:
+                          - generic [ref=e384]: Table 1. Architecture of proposed system.
+                          - generic [ref=e386] [cursor=pointer]:
+                            - img [ref=e387]
+                            - link [ref=e388]:
+                              - /url: "#table_body_display_wevj-16-00138-t001"
+                      - generic [ref=e389]:
+                        - heading "5.2. Reward Function" [level=3] [ref=e390]
+                        - generic [ref=e391]:
+                          - text: "The reward function in the provided code is structured to guide the agent’s behavior based on its interactions with the environment. The primary factors influencing the reward are collisions, the duration of the episode, and whether the agent avoids obstacles during its driving task. The reward function in this method is based on several specific scenarios, described in our approach. Here are the details of the different cases in this driving simulation: Firstly, in the event of a collision, detected by the presence of items in the collision_hist list, the reward is set to −20, reflecting a severe penalty for this incident. The episode immediately ends with done equal to True, marking the end of the episode following an accident. Then, if no collision occurs and the car continues to run smoothly, a + 5 reward is awarded. This encourages collision-free driving, and the episode continues with done equal to False, allowing the agent to continue the episode without interruption. Finally, if the episode lasts longer than 30 s, a significant reward of 250 is awarded. The episode ends with a done equal to True, reflecting a bonus for driving through the entire episode without major incident. This scenario offers an additional incentive to maintain prolonged, safe driving. In summary, this reward structure strongly penalizes collisions while promoting continuous, accident-free driving, enabling the agent to learn to avoid collisions and drive stably. Here is a summary of the reward function in pseudo-code form:"
+                          - generic [ref=e392]:
+                            - math [ref=e395]:
+                              - generic [ref=e397]:
+                                - generic [ref=e398]: r
+                                - generic [ref=e399]: e
+                                - generic [ref=e400]: w
+                                - generic [ref=e401]: a
+                                - generic [ref=e402]: r
+                                - generic [ref=e403]: d
+                                - generic [ref=e404]: =
+                                - generic [ref=e407]:
+                                  - generic [ref=e410]:
+                                    - generic [ref=e411]: −
+                                    - generic [ref=e412]: "20"
+                                  - generic [ref=e416]: "250"
+                                  - generic [ref=e419]:
+                                    - generic [ref=e420]: +
+                                    - generic [ref=e421]: "5"
+                                - generic [ref=e422]:
+                                  - generic [ref=e424]:
+                                    - generic [ref=e425]: i
+                                    - generic [ref=e426]: f
+                                    - generic [ref=e427]: c
+                                    - generic [ref=e428]: o
+                                    - generic [ref=e429]: l
+                                    - generic [ref=e430]: l
+                                    - generic [ref=e431]: i
+                                    - generic [ref=e432]: s
+                                    - generic [ref=e433]: i
+                                    - generic [ref=e434]: o
+                                    - generic [ref=e435]: "n"
+                                  - generic [ref=e437]:
+                                    - generic [ref=e438]: i
+                                    - generic [ref=e439]: f
+                                    - generic [ref=e440]: m
+                                    - generic [ref=e441]: a
+                                    - generic [ref=e442]: x
+                                    - generic [ref=e443]: i
+                                    - generic [ref=e444]: m
+                                    - generic [ref=e445]: u
+                                    - generic [ref=e446]: m
+                                    - generic [ref=e447]: t
+                                    - generic [ref=e448]: i
+                                    - generic [ref=e449]: m
+                                    - generic [ref=e450]: e
+                                    - generic [ref=e451]: r
+                                    - generic [ref=e452]: e
+                                    - generic [ref=e453]: a
+                                    - generic [ref=e454]: c
+                                    - generic [ref=e455]: h
+                                    - generic [ref=e456]: e
+                                    - generic [ref=e457]: d
+                                  - generic [ref=e459]:
+                                    - generic [ref=e460]: o
+                                    - generic [ref=e461]: t
+                                    - generic [ref=e462]: h
+                                    - generic [ref=e463]: e
+                                    - generic [ref=e464]: r
+                                    - generic [ref=e465]: w
+                                    - generic [ref=e466]: i
+                                    - generic [ref=e467]: s
+                                    - generic [ref=e468]: e
+                            - generic [ref=e470]: (1)
+                        - generic [ref=e471]: This encourages the agent to avoid collisions and continue driving until the episode ends.
+                      - generic [ref=e472]:
+                        - heading "5.3. Mounted Sensors and Hyperparameters" [level=3] [ref=e473]
+                        - generic [ref=e474]: "Sensors mounted on autonomous vehicles play a crucial role in their ability to perceive and understand their environment in real time to make safe and efficient decisions. To achieve this, several types of sensors are integrated into autonomous vehicles, each providing specific data to analyze different aspects of the environment. The following table introduces the types of data commonly captured by these sensors and their respective functions:"
+                        - generic [ref=e475]:
+                          - link "Table 2" [ref=e476] [cursor=pointer]:
+                            - /url: "#table_body_display_wevj-16-00138-t002"
+                          - text: outlines the two sensors used in our simulation, with details on their attributes, functions, and roles in controlling the autonomous vehicle.
+                        - generic [ref=e477]:
+                          - generic [ref=e478]: Table 2. Data for sensors mounted on autonomous vehicle.
+                          - generic [ref=e480] [cursor=pointer]:
+                            - img [ref=e481]
+                            - link [ref=e482]:
+                              - /url: "#table_body_display_wevj-16-00138-t002"
+                        - generic [ref=e483]: It is also necessary to define the set of various hyperparameters that serve as outside configuration variables utilized to control model training. These hyperparameters determine important model properties like design, learning rate, and complexity.
+                        - generic [ref=e484]:
+                          - link "Table 3" [ref=e485] [cursor=pointer]:
+                            - /url: "#table_body_display_wevj-16-00138-t003"
+                          - text: "below details the hyperparameters::"
+                        - generic [ref=e486]:
+                          - generic [ref=e487]: Table 3. Hyperparameters our model.
+                          - generic [ref=e489] [cursor=pointer]:
+                            - img [ref=e490]
+                            - link [ref=e491]:
+                              - /url: "#table_body_display_wevj-16-00138-t003"
+                        - generic [ref=e492]: These space hyperparameters control various aspects of the neural network architecture, reinforcement learning algorithm, and training dynamics.
+                      - generic [ref=e493]:
+                        - heading "5.4. Action Space" [level=3] [ref=e494]
+                        - generic [ref=e495]:
+                          - text: "Our model inputs forward-facing RGB camera images from the CARLA simulator. Each image is converted to grayscale and resized to 84 · 84 for processing. The output of our system is actions: there are 6 possible actions (combinations of steering and throttle). In the CARLA simulator environment, the AV interacts with its environment using four main control commands: steer left, steer right, go straight, and slow down. These commands are represented as integer values in the range 0 to 5. DDQN is a discrete DRL algorithm; the agent must make discrete action choices as per"
+                          - link "Table 4" [ref=e496] [cursor=pointer]:
+                            - /url: "#table_body_display_wevj-16-00138-t004"
+                          - text: ". The action is to be taken by car. The possible actions are shown in the following table:"
+                        - generic [ref=e497]:
+                          - generic [ref=e498]: Table 4. Actions and their corresponding values.
+                          - generic [ref=e500] [cursor=pointer]:
+                            - img [ref=e501]
+                            - link [ref=e502]:
+                              - /url: "#table_body_display_wevj-16-00138-t004"
+                        - generic [ref=e503]: Algorithm
+                        - generic [ref=e504]: "The provided algorithm presents a clear and concise implementation of the DDQN for autonomous navigation:"
+                        - generic [ref=e505]: Initialize CARLA environment and sensors
+                        - generic [ref=e506]: "For each episode:"
+                        - generic [ref=e507]: Reset environment and variables (collisions, camera, etc.)
+                        - generic [ref=e508]: "As long as the episode has not ended:"
+                        - generic [ref=e509]: Choose an action (epsilon-greedy)
+                        - generic [ref=e510]: Execute action in environment
+                        - generic [ref=e511]: Obtain new observation, reward, collision status, etc.
+                        - generic [ref=e512]: Add transition to buffer
+                        - generic [ref=e513]: "If buffer is sufficient:"
+                        - generic [ref=e514]: Sample a batch of transitions
+                        - generic [ref=e515]: Calculate Q-targets
+                        - generic [ref=e516]: Calculate loss between current Q-values and targets
+                        - generic [ref=e517]: Update model weights by minimizing loss
+                        - generic [ref=e518]: If episode is over or time is up, stop
+                        - generic [ref=e519]: "Every N episodes:"
+                        - generic [ref=e520]: Update target network with online network weights
+                        - generic [ref=e521]: Record model weights
+                        - generic [ref=e522]: Track rewards and display results
+                    - generic [ref=e523]:
+                      - heading "6. Results and Discussion" [level=2] [ref=e524]
+                      - generic [ref=e525]:
+                        - text: The suggested approach was validated using the free autonomous driving simulation program CALRA [
+                        - link "3" [ref=e526] [cursor=pointer]:
+                          - /url: "#B3-wevj-16-00138"
+                        - text: ","
+                        - link "9" [ref=e527] [cursor=pointer]:
+                          - /url: "#B9-wevj-16-00138"
+                        - text: ","
+                        - link "34" [ref=e528] [cursor=pointer]:
+                          - /url: "#B34-wevj-16-00138"
+                        - text: "]. Several training simulations were carried out in the Town 05 environment using CARLA 0.9.13. The simulation environment is shown in"
+                        - link "Figure 5" [ref=e529] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f005"
+                        - text: .
+                      - generic [ref=e530]:
+                        - generic [ref=e532] [cursor=pointer]:
+                          - img "Wevj 16 00138 g005" [ref=e533]
+                          - link [ref=e534]:
+                            - /url: "#fig_body_display_wevj-16-00138-f005"
+                        - generic [ref=e535]: Figure 5. The CARLA highway environment (Town 05).
+                      - generic [ref=e536]: Using the Town 05 environment of CARLA 0.9.13, we simulated the behavior of an expert human driver to control an autonomous vehicle using the actions generated by our model. After the model was well trained, we integrated it into the actor network for RL. This approach reduces the gap between states and actions, thus accelerating the training and convergence of the model.
+                      - generic [ref=e537]: In the CARLA simulator, the starting and destination points were consistent, and the traffic conditions varied according to the various episodes of training in Town 05. While the autonomous vehicle was entrusted with the task of driving safely and effectively, it could turn right and left in several intersections in an urban environment.
+                      - generic [ref=e538]:
+                        - text: The experimental simulation and training tests in our work were conducted using a PC HP Gaming I-5, Intel
+                        - superscript [ref=e539]: ®
+                        - text: Core ™ i5-11800h processor reconditioned 2.30 GHz 16 GB RAM, 512GB SSD Hard Drive, Nvidia GeForce RTX 3050 Graphic, 15.6 “HD LED”.
+                      - generic [ref=e540]: To test our work, the vehicle was initially generated randomly in the starting area, and it had to follow the designated route according to the town chosen until reaching its destination; it must also avoid collisions with other vehicles in dense traffic. The environment of the town chosen also contains other fixed and mobile objects, including signaling failures, pedestrians, cyclists, motorcycles, and other vehicles.
+                      - generic [ref=e541]:
+                        - text: In
+                        - link "Figure 6" [ref=e542] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f006"
+                        - text: ", the graph represents the reward per episode for the Deep Q-Network (DQN) agent trained in CARLA over 2000 episodes. This method is used in state-of-the-art methodologies. The x-axis denotes the number of episodes, while the y-axis represents the reward value. Observing the graph, the reward values exhibit significant fluctuations and spikes throughout the episodes, indicating inconsistent learning. There is no clear trend of continuous improvement, suggesting that the agent struggles to optimize its policy effectively. Additionally, the large variance in rewards implies that the model does not achieve stable learning."
+                      - generic [ref=e543]:
+                        - generic [ref=e545] [cursor=pointer]:
+                          - img "Wevj 16 00138 g006" [ref=e546]
+                          - link [ref=e547]:
+                            - /url: "#fig_body_display_wevj-16-00138-f006"
+                        - generic [ref=e548]: Figure 6. Representation of reward vs. episode of DQN algorithm with 2000 episodes.
+                      - generic [ref=e549]: DQN, in addition, has several limitations when used for autonomous vehicle (AV) training in reinforcement learning. One major issue is the lack of stability in learning, as the high variance in rewards suggests that DQN struggles with maintaining stable Q-values. Furthermore, DQN is designed for discrete action spaces, whereas AVs require continuous control over acceleration, braking, and steering. Discretizing these actions limits fine control and reduces overall performance. Another challenge is the exploration versus exploitation trade-off; DQN often suffers from insufficient exploration, leading to suboptimal policies.
+                      - generic [ref=e550]: Moreover, the algorithm is highly sensitive to hyperparameter tuning, such as learning rate and experience replay buffer size, making training inefficient for AVs. Small changes in parameters can result in catastrophic forgetting or suboptimal learning outcomes. Another crucial limitation is DQN’s inability to handle safety constraints effectively. The high fluctuations in rewards suggest frequent collisions or unsafe driving events, highlighting DQN’s inadequacy for real-world AV training without additional modifications.
+                      - generic [ref=e551]:
+                        - link "Figure 7" [ref=e552] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f007"
+                        - text: represents epsilon decay over 2000 episodes in a reinforcement learning (RL) training process, likely for a Deep Q-Network (DQN) agent. The x-axis represents the number of episodes, while the y-axis represents epsilon values.
+                      - generic [ref=e553]:
+                        - generic [ref=e555] [cursor=pointer]:
+                          - img "Wevj 16 00138 g007" [ref=e556]
+                          - link [ref=e557]:
+                            - /url: "#fig_body_display_wevj-16-00138-f007"
+                        - generic [ref=e558]: Figure 7. Representation of epsilon decay values of DQN algorithm with 2000 episodes.
+                      - generic [ref=e559]: Epsilon (ε) is a parameter in ε-greedy exploration used in DQN to balance exploration (trying new actions) and exploitation (choosing the best-known action). The graph shows that epsilon starts at 1.0, meaning that the agent initially explores randomly. Over time, epsilon decays exponentially, approaching near-zero values after around 1500 episodes, indicating that the agent shifts from exploration to exploitation.
+                      - generic [ref=e560]:
+                        - link "Figure 8" [ref=e561] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f008"
+                        - text: represents the reward per episode for a reinforcement learning (RL) agent trained in CARLA over 2000 episodes. The x-axis represents the number of episodes, while the y-axis represents the reward value obtained by the agent in each episode.
+                      - generic [ref=e562]:
+                        - generic [ref=e564] [cursor=pointer]:
+                          - img "Wevj 16 00138 g008" [ref=e565]
+                          - link [ref=e566]:
+                            - /url: "#fig_body_display_wevj-16-00138-f008"
+                        - generic [ref=e567]: Figure 8. Representation of reward vs. episode of proposed DDQN algorithm with 2000 episodes.
+                      - generic [ref=e568]: The above graph nicely shows the stability and performance of the Double Deep Q-Network (DDQN) method I n the CARLA simulator, which is used for autonomous driving tasks. The upward trend in the episode rewards graph indicates that the agent is improving its driving skills over time. This improvement suggests that the agent is learning to stay in its lane, make the right turns, and avoid collisions more efficiently as it gains experience over episodes.
+                      - generic [ref=e569]:
+                        - link "Figure 9" [ref=e570] [cursor=pointer]:
+                          - /url: "#fig_body_display_wevj-16-00138-f009"
+                        - text: represents eEpsilon dDecay over 2000 episodes in a reinforcement learn-ing (RL) training process, likely for a Double Deep Q-Network (DQN) agent. The x-axis represents the number of episodes, while the y-axis represents epsilon values.
+                      - generic [ref=e571]:
+                        - generic [ref=e573] [cursor=pointer]:
+                          - img "Wevj 16 00138 g009" [ref=e574]
+                          - link [ref=e575]:
+                            - /url: "#fig_body_display_wevj-16-00138-f009"
+                        - generic [ref=e576]: Figure 9. Representation of epsilon decay values of proposed DDQN algorithm with 2000 episodes.
+                    - generic [ref=e577]:
+                      - heading "7. Conclusions" [level=2] [ref=e578]
+                      - generic [ref=e579]: In this study, we developed an autonomous driving system utilizing Deep Q-Networks with Double Q-Learning (DDQN) in the CARLA simulator. Our model, which integrates Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) layers, effectively processes sequential visual input to control a Tesla Model 3 in a complex urban environment. Through reinforcement learning, the system learned to navigate Town 05 by making informed driving decisions, including steering, accelerating, and braking. One of the key contributions of this work is the implementation of DDQN, which mitigates the overestimation bias commonly found in traditional Deep Q-Networks (DQNs). By using a separate target network and decoupling action selection from value estimation, DDQN significantly enhances training stability and improves policy performance. The combination of a replay buffer and an epsilon-greedy exploration strategy further ensured a balance between learning from past experiences and discovering new driving behaviors. Our results demonstrate that reinforcement learning can be an effective approach for autonomous driving, with the trained model exhibiting improved decision-making capabilities, reduced collision rates, and smoother driving patterns over time. These findings highlight the potential of deep reinforcement learning for developing intelligent self-driving systems that can adapt to dynamic environments without human intervention. Despite these promising outcomes, several challenges remain. This study is constrained by the limitations of simulated environments, which do not fully capture the complexities of real-world driving. Additionally, fine-tuning hyperparameters, expanding the training dataset, and incorporating more diverse driving scenarios could further enhance model robustness. Future research should explore the integration of real-world sensory data, adaptive learning techniques, and multi-agent interactions to advance the applicability of reinforcement learning in autonomous driving. By continuing to refine these models and bridge the gap between simulation and real-world deployment, this research contributes to the broader effort of developing safer and more reliable autonomous driving technologies.
+                  - generic [ref=e580]:
+                    - generic [ref=e581]:
+                      - heading "Author Contributions" [level=2] [ref=e582]
+                      - generic [ref=e583]: Conceptualization, A.K. and M.O.; methodology, A.K.; software, A.K.; validation, A.K., M.O. and M.K.; formal analysis, A.K.; investigation, A.K.; resources, A.K.; data curation, A.K.; writing—original draft preparation, A.K.; writing—review and editing, A.K.; visualization, A.K.; supervision, M.O.; project administration, M.K.; funding acquisition, A.K. All authors have read and agreed to the published version of the manuscript.
+                    - generic [ref=e584]:
+                      - heading "Funding" [level=2] [ref=e585]
+                      - generic [ref=e586]: This research received no external funding.
+                    - generic [ref=e587]:
+                      - heading "Data Availability Statement" [level=2] [ref=e588]
+                      - generic [ref=e589]: The original contributions presented in this study are included in the article. Further inquiries can be directed to the corresponding author.
+                    - generic [ref=e590]:
+                      - heading "Conflicts of Interest" [level=2] [ref=e591]
+                      - generic [ref=e592]: The authors declare no conflicts of interest.
+                    - generic [ref=e593]:
+                      - heading "References" [level=2] [ref=e594]
+                      - list [ref=e595]:
+                        - listitem [ref=e596]:
+                          - text: 1.Shalev-Shwartz, S.; Shammah, S.; Shashua, A. Safe, Multi-Agent, Reinforcement Learning for Autonomous Driving. arXiv 2016, arXiv:1610.03295. [
+                          - link "Google Scholar" [ref=e597] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Safe,+Multi-Agent,+Reinforcement+Learning+for+Autonomous+Driving&author=Shalev-Shwartz,+S.&author=Shammah,+S.&author=Shashua,+A.&publication_year=2016&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e598]:
+                          - text: 2.Haklidir, M.; Temeltas, H. Autonomous Driving Systems for Decision-Making Under Uncertainty Using Deep Reinforcement Learning. In Proceedings of the 2022 30th Signal Processing and Communications Applications Conference (SIU), Safranbolu, Turkey, 15–18 May 2022; pp. 1–4. [
+                          - link "Google Scholar" [ref=e599] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Autonomous+Driving+Systems+for+Decision-Making+Under+Uncertainty+Using+Deep+Reinforcement+Learning&conference=Proceedings+of+the+2022+30th+Signal+Processing+and+Communications+Applications+Conference+(SIU)&author=Haklidir,+M.&author=Temeltas,+H.&publication_year=2022&pages=1%E2%80%934
+                          - text: "]"
+                        - listitem [ref=e600]:
+                          - text: 3.Qian, Z.; Guo, P.; Wang, Y.; Xiao, F. Ethical and Moral Decision-Making for Self-Driving Cars Based on Deep Reinforcement Learning. J. Intell. Fuzzy Syst. 2023, 45, 5523–5540. [
+                          - link "Google Scholar" [ref=e601] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Ethical+and+Moral+Decision-Making+for+Self-Driving+Cars+Based+on+Deep+Reinforcement+Learning&author=Qian,+Z.&author=Guo,+P.&author=Wang,+Y.&author=Xiao,+F.&publication_year=2023&journal=J.+Intell.+Fuzzy+Syst.&volume=45&pages=5523%E2%80%935540&doi=10.3233/JIFS-224553
+                          - text: "] ["
+                          - link "CrossRef" [ref=e602] [cursor=pointer]:
+                            - /url: https://doi.org/10.3233/JIFS-224553
+                          - text: "]"
+                        - listitem [ref=e603]:
+                          - text: 4.Sallab, A.E.; Abdou, M.; Perot, E.; Yogamani, S.K. Deep Reinforcement Learning Framework for Aut onomous Driving. arXiv 2017, arXiv:1704.02532. [
+                          - link "Google Scholar" [ref=e604] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Deep+Reinforcement+Learning+Framework+for+Aut+onomous+Driving&author=Sallab,+A.E.&author=Abdou,+M.&author=Perot,+E.&author=Yogamani,+S.K.&publication_year=2017&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e605]:
+                          - text: 5.Kuutti, S.; Bowden, R.; Jin, Y.; Barber, P.; Fallah, S. A Survey of Deep Learning Applications to Autonomous Vehicle Control. IEEE Trans. Intell. Transp. Syst. 2020, 22, 712–733. [
+                          - link "Google Scholar" [ref=e606] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=A+Survey+of+Deep+Learning+Applications+to+Autonomous+Vehicle+Control&author=Kuutti,+S.&author=Bowden,+R.&author=Jin,+Y.&author=Barber,+P.&author=Fallah,+S.&publication_year=2020&journal=IEEE+Trans.+Intell.+Transp.+Syst.&volume=22&pages=712%E2%80%93733&doi=10.1109/TITS.2019.2962338
+                          - text: "] ["
+                          - link "CrossRef" [ref=e607] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/TITS.2019.2962338
+                          - text: "]"
+                        - listitem [ref=e608]:
+                          - text: 6.Liu, Z.; Cai, Y.; Wang, H.; Chen, L.; Gao, H.; Jia, Y.; Li, Y. Robust Target Recognition and Tracking of Self-Driving Cars with Radar and Camera Information Fusion Under Severe Weather Conditions. IEEE Trans. Intell. Transp. Syst. 2021, 23, 6640–6653. [
+                          - link "Google Scholar" [ref=e609] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Robust+Target+Recognition+and+Tracking+of+Self-Driving+Cars+with+Radar+and+Camera+Information+Fusion+Under+Severe+Weather+Conditions&author=Liu,+Z.&author=Cai,+Y.&author=Wang,+H.&author=Chen,+L.&author=Gao,+H.&author=Jia,+Y.&author=Li,+Y.&publication_year=2021&journal=IEEE+Trans.+Intell.+Transp.+Syst.&volume=23&pages=6640%E2%80%936653&doi=10.1109/TITS.2021.3059674
+                          - text: "] ["
+                          - link "CrossRef" [ref=e610] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/TITS.2021.3059674
+                          - text: "]"
+                        - listitem [ref=e611]:
+                          - text: 7.Hoel, C.; Wolff, K.; Laine, L. Automated Speed and Lane Change Decision Making Using Deep Reinforcement Learning. In Proceedings of the 2018 21st International Conference on Intelligent Transportation Systems (ITSC), Maui, HI, USA, 4–7 November 2018; pp. 2148–2155. [
+                          - link "Google Scholar" [ref=e612] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Automated+Speed+and+Lane+Change+Decision+Making+Using+Deep+Reinforcement+Learning&conference=Proceedings+of+the+2018+21st+International+Conference+on+Intelligent+Transportation+Systems+(ITSC)&author=Hoel,+C.&author=Wolff,+K.&author=Laine,+L.&publication_year=2018&pages=2148%E2%80%932155
+                          - text: "]"
+                        - listitem [ref=e613]:
+                          - text: 8.Ronecker, M.P.; Zhu, Y. Deep Q-Network Based Decision Making for Autonomous Driving. In Proceedings of the 2019 3rd International Conference on Robotics and Automation Sciences (ICRAS), Wuhan, China, 1–3 June 2019; pp. 154–160. [
+                          - link "Google Scholar" [ref=e614] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Deep+Q-Network+Based+Decision+Making+for+Autonomous+Driving&conference=Proceedings+of+the+2019+3rd+International+Conference+on+Robotics+and+Automation+Sciences+(ICRAS)&author=Ronecker,+M.P.&author=Zhu,+Y.&publication_year=2019&pages=154%E2%80%93160
+                          - text: "]"
+                        - listitem [ref=e615]:
+                          - text: 9.Elallid, B.B.; Benamar, N.; Mrani, N.; Rachidi, T. DQN-Based Reinforcement Learning for Vehicle Control of Autonomous Vehicles Interacting With Pedestrians. In Proceedings of the 2022 International Conference on Innovation and Intelligence for Informatics, Computing, and Technologies (3ICT), Sakheer, Bahrain, 20–21 November 2022; pp. 489–493. [
+                          - link "Google Scholar" [ref=e616] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=DQN-Based+Reinforcement+Learning+for+Vehicle+Control+of+Autonomous+Vehicles+Interacting+With+Pedestrians&conference=Proceedings+of+the+2022+International+Conference+on+Innovation+and+Intelligence+for+Informatics,+Computing,+and+Technologies+(3ICT)&author=Elallid,+B.B.&author=Benamar,+N.&author=Mrani,+N.&author=Rachidi,+T.&publication_year=2022&pages=489%E2%80%93493
+                          - text: "]"
+                        - listitem [ref=e617]:
+                          - text: 10.Mnih, V.; Kavukcuoglu, K.; Silver, D.; Rusu, A.A.; Veness, J.; Bellemare, M.G.; Graves, A.; Riedmiller, M.A.; Fidjeland, A.K.; Ostrovski, G.; et al. Human-Level Control Through Deep Reinforcement Learning. Nature 2015, 518, 529–533. [
+                          - link "Google Scholar" [ref=e618] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Human-Level+Control+Through+Deep+Reinforcement+Learning&author=Mnih,+V.&author=Kavukcuoglu,+K.&author=Silver,+D.&author=Rusu,+A.A.&author=Veness,+J.&author=Bellemare,+M.G.&author=Graves,+A.&author=Riedmiller,+M.A.&author=Fidjeland,+A.K.&author=Ostrovski,+G.&author=et+al.&publication_year=2015&journal=Nature&volume=518&pages=529%E2%80%93533&doi=10.1038/nature14236
+                          - text: "] ["
+                          - link "CrossRef" [ref=e619] [cursor=pointer]:
+                            - /url: https://doi.org/10.1038/nature14236
+                          - text: "]"
+                        - listitem [ref=e620]:
+                          - text: 11.Elallid, B.B.; Benamar, N.; Bagaa, M.; Hadjadj-Aoul, Y. Enhancing Autonomous Driving Navigation Using Soft Actor-Critic. Future Internet 2024, 16, 238. [
+                          - link "Google Scholar" [ref=e621] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Enhancing+Autonomous+Driving+Navigation+Using+Soft+Actor-Critic&author=Elallid,+B.B.&author=Benamar,+N.&author=Bagaa,+M.&author=Hadjadj-Aoul,+Y.&publication_year=2024&journal=Future+Internet&volume=16&pages=238&doi=10.3390/fi16070238
+                          - text: "] ["
+                          - link "CrossRef" [ref=e622] [cursor=pointer]:
+                            - /url: https://doi.org/10.3390/fi16070238
+                          - text: "]"
+                        - listitem [ref=e623]:
+                          - text: "12.Katrakazas, C.; Quddus, M.A.; Chen, W.; Deka, L. Real-Time Motion Planning Methods for Autonomous On-Road Driving: State-of-the-Art and Future Research Directions. Transp. Res. Part C Emerg. Technol. 2015, 60, 416–442. ["
+                          - link "Google Scholar" [ref=e624] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Real-Time+Motion+Planning+Methods+for+Autonomous+On-Road+Driving:+State-of-the-Art+and+Future+Research+Directions&author=Katrakazas,+C.&author=Quddus,+M.A.&author=Chen,+W.&author=Deka,+L.&publication_year=2015&journal=Transp.+Res.+Part+C+Emerg.+Technol.&volume=60&pages=416%E2%80%93442&doi=10.1016/j.trc.2015.09.011
+                          - text: "] ["
+                          - link "CrossRef" [ref=e625] [cursor=pointer]:
+                            - /url: https://doi.org/10.1016/j.trc.2015.09.011
+                          - text: "]"
+                        - listitem [ref=e626]:
+                          - text: "13.Giannaros, A.; Karras, A.; Theodorakopoulos, L.; Karras, C.N.; Kranias, P.; Schizas, N.; Kalogeratos, G.; Tsolis, D. Autonomous Vehicles: Sophisticated Attacks, Safety Issues, Challenges, Open Topics, Blockchain, and Future Directions. J. Cybersecur. Priv. 2023, 3, 493–543. ["
+                          - link "Google Scholar" [ref=e627] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Autonomous+Vehicles:+Sophisticated+Attacks,+Safety+Issues,+Challenges,+Open+Topics,+Blockchain,+and+Future+Directions&author=Giannaros,+A.&author=Karras,+A.&author=Theodorakopoulos,+L.&author=Karras,+C.N.&author=Kranias,+P.&author=Schizas,+N.&author=Kalogeratos,+G.&author=Tsolis,+D.&publication_year=2023&journal=J.+Cybersecur.+Priv.&volume=3&pages=493%E2%80%93543&doi=10.3390/jcp3030025
+                          - text: "] ["
+                          - link "CrossRef" [ref=e628] [cursor=pointer]:
+                            - /url: https://doi.org/10.3390/jcp3030025
+                          - text: "]"
+                        - listitem [ref=e629]:
+                          - text: 14.Pérez-Gil, Ó.; Barea, R.; López-Guillén, E.; Bergasa, L.M.; Gómez-Huélamo, C.; Gutiérrez, R.; Diaz-Diaz, A. Deep Reinforcement Learning Based Control for Autonomous Vehicles in CARLA. Multimed. Tools Appl. 2022, 81, 3553–3576. [
+                          - link "Google Scholar" [ref=e630] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Deep+Reinforcement+Learning+Based+Control+for+Autonomous+Vehicles+in+CARLA&author=P%C3%A9rez-Gil,+%C3%93.&author=Barea,+R.&author=L%C3%B3pez-Guill%C3%A9n,+E.&author=Bergasa,+L.M.&author=G%C3%B3mez-Hu%C3%A9lamo,+C.&author=Guti%C3%A9rrez,+R.&author=Diaz-Diaz,+A.&publication_year=2022&journal=Multimed.+Tools+Appl.&volume=81&pages=3553%E2%80%933576&doi=10.1007/s11042-021-11437-3
+                          - text: "] ["
+                          - link "CrossRef" [ref=e631] [cursor=pointer]:
+                            - /url: https://doi.org/10.1007/s11042-021-11437-3
+                          - text: "]"
+                        - listitem [ref=e632]:
+                          - text: 15.Thompson, C.R.; Talla, R.R.; Gummadi, J.C.; Kamisetty, A. Reinforcement Learning Techniques for Autonomous Robotics. Asian J. Appl. Sci. Eng. 2019, 8, 85–96. [
+                          - link "Google Scholar" [ref=e633] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Reinforcement+Learning+Techniques+for+Autonomous+Robotics&author=Thompson,+C.R.&author=Talla,+R.R.&author=Gummadi,+J.C.&author=Kamisetty,+A.&publication_year=2019&journal=Asian+J.+Appl.+Sci.+Eng.&volume=8&pages=85%E2%80%9396&doi=10.18034/ajase.v8i1.94
+                          - text: "] ["
+                          - link "CrossRef" [ref=e634] [cursor=pointer]:
+                            - /url: https://doi.org/10.18034/ajase.v8i1.94
+                          - text: "]"
+                        - listitem [ref=e635]:
+                          - text: 16.Hu, D.; Huang, C.; Wu, J.; Gao, H. Pre-Trained Transformer-Enabled Strategies with Human-Guided Fine-Tuning for End-to-End Navigation of Autonomous Vehicles. arXiv 2024, arXiv:2402.12666. [
+                          - link "Google Scholar" [ref=e636] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Pre-Trained+Transformer-Enabled+Strategies+with+Human-Guided+Fine-Tuning+for+End-to-End+Navigation+of+Autonomous+Vehicles&author=Hu,+D.&author=Huang,+C.&author=Wu,+J.&author=Gao,+H.&publication_year=2024&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e637]:
+                          - text: "17.Sutton, R.S.; Barto, A.G. Reinforcement Learning: An Introduction; MIT Press: Cambridge, MA, USA, 1998. ["
+                          - link "Google Scholar" [ref=e638] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Reinforcement+Learning:+An+Introduction&author=Sutton,+R.S.&author=Barto,+A.G.&publication_year=1998
+                          - text: "]"
+                        - listitem [ref=e639]:
+                          - text: 18.Georgeon, O.L.; Casado, R.C.; Matignon, L. Modeling Biological Agents Beyond the Reinforcement-Learning Paradigm. Biologically Inspired Cogn. Archit. 2015, 71, 17–22. [
+                          - link "Google Scholar" [ref=e640] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Modeling+Biological+Agents+Beyond+the+Reinforcement-Learning+Paradigm&author=Georgeon,+O.L.&author=Casado,+R.C.&author=Matignon,+L.&publication_year=2015&journal=Biologically+Inspired+Cogn.+Archit.&volume=71&pages=17%E2%80%9322&doi=10.1016/j.procs.2015.12.179
+                          - text: "] ["
+                          - link "CrossRef" [ref=e641] [cursor=pointer]:
+                            - /url: https://doi.org/10.1016/j.procs.2015.12.179
+                          - text: "]"
+                        - listitem [ref=e642]:
+                          - text: 19.Rizehvandi, A.; Azadi, S.; Eichberger, A. Decision-Making Policy for Autonomous Vehicles on Highways Using Deep Reinforcement Learning (DRL) Method. Automation 2024, 5, 564. [
+                          - link "Google Scholar" [ref=e643] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Decision-Making+Policy+for+Autonomous+Vehicles+on+Highways+Using+Deep+Reinforcement+Learning+(DRL)+Method&author=Rizehvandi,+A.&author=Azadi,+S.&author=Eichberger,+A.&publication_year=2024&journal=Automation&volume=5&pages=564&doi=10.3390/automation5040032
+                          - text: "] ["
+                          - link "CrossRef" [ref=e644] [cursor=pointer]:
+                            - /url: https://doi.org/10.3390/automation5040032
+                          - text: "]"
+                        - listitem [ref=e645]:
+                          - text: "20.Chen, Y.; Ji, C.; Cai, Y.; Yan, T.; Su, B. Deep Reinforcement Learning in Autonomous Car Path Planning and Control: A Survey. arXiv 2024, arXiv:2404.00340. ["
+                          - link "Google Scholar" [ref=e646] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Deep+Reinforcement+Learning+in+Autonomous+Car+Path+Planning+and+Control:+A+Survey&author=Chen,+Y.&author=Ji,+C.&author=Cai,+Y.&author=Yan,+T.&author=Su,+B.&publication_year=2024&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e647]:
+                          - text: 21.Zhang, Y.; Sun, P.; Yin, Y.; Lin, L.; Wang, X. Human-Like Autonomous Vehicle Speed Control by Deep Reinforcement Learning with Double Q-Learning. In Proceedings of the 2018 IEEE Intelligent Vehicles Symposium (IV), Changshu, China, 26–30 June 2018; pp. 1251–1256. [
+                          - link "Google Scholar" [ref=e648] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Human-Like+Autonomous+Vehicle+Speed+Control+by+Deep+Reinforcement+Learning+with+Double+Q-Learning&conference=Proceedings+of+the+2018+IEEE+Intelligent+Vehicles+Symposium+(IV)&author=Zhang,+Y.&author=Sun,+P.&author=Yin,+Y.&author=Lin,+L.&author=Wang,+X.&publication_year=2018&pages=1251%E2%80%931256
+                          - text: "]"
+                        - listitem [ref=e649]:
+                          - text: 22.Doe, J.; Smith, A.; Lee, B. End-to-End Autonomous Driving Through Dueling Double Deep Q-Network. Future Transp. 2021, 4, 328–337. [
+                          - link "Google Scholar" [ref=e650] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=End-to-End+Autonomous+Driving+Through+Dueling+Double+Deep+Q-Network&author=Doe,+J.&author=Smith,+A.&author=Lee,+B.&publication_year=2021&journal=Future+Transp.&volume=4&pages=328%E2%80%93337&doi=10.3390/futuretransp4020018
+                          - text: "] ["
+                          - link "CrossRef" [ref=e651] [cursor=pointer]:
+                            - /url: https://doi.org/10.3390/futuretransp4020018
+                          - text: "]"
+                        - listitem [ref=e652]:
+                          - text: 23.Hu, H.; Chu, D.; Yin, J.; Lu, L. Double Deep Q-Networks Based Game-Theoretic Equilibrium Control of Automated Vehicles at Autonomous Intersection. Automot. Innov. 2024, 7, 571–587. [
+                          - link "Google Scholar" [ref=e653] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Double+Deep+Q-Networks+Based+Game-Theoretic+Equilibrium+Control+of+Automated+Vehicles+at+Autonomous+Intersection&author=Hu,+H.&author=Chu,+D.&author=Yin,+J.&author=Lu,+L.&publication_year=2024&journal=Automot.+Innov.&volume=7&pages=571%E2%80%93587&doi=10.1007/s42154-023-00281-w
+                          - text: "] ["
+                          - link "CrossRef" [ref=e654] [cursor=pointer]:
+                            - /url: https://doi.org/10.1007/s42154-023-00281-w
+                          - text: "]"
+                        - listitem [ref=e655]:
+                          - text: 24.Peng, X.; Bu, X.; Zhang, X.; Dong, M.; Ota, K. Double Broad Q-Network for Overtaking Control of Autonomous Driving. IEEE Trans. Veh. Technol. 2024, 1–13. [
+                          - link "Google Scholar" [ref=e656] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Double+Broad+Q-Network+for+Overtaking+Control+of+Autonomous+Driving&author=Peng,+X.&author=Bu,+X.&author=Zhang,+X.&author=Dong,+M.&author=Ota,+K.&publication_year=2024&journal=IEEE+Trans.+Veh.+Technol.&pages=1%E2%80%9313&doi=10.1109/TVT.2024.3390571
+                          - text: "] ["
+                          - link "CrossRef" [ref=e657] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/TVT.2024.3390571
+                          - text: "]"
+                        - listitem [ref=e658]:
+                          - text: 25.Qian, B.; Huang, B. Autonomous Driving Decision Algorithm Based on Hierarchical Dueling Double Deep Q-Network. In Proceedings of the 2024 2nd International Conference on Signal Processing and Intelligent Computing (SPIC), Guangzhou, China, 20–22 September 2024; pp. 390–393. [
+                          - link "Google Scholar" [ref=e659] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Autonomous+Driving+Decision+Algorithm+Based+on+Hierarchical+Dueling+Double+Deep+Q-Network&conference=Proceedings+of+the+2024+2nd+International+Conference+on+Signal+Processing+and+Intelligent+Computing+(SPIC)&author=Qian,+B.&author=Huang,+B.&publication_year=2024&pages=390%E2%80%93393&doi=10.1109/SPIC62469.2024.10691558
+                          - text: "] ["
+                          - link "CrossRef" [ref=e660] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/SPIC62469.2024.10691558
+                          - text: "]"
+                        - listitem [ref=e661]:
+                          - text: "26.Peng, X.; Liang, J.; Zhang, X.; Dong, M.; Ota, K.; Bu, X. LK-TDDQN: A Lane Keeping Transfer Double Deep Q Network Framework for Autonomous Vehicles. In Proceedings of the GLOBECOM 2023-2023 IEEE Global Communications Conference, Kuala Lumpur, Malaysia, 8–12 December 2023; pp. 3518–3523. ["
+                          - link "Google Scholar" [ref=e662] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=LK-TDDQN:+A+Lane+Keeping+Transfer+Double+Deep+Q+Network+Framework+for+Autonomous+Vehicles&conference=Proceedings+of+the+GLOBECOM+2023-2023+IEEE+Global+Communications+Conference&author=Peng,+X.&author=Liang,+J.&author=Zhang,+X.&author=Dong,+M.&author=Ota,+K.&author=Bu,+X.&publication_year=2023&pages=3518%E2%80%933523&doi=10.1109/GLOBECOM54140.2023.10437047
+                          - text: "] ["
+                          - link "CrossRef" [ref=e663] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/GLOBECOM54140.2023.10437047
+                          - text: "]"
+                        - listitem [ref=e664]:
+                          - text: "27.Dosovitskiy, A.; Ros, G.; Codevilla, F.; López, A.M.; Koltun, V. CARLA: An Open Urban Driving Simulator. In Proceedings of the Conference on Robot Learning, Mountain View, CA, USA, 13–15 November 2017. ["
+                          - link "Google Scholar" [ref=e665] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=CARLA:+An+Open+Urban+Driving+Simulator&conference=Proceedings+of+the+Conference+on+Robot+Learning&author=Dosovitskiy,+A.&author=Ros,+G.&author=Codevilla,+F.&author=L%C3%B3pez,+A.M.&author=Koltun,+V.&publication_year=2017
+                          - text: "]"
+                        - listitem [ref=e666]:
+                          - text: 28.Li, P.X.; Kusari, A.; Leblanc, D. A Novel Traffic Simulation Framework for Testing Autonomous Vehicles Using SUMO and CARLA. arXiv 2021, arXiv:2110.07111. [
+                          - link "Google Scholar" [ref=e667] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=A+Novel+Traffic+Simulation+Framework+for+Testing+Autonomous+Vehicles+Using+SUMO+and+CARLA&author=Li,+P.X.&author=Kusari,+A.&author=Leblanc,+D.&publication_year=2021&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e668]:
+                          - text: 29.Papadakis, A.; Theodorou, T.; Mamatas, L.; Petridou, S.G. An Experimentation Environment for SDN-Based Autonomous Vehicles in Smart Cities. In Proceedings of the 2021 17th International Conference on Network and Service Management (CNSM), Izmir, Turkey, 25–29 October 2021; pp. 391–393. [
+                          - link "Google Scholar" [ref=e669] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=An+Experimentation+Environment+for+SDN-Based+Autonomous+Vehicles+in+Smart+Cities&conference=Proceedings+of+the+2021+17th+International+Conference+on+Network+and+Service+Management+(CNSM)&author=Papadakis,+A.&author=Theodorou,+T.&author=Mamatas,+L.&author=Petridou,+S.G.&publication_year=2021&pages=391%E2%80%93393
+                          - text: "]"
+                        - listitem [ref=e670]:
+                          - text: 30.Elallid, B.B.; Benamar, N.; Hafid, A.S.; Rachidi, T.; Mrani, N. A Comprehensive Survey on the Application of Deep and Reinforcement Learning Approaches in Autonomous Driving. J. King Saud Univ. Comput. Inf. Sci. 2022, 34, 7366–7390. [
+                          - link "Google Scholar" [ref=e671] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=A+Comprehensive+Survey+on+the+Application+of+Deep+and+Reinforcement+Learning+Approaches+in+Autonomous+Driving&author=Elallid,+B.B.&author=Benamar,+N.&author=Hafid,+A.S.&author=Rachidi,+T.&author=Mrani,+N.&publication_year=2022&journal=J.+King+Saud+Univ.+Comput.+Inf.+Sci.&volume=34&pages=7366%E2%80%937390&doi=10.1016/j.jksuci.2022.03.013
+                          - text: "] ["
+                          - link "CrossRef" [ref=e672] [cursor=pointer]:
+                            - /url: https://doi.org/10.1016/j.jksuci.2022.03.013
+                          - text: "]"
+                        - listitem [ref=e673]:
+                          - text: 31.Hossain, J. Autonomous Driving with Deep Reinforcement Learning in CARLA Simulation. arXiv 2023, arXiv:2306.11217. [
+                          - link "Google Scholar" [ref=e674] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Autonomous+Driving+with+Deep+Reinforcement+Learning+in+CARLA+Simulation&author=Hossain,+J.&publication_year=2023&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e675]:
+                          - text: 32.Tammewar, A.; Chaudhari, N.; Saini, B.; Venkatesh, D.; Dharahas, G.; Vora, D.R.; Patil, S.A.; Kotecha, K.V.; Alfarhood, S. Improving the Performance of Autonomous Driving Through Deep Reinforcement Learning. Sustainability 2023, 15, 13799. [
+                          - link "Google Scholar" [ref=e676] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Improving+the+Performance+of+Autonomous+Driving+Through+Deep+Reinforcement+Learning&author=Tammewar,+A.&author=Chaudhari,+N.&author=Saini,+B.&author=Venkatesh,+D.&author=Dharahas,+G.&author=Vora,+D.R.&author=Patil,+S.A.&author=Kotecha,+K.V.&author=Alfarhood,+S.&publication_year=2023&journal=Sustainability&volume=15&pages=13799&doi=10.3390/su151813799
+                          - text: "] ["
+                          - link "CrossRef" [ref=e677] [cursor=pointer]:
+                            - /url: https://doi.org/10.3390/su151813799
+                          - text: "]"
+                        - listitem [ref=e678]:
+                          - text: 33.Bojarski, M.; Testa, D.W.; Dworakowski, D.; Firner, B.; Flepp, B.; Goyal, P.; Jackel, L.D.; Monfort, M.; Muller, U.; Zhang, J.; et al. End to End Learning for Self-Driving Cars. arXiv 2016, arXiv:1604.07316. [
+                          - link "Google Scholar" [ref=e679] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=End+to+End+Learning+for+Self-Driving+Cars&author=Bojarski,+M.&author=Testa,+D.W.&author=Dworakowski,+D.&author=Firner,+B.&author=Flepp,+B.&author=Goyal,+P.&author=Jackel,+L.D.&author=Monfort,+M.&author=Muller,+U.&author=Zhang,+J.&author=et+al.&publication_year=2016&journal=arXiv
+                          - text: "]"
+                        - listitem [ref=e680]:
+                          - text: 34.Chen, Y.; Palanisamy, P.; Mudalige, P.W.; Muelling, K.; Dolan, J.M. Learning On-Road Visual Control for Self-Driving Vehicles With Auxiliary Tasks. In Proceedings of the 2019 IEEE Winter Conference on Applications of Computer Vision (WACV), Waikoloa, HI, USA, 7–11 January 2019; pp. 331–338. [
+                          - link "Google Scholar" [ref=e681] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Learning+On-Road+Visual+Control+for+Self-Driving+Vehicles+With+Auxiliary+Tasks&conference=Proceedings+of+the+2019+IEEE+Winter+Conference+on+Applications+of+Computer+Vision+(WACV)&author=Chen,+Y.&author=Palanisamy,+P.&author=Mudalige,+P.W.&author=Muelling,+K.&author=Dolan,+J.M.&publication_year=2019&pages=331%E2%80%93338
+                          - text: "]"
+                        - listitem [ref=e682]:
+                          - text: 35.Chen, L.; Hu, X.; Tang, B.; Cheng, Y. Conditional DQN-Based Motion Planning with Fuzzy Logic for Autonomous Driving. IEEE Trans. Intell. Transp. Syst. 2022, 23, 2966–2977. [
+                          - link "Google Scholar" [ref=e683] [cursor=pointer]:
+                            - /url: https://scholar.google.com/scholar_lookup?title=Conditional+DQN-Based+Motion+Planning+with+Fuzzy+Logic+for+Autonomous+Driving&author=Chen,+L.&author=Hu,+X.&author=Tang,+B.&author=Cheng,+Y.&publication_year=2022&journal=IEEE+Trans.+Intell.+Transp.+Syst.&volume=23&pages=2966%E2%80%932977&doi=10.1109/TITS.2020.3025671
+                          - text: "] ["
+                          - link "CrossRef" [ref=e684] [cursor=pointer]:
+                            - /url: https://doi.org/10.1109/TITS.2020.3025671
+                          - text: "]"
+                    - table [ref=e686]:
+                      - rowgroup [ref=e687]:
+                        - 'row "Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods, instructions or products referred to in the content." [ref=e688]':
+                          - cell [ref=e689]
+                          - 'cell "Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods, instructions or products referred to in the content." [ref=e690]':
+                            - generic [ref=e691]: "Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods, instructions or products referred to in the content."
+                    - generic [ref=e692]:
+                      - text: © 2025 by the authors. Published by MDPI on behalf of the World Electric Vehicle Association. Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution (CC BY) license (
+                      - link "https://creativecommons.org/licenses/by/4.0/" [ref=e693] [cursor=pointer]:
+                        - /url: https://creativecommons.org/licenses/by/4.0/
+                      - text: ).
+                - generic [ref=e694]:
+                  - heading "Share and Cite" [level=2] [ref=e695]: Share and Cite
+                  - generic [ref=e696]:
+                    - link "" [ref=e697] [cursor=pointer]:
+                      - /url: mailto:?&subject=From%20MDPI%3A%20%22A%20Novel%20Approach%20to%20Autonomous%20Driving%20Using%20Double%20Deep%20Q-Network-Bsed%20Deep%20Reinforcement%20Learning"&body=https://www.mdpi.com/3207194%3A%0A%0AA%20Novel%20Approach%20to%20Autonomous%20Driving%20Using%20Double%20Deep%20Q-Network-Bsed%20Deep%20Reinforcement%20Learning%0A%0AAbstract%3A%20Deep%20reinforcement%20learning%20%28DRL%29%20trains%20agents%20to%20make%20decisions%20by%20learning%20from%20rewards%20and%20penalties%2C%20using%20trial%20and%20error.%20It%20combines%20reinforcement%20learning%20%28RL%29%20with%20deep%20neural%20networks%20%28DNNs%29%2C%20enabling%20agents%20to%20process%20large%20datasets%20and%20learn%20from%20complex%20environments.%20DRL%20has%20achieved%20notable%20success%20in%20gaming%2C%20robotics%2C%20decision-making%2C%20etc.%20However%2C%20real-world%20applications%2C%20such%20as%20self-driving%20cars%2C%20face%20challenges%20due%20to%20complex%20state%20and%20action%20spaces%2C%20requiring%20precise%20control.%20Researchers%20continue%20to%20develop%20new%20algorithms%20to%20improve%20performance%20in%20dynamic%20settings.%20A%20key%20algorithm%2C%20Deep%20Q-Network%20%28DQN%29%2C%20uses%20neural%20networks%20to%20approximate%20the%20Q-value%20function%20but%20suffers%20from%20overestimation%20bias%2C%20leading%20to%20suboptimal%20outcomes.%20To%20address%20this%2C%20Double%20Deep%20Q-Network%20%28DDQN%29%20was%20introduced%2C%20which%20decouples%20action%20selection%20from%20evaluation%2C%20thereby%20reducing%20bias%20and%20promoting%20more%20stable%20learning.%20This%20study%20evaluates%20the%20effectiveness%20of%20DQN%20and%20DDQN%20in%20autonomous%20driving%20using%20the%20CARLA%20simulator.%20The%20key%20findings%20emphasize%20DDQN%26rsquo%3Bs%20advantages%20in%20significantly%20reducing%20overestimation%20bias%20and%20enhancing%20policy%20performance%2C%20making%20it%20a%20more%20robust%20and%20reliable%20approach[...]
+                      - generic [ref=e698]: 
+                    - link [ref=e699] [cursor=pointer]:
+                      - /url: https://x.com/intent/tweet?text=A+Novel+Approach+to+Autonomous+Driving+Using+Double+Deep+Q-Network-Bsed+Deep+Reinforcement+Learning&hashtags=mdpiwevj&url=https%3A%2F%2Fwww.mdpi.com%2F3207194&via=MDPIOpenAccess
+                    - link "" [ref=e701] [cursor=pointer]:
+                      - /url: "\t                    http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.mdpi.com%2F3207194&title=A%20Novel%20Approach%20to%20Autonomous%20Driving%20Using%20Double%20Deep%20Q-Network-Bsed%20Deep%20Reinforcement%20Learning%26source%3Dhttps%3A%2F%2Fwww.mdpi.com%26summary%3DDeep%20reinforcement%20learning%20%28DRL%29%20trains%20agents%20to%20make%20decisions%20by%20learning%20from%20rewards%20and%20penalties%2C%20using%20trial%20and%20error.%20It%20combines%20reinforcement%20learning%20%28RL%29%20with%20deep%20neural%20networks%20%28DNNs%29%2C%20enabling%20agents%20to%20process%20large%20datasets%20and%20%5B...%5D"
+                      - generic [ref=e702]: 
+                    - link "" [ref=e703] [cursor=pointer]:
+                      - /url: http://www.facebook.com/sharer.php?u=https://www.mdpi.com/3207194
+                      - generic [ref=e704]: 
+                    - link "Wechat" [ref=e705] [cursor=pointer]:
+                      - /url: javascript:void(0);
+                    - link "" [ref=e707] [cursor=pointer]:
+                      - /url: http://www.reddit.com/submit?url=https://www.mdpi.com/3207194
+                      - generic [ref=e708]: 
+                    - link "Mendeley" [ref=e709] [cursor=pointer]:
+                      - /url: http://www.mendeley.com/import/?url=https://www.mdpi.com/3207194
+                  - generic [ref=e711]:
+                    - generic [ref=e712]: MDPI and ACS Style
+                    - paragraph [ref=e713]:
+                      - text: Khlifi, A.; Othmani, M.; Kherallah, M. A Novel Approach to Autonomous Driving Using Double Deep Q-Network-Bsed Deep Reinforcement Learning.
+                      - emphasis [ref=e714]: World Electr. Veh. J.
+                      - text: 2025,
+                      - emphasis [ref=e715]: "16"
+                      - text: ", 138. https://doi.org/10.3390/wevj16030138"
+                    - generic [ref=e716]:
+                      - text: AMA Style
+                      - paragraph [ref=e717]:
+                        - text: Khlifi A, Othmani M, Kherallah M. A Novel Approach to Autonomous Driving Using Double Deep Q-Network-Bsed Deep Reinforcement Learning.
+                        - emphasis [ref=e718]: World Electric Vehicle Journal
+                        - text: . 2025; 16(3):138. https://doi.org/10.3390/wevj16030138
+                      - text: Chicago/Turabian Style
+                      - paragraph [ref=e719]:
+                        - text: Khlifi, Ahmed, Mohamed Othmani, and Monji Kherallah. 2025. "A Novel Approach to Autonomous Driving Using Double Deep Q-Network-Bsed Deep Reinforcement Learning"
+                        - emphasis [ref=e720]: World Electric Vehicle Journal
+                        - text: "16, no. 3: 138. https://doi.org/10.3390/wevj16030138"
+                      - text: APA Style
+                      - paragraph [ref=e721]:
+                        - text: Khlifi, A., Othmani, M., & Kherallah, M. (2025). A Novel Approach to Autonomous Driving Using Double Deep Q-Network-Bsed Deep Reinforcement Learning.
+                        - emphasis [ref=e722]: World Electric Vehicle Journal
+                        - text: ","
+                        - emphasis [ref=e723]: "16"
+                        - text: (3), 138. https://doi.org/10.3390/wevj16030138
+                  - heading "Article Metrics" [level=2] [ref=e724]: Article Metrics
+                  - generic [ref=e725]:
+                    - generic [ref=e727]:
+                      - heading "Citations" [level=3] [ref=e728]
+                      - generic [ref=e730]:
+                        - generic [ref=e731]: Scopus
+                        - link "10" [ref=e735] [cursor=pointer]:
+                          - /url: https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=105001322217&origin=inward
+                      - generic [ref=e737]:
+                        - generic [ref=e738]: Web of Science
+                        - link "7" [ref=e742] [cursor=pointer]:
+                          - /url: https://www.webofscience.com/api/gateway?GWVersion=2&SrcApp=PARTNER_APP&SrcAuth=LinksAMR&KeyUT=WOS:001453381900001&DestLinkType=FullRecord&DestApp=ALL_WOS&UsrCustomerID=7e717b028bc90856e7c55c7029afc773
+                      - generic [ref=e744]:
+                        - generic [ref=e745]: Crossref
+                        - link "5" [ref=e749] [cursor=pointer]:
+                          - /url: "#"
+                      - generic [ref=e751]:
+                        - generic [ref=e752]: Google Scholar
+                        - link "[click to view]" [ref=e755] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=A+Novel+Approach+to+Autonomous+Driving+Using+Double+Deep+Q-Network-Bsed+Deep+Reinforcement+Learning&volume=16&doi=10.3390%2Fwevj16030138&journal=World+Electric+Vehicle+Journal&publication_year=2025&author=Ahmed+Khlifi&author=Mohamed+Othmani&author=Monji+Kherallah
+                    - generic [ref=e757]:
+                      - heading "Article Access Statistics" [level=3] [ref=e758]
+                      - img [ref=e761]:
+                        - generic "Chart context menu" [ref=e763]
+                        - generic [ref=e772]: Article access statistics
+                        - generic [ref=e778] [cursor=pointer]: Article Views
+                        - generic [ref=e779]:
+                          - generic [ref=e780]: 1. Jan
+                          - generic [ref=e781]: 2. Jan
+                          - generic [ref=e782]: 3. Jan
+                          - generic [ref=e783]: 4. Jan
+                          - generic [ref=e784]: 5. Jan
+                          - generic [ref=e785]: 6. Jan
+                          - generic [ref=e786]: 7. Jan
+                          - generic [ref=e787]: 8. Jan
+                          - generic [ref=e788]: 9. Jan
+                          - generic [ref=e789]: 10. Jan
+                          - generic [ref=e790]: 11. Jan
+                          - generic [ref=e791]: 12. Jan
+                          - generic [ref=e792]: 13. Jan
+                          - generic [ref=e793]: 14. Jan
+                          - generic [ref=e794]: 15. Jan
+                          - generic [ref=e795]: 16. Jan
+                          - generic [ref=e796]: 17. Jan
+                          - generic [ref=e797]: 18. Jan
+                          - generic [ref=e798]: 19. Jan
+                          - generic [ref=e799]: 20. Jan
+                          - generic [ref=e800]: 21. Jan
+                          - generic [ref=e801]: 22. Jan
+                          - generic [ref=e802]: 23. Jan
+                          - generic [ref=e803]: 24. Jan
+                          - generic [ref=e804]: 25. Jan
+                          - generic [ref=e805]: 26. Jan
+                          - generic [ref=e806]: 27. Jan
+                          - generic [ref=e807]: 28. Jan
+                          - generic [ref=e808]: 29. Jan
+                          - generic [ref=e809]: 30. Jan
+                          - generic [ref=e810]: 31. Jan
+                          - generic [ref=e811]: 1. Feb
+                          - generic [ref=e812]: 2. Feb
+                          - generic [ref=e813]: 3. Feb
+                          - generic [ref=e814]: 4. Feb
+                          - generic [ref=e815]: 5. Feb
+                          - generic [ref=e816]: 6. Feb
+                          - generic [ref=e817]: 7. Feb
+                          - generic [ref=e818]: 8. Feb
+                          - generic [ref=e819]: 9. Feb
+                          - generic [ref=e820]: 10. Feb
+                          - generic [ref=e821]: 11. Feb
+                          - generic [ref=e822]: 12. Feb
+                          - generic [ref=e823]: 13. Feb
+                          - generic [ref=e824]: 14. Feb
+                          - generic [ref=e825]: 15. Feb
+                          - generic [ref=e826]: 16. Feb
+                          - generic [ref=e827]: 17. Feb
+                          - generic [ref=e828]: 18. Feb
+                          - generic [ref=e829]: 19. Feb
+                          - generic [ref=e830]: 20. Feb
+                          - generic [ref=e831]: 21. Feb
+                          - generic [ref=e832]: 22. Feb
+                          - generic [ref=e833]: 23. Feb
+                          - generic [ref=e834]: 24. Feb
+                          - generic [ref=e835]: 25. Feb
+                          - generic [ref=e836]: 26. Feb
+                          - generic [ref=e837]: 27. Feb
+                          - generic [ref=e838]: 28. Feb
+                          - generic [ref=e839]: 1. Mar
+                          - generic [ref=e840]: 2. Mar
+                          - generic [ref=e841]: 3. Mar
+                          - generic [ref=e842]: 4. Mar
+                          - generic [ref=e843]: 5. Mar
+                          - generic [ref=e844]: 6. Mar
+                          - generic [ref=e845]: 7. Mar
+                          - generic [ref=e846]: 8. Mar
+                          - generic [ref=e847]: 9. Mar
+                          - generic [ref=e848]: 10. Mar
+                          - generic [ref=e849]: 11. Mar
+                          - generic [ref=e850]: 12. Mar
+                          - generic [ref=e851]: 13. Mar
+                          - generic [ref=e852]: 14. Mar
+                          - generic [ref=e853]: 15. Mar
+                          - generic [ref=e854]: 16. Mar
+                          - generic [ref=e855]: 17. Mar
+                          - generic [ref=e856]: 18. Mar
+                          - generic [ref=e857]: 19. Mar
+                          - generic [ref=e858]: 20. Mar
+                          - generic [ref=e859]: 21. Mar
+                          - generic [ref=e860]: 22. Mar
+                          - generic [ref=e861]: 23. Mar
+                          - generic [ref=e862]: 24. Mar
+                          - generic [ref=e863]: 25. Mar
+                          - generic [ref=e864]: 26. Mar
+                          - generic [ref=e865]: 27. Mar
+                          - generic [ref=e866]: 28. Mar
+                          - generic [ref=e867]: 29. Mar
+                          - generic [ref=e868]: 30. Mar
+                          - generic [ref=e869]: 31. Mar
+                        - generic [ref=e870]:
+                          - generic [ref=e871]: 0k
+                          - generic [ref=e872]: 1k
+                          - generic [ref=e873]: 2k
+                          - generic [ref=e874]: 3k
+                          - generic [ref=e875]: 4k
+                          - generic [ref=e876]: 5k
+                          - generic [ref=e877]: 6k
+                      - text: For more information on the journal statistics, click
+                      - link "here" [ref=e883] [cursor=pointer]:
+                        - /url: /journal/wevj/stats
+                      - text: .
+                      - generic [ref=e884]: error_outline Multiple requests from the same IP address are counted as one view.
+    - generic [ref=e885]:
+      - generic [ref=e886]:
+        - generic [ref=e887]:
+          - emphasis [ref=e888]:
+            - link "World Electr. Veh. J." [ref=e889] [cursor=pointer]:
+              - /url: /journal/wevj
+          - text: ", EISSN 2032-6653, Published by MDPI"
+        - generic [ref=e890]:
+          - link "RSS" [ref=e892] [cursor=pointer]:
+            - /url: /rss/journal/wevj
+          - link "Content Alert" [ref=e894] [cursor=pointer]:
+            - /url: /journal/wevj/toc-alert
+      - generic [ref=e895]:
+        - generic [ref=e896]:
+          - heading "Further Information" [level=3] [ref=e897]
+          - link "Article Processing Charges" [ref=e898] [cursor=pointer]:
+            - /url: /apc
+          - link "Pay an Invoice" [ref=e899] [cursor=pointer]:
+            - /url: /about/payment
+          - link "Open Access Policy" [ref=e900] [cursor=pointer]:
+            - /url: /openaccess
+          - link "Contact MDPI" [ref=e901] [cursor=pointer]:
+            - /url: /about/contact
+          - link "Jobs at MDPI" [ref=e902] [cursor=pointer]:
+            - /url: https://careers.mdpi.com
+        - generic [ref=e903]:
+          - heading "Guidelines" [level=3] [ref=e904]
+          - link "For Authors" [ref=e905] [cursor=pointer]:
+            - /url: /authors
+          - link "For Reviewers" [ref=e906] [cursor=pointer]:
+            - /url: /reviewers
+          - link "For Editors" [ref=e907] [cursor=pointer]:
+            - /url: /editors
+          - link "For Librarians" [ref=e908] [cursor=pointer]:
+            - /url: /librarians
+          - link "For Publishers" [ref=e909] [cursor=pointer]:
+            - /url: /publishing_services
+          - link "For Societies" [ref=e910] [cursor=pointer]:
+            - /url: /societies
+          - link "For Conference Organizers" [ref=e911] [cursor=pointer]:
+            - /url: /conference_organizers
+        - generic [ref=e912]:
+          - heading "MDPI Initiatives" [level=3] [ref=e913]
+          - link "Sciforum" [ref=e914] [cursor=pointer]:
+            - /url: https://sciforum.net
+          - link "MDPI Books" [ref=e915] [cursor=pointer]:
+            - /url: https://www.mdpi.com/books
+          - link "Preprints.org" [ref=e916] [cursor=pointer]:
+            - /url: https://www.preprints.org
+          - link "Scilit" [ref=e917] [cursor=pointer]:
+            - /url: https://www.scilit.com
+          - link "SciProfiles" [ref=e918] [cursor=pointer]:
+            - /url: https://sciprofiles.com?utm_source=mpdi.com&utm_medium=bottom_menu&utm_campaign=initiative
+          - link "Encyclopedia" [ref=e919] [cursor=pointer]:
+            - /url: https://encyclopedia.pub
+          - link "JAMS" [ref=e920] [cursor=pointer]:
+            - /url: https://jams.pub
+          - link "Proceedings Series" [ref=e921] [cursor=pointer]:
+            - /url: /about/proceedings
+        - generic [ref=e922]:
+          - heading "Follow MDPI" [level=3] [ref=e923]
+          - link "LinkedIn" [ref=e924] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/mdpi
+          - link "Facebook" [ref=e925] [cursor=pointer]:
+            - /url: https://www.facebook.com/MDPIOpenAccessPublishing
+          - link "X" [ref=e926] [cursor=pointer]:
+            - /url: https://x.com/MDPIOpenAccess
+        - generic [ref=e928]:
+          - img "MDPI" [ref=e929]
+          - generic [ref=e930]:
+            - paragraph [ref=e931]: Subscribe to receive issue release notifications and newsletters from MDPI journals
+            - button "Select options" [ref=e933] [cursor=pointer]
+            - textbox "Enter your email address..." [ref=e934]
+            - button "Subscribe" [ref=e935] [cursor=pointer]
+      - generic [ref=e937]:
+        - generic [ref=e938]: © 1996-2026 MDPI (Basel, Switzerland) unless otherwise stated
+        - generic [ref=e939]:
+          - generic [ref=e940]: Disclaimer
+          - link "Terms and Conditions" [ref=e941] [cursor=pointer]:
+            - /url: /about/terms-and-conditions
+          - link "Privacy Policy" [ref=e942] [cursor=pointer]:
+            - /url: /about/privacy
+  - log [ref=e943]
+  - log [ref=e944]
+  - log [ref=e945]
+  - log [ref=e946]
+  - log [ref=e947]
+  - log [ref=e948]
+  - log [ref=e949]
+  - log [ref=e950]
+  - log [ref=e951]
+  - log [ref=e952]
+  - log [ref=e953]
+  - log [ref=e954]
+  - log [ref=e955]
+  - log [ref=e956]
+  - log [ref=e957]
+  - log [ref=e958]
+  - log [ref=e959]
+  - log [ref=e960]
+  - log [ref=e961]
+  - log [ref=e962]
+  - log [ref=e963]
+  - log [ref=e964]
+  - log [ref=e965]
+  - log [ref=e966]
+  - log [ref=e967]
+  - log [ref=e968]
+  - log [ref=e969]
+  - log [ref=e970]
+  - log [ref=e971]
+  - log [ref=e972]
+  - log [ref=e973]
+  - log [ref=e974]
+  - log [ref=e975]
+  - log [ref=e976]
+  - log [ref=e977]
+  - log [ref=e978]
+  - log [ref=e979]
+  - log [ref=e980]
+  - log [ref=e981]
+  - log [ref=e982]
+  - log [ref=e983]
+  - log [ref=e984]
