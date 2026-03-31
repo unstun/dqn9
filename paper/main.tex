@@ -500,7 +500,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 \subsubsection{对比算法}
 
-为全面评估 MD-DDQN 的规划性能，选取两种代表性经典规划器作为对比基线：基于采样的 SS-RRT*~\cite{yoon2017spline}和基于搜索的 LO-Hybrid A*~\cite{chen2025improved}。两种基线算法均使用与 MD-DDQN 完全相同的双圆碰撞检测器，超时阈值设为 $\SI{10}{s}$，确保对比条件的一致性。
+为全面评估 MD-DDQN 的规划性能，选取两种代表性经典规划器作为对比基线，分别代表搜索型与采样型两大经典规划流派。Improved Hybrid A*~\cite{dang2022improved}通过在 Hybrid A* 框架中引入多曲率 Reeds-Shepp 解析扩展，使搜索过程能够高效生成满足非完整运动学约束的可行路径。Spline-based RRT*~\cite{yoon2018spline}以样条曲线替代 RRT* 中的直线段构建搜索树，并采用分段连续碰撞检测算法，使生成路径天然满足曲率连续性约束。两种基线算法均使用与 MD-DDQN 完全相同的双圆碰撞检测器，超时阈值设为 $\SI{10}{s}$，确保对比条件的一致性。
 
 \subsubsection{评价指标}
 
@@ -518,13 +518,13 @@ DQfD 预训练步数           & 40\,000 \\
 \begin{figure*}[!htbp]
 \centering
 \includegraphics[width=0.62\textwidth]{fig_trajectory.pdf}
-\caption{真实林地地图 realmap\_a 上的代表性路径轨迹。蓝色实线为 MD-DDQN，红色虚线为 LO-Hybrid A*，绿色点线为 SS-RRT*，三者使用相同的起终点对。DRL 地面无人车在穿越狭窄通道时生成了更平滑、更直接的路径。}
+\caption{真实林地地图 realmap\_a 上的代表性路径轨迹。蓝色实线为 MD-DDQN，红色虚线为 Improved Hybrid A*，绿色点线为 Spline-based RRT*，三者使用相同的起终点对。DRL 地面无人车在穿越狭窄通道时生成了更平滑、更直接的路径。}
 \label{fig:trajectory}
 \end{figure*}
 
 \subsubsection{成功率结果}
 
-MD-DDQN 在远距离和近距离任务上分别达到 94\% 和 100\% 的成功率，均高于两种经典规划器（表~\ref{tab:core_sr}）。远距离任务中差距更大：LO-Hybrid A* 仅完成 36\%，SS-RRT* 为 74\%。LO-Hybrid A* 的大量失败源于图搜索在稠密障碍物中的状态空间膨胀——搜索节点数随障碍物密度急剧增长，导致算法在 $\SI{10}{s}$ 超时内未能收敛。SS-RRT* 的随机采样使其优于图搜索，但在狭窄通道中采样效率仍然有限。
+MD-DDQN 在远距离和近距离任务上分别达到 94\% 和 100\% 的成功率，均高于两种经典规划器（表~\ref{tab:core_sr}）。远距离任务中差距更大：Improved Hybrid A* 仅完成 36\%，Spline-based RRT* 为 74\%。Improved Hybrid A* 的大量失败源于图搜索在稠密障碍物中的状态空间膨胀——搜索节点数随障碍物密度急剧增长，导致算法在 $\SI{10}{s}$ 超时内未能收敛。Spline-based RRT* 的随机采样使其优于图搜索，但在狭窄通道中采样效率仍然有限。
 
 \begin{table}[!htbp]
 \centering
@@ -532,7 +532,7 @@ MD-DDQN 在远距离和近距离任务上分别达到 94\% 和 100\% 的成功�
 \label{tab:core_sr}
 \begin{tabular}{lccc}
 \toprule
-路径距离 & MD-DDQN & LO-Hybrid A* & SS-RRT* \\
+路径距离 & MD-DDQN & Improved HA* & SB-RRT* \\
 \midrule
 远距离（$\geq\SI{18}{m}$） & \textbf{94\%} & 36\% & 74\% \\
 近距离（$\SI{6}{m}$--$\SI{14}{m}$） & \textbf{100\%} & 92\% & 96\% \\
@@ -551,9 +551,9 @@ MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需
 
 \subsubsection{路径质量结果}
 
-在三算法均成功的远距离质量子集（$N=18$）中，MD-DDQN 在路径长度、平均曲率和计算时间上均优于两种基线（表~\ref{tab:core_quality}）。计算时间的差距最为突出：MD-DDQN 耗时 $\SI{0.626}{s}$，LO-Hybrid A* 和 SS-RRT* 分别为 $\SI{5.084}{s}$ 和 $\SI{3.351}{s}$，高出约 8 倍和 5 倍——经典规划器的搜索开销随规划距离增大，而 DRL 每步决策仅需一次前向传播。近距离质量子集（$N=44$）中三种算法的路径长度几乎相同（差异不足 0.3\%），但 MD-DDQN 在曲率和计算时间上仍保持优势。
+在三算法均成功的远距离质量子集（$N=18$）中，MD-DDQN 在路径长度、平均曲率和计算时间上均优于两种基线（表~\ref{tab:core_quality}）。计算时间的差距最为突出：MD-DDQN 耗时 $\SI{0.626}{s}$，Improved Hybrid A* 和 Spline-based RRT* 分别为 $\SI{5.084}{s}$ 和 $\SI{3.351}{s}$，高出约 8 倍和 5 倍——经典规划器的搜索开销随规划距离增大，而 DRL 每步决策仅需一次前向传播。近距离质量子集（$N=44$）中三种算法的路径长度几乎相同（差异不足 0.3\%），但 MD-DDQN 在曲率和计算时间上仍保持优势。
 
-图~\ref{fig:trajectory}展示了代表性轨迹的对比。在穿越狭窄通道时，MD-DDQN 的路径更短且更平滑，SS-RRT* 因随机采样产生了明显的锯齿轨迹，LO-Hybrid A* 则因离散化搜索出现了冗余迂回。
+图~\ref{fig:trajectory}展示了代表性轨迹的对比。在穿越狭窄通道时，MD-DDQN 的路径更短且更平滑，Spline-based RRT* 因随机采样产生了明显的锯齿轨迹，Improved Hybrid A* 则因离散化搜索出现了冗余迂回。
 
 \begin{table}[!htbp]
 \centering
@@ -561,7 +561,7 @@ MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需
 \label{tab:core_quality}
 \begin{tabular}{llccc}
 \toprule
-距离 & 指标 & MD-DDQN & LO-Hybrid A* & SS-RRT* \\
+距离 & 指标 & MD-DDQN & Improved HA* & SB-RRT* \\
 \midrule
 \multirow{3}{*}{\shortstack[l]{远距离\\（$N=18$）}}
   & 路径长度 / m       & \textbf{24.438} & 24.667 & 24.486 \\
@@ -586,7 +586,7 @@ MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.7\columnwidth]{fig_radar_comparison.pdf}
-\caption{MD-DDQN、LO-Hybrid A* 和 SS-RRT* 在远距离任务上四项归一化指标的雷达图对比。各轴均归一化为$[0,1]$，外围表示最优性能。}
+\caption{MD-DDQN、Improved Hybrid A* 和 Spline-based RRT* 在远距离任务上四项归一化指标的雷达图对比。各轴均归一化为$[0,1]$，外围表示最优性能。}
 \label{fig:radar}
 \end{figure}
 
@@ -759,7 +759,7 @@ MHA-DDQN        & 26.597 & 0.1507 & 0.491 & 8.918 & 0.2209 & 0.260 \\
 
 本文提出了一种面向稠密林地环境中阿克曼转向 UGV 的深度强化学习路径规划框架。该框架将自行车运动学约束、基于 Dijkstra 目标距离图的测地线奖励塑形、DQfD 专家预训练、基于运动学约束的动作掩码以及双圆碰撞检测集成于统一的 MD-DDQN 规划流水线中，核心贡献在于系统层面的集成而非单一组件的创新。
 
-在真实林地地图上的实验中，MD-DDQN 在远距离任务上达到94\%的成功率，远高于 LO-Hybrid A*（36\%）和 SS-RRT*（74\%），同时计算速度提升约一个数量级。八变体架构消融实验证实了 MD-DDQN 在路径质量上的综合最优性，组件消融实验则揭示了动作掩码与 DQfD 预训练之间的互补关系——两者的组合效果优于任一单组件，表明安全探索约束与演示引导初始化的结合对于受约束导航任务不可或缺。
+在真实林地地图上的实验中，MD-DDQN 在远距离任务上达到94\%的成功率，远高于 Improved Hybrid A*（36\%）和 Spline-based RRT*（74\%），同时计算速度提升约一个数量级。八变体架构消融实验证实了 MD-DDQN 在路径质量上的综合最优性，组件消融实验则揭示了动作掩码与 DQfD 预训练之间的互补关系——两者的组合效果优于任一单组件，表明安全探索约束与演示引导初始化的结合对于受约束导航任务不可或缺。
 
 本研究的局限性也指明了未来的改进方向。当前实验基于单一真实林地地图，后续工作将通过多地图训练与域随机化验证方法的泛化能力。仿真到真实的迁移是另一关键课题，计划将所学策略部署至搭载 Jetson AGX Orin 的实体 UGV 平台，并评估传感器噪声与定位误差对规划性能的影响。此外，引入时序观测机制以应对动态障碍物，以及探索连续动作空间以提升轨迹精细度，均是值得深入研究的方向。
 
