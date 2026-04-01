@@ -271,13 +271,13 @@
 \begin{equation}\label{eq:reward_prog}
   r_1 = k_p \bigl(D_t - D_{t+1}\bigr)
 \end{equation}
-其中$D_t$为第$t$步车辆位置到目标的 Dijkstra 最短路径距离，$k_p=12.0$为增益系数。车辆靠近目标时$D_t > D_{t+1}$，$r_1$为正；远离目标时$r_1$为负。
+其中$D_t$为第$t$步车辆位置到目标的 Dijkstra 最短路径距离，$k_p$为正增益系数。车辆靠近目标时$D_t > D_{t+1}$，$r_1$为正；远离目标时$r_1$为负。
 
 时间步惩罚$r_2$在每步施加恒定负值，促使车辆尽快到达目标：
 \begin{equation}\label{eq:reward_time}
   r_2 = -k_\tau
 \end{equation}
-其中$k_\tau=0.2$。
+其中$k_\tau$为正常数。
 
 平滑性惩罚$r_3$约束控制输出的平滑程度，由转向角变化、加速度变化和曲率三项构成：
 \begin{equation}\label{eq:reward_smooth}
@@ -287,7 +287,7 @@
 \begin{equation}\label{eq:reward_steer}
   r_{3\delta} = -k_\delta\bigl(\delta_{t+1}-\delta_t\bigr)^2
 \end{equation}
-其中$k_\delta=1.5$。$r_{3a}$惩罚加速度的变化，并乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小：
+其中$k_\delta$为正权重系数。$r_{3a}$惩罚加速度的变化，并乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小：
 \begin{equation}\label{eq:reward_acc}
   r_{3a} = -k_a\bigl(a_t - a_{t-1}\bigr)^2\!\left(\frac{v_{t+1}}{v_{\max}}\right)^{\!2}
 \end{equation}
