@@ -355,21 +355,21 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
-卷积输出的 $3\times3$ 特征图沿空间维度展平为 9 个 token，排列为矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。每个 token 对应特征图中一个空间位置的 $C$ 维特征向量。
+卷积输出的 $3\times3$ 特征图展平为 9 个 token，构成矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。每个 token 对应特征图中一个空间位置的 $C$ 维特征。
 
-$\boldsymbol{E}$ 经三组可学习投影矩阵 $\boldsymbol{W}^Q$、$\boldsymbol{W}^K$、$\boldsymbol{W}^V$ 分别映射为查询、键与值~\cite{vaswani2017attention}：
+$\boldsymbol{E}$ 经三组投影矩阵 $\boldsymbol{W}^Q$、$\boldsymbol{W}^K$、$\boldsymbol{W}^V$ 分别得到查询向量、键向量与值向量~\cite{vaswani2017attention}：
 \begin{equation}
   \boldsymbol{Q}=\boldsymbol{E}\boldsymbol{W}^Q,\quad
   \boldsymbol{K}=\boldsymbol{E}\boldsymbol{W}^K,\quad
   \boldsymbol{V}=\boldsymbol{E}\boldsymbol{W}^V
 \end{equation}
-查询与键的点积计算任意两个空间位置之间的注意力分数，经缩放与归一化后作为权重对值进行加权求和：
+查询与键的点积计算任意两个空间位置之间的注意力分数，经缩放与 softmax 归一化后作为注意力权重，对值向量加权求和：
 \begin{equation}\label{eq:mha}
   \boldsymbol{Z} = \mathrm{softmax}\!\Bigl(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\Bigr)\boldsymbol{V}
 \end{equation}
-其中 $d_k$ 为键向量维度。当 $d_k$ 较大时点积的量级随之增大，将 softmax 函数推入梯度极小的区域~\cite{vaswani2017attention}，故以 $\sqrt{d_k}$ 缩放予以抵消。
+其中 $d_k$ 为键向量的维度。当 $d_k$ 较大时点积的幅度随之增大，将 softmax 函数推入梯度极小的区域~\cite{vaswani2017attention}，故除以 $\sqrt{d_k}$ 加以抵消。
 
-本文采用 4 个注意力头，各头以独立的投影参数计算式~\eqref{eq:mha}，所得结果沿特征维度拼接后经线性投影映射回 $C$ 维。该输出与原始输入 $\boldsymbol{E}$ 经残差连接相加后进行层归一化，送入 Dueling 分支。
+本文采用 4 个注意力头，各头以独立的投影矩阵计算式~\eqref{eq:mha}，所得结果拼接后经线性投影恢复至 $C$ 维。该输出与原始输入 $\boldsymbol{E}$ 经残差连接后进行层归一化，送入 Dueling 分支。
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
@@ -504,19 +504,15 @@ DQfD 预训练步数           & 40\,000 \\
 
 \FloatBarrier
 \subsection{对比算法与评价指标}\label{ssec:setup}
+为了验证所提出的IDDQN算法的可行性，在PyCharm平台上建立了所提出的IDDQN和其他四种路径规划算法的仿真模型，并通过gym框架设计了四个30×30维度的可视化网格仿真环境。 IDDQN算法采用的超参数配置总结在表1中。用于训练算法的操作系统设备是Windows 11，CPU是i7-12700H，GPU是NVIDIA RTX 3050 TI。
 
-\subsubsection{对比算法}
+比较算法描述如下。1) IDDQN (Proposed):基于DRL，对动作选择策略、DNN和奖励函数进行联合优化。通过引入综合奖励函数，提高了AMR的路径规划安全性和搜索效率。2) APF [10]: APF算法通过计算环境中势场的梯度可以快速灵活地规划有效路径，并且路径轨迹可以与障碍物保持安全距离。3) RRT [47]: RRT算法可以通过不断扩展随机生成的解空间来探索解空间
+根据APF算法、RRT算法和A*算法的优点，从四个方面评估不同算法规划的路径结果的性能：1）路径长度； 2）路径平滑度； 3）路径轨迹与障碍物之间的距离； 4）算法推理时间（IT），以评估所提出的IDDQN算法的优越性和有效性。
 
-为全面评估 MD-DDQN 的规划性能，选取两种代表性经典规划器作为对比基线，分别代表搜索型与采样型两大经典规划流派。Improved Hybrid A*~\cite{dang2022improved}通过在 Hybrid A* 框架中引入多曲率 Reeds-Shepp 解析扩展，使搜索过程能够高效生成满足非完整运动学约束的可行路径。Spline-based RRT*~\cite{yoon2018spline}以样条曲线替代 RRT* 中的直线段构建搜索树，并采用分段连续碰撞检测算法，使生成路径天然满足曲率连续性约束。两种基线算法均使用与 MD-DDQN 完全相同的双圆碰撞检测器，超时阈值设为 $\SI{10}{s}$，确保对比条件的一致性。
 
-\subsubsection{评价指标}
-
-实验从成功率和路径质量两个维度评估算法性能。成功率定义为算法在给定起终点对上成功生成无碰撞路径的比例，在全部 50 组任务上统计；对于经典规划器，超过 $\SI{10}{s}$ 未返回结果视为失败。
-
-路径质量通过路径长度、平均曲率和计算时间三项指标衡量。路径长度为路径的累计弧长，反映全局效率；平均曲率为路径上各点曲率的算术平均值，值越小表示路径越平滑；计算时间为算法从接收查询到返回完整路径的耗时。为消除失败路径的混杂影响，路径质量仅在三种算法对同一起终点对均成功的子集上计算。
 
 \FloatBarrier
-\subsection{核心对比实验}\label{ssec:core}
+\subsection{与基线方法的对比实验}\label{ssec:core}
 
 \begin{figure*}[!htbp]
 \centering
@@ -531,7 +527,7 @@ MD-DDQN 在远距离和近距离任务上分别达到 94\% 和 100\% 的成功�
 
 \begin{table}[!htbp]
 \centering
-\caption{核心对比实验：成功率（50次运行）}
+\caption{基线对比：成功率（50次运行）}
 \label{tab:core_sr}
 \begin{tabular}{lccc}
 \toprule
@@ -560,7 +556,7 @@ MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需
 
 \begin{table}[!htbp]
 \centering
-\caption{核心对比实验：路径质量（三算法过滤）}
+\caption{基线对比：路径质量（三算法过滤）}
 \label{tab:core_quality}
 \begin{tabular}{llccc}
 \toprule
@@ -745,7 +741,7 @@ MHA-DDQN        & 26.597 & 0.1507 & 0.491 & 8.918 & 0.2209 & 0.260 \\
 \FloatBarrier
 \subsection{讨论}\label{ssec:discussion}
 
-核心对比实验中 DRL 的优势源于推理机制的差异。经典规划器的搜索开销随障碍物密度超线性增长，而 DRL 每步决策仅需一次前向传播，与环境复杂度无关。远距离任务中经典规划器的超时失败集中在障碍物最稠密的区域，Yin 等人~\cite{yin2023efficient}和 Jiang 等人~\cite{jiang2022r2rrt}在越野环境中也观察到了类似的计算瓶颈。
+基线对比实验中 DRL 的优势源于推理机制的差异。经典规划器的搜索开销随障碍物密度超线性增长，而 DRL 每步决策仅需一次前向传播，与环境复杂度无关。远距离任务中经典规划器的超时失败集中在障碍物最稠密的区域，Yin 等人~\cite{yin2023efficient}和 Jiang 等人~\cite{jiang2022r2rrt}在越野环境中也观察到了类似的计算瓶颈。
 
 模块消融实验中，8 种变体的成功率相近而路径质量差异显著，说明架构选择主要影响路径质量而非成功率。MD 架构中，MHA 对卷积特征图的各空间位置施加自注意力；Dueling~\cite{wang2016dueling}在输出层将 Q 函数分离为 $V(s)$ 与 $A(s,a)$，在 35 维动作空间中实现跨动作的价值共享。两者分别位于网络的不同阶段，优势可以叠加。
 
