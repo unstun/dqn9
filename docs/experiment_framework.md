@@ -60,9 +60,9 @@
 ### 3.4 DRL 模块消融实验（8 变体）
 
 - **训练**: 10000 episodes, DQfD pretrain 40000 steps, reward_k_t=0.2, EDT diag
-- **推理**: Seeds 42/142/242/342/442/542/642，50 runs/variant/distance
+- **推理**: Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
 - **变体**: DDQN, Duel-DDQN, MHA-DDQN, MD-DDQN, DQN, Duel-DQN, MHA-DQN, MD-DQN
-- **结论**: MD-DDQN Quality 路径长度 Long/Short 均第一（26.364m / 8.603m），SR 稳定（94%/92%）
+- **结论**: MD-DDQN Quality 路径长度 Long 第一（26.819m），Short 次优（9.294m，差 0.008m），Short 曲率最优（0.1394）；SR Long 80%（并列第一），Short 72%
 - **详细日志**: `runs/ablation_logs/ablation_20260315_diag10k_kt02.md`
 - **配置**: `configs/ablation_20260314_diag10k_kt02_*.json`
 
@@ -70,7 +70,7 @@
 
 - **基底**: MD-DDQN (reward_k_t=0.2, EDT diag)
 - **训练**: 10000 episodes, seed=0
-- **推理**: Seeds 100/200/300/400/500/600/700，50 runs/variant/distance
+- **推理**: Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
 - **设计**: 训练时消融，推理统一带 mask（隔离训练时贡献）
 - **代码改动**: `ugv_dqn/cli/train.py` 4 处条件化 `forest_action_shield`（expert exploration fallback、TD target mask、demo prefill mask ×2）
 - **变体**:
@@ -85,22 +85,22 @@
 
 | 变体                     | Long SR       | Short SR      |
 | ------------------------ | ------------- | ------------- |
-| **Full (AM+DQfD)** | **92%** | **90%** |
-| w/o AM                   | 72%           | 86%           |
-| w/o DQfD                 | 56%           | 80%           |
+| **Full (AM+DQfD)** | **80%** | **72%** |
+| w/o AM                   | 48%           | 62%           |
+| w/o DQfD                 | 28%           | 40%           |
 
 - **Quality 结果**:
 
 | 距离            | 指标      | Full              | w/o AM           | w/o DQfD |
 | --------------- | --------- | ----------------- | ---------------- | -------- |
-| Long (19 runs)  | PathLen   | **24.652m** | 25.317m          | 25.831m  |
-| Long            | Curvature | **0.1412**  | 0.1537           | 0.1812   |
-| Long            | Time      | **0.490s**  | 0.523s           | 0.648s   |
-| Short (32 runs) | PathLen   | 8.809m            | **8.778m** | 9.048m   |
-| Short           | Curvature | 0.1685            | **0.1500** | 0.1718   |
-| Short           | Time      | 0.287s            | **0.258s** | 0.370s   |
+| Long (6 runs)   | PathLen   | **24.660m** | 24.949m          | 25.579m  |
+| Long            | Curvature | **0.1231**  | 0.1576           | 0.1488   |
+| Long            | Time      | **0.490s**  | 0.579s           | 0.660s   |
+| Short (15 runs) | PathLen   | 8.655m            | **8.636m** | 9.113m   |
+| Short           | Curvature | **0.1564**        | 0.1585     | 0.1802   |
+| Short           | Time      | 0.301s            | **0.260s** | 0.359s   |
 
-- **结论**: DQfD 预训练贡献最大（Long SR -36pp），AM 显著辅助（Long SR -20pp），两者协同最优
+- **结论**: DQfD 预训练贡献最大（Long SR -52pp），AM 显著辅助（Long SR -32pp），两者协同最优
 - **详细日志**: `runs/ablation_logs/ablation_20260316_amdqfd.md`
 - **配置**: `configs/ablation_20260315_amdqfd_*.json`
 - **本地结果**: `runs/abl_amdqfd_infer_{full,noDQfD,noAM}/`

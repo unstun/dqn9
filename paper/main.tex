@@ -271,13 +271,13 @@
 \begin{equation}\label{eq:reward_prog}
   r_1 = k_p \bigl(D_t - D_{t+1}\bigr)
 \end{equation}
-其中$D_t$为第$t$步车辆位置到目标的 Dijkstra 最短路径距离，$k_p$为正增益系数。车辆靠近目标时$D_t > D_{t+1}$，$r_1$为正；远离目标时$r_1$为负。
+其中$D_t$为第$t$步车辆位置到目标的 Dijkstra 最短路径距离，$k_p$为增益系数。车辆靠近目标时$D_t > D_{t+1}$，$r_1$为正；远离目标时$r_1$为负。
 
 时间步惩罚$r_2$在每步施加恒定负值，促使车辆尽快到达目标：
 \begin{equation}\label{eq:reward_time}
   r_2 = -k_\tau
 \end{equation}
-其中$k_\tau$为正常数。
+其中$k_\tau > 0$。
 
 平滑性惩罚$r_3$约束控制输出的平滑程度，由转向角变化、加速度变化和曲率三项构成：
 \begin{equation}\label{eq:reward_smooth}
@@ -287,15 +287,15 @@
 \begin{equation}\label{eq:reward_steer}
   r_{3\delta} = -k_\delta\bigl(\delta_{t+1}-\delta_t\bigr)^2
 \end{equation}
-其中$k_\delta$为正权重系数。$r_{3a}$惩罚加速度的变化，并乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小：
+其中$k_\delta > 0$。$r_{3a}$惩罚加速度的变化，并乘以速度缩放因子$(v_{t+1}/v_{\max})^2$使低速时惩罚减小：
 \begin{equation}\label{eq:reward_acc}
   r_{3a} = -k_a\bigl(a_t - a_{t-1}\bigr)^2\!\left(\frac{v_{t+1}}{v_{\max}}\right)^{\!2}
 \end{equation}
-其中$k_a$为正权重系数。$r_{3\kappa}$惩罚大转向角：
+其中$k_a > 0$。$r_{3\kappa}$惩罚大转向角：
 \begin{equation}\label{eq:reward_curv}
   r_{3\kappa} = -k_\kappa \tan^2\!\delta_{t+1}
 \end{equation}
-其中$k_\kappa$为正权重系数。上述三项共同作用，抑制急转弯和突变加速，使规划路径更加平滑。
+其中$k_\kappa > 0$。上述三项共同作用，抑制急转弯和突变加速，使规划路径更加平滑。
 
 障碍物惩罚$r_4$使车辆在接近障碍物时受到递增的排斥信号。车辆采用第~\ref{sec:collision}~节所述的双圆碰撞检测模型，前、后圆心到最近障碍物的欧氏距离分别为$d_1$、$d_2$，圆半径为$r$。取两圆的最小净间距
 \begin{equation}\label{eq:d_obs}
@@ -316,7 +316,7 @@
     -R_{\mathrm{s}} & \text{停滞超时}
   \end{cases}
 \end{equation}
-其中$R_{\mathrm{g}}$、$R_{\mathrm{c}}$、$R_{\mathrm{s}}$均为正常数。
+其中$R_{\mathrm{g}}$、$R_{\mathrm{c}}$、$R_{\mathrm{s}} > 0$。
 
 \subsubsection{动作掩码}\label{sec:masking}
 
@@ -504,10 +504,11 @@ DQfD 预训练步数           & 40\,000 \\
 
 \FloatBarrier
 \subsection{对比算法与评价指标}\label{ssec:setup}
-为了验证所提出的IDDQN算法的可行性，在PyCharm平台上建立了所提出的IDDQN和其他四种路径规划算法的仿真模型，并通过gym框架设计了四个30×30维度的可视化网格仿真环境。 IDDQN算法采用的超参数配置总结在表1中。用于训练算法的操作系统设备是Windows 11，CPU是i7-12700H，GPU是NVIDIA RTX 3050 TI。
+仿真实验在第~\ref{ssec:real_scene_setup}~节所建立的 $30\times30$ 真实林地占据栅格地图上进行，训练在配备 NVIDIA RTX 4090 GPU 的 Ubuntu 工作站上完成，超参数配置见表~\ref{tab:train_params}。
 
-比较算法描述如下。1) IDDQN (Proposed):基于DRL，对动作选择策略、DNN和奖励函数进行联合优化。通过引入综合奖励函数，提高了AMR的路径规划安全性和搜索效率。2) APF [10]: APF算法通过计算环境中势场的梯度可以快速灵活地规划有效路径，并且路径轨迹可以与障碍物保持安全距离。3) RRT [47]: RRT算法可以通过不断扩展随机生成的解空间来探索解空间
-根据APF算法、RRT算法和A*算法的优点，从四个方面评估不同算法规划的路径结果的性能：1）路径长度； 2）路径平滑度； 3）路径轨迹与障碍物之间的距离； 4）算法推理时间（IT），以评估所提出的IDDQN算法的优越性和有效性。
+MD-DDQN 与两种经典规划器对比：基于图搜索的 Improved Hybrid A*~\cite{dang2022improved} 和基于采样的 Spline-based RRT*~\cite{yoon2018spline}。三种算法使用同一占据栅格地图与双圆碰撞检测器，基线超时阈值为 $\SI{10}{s}$。
+
+每组实验独立运行 50 次，起终点对随机采样并按直线距离划分为远距离（$\geq\SI{18}{m}$）和近距离（$\SI{6}{m}$--$\SI{14}{m}$）两类。记录成功率、路径长度、平均曲率和计算时间四项指标，路径长度与平均曲率仅在三种算法均成功的子集上统计。
 
 
 
