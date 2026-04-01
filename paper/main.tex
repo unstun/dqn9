@@ -418,19 +418,19 @@ DQfD 预训练步数           & 40\,000 \\
 预训练总损失由两项组成，分别是大间隔分类损失和交叉熵损失：
 \begin{equation}\label{eq:dqfd_pretrain}
   \mathcal{L}_{\mathrm{pre}} =
-    \mathcal{L}_{\mathrm{margin}} + \mathcal{L}_{\mathrm{CE}}.
+    \mathcal{L}_{\mathrm{margin}} + \mathcal{L}_{\mathrm{CE}}
 \end{equation}
 大间隔分类损失要求演示小批量 $\mathcal{B}_{\mathrm{D}}$ 中专家动作 $a_{i}^{E}$ 对应的 Q 值比其余动作中的最大值高出至少 $m$：
 \begin{equation}\label{eq:margin_loss}
   \mathcal{L}_{\mathrm{margin}} = \frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
-    \max\!\bigl(0,\;\max_{a\neq a_{i}^{E}}Q(s_i,a) + m - Q(s_i,a_{i}^{E})\bigr),
+    \max\!\bigl(0,\;\max_{a\neq a_{i}^{E}}Q(s_i,a) + m - Q(s_i,a_{i}^{E})\bigr)
 \end{equation}
 式~\eqref{eq:margin_loss} 为铰链形式：$Q(s_i,a_i^E)$ 领先次优动作达 $m$ 后损失归零，该样本不再贡献梯度。为此引入交叉熵损失：
 \begin{equation}\label{eq:ce_loss}
   \mathcal{L}_{\mathrm{CE}} = -\frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
-    \log\frac{\exp Q(s_i,a_{i}^{E})}{\sum_{a'}\exp Q(s_i,a')}.
+    \log\frac{\exp Q(s_i,a_{i}^{E})}{\sum_{a'}\exp Q(s_i,a')}
 \end{equation}
 与大间隔损失不同，交叉熵在间隔满足后仍持续产生梯度，驱动 Q 值进一步向专家动作集中。
 
