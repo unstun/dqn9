@@ -411,9 +411,9 @@ DQfD 预训练步数           & 40\,000 \\
 \end{tabular}
 \end{table}
 
-\subsubsection{DQfD 预训练}\label{sec:dqfd}
+\subsubsection{Deep Q-learning from Demonstrations (DQfD) 预训练}\label{sec:dqfd}
 
-在树干密集分布的林地环境中，通行条件苛刻，地面无人车在训练初期缺乏正向奖励。为此，在线交互开始前先利用专家演示对 Q 网络预训练，让其在与环境交互之前就知道大致该怎么走，跳过盲目探索阶段。
+在树干密集分布的林地环境中，通行条件苛刻，地面无人车在训练初期缺乏正向奖励。为此，在线交互开始前先利用专家示教对 Q 网络预训练，让其在与环境交互之前就知道大致该怎么走，跳过盲目探索阶段。
 
 预训练总损失由两项组成，分别是大间隔分类损失和交叉熵损失：
 \begin{equation}\label{eq:dqfd_pretrain}
@@ -426,7 +426,7 @@ DQfD 预训练步数           & 40\,000 \\
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
     \max\!\bigl(0,\;\max_{a\neq a_{i}^{E}}Q(s_i,a) + m - Q(s_i,a_{i}^{E})\bigr),
 \end{equation}
-大间隔分类损失具有铰链性质，一旦 Q 值间隔达到 $m$，损失归零，梯度消失，网络不再从该样本获益。为弥补这一不足，新增的交叉熵损失对 Q 值做 softmax 归一化得到动作概率分布，与专家动作的 one-hot 标签计算交叉熵：
+式~\eqref{eq:margin_loss} 为铰链形式：$Q(s_i,a_i^E)$ 领先次优动作达 $m$ 后损失归零，该样本不再贡献梯度。为此引入交叉熵损失：
 \begin{equation}\label{eq:ce_loss}
   \mathcal{L}_{\mathrm{CE}} = -\frac{1}{|\mathcal{B}_{\mathrm{D}}|}
     \sum_{i\in\mathcal{B}_{\mathrm{D}}}
@@ -436,7 +436,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 在线交互开始后，总损失增加 TD 项：$\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\mathcal{L}_{\mathrm{margin}}+\mathcal{L}_{\mathrm{CE}}$。其中 $\mathcal{L}_{\mathrm{margin}}$ 与 $\mathcal{L}_{\mathrm{CE}}$ 仅对小批量中的演示样本计算，防止在线经验覆盖已习得的专家知识。
 
-\textit{专家演示生成。} 示教轨迹通过基于运动学模型逐步生成：每一步对 35 个离散动作分别以恒定控制输入向前仿真 $H=15$ 步，从全程无碰撞的候选动作中选取末端目标距离最小者执行，重复至回合结束。仅保留成功到达目标的回合作为演示，存入回放缓冲区并在在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
+示教轨迹通过基于运动学模型逐步生成：每一步对 35 个离散动作分别以恒定控制输入向前仿真 $H=15$ 步，从全程无碰撞的候选动作中选取末端目标距离最小者执行，重复至回合结束。仅保留成功到达目标的回合作为演示，存入回放缓冲区~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
 
 \begin{algorithm}[!htbp]
 \caption{MD-DDQN 训练流程}
