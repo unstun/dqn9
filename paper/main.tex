@@ -355,11 +355,21 @@ Q 网络接收由占据栅格图与目标距离图构成的二通道地图与标
 
 \paragraph{(2) 多头自注意力}\label{sec:mha}
 
-卷积输出的 $3\times3$ 特征图被展平为 9 个空间 token，构成矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。$\boldsymbol{E}$ 经三组可学习投影矩阵分别映射为查询、键与值：$\boldsymbol{Q}=\boldsymbol{E}\boldsymbol{W}^Q$，$\boldsymbol{K}=\boldsymbol{E}\boldsymbol{W}^K$，$\boldsymbol{V}=\boldsymbol{E}\boldsymbol{W}^V$。单头注意力输出为
+卷积输出的 $3\times3$ 特征图沿空间维度展平为 9 个 token，排列为矩阵 $\boldsymbol{E}\in\mathbb{R}^{9\times C}$，其中 $C$ 为通道数。每个 token 对应特征图中一个空间位置的 $C$ 维特征向量。
+
+$\boldsymbol{E}$ 经三组可学习投影矩阵 $\boldsymbol{W}^Q$、$\boldsymbol{W}^K$、$\boldsymbol{W}^V$ 分别映射为查询、键与值~\cite{vaswani2017attention}：
+\begin{equation}
+  \boldsymbol{Q}=\boldsymbol{E}\boldsymbol{W}^Q,\quad
+  \boldsymbol{K}=\boldsymbol{E}\boldsymbol{W}^K,\quad
+  \boldsymbol{V}=\boldsymbol{E}\boldsymbol{W}^V
+\end{equation}
+查询与键的点积计算任意两个空间位置之间的注意力分数，经缩放与归一化后作为权重对值进行加权求和：
 \begin{equation}\label{eq:mha}
   \boldsymbol{Z} = \mathrm{softmax}\!\Bigl(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\Bigr)\boldsymbol{V}
 \end{equation}
-其中 $d_k$ 为键向量维度。本文采用 4 个注意力头，各头以独立参数计算式~\eqref{eq:mha}，所得结果拼接后经线性投影映射回原始维度。该输出经残差连接与层归一化后送入 Dueling 分支。
+其中 $d_k$ 为键向量维度。当 $d_k$ 较大时点积的量级随之增大，将 softmax 函数推入梯度极小的区域~\cite{vaswani2017attention}，故以 $\sqrt{d_k}$ 缩放予以抵消。
+
+本文采用 4 个注意力头，各头以独立的投影参数计算式~\eqref{eq:mha}，所得结果沿特征维度拼接后经线性投影映射回 $C$ 维。该输出与原始输入 $\boldsymbol{E}$ 经残差连接相加后进行层归一化，送入 Dueling 分支。
 
 \paragraph{(3) Dueling 网络架构}\label{sec:md}
 
