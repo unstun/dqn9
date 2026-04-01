@@ -1,0 +1,2942 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Back to arXiv" [ref=e4] [cursor=pointer]:
+      - /url: https://arxiv.org/
+      - generic [ref=e5]: Back to arXiv
+    - banner [ref=e6]:
+      - paragraph [ref=e7]:
+        - text: This is
+        - strong [ref=e8]: experimental HTML
+        - text: to improve accessibility. We invite you to report rendering errors.
+        - generic [ref=e9]: Use Alt+Y to toggle on accessible reporting links and Alt+Shift+Y to toggle off.
+        - text: Learn more
+        - link "about this project" [ref=e10] [cursor=pointer]:
+          - /url: https://info.arxiv.org/about/accessible_HTML.html
+        - text: and
+        - link "help improve conversions" [ref=e11] [cursor=pointer]:
+          - /url: https://info.arxiv.org/help/submit_latex_best_practices.html
+        - text: .
+    - navigation [ref=e12]:
+      - link "Why HTML?" [ref=e13] [cursor=pointer]:
+        - /url: https://info.arxiv.org/about/accessible_HTML.html
+      - link "Report Issue" [ref=e14] [cursor=pointer]:
+        - /url: "#myForm"
+      - link "Back to Abstract" [ref=e15] [cursor=pointer]:
+        - /url: https://arxiv.org/abs/2502.09393v1
+      - link "Download PDF" [ref=e16] [cursor=pointer]:
+        - /url: https://arxiv.org/pdf/2502.09393v1
+      - link "Toggle dark/light mode" [ref=e17] [cursor=pointer]:
+        - /url: javascript:toggleColorScheme()
+        - generic "Switch to light mode" [ref=e18]:
+          - img [ref=e19]
+  - generic [ref=e21]:
+    - navigation "Table of Contents" [ref=e22]:
+      - generic [ref=e23] [cursor=pointer]:
+        - img
+      - list [ref=e24]:
+        - listitem [ref=e25]:
+          - link "Abstract" [ref=e26] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393#abstract
+            - generic [ref=e27]: Abstract
+        - listitem [ref=e28]:
+          - link "I Introduction" [ref=e29] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393v1#S1
+            - generic [ref=e30]:
+              - generic [ref=e31]: I
+              - text: Introduction
+        - listitem [ref=e32]:
+          - link "II Background" [ref=e33] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393v1#S2
+            - generic [ref=e34]:
+              - generic [ref=e35]: II
+              - text: Background
+        - listitem [ref=e36]:
+          - link "III Reinforcement Learning with OGMs" [ref=e37] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393v1#S3
+            - generic [ref=e38]:
+              - generic [ref=e39]: III
+              - text: Reinforcement Learning with OGMs
+        - listitem [ref=e40]:
+          - link "IV Results & Discussion" [ref=e41] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393v1#S4
+            - generic [ref=e42]:
+              - generic [ref=e43]: IV
+              - text: Results & Discussion
+        - listitem [ref=e44]:
+          - link "V Conclusion" [ref=e45] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393v1#S5
+            - generic [ref=e46]:
+              - generic [ref=e47]: V
+              - text: Conclusion
+        - listitem [ref=e48]:
+          - link "References" [ref=e49] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2502.09393#bib
+            - generic [ref=e50]: References
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - 'link "License: CC BY 4.0" [ref=e53] [cursor=pointer]':
+          - /url: https://info.arxiv.org/help/license/index.html#licenses-available
+        - generic [ref=e54]: arXiv:2502.09393v1 [cs.RO] 13 Feb 2025
+      - article [ref=e55]:
+        - heading "Generalizable Reinforcement Learning with Biologically Inspired Hyperdimensional Occupancy Grid Maps for Exploration and Goal-Directed Path Planning" [level=1] [ref=e56]
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]: Shay Snyder
+            - generic [ref=e60]:
+              - text: "* These authors contributed equally to this work."
+              - generic [ref=e61]:
+                - generic [ref=e62]: George Mason University
+                - text: ssnyde9@gmu.edu
+          - generic [ref=e63]:
+            - generic [ref=e64]: Ryan Shea
+            - generic [ref=e66]:
+              - generic [ref=e67]: Columbia University
+              - text: rs4235@columbia.edu
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - text: Andrew Capodieci
+              - text: "{@IEEEauthorhalign} David Gorsich"
+            - generic [ref=e70]:
+              - generic [ref=e71]:
+                - generic [ref=e72]: Neya Robotics
+                - text: acapodieci@neyarobotics.com
+              - generic [ref=e73]:
+                - generic [ref=e74]: US Army Futures Command
+                - text: david.j.gorsich.civ@army.mil
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - text: Maryam Parsa
+              - superscript [ref=e77]: †
+            - generic [ref=e78]:
+              - math [ref=e79]:
+                - generic [ref=e81]: †
+              - text: Corresponding author
+              - generic [ref=e82]:
+                - generic [ref=e83]: George Mason University
+                - text: mparsa@gmu.edu
+        - generic [ref=e84]:
+          - heading "Abstract" [level=6] [ref=e85]
+          - paragraph [ref=e86]: Real-time autonomous systems utilize multi-layer computational frameworks to perform critical tasks such as perception, goal finding, and path planning. Traditional methods implement perception using occupancy grid mapping (OGM), segmenting the environment into discretized cells with probabilistic information. This classical approach is well-established and provides a structured input for downstream processes like goal finding and path planning algorithms. Recent approaches leverage a biologically inspired mathematical framework known as vector symbolic architectures (VSA), commonly known as hyperdimensional computing, to perform probabilistic OGM in hyperdimensional space. This approach, VSA-OGM, provides native compatibility with spiking neural networks, positioning VSA-OGM as a potential neuromorphic alternative to conventional OGM. However, for large-scale integration, it is essential to assess the performance implications of VSA-OGM on downstream tasks compared to established OGM methods. This study examines the efficacy of VSA-OGM against a traditional OGM approach, Bayesian Hilbert Maps (BHM), within reinforcement learning based goal finding and path planning frameworks, across a controlled exploration environment and an autonomous driving scenario inspired by the F1-Tenth challenge. Our results demonstrate that VSA-OGM maintains comparable learning performance across single and multi-scenario training configurations while improving performance on unseen environments by approximately 47%. These findings highlight the increased generalizability of policy networks trained with VSA-OGM over BHM, reinforcing its potential for real-world deployment in diverse environments.
+        - generic [ref=e87]:
+          - heading "Index Terms:" [level=6] [ref=e88]
+          - text: occupancy grid mapping, hyperdimensional computing, probabilistic learning, reinforcement learning, brain-inspired learning
+        - generic [ref=e89]:
+          - heading "I Introduction" [level=2] [ref=e90]:
+            - generic [ref=e91]: I
+            - text: Introduction
+          - paragraph [ref=e93]:
+            - text: Contemporary robotic systems are structured around a multi-level autonomy framework, where complex tasks are divided into interconnected sub-units. Each sub-unit focuses on specific functions, such as mapping, localization, goal identification, or path planning
+            - generic [ref=e94]:
+              - text: "["
+              - link "1" [ref=e95] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib1
+              - text: "]"
+            - text: . Together, these sub-systems enable high-level capabilities, such as autonomous driving
+            - generic [ref=e96]:
+              - text: "["
+              - link "2" [ref=e97] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib2
+              - text: "]"
+            - text: and unknown environment exploration
+            - generic [ref=e98]:
+              - text: "["
+              - link "3" [ref=e99] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib3
+              - text: "]"
+            - text: .
+          - paragraph [ref=e101]:
+            - text: Localization and mapping have long been central to the multi-level autonomy framework, with simultaneous localization and mapping (SLAM) being a key technique for enabling autonomous agents to navigate complex environments
+            - generic [ref=e102]:
+              - text: "["
+              - link "4" [ref=e103] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib4
+              - text: "]"
+            - text: . SLAM provides agents with an information-rich representation of their surroundings, which can be leveraged by downstream goal-finding and path planning modules. A traditional approach to the mapping component is Occupancy Grid Mapping (OGM)
+            - generic [ref=e104]:
+              - text: "["
+              - link "5" [ref=e105] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib5
+              - text: "]"
+            - text: . These algorithms construct probabilistic representations of the environment, where each region is assigned a real value quantifying the likelihood of occupancy.
+          - paragraph [ref=e107]:
+            - text: OGM literature is well-established, providing a structured framework for downstream processes such as goal finding and path planning algorithms at the expense of exponential Big O complexity
+            - generic [ref=e108]:
+              - text: "["
+              - link "6" [ref=e109] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib6
+              - text: "]"
+            - text: . Recently, biologically inspired mathematical frameworks, specifically vector symbolic architectures (VSA), have been applied to probabilistic OGM in hyperdimensional space
+            - generic [ref=e110]:
+              - text: "["
+              - link "7" [ref=e111] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: . This novel approach, known as Vector Symbolic Architectures for Occupancy Grid Mapping (VSA-OGM)
+            - generic [ref=e112]:
+              - text: "["
+              - link "7" [ref=e113] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: ", supports integration with spiking neural networks, making it a promising neuromorphic alternative to conventional OGM techniques. However, to facilitate large-scale integration with existing systems, it is crucial to evaluate VSA-OGM’s performance on downstream tasks relative to traditional methods."
+          - superscript [ref=e115]: †
+          - generic [ref=e116]:
+            - paragraph [ref=e117]:
+              - text: This study investigates the efficacy of VSA-OGM compared to a well-established OGM technique, Bayesian Hilbert Maps (BHM)
+              - generic [ref=e118]:
+                - text: "["
+                - link "8" [ref=e119] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                - text: "]"
+              - text: ", within reinforcement learning (RL) frameworks for goal finding and path planning. Experiments are conducted across controlled environments for unknown environment exploration"
+              - generic [ref=e120]:
+                - text: "["
+                - link "9" [ref=e121] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: and autonomous driving inspired by the F1-Tenth challenge
+              - generic [ref=e122]:
+                - text: "["
+                - link "10" [ref=e123] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+                - text: "]"
+              - text: ". Our results indicate that VSA-OGM not only maintains robust learning performance but also significantly enhances policy generalizability to different starting conditions and diverse unseen environments. In summary, the major contributions of this paper are as follows:"
+            - list [ref=e124]:
+              - listitem [ref=e125]:
+                - text: •
+                - paragraph [ref=e127]:
+                  - text: "We design environment wrappers for two distinct reinforcement learning scenarios: one simulating a rover exploring unknown regions"
+                  - generic [ref=e128]:
+                    - text: "["
+                    - link "9" [ref=e129] [cursor=pointer]:
+                      - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                    - text: "]"
+                  - text: ", and another inspired by the F1-Tenth driving challenge"
+                  - generic [ref=e130]:
+                    - text: "["
+                    - link "10" [ref=e131] [cursor=pointer]:
+                      - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+                    - text: "]"
+                  - text: . These wrappers enable seamless integration with OGM methods.
+              - listitem [ref=e132]:
+                - text: •
+                - paragraph [ref=e134]: Our results, conducted using various parameter combinations and environmental configurations to evaluate performance across a diverse range of scenarios, highlight that VSA-OGM achieves comparable performance to traditional approaches while improving policy generalization on unseen environments and different starting conditions by approximately 47%.
+              - listitem [ref=e135]:
+                - text: •
+                - paragraph [ref=e137]: We perform multi-map training and evaluation across both environments with both OGM methods and VSA-OGM presents increased generalization, on average, across all evaluation maps and unseen scenarios.
+        - generic [ref=e138]:
+          - heading "II Background" [level=2] [ref=e139]:
+            - generic [ref=e140]: II
+            - text: Background
+          - paragraph [ref=e142]:
+            - text: OGM techniques have been developed to incorporate semantically labeled spatial information and give autonomous agents critical information to accomplish diverse tasks such as unknown environment exploration
+            - generic [ref=e143]:
+              - text: "["
+              - link "1" [ref=e144] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib1
+              - text: "]"
+            - text: and path planning
+            - generic [ref=e145]:
+              - text: "["
+              - link "3" [ref=e146] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib3
+              - text: "]"
+            - text: . The field has diverged into three primary sub-fields with each being defined by unique computational attributes.
+          - paragraph [ref=e148]:
+            - text: Traditional methods are the most studied from the foundational work of Elfes
+            - generic [ref=e149]:
+              - text: "["
+              - link "5" [ref=e150] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib5
+              - text: "]"
+            - text: to more recent approaches like BHM
+            - generic [ref=e151]:
+              - text: "["
+              - link "8" [ref=e152] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: . These approaches perform dense probabilistic calculations to learn from semantically-labeled spatial information at the cost of cubic computational complexity. BHM is a flexible framework that allows users to dictate the retention of the entire covariance matrix or only the variance. This enables BHM to scale between offline mapping scenarios with cubic complexity or real-time edge applications sub-cubic complexity, respectively. A newer version of BHM, known as Fast Bayesian Hilbert Maps (Fast-BHM)
+            - generic [ref=e153]:
+              - text: "["
+              - link "11" [ref=e154] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib11
+              - text: "]"
+            - text: ", reduces computational complexity to sub-quadratic levels by assuming independence between voxels and not utilizing a full covariance matrix. We were unable to include Fast-BHM in this study because their code is not publically available."
+          - paragraph [ref=e156]:
+            - text: With the advent in AI, neural methods have emerged with the goal of compressing probabilistic information into the black-box latent space of weights and biases
+            - generic [ref=e157]:
+              - text: "["
+              - link "12" [ref=e158] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib12
+              - text: "]"
+            - text: . While these approaches are effective for OGM, the black-box nature of deep neural networks makes them difficult to validate in safety critical environments such as autonomous driving
+            - generic [ref=e159]:
+              - text: "["
+              - link "2" [ref=e160] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib2
+              - text: "]"
+            - text: . Moreover, these methods must be trained on each operating domain to avoid performance degradation from domain shift. We limit the scope of our comparison to only traditional methods because we are evaluating the generalizability of OGMs in unknown environments which would require domain specific retraining for neural methods.
+          - paragraph [ref=e162]:
+            - text: A third subfield, neuro-symbolic methods have emerged. These approaches, Convolutional Bayesian Kernel Inference (ConvBKI)
+            - generic [ref=e163]:
+              - text: "["
+              - link "6" [ref=e164] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib6
+              - text: "]"
+            - text: and VSA-OGM
+            - generic [ref=e165]:
+              - text: "["
+              - link "7" [ref=e166] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: combine benefits of both prior methods. Although ConvBKI and VSA-OGM have shown improvements in algorithmic complexity with respect to environment size and density, their efficacy for downstream path planning and environmental exploration remains a critical concern because they have not been compared against traditional OGM methods.
+          - paragraph [ref=e168]:
+            - text: VSA-OGM leverages VSAs, a framework also known as hyperdimensional computing. VSAs provide a way to represent and manipulate information using high-dimensional vectors, drawing parallels to how the brain encodes and processes data. This biologically motivated approach serves as a mathematical framework that approximates higher-order cognitive functions in neural networks
+            - generic [ref=e169]:
+              - text: "["
+              - link "13" [ref=e170] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib13
+              - text: ","
+              - link "14" [ref=e171] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib14
+              - text: "]"
+            - text: . A specific VSA architecture, known as Spatial Semantic Pointers (SSPs)
+            - generic [ref=e172]:
+              - text: "["
+              - link "14" [ref=e173] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib14
+              - text: "]"
+            - text: ", enables probabilistic inference over continuous representations in hyperdimensional space through a process known as fractional binding"
+            - generic [ref=e174]:
+              - text: "["
+              - link "15" [ref=e175] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib15
+              - text: "]"
+            - text: .
+          - paragraph [ref=e177]:
+            - text: SSPs operate on high dimensional vectors that are unit length and generated by performing the inverse discrete Fourier transform on uniformly distributed phasors between
+            - math [ref=e178]:
+              - generic [ref=e180]:
+                - generic [ref=e181]: −
+                - generic [ref=e182]: π
+            - text: and
+            - math [ref=e183]:
+              - generic [ref=e185]: π
+            - text: ". SSPs utilize two primary operations: binding and bundling. Binding, analogous to multiplication, combines two or more input vectors into a final invertible representation that is distinct from each input. Bundling, analogous to addition, combines multiple input vectors into their superposition. SSPs follow the same vector operations described in Holographic Reduced Representations (HRR)"
+            - generic [ref=e186]:
+              - text: "["
+              - link "16" [ref=e187] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib16
+              - text: "]"
+            - text: where binding is implemented as circular convolution and bundling is implemented as element-wise addition. SSPs support encoding continuous values by exponentiating an axis vector
+            - math [ref=e188]:
+              - generic [ref=e190]:
+                - generic [ref=e191]: ϕ
+                - generic [ref=e192]: x
+            - text: in the complex domain by the desired axis values
+            - math [ref=e193]:
+              - generic [ref=e195]: x
+            - text: "through a process known as fractional binding:"
+          - table [ref=e197]:
+            - rowgroup [ref=e198]:
+              - row "(1)" [ref=e199]:
+                - cell [ref=e200]
+                - cell [ref=e201]:
+                  - math [ref=e202]:
+                    - generic [ref=e204]:
+                      - generic [ref=e205]:
+                        - generic [ref=e206]:
+                          - generic [ref=e207]: ϕ
+                          - generic: ⁢
+                          - generic [ref=e208]:
+                            - generic [ref=e209]: (
+                            - generic [ref=e210]: x
+                            - generic [ref=e211]: )
+                        - generic [ref=e212]: =
+                        - generic [ref=e213]:
+                          - generic [ref=e214]:
+                            - generic [ref=e215]: ℱ
+                            - generic [ref=e216]:
+                              - generic [ref=e217]: −
+                              - generic [ref=e218]: "1"
+                          - generic: ⁢
+                          - generic [ref=e219]:
+                            - generic [ref=e220]: (
+                            - generic [ref=e221]:
+                              - generic [ref=e222]: ℱ
+                              - generic: ⁢
+                              - generic [ref=e223]:
+                                - generic [ref=e224]:
+                                  - generic [ref=e225]: (
+                                  - generic [ref=e226]: ϕ
+                                  - generic [ref=e227]: )
+                                - generic [ref=e228]:
+                                  - generic [ref=e229]: x
+                                  - generic [ref=e230]: /
+                                  - generic [ref=e231]: l
+                            - generic [ref=e232]: )
+                      - generic [ref=e233]: ","
+                - cell [ref=e234]
+                - cell "(1)" [ref=e235]:
+                  - generic [ref=e236]: (1)
+          - paragraph [ref=e238]:
+            - text: where
+            - math [ref=e239]:
+              - generic [ref=e241]: l
+            - text: is the length-scale parameter
+            - generic [ref=e242]:
+              - text: "["
+              - link "15" [ref=e243] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib15
+              - text: "]"
+            - text: . Probabilistic inference is performed with SSPs through Hadamard products between vectors. This process returns a quasi-kernel density estimator over the axis approaching a sinc function as the vector dimensionality approaches infinity
+            - generic [ref=e244]:
+              - text: "["
+              - link "17" [ref=e245] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib17
+              - text: "]"
+            - text: . The length scale parameter in the fractional binding operation controls the width of this kernel and can be used to adjust the resolution and noise resilience of the SSPs.
+          - paragraph [ref=e247]:
+            - text: SSPs are the basis of VSA-OGM and enable probabilistic modelling of occupancy in hyperdimensional space. More information on the underlying mathematics of VSAs and HRRs can be found in
+            - generic [ref=e248]:
+              - text: "["
+              - link "13" [ref=e249] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib13
+              - text: ","
+              - link "16" [ref=e250] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib16
+              - text: ","
+              - link "18" [ref=e251] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib18
+              - text: ","
+              - link "19" [ref=e252] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib19
+              - text: ","
+              - link "14" [ref=e253] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib14
+              - text: "]"
+            - text: . More specific details on the extension of SSPs to create VSA-OGM can be found in
+            - generic [ref=e254]:
+              - text: "["
+              - link "7" [ref=e255] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: . Given this drastically different approach to probabilistic computation compared to traditional methods, a major question remains around the ability of downstream path planning algorithms to leverage the quasi-probabilistic properties of VSA-OGM. This stands as the central question of this work where we compare the efficacy of VSA-OGM against BHM for reinforcement learning based path planning and environmental exploration with diverse environments, scenarios, and parameter combinations.
+        - generic [ref=e256]:
+          - heading "III Reinforcement Learning with OGMs" [level=2] [ref=e257]:
+            - generic [ref=e258]: III
+            - text: Reinforcement Learning with OGMs
+          - paragraph [ref=e260]:
+            - text: Most OGM frameworks, such as BHM
+            - generic [ref=e261]:
+              - text: "["
+              - link "8" [ref=e262] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: and VSA-OGM
+            - generic [ref=e263]:
+              - text: "["
+              - link "7" [ref=e264] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: ", require a different data format versus the native LiDAR output of many reinforcement learning environments. OGM methods require formalized training data similar to the feature and target format defined in Scikit-Learn"
+            - generic [ref=e265]:
+              - text: "["
+              - link "20" [ref=e266] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib20
+              - text: "]"
+            - text: ", where"
+            - math [ref=e267]:
+              - generic [ref=e269]: X
+            - text: represents the data feature matrix with shape
+            - math [ref=e270]:
+              - generic [ref=e272]:
+                - generic [ref=e273]:
+                  - generic [ref=e274]: γ
+                  - generic [ref=e275]: "n"
+                - generic [ref=e276]: ×
+                - generic [ref=e277]: "2"
+            - text: ", where"
+            - math [ref=e278]:
+              - generic [ref=e280]:
+                - generic [ref=e281]: γ
+                - generic [ref=e282]: "n"
+            - text: is equal to the number of ray-casts in a LiDAR point cloud
+            - math [ref=e283]:
+              - generic [ref=e285]: γ
+            - text: and other 2 dimensions represent a Cartesian coordinate. Likewise,
+            - math [ref=e286]:
+              - generic [ref=e288]: "y"
+            - text: is a
+            - math [ref=e289]:
+              - generic [ref=e291]:
+                - generic [ref=e292]:
+                  - generic [ref=e293]: γ
+                  - generic [ref=e294]: "n"
+                - generic [ref=e295]: ×
+                - generic [ref=e296]: "1"
+            - text: vector representing the labels of each point where
+            - math [ref=e297]:
+              - generic [ref=e299]: "0"
+            - text: signifies empty and
+            - math [ref=e300]:
+              - generic [ref=e302]: "1"
+            - text: signifies occupied. Bridging this gap and extracting OGM training data from LiDAR-based RL environments requires the end user to augment baseline environments with a wrapping layer transforming environmental information into an OGM compatible format. In this section, we describe the RL environments utilized throughout all experiments and the environmental wrappers augmenting their baseline input and output structure into an OGM-friendly format.
+          - 'figure "TABLE I: The mathematical symbols used throughout this paper." [ref=e303]':
+            - generic [ref=e304]:
+              - generic [ref=e305]: "TABLE I:"
+              - text: The mathematical symbols used throughout this paper.
+            - table [ref=e306]:
+              - rowgroup [ref=e307]:
+                - row "Symbol Meaning" [ref=e308]:
+                  - columnheader "Symbol" [ref=e309]
+                  - columnheader "Meaning" [ref=e310]
+              - rowgroup [ref=e311]:
+                - row "square grid of cells" [ref=e312]:
+                  - rowheader [ref=e313]:
+                    - math [ref=e314]:
+                      - generic [ref=e316]: 𝒢
+                  - cell "square grid of cells" [ref=e317]
+                - row "an individual grid cell in" [ref=e318]:
+                  - rowheader [ref=e319]:
+                    - math [ref=e320]:
+                      - generic [ref=e322]: g
+                  - cell "an individual grid cell in" [ref=e323]:
+                    - text: an individual grid cell in
+                    - math [ref=e324]:
+                      - generic [ref=e326]: 𝒢
+                - row "the agent’s location in" [ref=e327]:
+                  - rowheader [ref=e328]:
+                    - math [ref=e329]:
+                      - generic [ref=e331]:
+                        - generic [ref=e332]: g
+                        - generic [ref=e333]:
+                          - generic [ref=e334]: l
+                          - generic: ⁢
+                          - generic [ref=e335]: o
+                          - generic: ⁢
+                          - generic [ref=e336]: c
+                  - cell "the agent’s location in" [ref=e337]:
+                    - text: the agent’s location in
+                    - math [ref=e338]:
+                      - generic [ref=e340]: 𝒢
+                - row "the number of cells in" [ref=e341]:
+                  - rowheader [ref=e342]:
+                    - math [ref=e343]:
+                      - generic [ref=e345]: "N"
+                  - cell "the number of cells in" [ref=e346]:
+                    - text: the number of cells in
+                    - math [ref=e347]:
+                      - generic [ref=e349]: 𝒢
+                - row "the number of ray-cast interpolations" [ref=e350]:
+                  - rowheader [ref=e351]:
+                    - math [ref=e352]:
+                      - generic [ref=e354]: M
+                  - cell "the number of ray-cast interpolations" [ref=e355]
+                - row "ground truth map of cells" [ref=e356]:
+                  - rowheader [ref=e357]:
+                    - math [ref=e358]:
+                      - generic [ref=e360]: ℳ
+                  - cell "ground truth map of cells" [ref=e361]:
+                    - text: ground truth map of
+                    - math [ref=e362]:
+                      - generic [ref=e364]: 𝒢
+                    - text: cells
+                - row "a point cloud in polar coordinates" [ref=e365]:
+                  - rowheader [ref=e366]:
+                    - math [ref=e367]:
+                      - generic [ref=e369]: γ
+                  - cell "a point cloud in polar coordinates" [ref=e370]
+                - row "the number of ray-casts in" [ref=e371]:
+                  - rowheader [ref=e372]:
+                    - math [ref=e373]:
+                      - generic [ref=e375]:
+                        - generic [ref=e376]: γ
+                        - generic [ref=e377]: "n"
+                  - cell "the number of ray-casts in" [ref=e378]:
+                    - text: the number of ray-casts in
+                    - math [ref=e379]:
+                      - generic [ref=e381]: γ
+                - row "maximum cast distance in meters" [ref=e382]:
+                  - rowheader [ref=e383]:
+                    - math [ref=e384]:
+                      - generic [ref=e386]:
+                        - generic [ref=e387]: γ
+                        - generic [ref=e388]:
+                          - generic [ref=e389]: m
+                          - generic: ⁢
+                          - generic [ref=e390]: a
+                          - generic: ⁢
+                          - generic [ref=e391]: x
+                  - cell "maximum cast distance in meters" [ref=e392]
+                - row "normalized steering angle" [ref=e393]:
+                  - rowheader [ref=e394]:
+                    - math [ref=e395]:
+                      - generic [ref=e397]: δ
+                  - cell "normalized steering angle" [ref=e398]
+                - row "normalized motor speed" [ref=e399]:
+                  - rowheader [ref=e400]:
+                    - math [ref=e401]:
+                      - generic [ref=e403]: τ
+                  - cell "normalized motor speed" [ref=e404]
+                - row "time" [ref=e405]:
+                  - rowheader [ref=e406]:
+                    - math [ref=e407]:
+                      - generic [ref=e409]: t
+                  - cell "time" [ref=e410]
+                - row "reward value" [ref=e411]:
+                  - rowheader [ref=e412]:
+                    - math [ref=e413]:
+                      - generic [ref=e415]: r
+                  - cell "reward value" [ref=e416]
+                - row "reward for target map exploration" [ref=e417]:
+                  - rowheader [ref=e418]:
+                    - math [ref=e419]:
+                      - generic [ref=e421]:
+                        - generic [ref=e422]: r
+                        - generic [ref=e423]:
+                          - generic [ref=e424]: b
+                          - generic: ⁢
+                          - generic [ref=e425]: o
+                          - generic: ⁢
+                          - generic [ref=e426]: "n"
+                          - generic: ⁢
+                          - generic [ref=e427]: u
+                          - generic: ⁢
+                          - generic [ref=e428]: s
+                  - cell "reward for target map exploration" [ref=e429]
+                - row "reward for exploring new areas" [ref=e430]:
+                  - rowheader [ref=e431]:
+                    - math [ref=e432]:
+                      - generic [ref=e434]:
+                        - generic [ref=e435]: r
+                        - generic [ref=e436]:
+                          - generic [ref=e437]: e
+                          - generic: ⁢
+                          - generic [ref=e438]: x
+                          - generic: ⁢
+                          - generic [ref=e439]: p
+                          - generic: ⁢
+                          - generic [ref=e440]: l
+                          - generic: ⁢
+                          - generic [ref=e441]: o
+                          - generic: ⁢
+                          - generic [ref=e442]: r
+                          - generic: ⁢
+                          - generic [ref=e443]: e
+                  - cell "reward for exploring new areas" [ref=e444]
+                - row "penalty for invalid movement" [ref=e445]:
+                  - rowheader [ref=e446]:
+                    - math [ref=e447]:
+                      - generic [ref=e449]:
+                        - generic [ref=e450]: r
+                        - generic [ref=e451]:
+                          - generic [ref=e452]: i
+                          - generic: ⁢
+                          - generic [ref=e453]: "n"
+                          - generic: ⁢
+                          - generic [ref=e454]: v
+                          - generic: ⁢
+                          - generic [ref=e455]: a
+                          - generic: ⁢
+                          - generic [ref=e456]: l
+                          - generic: ⁢
+                          - generic [ref=e457]: i
+                          - generic: ⁢
+                          - generic [ref=e458]: d
+                  - cell "penalty for invalid movement" [ref=e459]
+                - row "penalty for movement" [ref=e460]:
+                  - rowheader [ref=e461]:
+                    - math [ref=e462]:
+                      - generic [ref=e464]:
+                        - generic [ref=e465]: r
+                        - generic [ref=e466]:
+                          - generic [ref=e467]: m
+                          - generic: ⁢
+                          - generic [ref=e468]: o
+                          - generic: ⁢
+                          - generic [ref=e469]: v
+                          - generic: ⁢
+                          - generic [ref=e470]: e
+                  - cell "penalty for movement" [ref=e471]
+                - row "penalty for hitting an obstacle" [ref=e472]:
+                  - rowheader [ref=e473]:
+                    - math [ref=e474]:
+                      - generic [ref=e476]:
+                        - generic [ref=e477]: r
+                        - generic [ref=e478]:
+                          - generic [ref=e479]: o
+                          - generic: ⁢
+                          - generic [ref=e480]: b
+                          - generic: ⁢
+                          - generic [ref=e481]: s
+                          - generic: ⁢
+                          - generic [ref=e482]: t
+                          - generic: ⁢
+                          - generic [ref=e483]: a
+                          - generic: ⁢
+                          - generic [ref=e484]: c
+                          - generic: ⁢
+                          - generic [ref=e485]: l
+                          - generic: ⁢
+                          - generic [ref=e486]: e
+                  - cell "penalty for hitting an obstacle" [ref=e487]
+                - row "penalty for steering magnitude" [ref=e488]:
+                  - rowheader [ref=e489]:
+                    - math [ref=e490]:
+                      - generic [ref=e492]:
+                        - generic [ref=e493]: r
+                        - generic [ref=e494]:
+                          - generic [ref=e495]: s
+                          - generic: ⁢
+                          - generic [ref=e496]: t
+                          - generic: ⁢
+                          - generic [ref=e497]: e
+                          - generic: ⁢
+                          - generic [ref=e498]: e
+                          - generic: ⁢
+                          - generic [ref=e499]: r
+                  - cell "penalty for steering magnitude" [ref=e500]
+                - row "reward for maintaining target velocity" [ref=e501]:
+                  - rowheader [ref=e502]:
+                    - math [ref=e503]:
+                      - generic [ref=e505]:
+                        - generic [ref=e506]: r
+                        - generic [ref=e507]:
+                          - generic [ref=e508]: v
+                          - generic: ⁢
+                          - generic [ref=e509]: e
+                          - generic: ⁢
+                          - generic [ref=e510]: l
+                          - generic: ⁢
+                          - generic [ref=e511]: o
+                          - generic: ⁢
+                          - generic [ref=e512]: c
+                          - generic: ⁢
+                          - generic [ref=e513]: i
+                          - generic: ⁢
+                          - generic [ref=e514]: t
+                          - generic: ⁢
+                          - generic [ref=e515]: "y"
+                  - cell "reward for maintaining target velocity" [ref=e516]
+                - row "penalty for collisions" [ref=e517]:
+                  - rowheader [ref=e518]:
+                    - math [ref=e519]:
+                      - generic [ref=e521]:
+                        - generic [ref=e522]: r
+                        - generic [ref=e523]:
+                          - generic [ref=e524]: c
+                          - generic: ⁢
+                          - generic [ref=e525]: o
+                          - generic: ⁢
+                          - generic [ref=e526]: l
+                          - generic: ⁢
+                          - generic [ref=e527]: l
+                          - generic: ⁢
+                          - generic [ref=e528]: i
+                          - generic: ⁢
+                          - generic [ref=e529]: s
+                          - generic: ⁢
+                          - generic [ref=e530]: i
+                          - generic: ⁢
+                          - generic [ref=e531]: o
+                          - generic: ⁢
+                          - generic [ref=e532]: "n"
+                  - cell "penalty for collisions" [ref=e533]
+                - row "velocity in meters per second" [ref=e534]:
+                  - rowheader [ref=e535]:
+                    - math [ref=e536]:
+                      - generic [ref=e538]: v
+                  - cell "velocity in meters per second" [ref=e539]
+                - row "Cartesian ray-casts from" [ref=e540]:
+                  - rowheader [ref=e541]:
+                    - math [ref=e542]:
+                      - generic [ref=e544]: X
+                  - cell "Cartesian ray-casts from" [ref=e545]:
+                    - text: Cartesian ray-casts from
+                    - math [ref=e546]:
+                      - generic [ref=e548]: γ
+                - row "interpolated ray-casts from" [ref=e549]:
+                  - rowheader [ref=e550]:
+                    - math [ref=e551]:
+                      - generic [ref=e553]:
+                        - generic [ref=e554]: X
+                        - generic [ref=e555]:
+                          - generic [ref=e556]: i
+                          - generic: ⁢
+                          - generic [ref=e557]: "n"
+                          - generic: ⁢
+                          - generic [ref=e558]: t
+                  - cell "interpolated ray-casts from" [ref=e559]:
+                    - text: interpolated ray-casts from
+                    - math [ref=e560]:
+                      - generic [ref=e562]: γ
+                - row "occupancy label vector for" [ref=e563]:
+                  - rowheader [ref=e564]:
+                    - math [ref=e565]:
+                      - generic [ref=e567]: "y"
+                  - cell "occupancy label vector for" [ref=e568]:
+                    - text: occupancy label vector for
+                    - math [ref=e569]:
+                      - generic [ref=e571]: X
+                - row "occupancy label vector for" [ref=e572]:
+                  - rowheader [ref=e573]:
+                    - math [ref=e574]:
+                      - generic [ref=e576]:
+                        - generic [ref=e577]: "y"
+                        - generic [ref=e578]:
+                          - generic [ref=e579]: i
+                          - generic: ⁢
+                          - generic [ref=e580]: "n"
+                          - generic: ⁢
+                          - generic [ref=e581]: t
+                  - cell "occupancy label vector for" [ref=e582]:
+                    - text: occupancy label vector for
+                    - math [ref=e583]:
+                      - generic [ref=e585]:
+                        - generic [ref=e586]: X
+                        - generic [ref=e587]:
+                          - generic [ref=e588]: i
+                          - generic: ⁢
+                          - generic [ref=e589]: "n"
+                          - generic: ⁢
+                          - generic [ref=e590]: t
+                - row "angle in radians" [ref=e591]:
+                  - rowheader [ref=e592]:
+                    - math [ref=e593]:
+                      - generic [ref=e595]: θ
+                  - cell "angle in radians" [ref=e596]
+                - row "angle vector for each ray-cast" [ref=e597]:
+                  - rowheader [ref=e598]:
+                    - math [ref=e599]:
+                      - generic [ref=e601]: Θ
+                  - cell "angle vector for each ray-cast" [ref=e602]
+                - row "step-size between individual ray-casts" [ref=e603]:
+                  - rowheader [ref=e604]:
+                    - math [ref=e605]:
+                      - generic [ref=e607]:
+                        - generic [ref=e608]: Δ
+                        - generic: ⁢
+                        - generic [ref=e609]: Θ
+                  - cell "step-size between individual ray-casts" [ref=e610]
+                - row "reward scaling parameter" [ref=e611]:
+                  - rowheader [ref=e612]:
+                    - math [ref=e613]:
+                      - generic [ref=e615]:
+                        - generic [ref=e616]: λ
+                        - generic [ref=e617]: x
+                  - cell "reward scaling parameter" [ref=e618]
+                - row "orientation matrix" [ref=e619]:
+                  - rowheader [ref=e620]:
+                    - math [ref=e621]:
+                      - generic [ref=e623]: T
+                  - cell "orientation matrix" [ref=e624]
+          - generic [ref=e625]:
+            - paragraph [ref=e626]:
+              - text: Mars Explorer (MarsExplorer)
+              - generic [ref=e627]:
+                - text: "["
+                - link "9" [ref=e628] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: ": MarsExplorer"
+              - generic [ref=e629]:
+                - text: "["
+                - link "9" [ref=e630] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: is an open-source Open-AI Gym
+              - generic [ref=e631]:
+                - text: "["
+                - link "21" [ref=e632] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib21
+                - text: "]"
+              - text: compatible environment designed to train agents to explore randomized unknown environments. These environments are constrained to be a square grid
+              - math [ref=e633]:
+                - generic [ref=e635]: 𝒢
+              - text: of
+              - math [ref=e636]:
+                - generic [ref=e638]:
+                  - generic [ref=e639]: "N"
+                  - generic [ref=e640]: =
+                  - generic [ref=e641]:
+                    - generic [ref=e642]:
+                      - generic [ref=e643]:
+                        - generic [ref=e644]: r
+                        - generic: ⁢
+                        - generic [ref=e645]: o
+                        - generic: ⁢
+                        - generic [ref=e646]: w
+                        - generic: ⁢
+                        - generic [ref=e647]: s
+                      - generic [ref=e648]: ×
+                      - generic [ref=e649]: c
+                    - generic: ⁢
+                    - generic [ref=e650]: o
+                    - generic: ⁢
+                    - generic [ref=e651]: l
+                    - generic: ⁢
+                    - generic [ref=e652]: s
+              - text: "cells defined as:"
+            - table [ref=e653]:
+              - rowgroup [ref=e654]:
+                - row "(2)" [ref=e655]:
+                  - cell [ref=e656]
+                  - cell [ref=e657]:
+                    - math [ref=e658]:
+                      - generic [ref=e660]:
+                        - generic [ref=e661]:
+                          - generic [ref=e662]: 𝒢
+                          - generic [ref=e663]: =
+                          - generic [ref=e664]:
+                            - generic [ref=e665]: "{"
+                            - generic [ref=e666]:
+                              - generic [ref=e667]: (
+                              - generic [ref=e668]: x
+                              - generic [ref=e669]: ","
+                              - generic [ref=e670]: "y"
+                              - generic [ref=e671]: )
+                            - generic [ref=e672]: ":"
+                            - generic [ref=e673]:
+                              - generic [ref=e674]:
+                                - generic [ref=e675]: x
+                                - generic [ref=e676]: ∈
+                                - generic [ref=e677]:
+                                  - generic [ref=e678]: "["
+                                  - generic [ref=e679]: "1"
+                                  - generic [ref=e680]: ","
+                                  - generic [ref=e681]:
+                                    - generic [ref=e682]: r
+                                    - generic: ⁢
+                                    - generic [ref=e683]: o
+                                    - generic: ⁢
+                                    - generic [ref=e684]: w
+                                    - generic: ⁢
+                                    - generic [ref=e685]: s
+                                  - generic [ref=e686]: "]"
+                              - generic [ref=e687]: ","
+                              - generic [ref=e688]:
+                                - generic [ref=e689]: "y"
+                                - generic [ref=e690]: ∈
+                                - generic [ref=e691]:
+                                  - generic [ref=e692]: "["
+                                  - generic [ref=e693]: "1"
+                                  - generic [ref=e694]: ","
+                                  - generic [ref=e695]:
+                                    - generic [ref=e696]: c
+                                    - generic: ⁢
+                                    - generic [ref=e697]: o
+                                    - generic: ⁢
+                                    - generic [ref=e698]: l
+                                    - generic: ⁢
+                                    - generic [ref=e699]: s
+                                  - generic [ref=e700]: "]"
+                            - generic [ref=e701]: "}"
+                        - generic [ref=e702]: .
+                  - cell [ref=e703]
+                  - cell "(2)" [ref=e704]:
+                    - generic [ref=e705]: (2)
+            - paragraph [ref=e706]:
+              - text: The ground truth map of a scenario
+              - math [ref=e707]:
+                - generic [ref=e709]: ℳ
+              - text: is defined as a mapping from each individual grid cell
+              - math [ref=e710]:
+                - generic [ref=e712]:
+                  - generic [ref=e713]: ℳ
+                  - generic: ⁢
+                  - generic [ref=e714]:
+                    - generic [ref=e715]: (
+                    - generic [ref=e716]: g
+                    - generic [ref=e717]: )
+              - text: "such that:"
+            - table [ref=e718]:
+              - rowgroup [ref=e719]:
+                - row "(3)" [ref=e720]:
+                  - cell [ref=e721]
+                  - cell [ref=e722]:
+                    - math [ref=e723]:
+                      - generic [ref=e725]:
+                        - generic [ref=e726]:
+                          - generic [ref=e727]:
+                            - generic [ref=e728]: ℳ
+                            - generic: ⁢
+                            - generic [ref=e729]:
+                              - generic [ref=e730]: (
+                              - generic [ref=e731]: g
+                              - generic [ref=e732]: )
+                          - generic [ref=e733]: =
+                          - generic [ref=e734]:
+                            - generic [ref=e735]:
+                              - generic [ref=e736]: "{"
+                              - generic [ref=e737]:
+                                - generic [ref=e738]:
+                                  - generic [ref=e740]: "0.3"
+                                  - generic [ref=e742]: empty
+                                - generic [ref=e743]:
+                                  - generic [ref=e745]: "1"
+                                  - generic [ref=e747]: occupied
+                            - generic: ⁢
+                            - generic [ref=e748]: g
+                          - generic [ref=e749]: =
+                          - generic [ref=e750]:
+                            - generic [ref=e751]: (
+                            - generic [ref=e752]: x
+                            - generic [ref=e753]: ","
+                            - generic [ref=e754]: "y"
+                            - generic [ref=e755]: )
+                          - generic [ref=e756]: ∈
+                          - generic [ref=e757]: 𝒢
+                        - generic [ref=e758]: .
+                  - cell [ref=e759]
+                  - cell "(3)" [ref=e760]:
+                    - generic [ref=e761]: (3)
+          - paragraph [ref=e763]:
+            - text: The default observation space in MarsExplorer is a real-valued matrix, with shape
+            - math [ref=e764]:
+              - generic [ref=e766]: 𝒢
+            - text: ", indicating whether each cell is occupied or empty. The field of view is determined by propagating circular ray-casts uniformly distributed across the unit circle. These ray-casts simulate a LIDAR sensor, generating a point cloud vector"
+            - math [ref=e767]:
+              - generic [ref=e769]: γ
+            - text: in polar coordinates with shape
+            - math [ref=e770]:
+              - generic [ref=e772]:
+                - generic [ref=e773]: γ
+                - generic [ref=e774]: "n"
+            - text: ", where"
+            - math [ref=e775]:
+              - generic [ref=e777]:
+                - generic [ref=e778]: γ
+                - generic [ref=e779]: "n"
+            - text: represents the number of ray-casts in the point cloud. We utilized the default
+            - math [ref=e780]:
+              - generic [ref=e782]:
+                - generic [ref=e783]:
+                  - generic [ref=e784]: γ
+                  - generic [ref=e785]: "n"
+                - generic [ref=e786]: =
+                - generic [ref=e787]: "32"
+            - text: provided within MarsExplorer. The observation matrix is then updated by marking all intersected cells as empty (
+            - math [ref=e788]:
+              - generic [ref=e790]:
+                - generic [ref=e791]: g
+                - generic [ref=e792]: =
+                - generic [ref=e793]: "0.3"
+            - text: ) and terminal cells (those where a ray-cast terminates before the max cast distance) as occupied (
+            - math [ref=e794]:
+              - generic [ref=e796]:
+                - generic [ref=e797]: g
+                - generic [ref=e798]: =
+                - generic [ref=e799]: "1.0"
+            - text: ). Lastly, the agent’s position
+            - math [ref=e800]:
+              - generic [ref=e802]:
+                - generic [ref=e803]: l
+                - generic: ⁢
+                - generic [ref=e804]: o
+                - generic: ⁢
+                - generic [ref=e805]: c
+            - text: is marked by setting the corresponding cell to an intermediate value where
+            - math [ref=e806]:
+              - generic [ref=e808]:
+                - generic [ref=e809]:
+                  - generic [ref=e810]: g
+                  - generic [ref=e811]:
+                    - generic [ref=e812]: l
+                    - generic: ⁢
+                    - generic [ref=e813]: o
+                    - generic: ⁢
+                    - generic [ref=e814]: c
+                - generic [ref=e815]: =
+                - generic [ref=e816]: "0.6"
+            - text: . The action space for MarsExplorer is discrete with 4 options representing moving one cell up, down, left, or right.
+          - paragraph [ref=e818]:
+            - text: The reward
+            - math [ref=e819]:
+              - generic [ref=e821]: r
+            - text: "is defined as a piecewise function consisting of four parts:"
+            - math [ref=e822]:
+              - generic [ref=e824]:
+                - generic [ref=e825]: r
+                - generic [ref=e826]:
+                  - generic [ref=e827]: e
+                  - generic: ⁢
+                  - generic [ref=e828]: x
+                  - generic: ⁢
+                  - generic [ref=e829]: p
+                  - generic: ⁢
+                  - generic [ref=e830]: l
+                  - generic: ⁢
+                  - generic [ref=e831]: o
+                  - generic: ⁢
+                  - generic [ref=e832]: r
+                  - generic: ⁢
+                  - generic [ref=e833]: e
+            - text: ","
+            - math [ref=e834]:
+              - generic [ref=e836]:
+                - generic [ref=e837]: r
+                - generic [ref=e838]:
+                  - generic [ref=e839]: m
+                  - generic: ⁢
+                  - generic [ref=e840]: o
+                  - generic: ⁢
+                  - generic [ref=e841]: v
+                  - generic: ⁢
+                  - generic [ref=e842]: e
+            - text: ","
+            - math [ref=e843]:
+              - generic [ref=e845]:
+                - generic [ref=e846]: r
+                - generic [ref=e847]:
+                  - generic [ref=e848]: i
+                  - generic: ⁢
+                  - generic [ref=e849]: "n"
+                  - generic: ⁢
+                  - generic [ref=e850]: v
+                  - generic: ⁢
+                  - generic [ref=e851]: a
+                  - generic: ⁢
+                  - generic [ref=e852]: l
+                  - generic: ⁢
+                  - generic [ref=e853]: i
+                  - generic: ⁢
+                  - generic [ref=e854]: d
+            - text: ", and"
+            - math [ref=e855]:
+              - generic [ref=e857]:
+                - generic [ref=e858]: r
+                - generic [ref=e859]:
+                  - generic [ref=e860]: b
+                  - generic: ⁢
+                  - generic [ref=e861]: o
+                  - generic: ⁢
+                  - generic [ref=e862]: "n"
+                  - generic: ⁢
+                  - generic [ref=e863]: u
+                  - generic: ⁢
+                  - generic [ref=e864]: s
+            - text: . With agents having the ultimate goal of exploring the entire environment,
+            - math [ref=e865]:
+              - generic [ref=e867]:
+                - generic [ref=e868]: r
+                - generic [ref=e869]:
+                  - generic [ref=e870]: e
+                  - generic: ⁢
+                  - generic [ref=e871]: x
+                  - generic: ⁢
+                  - generic [ref=e872]: p
+                  - generic: ⁢
+                  - generic [ref=e873]: l
+                  - generic: ⁢
+                  - generic [ref=e874]: o
+                  - generic: ⁢
+                  - generic [ref=e875]: r
+                  - generic: ⁢
+                  - generic [ref=e876]: e
+            - text: is defined as the number of newly explored cells from
+            - math [ref=e877]:
+              - generic [ref=e879]:
+                - generic [ref=e880]: t
+                - generic [ref=e881]: −
+                - generic [ref=e882]: "1"
+            - text: to
+            - math [ref=e883]:
+              - generic [ref=e885]: t
+            - text: . Therefore, we can also conclude that the entire grid has been explored when
+            - math [ref=e886]:
+              - generic [ref=e888]:
+                - generic [ref=e889]:
+                  - generic [ref=e890]:
+                    - generic [ref=e891]: ∑
+                    - generic [ref=e892]:
+                      - generic [ref=e893]: k
+                      - generic [ref=e894]: =
+                      - generic [ref=e895]: "0"
+                    - generic [ref=e896]: T
+                  - generic [ref=e897]:
+                    - generic [ref=e898]:
+                      - generic [ref=e899]: r
+                      - generic [ref=e900]:
+                        - generic [ref=e901]: e
+                        - generic: ⁢
+                        - generic [ref=e902]: x
+                        - generic: ⁢
+                        - generic [ref=e903]: p
+                        - generic: ⁢
+                        - generic [ref=e904]: l
+                        - generic: ⁢
+                        - generic [ref=e905]: o
+                        - generic: ⁢
+                        - generic [ref=e906]: r
+                        - generic: ⁢
+                        - generic [ref=e907]: e
+                    - generic: ⁢
+                    - generic [ref=e908]:
+                      - generic [ref=e909]: (
+                      - generic [ref=e910]: k
+                      - generic [ref=e911]: )
+                - generic [ref=e912]: →
+                - generic [ref=e913]: "N"
+            - text: . To encourage the agent to use fewer movements to observe the environment, a fixed penalty
+            - math [ref=e914]:
+              - generic [ref=e916]:
+                - generic [ref=e917]: r
+                - generic [ref=e918]:
+                  - generic [ref=e919]: m
+                  - generic: ⁢
+                  - generic [ref=e920]: o
+                  - generic: ⁢
+                  - generic [ref=e921]: v
+                  - generic: ⁢
+                  - generic [ref=e922]: e
+            - text: of 0.5 is applied at every time step.
+            - math [ref=e923]:
+              - generic [ref=e925]:
+                - generic [ref=e926]: r
+                - generic [ref=e927]:
+                  - generic [ref=e928]: b
+                  - generic: ⁢
+                  - generic [ref=e929]: o
+                  - generic: ⁢
+                  - generic [ref=e930]: "n"
+                  - generic: ⁢
+                  - generic [ref=e931]: u
+                  - generic: ⁢
+                  - generic [ref=e932]: s
+            - text: serves as an encouragement bonus where the agent receives an increased reward of 100 if 95% or more of the environment has been explored. Lastly, is
+            - math [ref=e933]:
+              - generic [ref=e935]:
+                - generic [ref=e936]: r
+                - generic [ref=e937]:
+                  - generic [ref=e938]: i
+                  - generic: ⁢
+                  - generic [ref=e939]: "n"
+                  - generic: ⁢
+                  - generic [ref=e940]: v
+                  - generic: ⁢
+                  - generic [ref=e941]: a
+                  - generic: ⁢
+                  - generic [ref=e942]: l
+                  - generic: ⁢
+                  - generic [ref=e943]: i
+                  - generic: ⁢
+                  - generic [ref=e944]: d
+            - text: which overrides the other pieces if activated.
+            - math [ref=e945]:
+              - generic [ref=e947]:
+                - generic [ref=e948]: r
+                - generic [ref=e949]:
+                  - generic [ref=e950]: i
+                  - generic: ⁢
+                  - generic [ref=e951]: "n"
+                  - generic: ⁢
+                  - generic [ref=e952]: v
+                  - generic: ⁢
+                  - generic [ref=e953]: a
+                  - generic: ⁢
+                  - generic [ref=e954]: l
+                  - generic: ⁢
+                  - generic [ref=e955]: i
+                  - generic: ⁢
+                  - generic [ref=e956]: d
+            - text: represents a fixed penalty of -100 if the agent hits an obstacle or tries to move out of bounds.
+          - 'figure "Figure 1: The process of transforming the baseline observation spaces with polar-coordinate LIDAR scans to Cartesian coordinates located and orientated on the global reference frame. (A) The first and last LIDAR scans in polar coordinates. (B) The scans transformed into Cartesian coordinates. (C) The point clouds oriented based on the agent’s location and orientation." [ref=e957]':
+            - img "Refer to caption" [ref=e958]
+            - generic [ref=e959]:
+              - generic [ref=e960]: "Figure 1:"
+              - text: The process of transforming the baseline observation spaces with polar-coordinate LIDAR scans to Cartesian coordinates located and orientated on the global reference frame. (A) The first and last LIDAR scans in polar coordinates. (B) The scans transformed into Cartesian coordinates. (C) The point clouds oriented based on the agent’s location and orientation.
+          - paragraph [ref=e962]:
+            - text: Racecar Gym (RaceCarGym)
+            - generic [ref=e963]:
+              - text: "["
+              - link "10" [ref=e964] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+              - text: "]"
+            - text: ": Inspired by the F1-Tenth driving challenge, RaceCarGym tasks agent’s with the goal of autonomous driving around flat models of real world racetracks. This environment is developed with PyBullet"
+            - generic [ref=e965]:
+              - text: "["
+              - link "22" [ref=e966] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib22
+              - text: "]"
+            - text: to implement vehicle physics with a differential drive kinematics model, steering on the front wheels, and a ray-casting-based LIDAR sensor. All experiments in this work utilize the default physics parameters. The vehicle is equipped with a 2D LIDAR sensor returning point clouds
+            - math [ref=e967]:
+              - generic [ref=e969]: γ
+            - text: with
+            - math [ref=e970]:
+              - generic [ref=e972]:
+                - generic [ref=e973]:
+                  - generic [ref=e974]: γ
+                  - generic [ref=e975]: "n"
+                - generic [ref=e976]: =
+                - generic [ref=e977]: "1080"
+            - text: beams across a 273.5
+            - superscript [ref=e978]: ∘
+            - text: field of view. Moreover, the vehicle model also includes pose, velocity, and acceleration sensors with configurable noise. To isolate OGM performance from the variability introduced by SLAM algorithms, we disable all position sensor noise. Additionally, ray-cast measurements are subjected to uniformly distributed noise, constrained within
+            - math [ref=e979]:
+              - generic [ref=e981]:
+                - generic [ref=e982]: ±
+                - generic [ref=e983]:
+                  - generic [ref=e984]: "5"
+                  - generic [ref=e985]: "%"
+            - text: of the true cast length, to simulate realistic sensor imperfections. Controlling the vehicle are two actuators adjusting the steering angle and motor speed. The default observation space is the point cloud
+            - math [ref=e986]:
+              - generic [ref=e988]: γ
+            - text: and the corresponding pose and velocity information. Likewise, the action space is a real-valued vector, normalized between -1 and 1, representing the steering angle
+            - math [ref=e989]:
+              - generic [ref=e991]: δ
+            - text: and motor speed
+            - math [ref=e992]:
+              - generic [ref=e994]: τ
+            - text: .
+          - generic [ref=e995]:
+            - paragraph [ref=e996]:
+              - text: We create a custom reward function to encourage the agent to maintain a high velocity throughout the tracks whilst minimizing the amount of steering input, the distance to any obstacles, and avoiding collisions. This process results in a final reward value
+              - math [ref=e997]:
+                - generic [ref=e999]: r
+              - text: "consisting of four distinct components:"
+              - math [ref=e1000]:
+                - generic [ref=e1002]:
+                  - generic [ref=e1003]: r
+                  - generic [ref=e1004]:
+                    - generic [ref=e1005]: v
+                    - generic: ⁢
+                    - generic [ref=e1006]: e
+                    - generic: ⁢
+                    - generic [ref=e1007]: l
+                    - generic: ⁢
+                    - generic [ref=e1008]: o
+                    - generic: ⁢
+                    - generic [ref=e1009]: c
+                    - generic: ⁢
+                    - generic [ref=e1010]: i
+                    - generic: ⁢
+                    - generic [ref=e1011]: t
+                    - generic: ⁢
+                    - generic [ref=e1012]: "y"
+              - text: ","
+              - math [ref=e1013]:
+                - generic [ref=e1015]:
+                  - generic [ref=e1016]: r
+                  - generic [ref=e1017]:
+                    - generic [ref=e1018]: s
+                    - generic: ⁢
+                    - generic [ref=e1019]: t
+                    - generic: ⁢
+                    - generic [ref=e1020]: e
+                    - generic: ⁢
+                    - generic [ref=e1021]: e
+                    - generic: ⁢
+                    - generic [ref=e1022]: r
+                    - generic: ⁢
+                    - generic [ref=e1023]: i
+                    - generic: ⁢
+                    - generic [ref=e1024]: "n"
+                    - generic: ⁢
+                    - generic [ref=e1025]: g
+              - text: ","
+              - math [ref=e1026]:
+                - generic [ref=e1028]:
+                  - generic [ref=e1029]: r
+                  - generic [ref=e1030]:
+                    - generic [ref=e1031]: o
+                    - generic: ⁢
+                    - generic [ref=e1032]: b
+                    - generic: ⁢
+                    - generic [ref=e1033]: s
+                    - generic: ⁢
+                    - generic [ref=e1034]: t
+                    - generic: ⁢
+                    - generic [ref=e1035]: a
+                    - generic: ⁢
+                    - generic [ref=e1036]: c
+                    - generic: ⁢
+                    - generic [ref=e1037]: l
+                    - generic: ⁢
+                    - generic [ref=e1038]: e
+              - text: ", and"
+              - math [ref=e1039]:
+                - generic [ref=e1041]:
+                  - generic [ref=e1042]: r
+                  - generic [ref=e1043]:
+                    - generic [ref=e1044]: c
+                    - generic: ⁢
+                    - generic [ref=e1045]: o
+                    - generic: ⁢
+                    - generic [ref=e1046]: l
+                    - generic: ⁢
+                    - generic [ref=e1047]: l
+                    - generic: ⁢
+                    - generic [ref=e1048]: i
+                    - generic: ⁢
+                    - generic [ref=e1049]: s
+                    - generic: ⁢
+                    - generic [ref=e1050]: i
+                    - generic: ⁢
+                    - generic [ref=e1051]: o
+                    - generic: ⁢
+                    - generic [ref=e1052]: "n"
+              - text: .
+              - math [ref=e1053]:
+                - generic [ref=e1055]:
+                  - generic [ref=e1056]: r
+                  - generic [ref=e1057]:
+                    - generic [ref=e1058]: v
+                    - generic: ⁢
+                    - generic [ref=e1059]: e
+                    - generic: ⁢
+                    - generic [ref=e1060]: l
+                    - generic: ⁢
+                    - generic [ref=e1061]: o
+                    - generic: ⁢
+                    - generic [ref=e1062]: c
+                    - generic: ⁢
+                    - generic [ref=e1063]: i
+                    - generic: ⁢
+                    - generic [ref=e1064]: t
+                    - generic: ⁢
+                    - generic [ref=e1065]: "y"
+              - text: "is designed to encourage the agent to maintain high velocities throughout each timestep such that:"
+            - table [ref=e1066]:
+              - rowgroup [ref=e1067]:
+                - row "(4)" [ref=e1068]:
+                  - cell [ref=e1069]
+                  - cell [ref=e1070]:
+                    - math [ref=e1071]:
+                      - generic [ref=e1073]:
+                        - generic [ref=e1074]:
+                          - generic [ref=e1075]: r
+                          - generic [ref=e1076]:
+                            - generic [ref=e1077]: v
+                            - generic: ⁢
+                            - generic [ref=e1078]: e
+                            - generic: ⁢
+                            - generic [ref=e1079]: l
+                            - generic: ⁢
+                            - generic [ref=e1080]: o
+                            - generic: ⁢
+                            - generic [ref=e1081]: c
+                            - generic: ⁢
+                            - generic [ref=e1082]: i
+                            - generic: ⁢
+                            - generic [ref=e1083]: t
+                            - generic: ⁢
+                            - generic [ref=e1084]: "y"
+                        - generic [ref=e1085]: =
+                        - generic [ref=e1086]:
+                          - generic [ref=e1087]: "{"
+                          - generic [ref=e1088]:
+                            - generic [ref=e1089]:
+                              - generic [ref=e1091]:
+                                - generic [ref=e1093]:
+                                  - generic [ref=e1094]: v
+                                  - generic [ref=e1095]:
+                                    - generic [ref=e1096]: λ
+                                    - generic [ref=e1097]: "0"
+                                - generic [ref=e1098]: ","
+                              - generic [ref=e1100]:
+                                - generic [ref=e1101]: v
+                                - generic [ref=e1102]: ">"
+                                - generic [ref=e1103]:
+                                  - generic [ref=e1104]: λ
+                                  - generic [ref=e1105]: "1"
+                            - generic [ref=e1106]:
+                              - generic [ref=e1108]:
+                                - generic [ref=e1109]:
+                                  - generic [ref=e1110]: −
+                                  - generic [ref=e1111]: "1"
+                                - generic [ref=e1112]: ","
+                              - generic [ref=e1114]: else
+                  - cell [ref=e1115]
+                  - cell "(4)" [ref=e1116]:
+                    - generic [ref=e1117]: (4)
+            - paragraph [ref=e1118]:
+              - text: where
+              - math [ref=e1119]:
+                - generic [ref=e1121]: v
+              - text: is the cumulative magnitude of velocities across all dimensions.
+              - math [ref=e1122]:
+                - generic [ref=e1124]:
+                  - generic [ref=e1125]: λ
+                  - generic [ref=e1126]: "0"
+              - text: and
+              - math [ref=e1127]:
+                - generic [ref=e1129]:
+                  - generic [ref=e1130]: λ
+                  - generic [ref=e1131]: "1"
+              - text: are heuristically chosen to be 3.5 and 0.1 respectively.
+              - math [ref=e1132]:
+                - generic [ref=e1134]:
+                  - generic [ref=e1135]: r
+                  - generic [ref=e1136]:
+                    - generic [ref=e1137]: s
+                    - generic: ⁢
+                    - generic [ref=e1138]: t
+                    - generic: ⁢
+                    - generic [ref=e1139]: e
+                    - generic: ⁢
+                    - generic [ref=e1140]: e
+                    - generic: ⁢
+                    - generic [ref=e1141]: r
+                    - generic: ⁢
+                    - generic [ref=e1142]: i
+                    - generic: ⁢
+                    - generic [ref=e1143]: "n"
+                    - generic: ⁢
+                    - generic [ref=e1144]: g
+              - text: penalizes very large steering inputs to avoid jerk and is defined as
+            - table [ref=e1145]:
+              - rowgroup [ref=e1146]:
+                - row "(5)" [ref=e1147]:
+                  - cell [ref=e1148]
+                  - cell [ref=e1149]:
+                    - math [ref=e1150]:
+                      - generic [ref=e1152]:
+                        - generic [ref=e1153]:
+                          - generic [ref=e1154]: r
+                          - generic [ref=e1155]:
+                            - generic [ref=e1156]: s
+                            - generic: ⁢
+                            - generic [ref=e1157]: t
+                            - generic: ⁢
+                            - generic [ref=e1158]: e
+                            - generic: ⁢
+                            - generic [ref=e1159]: e
+                            - generic: ⁢
+                            - generic [ref=e1160]: r
+                            - generic: ⁢
+                            - generic [ref=e1161]: i
+                            - generic: ⁢
+                            - generic [ref=e1162]: "n"
+                            - generic: ⁢
+                            - generic [ref=e1163]: g
+                        - generic [ref=e1164]: =
+                        - generic [ref=e1165]:
+                          - generic [ref=e1166]: "{"
+                          - generic [ref=e1167]:
+                            - generic [ref=e1168]:
+                              - generic [ref=e1170]:
+                                - generic [ref=e1171]: "0.1"
+                                - generic [ref=e1172]: ","
+                              - generic [ref=e1174]:
+                                - generic [ref=e1175]:
+                                  - generic [ref=e1176]: "|"
+                                  - generic [ref=e1178]:
+                                    - generic [ref=e1179]: δ
+                                    - generic [ref=e1180]:
+                                      - generic [ref=e1181]: λ
+                                      - generic [ref=e1182]: "3"
+                                  - generic [ref=e1183]: "|"
+                                - generic [ref=e1184]: <
+                                - generic [ref=e1185]:
+                                  - generic [ref=e1186]: λ
+                                  - generic [ref=e1187]: "4"
+                            - generic [ref=e1188]:
+                              - generic [ref=e1190]:
+                                - generic [ref=e1191]:
+                                  - generic [ref=e1192]: −
+                                  - generic [ref=e1194]:
+                                    - generic [ref=e1195]: δ
+                                    - generic [ref=e1196]:
+                                      - generic [ref=e1197]: λ
+                                      - generic [ref=e1198]: "2"
+                                - generic [ref=e1199]: ","
+                              - generic [ref=e1201]:
+                                - generic [ref=e1202]: e
+                                - generic: ⁢
+                                - generic [ref=e1203]: l
+                                - generic: ⁢
+                                - generic [ref=e1204]: s
+                                - generic: ⁢
+                                - generic [ref=e1205]: e
+                  - cell [ref=e1206]
+                  - cell "(5)" [ref=e1207]:
+                    - generic [ref=e1208]: (5)
+            - paragraph [ref=e1209]:
+              - math [ref=e1210]:
+                - generic [ref=e1212]:
+                  - generic [ref=e1213]: λ
+                  - generic [ref=e1214]: "2"
+              - text: ","
+              - math [ref=e1215]:
+                - generic [ref=e1217]:
+                  - generic [ref=e1218]: λ
+                  - generic [ref=e1219]: "3"
+              - text: ", and"
+              - math [ref=e1220]:
+                - generic [ref=e1222]:
+                  - generic [ref=e1223]: λ
+                  - generic [ref=e1224]: "4"
+              - text: are heuristically chosen to be 15, 5, and 0.08, respectively.
+              - math [ref=e1225]:
+                - generic [ref=e1227]:
+                  - generic [ref=e1228]: r
+                  - generic [ref=e1229]:
+                    - generic [ref=e1230]: o
+                    - generic: ⁢
+                    - generic [ref=e1231]: b
+                    - generic: ⁢
+                    - generic [ref=e1232]: s
+                    - generic: ⁢
+                    - generic [ref=e1233]: t
+                    - generic: ⁢
+                    - generic [ref=e1234]: a
+                    - generic: ⁢
+                    - generic [ref=e1235]: c
+                    - generic: ⁢
+                    - generic [ref=e1236]: l
+                    - generic: ⁢
+                    - generic [ref=e1237]: e
+              - text: penalizes the agent for being too close to any given hazard and is calculated by subtracting 0.4 from the distance to the closest obstacle.
+              - math [ref=e1238]:
+                - generic [ref=e1240]:
+                  - generic [ref=e1241]: r
+                  - generic [ref=e1242]:
+                    - generic [ref=e1243]: c
+                    - generic: ⁢
+                    - generic [ref=e1244]: o
+                    - generic: ⁢
+                    - generic [ref=e1245]: l
+                    - generic: ⁢
+                    - generic [ref=e1246]: l
+                    - generic: ⁢
+                    - generic [ref=e1247]: i
+                    - generic: ⁢
+                    - generic [ref=e1248]: s
+                    - generic: ⁢
+                    - generic [ref=e1249]: i
+                    - generic: ⁢
+                    - generic [ref=e1250]: o
+                    - generic: ⁢
+                    - generic [ref=e1251]: "n"
+              - text: is a fixed penalty of 100 that is applied if the agent hits any obstacle during the course of an episode. Bringing everything together, the final reward value
+              - math [ref=e1252]:
+                - generic [ref=e1254]: r
+              - text: "is calculated as:"
+            - table [ref=e1255]:
+              - rowgroup [ref=e1256]:
+                - row "(6)" [ref=e1257]:
+                  - cell [ref=e1258]
+                  - cell [ref=e1259]:
+                    - math [ref=e1260]:
+                      - generic [ref=e1262]:
+                        - generic [ref=e1263]:
+                          - generic [ref=e1264]: r
+                          - generic [ref=e1265]: =
+                          - generic [ref=e1266]:
+                            - generic [ref=e1267]:
+                              - generic [ref=e1268]: r
+                              - generic [ref=e1269]:
+                                - generic [ref=e1270]: v
+                                - generic: ⁢
+                                - generic [ref=e1271]: e
+                                - generic: ⁢
+                                - generic [ref=e1272]: l
+                                - generic: ⁢
+                                - generic [ref=e1273]: o
+                                - generic: ⁢
+                                - generic [ref=e1274]: c
+                                - generic: ⁢
+                                - generic [ref=e1275]: i
+                                - generic: ⁢
+                                - generic [ref=e1276]: t
+                                - generic: ⁢
+                                - generic [ref=e1277]: "y"
+                            - generic [ref=e1278]: +
+                            - generic [ref=e1279]:
+                              - generic [ref=e1280]: r
+                              - generic [ref=e1281]:
+                                - generic [ref=e1282]: s
+                                - generic: ⁢
+                                - generic [ref=e1283]: t
+                                - generic: ⁢
+                                - generic [ref=e1284]: e
+                                - generic: ⁢
+                                - generic [ref=e1285]: e
+                                - generic: ⁢
+                                - generic [ref=e1286]: r
+                                - generic: ⁢
+                                - generic [ref=e1287]: i
+                                - generic: ⁢
+                                - generic [ref=e1288]: "n"
+                                - generic: ⁢
+                                - generic [ref=e1289]: g
+                            - generic [ref=e1290]: +
+                            - generic [ref=e1291]:
+                              - generic [ref=e1292]: r
+                              - generic [ref=e1293]:
+                                - generic [ref=e1294]: o
+                                - generic: ⁢
+                                - generic [ref=e1295]: b
+                                - generic: ⁢
+                                - generic [ref=e1296]: s
+                                - generic: ⁢
+                                - generic [ref=e1297]: t
+                                - generic: ⁢
+                                - generic [ref=e1298]: a
+                                - generic: ⁢
+                                - generic [ref=e1299]: c
+                                - generic: ⁢
+                                - generic [ref=e1300]: l
+                                - generic: ⁢
+                                - generic [ref=e1301]: e
+                            - generic [ref=e1302]: +
+                            - generic [ref=e1303]:
+                              - generic [ref=e1304]: r
+                              - generic [ref=e1305]:
+                                - generic [ref=e1306]: c
+                                - generic: ⁢
+                                - generic [ref=e1307]: o
+                                - generic: ⁢
+                                - generic [ref=e1308]: l
+                                - generic: ⁢
+                                - generic [ref=e1309]: l
+                                - generic: ⁢
+                                - generic [ref=e1310]: i
+                                - generic: ⁢
+                                - generic [ref=e1311]: s
+                                - generic: ⁢
+                                - generic [ref=e1312]: i
+                                - generic: ⁢
+                                - generic [ref=e1313]: o
+                                - generic: ⁢
+                                - generic [ref=e1314]: "n"
+                        - generic [ref=e1315]: .
+                  - cell [ref=e1316]
+                  - cell "(6)" [ref=e1317]:
+                    - generic [ref=e1318]: (6)
+          - paragraph [ref=e1320]:
+            - text: "Environment Wrapping: To transform polar coordinate based LIDAR scans to Cartesian space, we create a theta vector"
+            - math [ref=e1321]:
+              - generic [ref=e1323]: Θ
+            - text: with shape
+            - math [ref=e1324]:
+              - generic [ref=e1326]:
+                - generic [ref=e1327]: γ
+                - generic [ref=e1328]: "n"
+            - text: representing the degree of rotation about the unit circle with respect to each ray-cast. For the MarsExplorer environment with a 360
+            - superscript [ref=e1329]: ∘
+            - text: field of view and
+            - math [ref=e1330]:
+              - generic [ref=e1332]:
+                - generic [ref=e1333]: γ
+                - generic [ref=e1334]: "n"
+            - text: ray-casts,
+            - math [ref=e1335]:
+              - generic [ref=e1337]: θ
+            - text: will have a discrete radian step size of
+            - math [ref=e1338]:
+              - generic [ref=e1340]:
+                - generic [ref=e1341]:
+                  - generic [ref=e1342]: Δ
+                  - generic: ⁢
+                  - generic [ref=e1343]: Θ
+                - generic [ref=e1344]: =
+                - generic [ref=e1345]:
+                  - generic [ref=e1346]:
+                    - generic [ref=e1347]: "2"
+                    - generic: ⁢
+                    - generic [ref=e1348]: π
+                  - generic [ref=e1349]:
+                    - generic [ref=e1350]: γ
+                    - generic [ref=e1351]: "n"
+            - text: such that
+            - math [ref=e1352]:
+              - generic [ref=e1354]:
+                - generic [ref=e1355]: Θ
+                - generic [ref=e1356]: =
+                - generic [ref=e1357]:
+                  - generic [ref=e1358]: "{"
+                  - generic [ref=e1359]:
+                    - generic [ref=e1360]:
+                      - generic [ref=e1361]: "0"
+                      - generic [ref=e1362]: ∗
+                      - generic [ref=e1363]: Δ
+                    - generic: ⁢
+                    - generic [ref=e1364]: Θ
+                  - generic [ref=e1365]: ","
+                  - generic [ref=e1366]:
+                    - generic [ref=e1367]:
+                      - generic [ref=e1368]: "1"
+                      - generic [ref=e1369]: ∗
+                      - generic [ref=e1370]: Δ
+                    - generic: ⁢
+                    - generic [ref=e1371]: Θ
+                  - generic [ref=e1372]: ","
+                  - generic [ref=e1373]: …
+                  - generic [ref=e1374]: ","
+                  - generic [ref=e1375]:
+                    - generic [ref=e1376]:
+                      - generic [ref=e1377]:
+                        - generic [ref=e1378]: (
+                        - generic [ref=e1379]:
+                          - generic [ref=e1380]:
+                            - generic [ref=e1381]: γ
+                            - generic [ref=e1382]: "n"
+                          - generic [ref=e1383]: −
+                          - generic [ref=e1384]: "1"
+                        - generic [ref=e1385]: )
+                      - generic [ref=e1386]: ∗
+                      - generic [ref=e1387]: Δ
+                    - generic: ⁢
+                    - generic [ref=e1388]: Θ
+                  - generic [ref=e1389]: "}"
+            - text: . Conversely with the RaceCarGym having a field of view of 273.5
+            - superscript [ref=e1390]: ∘
+            - text: ", it has a different step size of"
+            - math [ref=e1391]:
+              - generic [ref=e1393]:
+                - generic [ref=e1394]:
+                  - generic [ref=e1395]: Δ
+                  - generic: ⁢
+                  - generic [ref=e1396]: Θ
+                - generic [ref=e1397]: =
+                - generic [ref=e1398]:
+                  - generic [ref=e1399]:
+                    - generic [ref=e1400]:
+                      - generic [ref=e1401]: "273.5"
+                      - generic [ref=e1402]: ∗
+                      - generic [ref=e1403]: "2"
+                    - generic: ⁢
+                    - generic [ref=e1404]: π
+                  - generic [ref=e1405]:
+                    - generic [ref=e1406]: "365"
+                    - generic [ref=e1407]: ∗
+                    - generic [ref=e1408]:
+                      - generic [ref=e1409]: γ
+                      - generic [ref=e1410]: "n"
+            - text: radians.
+          - figure "Algorithm 1 Polar to Cartesian Coordinates" [ref=e1411]:
+            - generic [ref=e1412]:
+              - generic [ref=e1413]: Algorithm 1
+              - text: Polar to Cartesian Coordinates
+            - generic [ref=e1414]:
+              - generic [ref=e1415]:
+                - generic [ref=e1416]: "0:"
+                - math [ref=e1417]:
+                  - generic [ref=e1419]:
+                    - generic [ref=e1420]:
+                      - generic [ref=e1421]: γ
+                      - generic [ref=e1422]: "n"
+                    - generic [ref=e1423]: ←
+                    - generic [ref=e1424]: number of ray-casts
+              - generic [ref=e1425]:
+                - generic [ref=e1426]: "0:"
+                - math [ref=e1427]:
+                  - generic [ref=e1429]:
+                    - generic [ref=e1430]: γ
+                    - generic [ref=e1431]: ←
+                    - generic [ref=e1432]:
+                      - generic [ref=e1433]: LIDAR scan with
+                      - generic: ⁢
+                      - generic [ref=e1434]:
+                        - generic [ref=e1435]: γ
+                        - generic [ref=e1436]: "n"
+                      - generic: ⁢
+                      - generic [ref=e1437]: ray-casts
+              - generic [ref=e1438]:
+                - generic [ref=e1439]: "0:"
+                - math [ref=e1440]:
+                  - generic [ref=e1442]:
+                    - generic [ref=e1443]: Θ
+                    - generic [ref=e1444]: ←
+                    - generic [ref=e1445]: angle of each ray-cast in radians
+              - math [ref=e1447]:
+                - generic [ref=e1449]:
+                  - generic [ref=e1450]: X
+                  - generic [ref=e1451]: ∈
+                  - generic [ref=e1452]:
+                    - generic [ref=e1453]: ℝ
+                    - generic [ref=e1454]:
+                      - generic [ref=e1455]: "N"
+                      - generic [ref=e1456]: ×
+                      - generic [ref=e1457]: "2"
+              - math [ref=e1459]:
+                - generic [ref=e1461]:
+                  - generic [ref=e1462]: i
+                  - generic [ref=e1463]: ←
+                  - generic [ref=e1464]: "0"
+              - generic [ref=e1465]:
+                - text: while
+                - math [ref=e1466]:
+                  - generic [ref=e1468]:
+                    - generic [ref=e1469]: i
+                    - generic [ref=e1470]: <
+                    - generic [ref=e1471]:
+                      - generic [ref=e1472]: γ
+                      - generic [ref=e1473]: "n"
+                - text: do
+              - math [ref=e1475]:
+                - generic [ref=e1477]:
+                  - generic [ref=e1478]:
+                    - generic [ref=e1479]: X
+                    - generic: ⁢
+                    - generic [ref=e1480]:
+                      - generic [ref=e1481]: "["
+                      - generic [ref=e1482]: i
+                      - generic [ref=e1483]: ","
+                      - generic [ref=e1484]: "0"
+                      - generic [ref=e1485]: "]"
+                  - generic [ref=e1486]: ←
+                  - generic [ref=e1487]:
+                    - generic [ref=e1488]: γ
+                    - generic: ⁢
+                    - generic [ref=e1489]:
+                      - generic [ref=e1490]: "["
+                      - generic [ref=e1491]: i
+                      - generic [ref=e1492]: "]"
+                    - generic: ⁢
+                    - generic [ref=e1493]:
+                      - generic [ref=e1494]: sin
+                      - generic: ⁡
+                      - generic [ref=e1495]:
+                        - generic [ref=e1496]: (
+                        - generic [ref=e1497]:
+                          - generic [ref=e1498]: Θ
+                          - generic: ⁢
+                          - generic [ref=e1499]:
+                            - generic [ref=e1500]: "["
+                            - generic [ref=e1501]: i
+                            - generic [ref=e1502]: "]"
+                        - generic [ref=e1503]: )
+              - math [ref=e1505]:
+                - generic [ref=e1507]:
+                  - generic [ref=e1508]:
+                    - generic [ref=e1509]: X
+                    - generic: ⁢
+                    - generic [ref=e1510]:
+                      - generic [ref=e1511]: "["
+                      - generic [ref=e1512]: i
+                      - generic [ref=e1513]: ","
+                      - generic [ref=e1514]: "1"
+                      - generic [ref=e1515]: "]"
+                  - generic [ref=e1516]: ←
+                  - generic [ref=e1517]:
+                    - generic [ref=e1518]: γ
+                    - generic: ⁢
+                    - generic [ref=e1519]:
+                      - generic [ref=e1520]: "["
+                      - generic [ref=e1521]: i
+                      - generic [ref=e1522]: "]"
+                    - generic: ⁢
+                    - generic [ref=e1523]:
+                      - generic [ref=e1524]: cos
+                      - generic: ⁡
+                      - generic [ref=e1525]:
+                        - generic [ref=e1526]: (
+                        - generic [ref=e1527]:
+                          - generic [ref=e1528]: Θ
+                          - generic: ⁢
+                          - generic [ref=e1529]:
+                            - generic [ref=e1530]: "["
+                            - generic [ref=e1531]: i
+                            - generic [ref=e1532]: "]"
+                        - generic [ref=e1533]: )
+              - math [ref=e1535]:
+                - generic [ref=e1537]:
+                  - generic [ref=e1538]: i
+                  - generic [ref=e1539]: =
+                  - generic [ref=e1540]:
+                    - generic [ref=e1541]: i
+                    - generic [ref=e1542]: +
+                    - generic [ref=e1543]: "1"
+              - generic [ref=e1544]: end while
+              - generic [ref=e1545]:
+                - text: return
+                - math [ref=e1546]:
+                  - generic [ref=e1548]: X
+          - 'figure "Figure 2: The qualitative results of training a convolutional policy network with Proximal Policy Optimization [ 23 ] for multiple levels in MarsExplorer [ 9 ] with VSA-OGM [ 7 ] and BHM [ 8 ]." [ref=e1549]':
+            - img "Refer to caption" [ref=e1550]
+            - generic [ref=e1551]:
+              - generic [ref=e1552]: "Figure 2:"
+              - text: The qualitative results of training a convolutional policy network with Proximal Policy Optimization
+              - generic [ref=e1553]:
+                - text: "["
+                - link "23" [ref=e1554] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib23
+                - text: "]"
+              - text: for multiple levels in MarsExplorer
+              - generic [ref=e1555]:
+                - text: "["
+                - link "9" [ref=e1556] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: with VSA-OGM
+              - generic [ref=e1557]:
+                - text: "["
+                - link "7" [ref=e1558] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+                - text: "]"
+              - text: and BHM
+              - generic [ref=e1559]:
+                - text: "["
+                - link "8" [ref=e1560] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                - text: "]"
+              - text: .
+          - paragraph [ref=e1562]:
+            - text: Following Algorithm
+            - link "1" [ref=e1563] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#alg1
+            - text: ", we convert each ray-cast length in"
+            - math [ref=e1564]:
+              - generic [ref=e1566]: γ
+            - text: and each ray-cast angle in
+            - math [ref=e1567]:
+              - generic [ref=e1569]: Θ
+            - text: to a Cartesian coordinate resulting in a matrix
+            - math [ref=e1570]:
+              - generic [ref=e1572]:
+                - generic [ref=e1573]: X
+                - generic [ref=e1574]: ∈
+                - generic [ref=e1575]:
+                  - generic [ref=e1576]: ℝ
+                  - generic [ref=e1577]:
+                    - generic [ref=e1578]:
+                      - generic [ref=e1579]: γ
+                      - generic [ref=e1580]: "n"
+                    - generic [ref=e1581]: ×
+                    - generic [ref=e1582]: "2"
+            - text: . We create a corresponding output matrix
+            - math [ref=e1583]:
+              - generic [ref=e1585]: "y"
+            - text: with shape
+            - math [ref=e1586]:
+              - generic [ref=e1588]:
+                - generic [ref=e1589]:
+                  - generic [ref=e1590]: γ
+                  - generic [ref=e1591]: "n"
+                - generic [ref=e1592]: ×
+                - generic [ref=e1593]: "1"
+            - text: and all values defaulting to 1. To account for ray-casts that do not intersect with an obstacle and return the maximum cast distance
+            - math [ref=e1594]:
+              - generic [ref=e1596]:
+                - generic [ref=e1597]: γ
+                - generic [ref=e1598]:
+                  - generic [ref=e1599]: m
+                  - generic: ⁢
+                  - generic [ref=e1600]: a
+                  - generic: ⁢
+                  - generic [ref=e1601]: x
+            - text: ", we employ element-wise conditioning and assignment to set all"
+            - math [ref=e1602]:
+              - generic [ref=e1604]: "y"
+            - text: values, where indices that match
+            - math [ref=e1605]:
+              - generic [ref=e1607]:
+                - generic [ref=e1608]:
+                  - generic [ref=e1609]: γ
+                  - generic: ⁢
+                  - generic [ref=e1610]:
+                    - generic [ref=e1611]: "["
+                    - generic [ref=e1612]: i
+                    - generic [ref=e1613]: "]"
+                - generic [ref=e1614]: =
+                - generic [ref=e1615]:
+                  - generic [ref=e1616]: γ
+                  - generic [ref=e1617]:
+                    - generic [ref=e1618]: m
+                    - generic: ⁢
+                    - generic [ref=e1619]: a
+                    - generic: ⁢
+                    - generic [ref=e1620]: x
+            - text: are set to 0 signifying that the ray-cast corresponds to an empty location.
+          - paragraph [ref=e1622]:
+            - text: To avoid under-sampling free-space within the environment, we employ linear interpolation to generate
+            - math [ref=e1623]:
+              - generic [ref=e1625]: M
+            - text: points along each individual ray-cast. This process generates a matrix
+            - math [ref=e1626]:
+              - generic [ref=e1628]:
+                - generic [ref=e1629]: X
+                - generic [ref=e1630]:
+                  - generic [ref=e1631]: i
+                  - generic: ⁢
+                  - generic [ref=e1632]: "n"
+                  - generic: ⁢
+                  - generic [ref=e1633]: t
+            - text: with
+            - math [ref=e1634]:
+              - generic [ref=e1636]: M
+            - text: evenly distributed points between 0 and the length of the i-th raycast
+            - math [ref=e1637]:
+              - generic [ref=e1639]:
+                - generic [ref=e1640]: γ
+                - generic: ⁢
+                - generic [ref=e1641]:
+                  - generic [ref=e1642]: "["
+                  - generic [ref=e1643]: i
+                  - generic [ref=e1644]: "]"
+            - text: resulting in a final matrix shape of
+            - math [ref=e1645]:
+              - generic [ref=e1647]:
+                - generic [ref=e1648]:
+                  - generic [ref=e1649]: M
+                  - generic: ⁢
+                  - generic [ref=e1650]:
+                    - generic [ref=e1651]: γ
+                    - generic [ref=e1652]: "n"
+                - generic [ref=e1653]: ×
+                - generic [ref=e1654]: "2"
+            - text: . A corresponding target vector
+            - math [ref=e1655]:
+              - generic [ref=e1657]:
+                - generic [ref=e1658]: "y"
+                - generic [ref=e1659]:
+                  - generic [ref=e1660]: i
+                  - generic: ⁢
+                  - generic [ref=e1661]: "n"
+                  - generic: ⁢
+                  - generic [ref=e1662]: t
+            - text: ", with shape"
+            - math [ref=e1663]:
+              - generic [ref=e1665]:
+                - generic [ref=e1666]: M
+                - generic: ⁢
+                - generic [ref=e1667]:
+                  - generic [ref=e1668]: γ
+                  - generic [ref=e1669]: "n"
+            - text: ", is initialized with zeros signifying that all points in"
+            - math [ref=e1670]:
+              - generic [ref=e1672]:
+                - generic [ref=e1673]: X
+                - generic [ref=e1674]:
+                  - generic [ref=e1675]: i
+                  - generic: ⁢
+                  - generic [ref=e1676]: "n"
+                  - generic: ⁢
+                  - generic [ref=e1677]: t
+            - text: are classified as empty. We concatenate
+            - math [ref=e1678]:
+              - generic [ref=e1680]: X
+            - text: and
+            - math [ref=e1681]:
+              - generic [ref=e1683]:
+                - generic [ref=e1684]: X
+                - generic [ref=e1685]:
+                  - generic [ref=e1686]: i
+                  - generic: ⁢
+                  - generic [ref=e1687]: "n"
+                  - generic: ⁢
+                  - generic [ref=e1688]: t
+            - text: along with
+            - math [ref=e1689]:
+              - generic [ref=e1691]: "y"
+            - text: and
+            - math [ref=e1692]:
+              - generic [ref=e1694]:
+                - generic [ref=e1695]: "y"
+                - generic [ref=e1696]:
+                  - generic [ref=e1697]: i
+                  - generic: ⁢
+                  - generic [ref=e1698]: "n"
+                  - generic: ⁢
+                  - generic [ref=e1699]: t
+            - text: resulting in vector-matrices with shape
+            - math [ref=e1700]:
+              - generic [ref=e1702]:
+                - generic [ref=e1703]:
+                  - generic [ref=e1704]:
+                    - generic [ref=e1705]: (
+                    - generic [ref=e1706]:
+                      - generic [ref=e1707]: M
+                      - generic [ref=e1708]: +
+                      - generic [ref=e1709]: "1"
+                    - generic [ref=e1710]: )
+                  - generic: ⁢
+                  - generic [ref=e1711]:
+                    - generic [ref=e1712]: γ
+                    - generic [ref=e1713]: "n"
+                - generic [ref=e1714]: ×
+                - generic [ref=e1715]: "2"
+            - text: and
+            - math [ref=e1716]:
+              - generic [ref=e1718]:
+                - generic [ref=e1719]:
+                  - generic [ref=e1720]: (
+                  - generic [ref=e1721]:
+                    - generic [ref=e1722]: M
+                    - generic [ref=e1723]: +
+                    - generic [ref=e1724]: "1"
+                  - generic [ref=e1725]: )
+                - generic: ⁢
+                - generic [ref=e1726]:
+                  - generic [ref=e1727]: γ
+                  - generic [ref=e1728]: "n"
+            - text: ", respectively. We specify"
+            - math [ref=e1729]:
+              - generic [ref=e1731]:
+                - generic [ref=e1732]: M
+                - generic [ref=e1733]: =
+                - generic [ref=e1734]: "1"
+            - text: and
+            - math [ref=e1735]:
+              - generic [ref=e1737]:
+                - generic [ref=e1738]: M
+                - generic [ref=e1739]: =
+                - generic [ref=e1740]: "20"
+            - text: for all MarsExplorer and RaceCarGym experiments, respectively. These values were empirically chosen based on the environmental complexity. The last step in our data preprocessing is creating a geometric transformation matrix
+            - math [ref=e1741]:
+              - generic [ref=e1743]: T
+            - text: to translate and rotate the Cartesian coordinates to the global reference frame using the agent’s pose. More information on this process can be found in
+            - generic [ref=e1744]:
+              - text: "["
+              - link "24" [ref=e1745] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib24
+              - text: "]"
+            - text: . A visualization of the end-to-end data transformation process is shown in Figure
+            - link "1" [ref=e1746] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S3.F1
+            - text: .
+        - generic [ref=e1747]:
+          - heading "IV Results & Discussion" [level=2] [ref=e1748]:
+            - generic [ref=e1749]: IV
+            - text: Results & Discussion
+          - paragraph [ref=e1751]:
+            - text: We evaluate the performance characteristics of BHM
+            - generic [ref=e1752]:
+              - text: "["
+              - link "8" [ref=e1753] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: and VSA-OGM
+            - generic [ref=e1754]:
+              - text: "["
+              - link "7" [ref=e1755] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: across two distinct RL environments known as MarsExplorer
+            - generic [ref=e1756]:
+              - text: "["
+              - link "9" [ref=e1757] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+              - text: "]"
+            - text: and RaceCarGym
+            - generic [ref=e1758]:
+              - text: "["
+              - link "10" [ref=e1759] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+              - text: "]"
+            - text: . All RL models are trained using the open-source Stable-Baselines framework
+            - generic [ref=e1760]:
+              - text: "["
+              - link "25" [ref=e1761] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib25
+              - text: "]"
+            - text: with Open-AI Gym
+            - generic [ref=e1762]:
+              - text: "["
+              - link "26" [ref=e1763] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib26
+              - text: "]"
+            - text: and Farama’s Gymnasium
+            - generic [ref=e1764]:
+              - text: "["
+              - link "27" [ref=e1765] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib27
+              - text: "]"
+            - text: . We train models and perform all timing analysis using an NVIDIA DGX compute cluster with 40GB A100 GPUs. It should be noted all experiments are performed on a slice of a single DGX machine with one A100 GPU.
+          - paragraph [ref=e1767]:
+            - generic [ref=e1768]: "Environment Exploration with MarsExplorer:"
+            - text: The MarsExplorer environment tasks autonomous agents with exploring unknown environments. We create three environments with varying sizes to increase the difficulty of learning the entire environment. These levels are known as Level 1, Level 5, and Level 10 with shapes [20x20], [30x30], and [40x40] respectively. All levels maintain the same reward coefficients as described in Section
+            - link "III" [ref=e1769] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S3
+            - text: .
+          - paragraph [ref=e1771]:
+            - text: Taking inspiration from the default observation space within MarsExplorer, we scale the resulting occupancy grid maps from both BHM
+            - generic [ref=e1772]:
+              - text: "["
+              - link "8" [ref=e1773] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: and VSA-OGM
+            - generic [ref=e1774]:
+              - text: "["
+              - link "7" [ref=e1775] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: to between 0 and 0.5 with the voxel corresponding to the agent’s location having a value of 1.0. We chose to scale the resulting occupancy values between a subset of the range and set the location value outside of this range. This process avoids the possibility of an intermediate value being confused with the agent’s location. MarsExplorer uses a one-to-one mapping between the number of grid cells and the occupancy grid so the resulting OGM’s from both methods have the shape
+            - math [ref=e1776]:
+              - generic [ref=e1778]: 𝒢
+            - text: .
+          - 'figure "Figure 3: The generalization capabilities of policy networks trained with VSA-OGM [ 7 ] and BHM [ 8 ] on unseen map layouts within the MarsExplorer environment [ 9 ]." [ref=e1779]':
+            - img "Refer to caption" [ref=e1780]
+            - generic [ref=e1781]:
+              - generic [ref=e1782]: "Figure 3:"
+              - text: The generalization capabilities of policy networks trained with VSA-OGM
+              - generic [ref=e1783]:
+                - text: "["
+                - link "7" [ref=e1784] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+                - text: "]"
+              - text: and BHM
+              - generic [ref=e1785]:
+                - text: "["
+                - link "8" [ref=e1786] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                - text: "]"
+              - text: on unseen map layouts within the MarsExplorer environment
+              - generic [ref=e1787]:
+                - text: "["
+                - link "9" [ref=e1788] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: .
+          - 'figure "TABLE II: Training results with Proximal Policy Optimization [ 23 ] on different levels of the MarsExplorer [ 9 ] environment" [ref=e1789]':
+            - generic [ref=e1790]:
+              - generic [ref=e1791]: "TABLE II:"
+              - text: Training results with Proximal Policy Optimization
+              - generic [ref=e1792]:
+                - text: "["
+                - link "23" [ref=e1793] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib23
+                - text: "]"
+              - text: on different levels of the MarsExplorer
+              - generic [ref=e1794]:
+                - text: "["
+                - link "9" [ref=e1795] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+                - text: "]"
+              - text: environment
+            - table [ref=e1796]:
+              - rowgroup [ref=e1797]:
+                - row "Algorithm Level Mean Reward OGM Latency" [ref=e1798]:
+                  - columnheader "Algorithm" [ref=e1799]
+                  - columnheader "Level" [ref=e1800]
+                  - columnheader "Mean Reward" [ref=e1801]
+                  - columnheader "OGM Latency" [ref=e1802]
+              - rowgroup [ref=e1803]:
+                - row "1 117.02" [ref=e1804]:
+                  - rowheader [ref=e1805]
+                  - cell "1" [ref=e1806]
+                  - rowheader "117.02" [ref=e1807]
+                  - cell [ref=e1808]:
+                    - math [ref=e1809]:
+                      - generic [ref=e1811]:
+                        - generic [ref=e1812]: "0.75"
+                        - generic [ref=e1813]: ±
+                        - generic [ref=e1814]:
+                          - generic [ref=e1815]: "0.06"
+                          - generic: ⁢
+                          - generic [ref=e1816]: ms
+                - row "BHM [ 8 ] 5 230.25" [ref=e1817]:
+                  - rowheader "BHM [ 8 ]" [ref=e1818]:
+                    - text: BHM
+                    - generic [ref=e1819]:
+                      - text: "["
+                      - link "8" [ref=e1820] [cursor=pointer]:
+                        - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                      - text: "]"
+                  - cell "5" [ref=e1821]
+                  - rowheader "230.25" [ref=e1822]
+                  - cell [ref=e1823]:
+                    - math [ref=e1824]:
+                      - generic [ref=e1826]:
+                        - generic [ref=e1827]: "0.76"
+                        - generic [ref=e1828]: ±
+                        - generic [ref=e1829]:
+                          - generic [ref=e1830]: "0.05"
+                          - generic: ⁢
+                          - generic [ref=e1831]: ms
+                - row "10 180.80" [ref=e1832]:
+                  - rowheader [ref=e1833]
+                  - cell "10" [ref=e1834]
+                  - rowheader "180.80" [ref=e1835]
+                  - cell [ref=e1836]:
+                    - math [ref=e1837]:
+                      - generic [ref=e1839]:
+                        - generic [ref=e1840]: "0.93"
+                        - generic [ref=e1841]: ±
+                        - generic [ref=e1842]:
+                          - generic [ref=e1843]: "0.04"
+                          - generic: ⁢
+                          - generic [ref=e1844]: ms
+                - row "1 119.10" [ref=e1845]:
+                  - rowheader [ref=e1846]
+                  - cell "1" [ref=e1847]
+                  - rowheader "119.10" [ref=e1848]
+                  - cell [ref=e1849]:
+                    - math [ref=e1850]:
+                      - generic [ref=e1852]:
+                        - generic [ref=e1853]: "1.76"
+                        - generic [ref=e1854]: ±
+                        - generic [ref=e1855]:
+                          - generic [ref=e1856]: "0.32"
+                          - generic: ⁢
+                          - generic [ref=e1857]: ms
+                - row "VSA-OGM [ 7 ] 5 232.93" [ref=e1858]:
+                  - rowheader "VSA-OGM [ 7 ]" [ref=e1859]:
+                    - text: VSA-OGM
+                    - generic [ref=e1860]:
+                      - text: "["
+                      - link "7" [ref=e1861] [cursor=pointer]:
+                        - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+                      - text: "]"
+                  - cell "5" [ref=e1862]
+                  - rowheader "232.93" [ref=e1863]
+                  - cell [ref=e1864]:
+                    - math [ref=e1865]:
+                      - generic [ref=e1867]:
+                        - generic [ref=e1868]: "1.73"
+                        - generic [ref=e1869]: ±
+                        - generic [ref=e1870]:
+                          - generic [ref=e1871]: "0.31"
+                          - generic: ⁢
+                          - generic [ref=e1872]: ms
+                - row "10 184.35" [ref=e1873]:
+                  - rowheader [ref=e1874]
+                  - cell "10" [ref=e1875]
+                  - rowheader "184.35" [ref=e1876]
+                  - cell [ref=e1877]:
+                    - math [ref=e1878]:
+                      - generic [ref=e1880]:
+                        - generic [ref=e1881]: "1.70"
+                        - generic [ref=e1882]: ±
+                        - generic [ref=e1883]:
+                          - generic [ref=e1884]: "0.33"
+                          - generic: ⁢
+                          - generic [ref=e1885]: ms
+          - 'figure "Figure 4: The qualitative results of training a multi-headed policy network with Proximal Policy Optimization [ 23 ] for multiple tracks in RaceCarGym [ 10 ] with VSA-OGM [ 7 ] and BHM [ 8 ]." [ref=e1886]':
+            - img "Refer to caption" [ref=e1887]
+            - generic [ref=e1888]:
+              - generic [ref=e1889]: "Figure 4:"
+              - text: The qualitative results of training a multi-headed policy network with Proximal Policy Optimization
+              - generic [ref=e1890]:
+                - text: "["
+                - link "23" [ref=e1891] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib23
+                - text: "]"
+              - text: for multiple tracks in RaceCarGym
+              - generic [ref=e1892]:
+                - text: "["
+                - link "10" [ref=e1893] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+                - text: "]"
+              - text: with VSA-OGM
+              - generic [ref=e1894]:
+                - text: "["
+                - link "7" [ref=e1895] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+                - text: "]"
+              - text: and BHM
+              - generic [ref=e1896]:
+                - text: "["
+                - link "8" [ref=e1897] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                - text: "]"
+              - text: .
+          - paragraph [ref=e1899]: BHM is configured with a bandwidth of 6, while VSA-OGM is configured with a vector dimensionality of 4096, a length scale of 3, and 4 tiles per dimension. In both cases, the length scale and bandwidth parameters control the fidelity and smoothness of the map with respect to map size. The vector dimensionality and number of tiles are unique to VSA-OGM and allow the algorithm to scale based on problem requirements. The policy network utilizes a convolutional feature extractor with a multi-layer perception (MLP).
+          - paragraph [ref=e1901]:
+            - text: The convolutional feature extractor receives the modified OGM and passes it through two convolutional layers. The first layer returns 8 features with a kernel size of 3 and a stride of 2. The second convolutional layer accepts the 8 features and returns 16 features with a kernel size of 2 and a stride of 2. The extracted features are flattened and passed through a linear layer returning 256 features. These features are then passed through a MLP using 4 hidden layers with 64 hidden neurons and ReLU activations. To introduce more variability in the training process, we adjust the decay factor and learning rate with unique values (.95, .99, .999) and (.0003, .000198, .000099), respectively. We train our model with Proximal Policy Optimization (PPO)
+            - generic [ref=e1902]:
+              - text: "["
+              - link "23" [ref=e1903] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib23
+              - text: "]"
+            - text: and each parameter combination, for 100000 time steps, leading to nine training configurations per OGM algorithm and level combination. The averaged performance of these nine combinations are shown in Table
+            - link "II" [ref=e1904] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.T2
+            - text: and Figure
+            - link "2" [ref=e1905] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S3.F2
+            - text: . All timing analysis is performed with PyTorch
+            - generic [ref=e1906]:
+              - text: "["
+              - link "28" [ref=e1907] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib28
+              - text: "]"
+            - text: ", all tensors pre-loaded into GPU memory, and include synchronization between the CPU and GPU."
+          - 'figure "Figure 5: The generalizability of trained multi-headed policy networks when trained and evaluated on multiple maps. Austria, Berlin, and Treitlstrasse were used for training with all remaining maps being used for evaluation. All results are averaged over 5 evaluations." [ref=e1908]':
+            - img "Refer to caption" [ref=e1909]
+            - generic [ref=e1910]:
+              - generic [ref=e1911]: "Figure 5:"
+              - text: The generalizability of trained multi-headed policy networks when trained and evaluated on multiple maps. Austria, Berlin, and Treitlstrasse were used for training with all remaining maps being used for evaluation. All results are averaged over 5 evaluations.
+          - paragraph [ref=e1913]:
+            - text: As shown in Table
+            - link "II" [ref=e1914] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.T2
+            - text: ", VSA-OGM performs slightly better in terms of mean reward at the cost of 2.33x increased latency per time step. The final size of the learned memory with VSA-OGM was 0.52MB with BHM having a model size of 0.02MB on the largest map (Level 10). This increase in model size is expected as the GPU compatible version of BHM assumes independence between voxels and doesn’t maintain the full covariance matrix"
+            - generic [ref=e1915]:
+              - text: "["
+              - link "7" [ref=e1916] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: ","
+              - link "8" [ref=e1917] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: .
+          - paragraph [ref=e1919]:
+            - text: Generalizability. As shown in Figure
+            - link "3" [ref=e1920] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.F3
+            - text: ", we evaluate the generalizability of all trained policy networks on each level with random obstacle layouts. We evaluate each parameter combination across both OGM methods and 25 levels of the same size but with different obstacle layouts for a total of 2250 evaluations. Our results show that policies trained with VSA-OGM exhibit an approximately 52% increase in generalizability (measured by the percent increase in reward) across all evaluations. This suggests that policy networks trained with VSA-OGM provide policy networks with adequate information to perform the tasks while also not allowing the policy to over fit and suffer on unknown environments. It should be noted that the increased variance with VSA-OGM is expected as PPO is very sensitive to parameter configurations so many of the configurations fail to generalize. Therefore, the increased variance is caused by the high performance ceiling provided by policy networks trained with VSA-OGM."
+          - 'figure "Figure 6: The training maps used within the RaceCarGym environment." [ref=e1921]':
+            - img "Refer to caption" [ref=e1922]
+            - generic [ref=e1923]:
+              - generic [ref=e1924]: "Figure 6:"
+              - text: The training maps used within the RaceCarGym environment.
+          - paragraph [ref=e1926]:
+            - generic [ref=e1927]: "Autonomous Driving with RaceCarGym:"
+            - text: We evaluate the performance attributes of VSA-OGM for autonomous driving with the RaceCarGym
+            - generic [ref=e1928]:
+              - text: "["
+              - link "10" [ref=e1929] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+              - text: "]"
+            - text: reinforcement learning environment. We utilized three of the tracks (Berlin, Austria, and Treitlstrasse). Berlin is the easiest track with multiple gradual corners with Austria having more short radius (closer to
+            - math [ref=e1930]:
+              - generic [ref=e1932]:
+                - generic [ref=e1933]: "90"
+                - generic [ref=e1934]: ∘
+            - text: ) corners. Treitlstrasse is the most difficult with extremely sharp turns through narrow corridors. We train all model configurations individually on each track. A visualization of the three training maps is shown in Figure
+            - link "6" [ref=e1935] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.F6
+            - text: .
+          - 'figure "TABLE III: Training results with Proximal Policy Optimization [ 23 ] on different tracks of the RaceCarGym [ 10 ] environment" [ref=e1936]':
+            - generic [ref=e1937]:
+              - generic [ref=e1938]: "TABLE III:"
+              - text: Training results with Proximal Policy Optimization
+              - generic [ref=e1939]:
+                - text: "["
+                - link "23" [ref=e1940] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib23
+                - text: "]"
+              - text: on different tracks of the RaceCarGym
+              - generic [ref=e1941]:
+                - text: "["
+                - link "10" [ref=e1942] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+                - text: "]"
+              - text: environment
+            - table [ref=e1943]:
+              - rowgroup [ref=e1944]:
+                - row "Algorithm Track Mean Reward OGM Latency" [ref=e1945]:
+                  - columnheader "Algorithm" [ref=e1946]
+                  - columnheader "Track" [ref=e1947]
+                  - columnheader "Mean Reward" [ref=e1948]
+                  - columnheader "OGM Latency" [ref=e1949]
+              - rowgroup [ref=e1950]:
+                - row "Berlin 197.99" [ref=e1951]:
+                  - cell [ref=e1952]
+                  - cell "Berlin" [ref=e1953]
+                  - cell "197.99" [ref=e1954]
+                  - cell [ref=e1955]:
+                    - math [ref=e1956]:
+                      - generic [ref=e1958]:
+                        - generic [ref=e1959]: "3.39"
+                        - generic [ref=e1960]: ±
+                        - generic [ref=e1961]:
+                          - generic [ref=e1962]: "1.27"
+                          - generic: ⁢
+                          - generic [ref=e1963]: ms
+                - row "BHM [ 8 ] Austria 334.86" [ref=e1964]:
+                  - cell "BHM [ 8 ]" [ref=e1965]:
+                    - text: BHM
+                    - generic [ref=e1966]:
+                      - text: "["
+                      - link "8" [ref=e1967] [cursor=pointer]:
+                        - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+                      - text: "]"
+                  - cell "Austria" [ref=e1968]
+                  - cell "334.86" [ref=e1969]
+                  - cell [ref=e1970]:
+                    - math [ref=e1971]:
+                      - generic [ref=e1973]:
+                        - generic [ref=e1974]: "2.97"
+                        - generic [ref=e1975]: ±
+                        - generic [ref=e1976]:
+                          - generic [ref=e1977]: "0.51"
+                          - generic: ⁢
+                          - generic [ref=e1978]: ms
+                - row "Treitlstasse 121.42" [ref=e1979]:
+                  - cell [ref=e1980]
+                  - cell "Treitlstasse" [ref=e1981]
+                  - cell "121.42" [ref=e1982]
+                  - cell [ref=e1983]:
+                    - math [ref=e1984]:
+                      - generic [ref=e1986]:
+                        - generic [ref=e1987]: "2.03"
+                        - generic [ref=e1988]: ±
+                        - generic [ref=e1989]:
+                          - generic [ref=e1990]: "0.29"
+                          - generic: ⁢
+                          - generic [ref=e1991]: ms
+                - row "Berlin 214.36" [ref=e1992]:
+                  - cell [ref=e1993]
+                  - cell "Berlin" [ref=e1994]
+                  - cell "214.36" [ref=e1995]
+                  - cell [ref=e1996]:
+                    - math [ref=e1997]:
+                      - generic [ref=e1999]:
+                        - generic [ref=e2000]: "198.83"
+                        - generic [ref=e2001]: ±
+                        - generic [ref=e2002]:
+                          - generic [ref=e2003]: "0.52"
+                          - generic: ⁢
+                          - generic [ref=e2004]: ms
+                - row "VSA-OGM [ 7 ] Austria 297.31" [ref=e2005]:
+                  - cell "VSA-OGM [ 7 ]" [ref=e2006]:
+                    - text: VSA-OGM
+                    - generic [ref=e2007]:
+                      - text: "["
+                      - link "7" [ref=e2008] [cursor=pointer]:
+                        - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+                      - text: "]"
+                  - cell "Austria" [ref=e2009]
+                  - cell "297.31" [ref=e2010]
+                  - cell [ref=e2011]:
+                    - math [ref=e2012]:
+                      - generic [ref=e2014]:
+                        - generic [ref=e2015]: "198.73"
+                        - generic [ref=e2016]: ±
+                        - generic [ref=e2017]:
+                          - generic [ref=e2018]: "0.68"
+                          - generic: ⁢
+                          - generic [ref=e2019]: ms
+                - row "Treitlstasse 90.62" [ref=e2020]:
+                  - cell [ref=e2021]
+                  - cell "Treitlstasse" [ref=e2022]
+                  - cell "90.62" [ref=e2023]
+                  - cell [ref=e2024]:
+                    - math [ref=e2025]:
+                      - generic [ref=e2027]:
+                        - generic [ref=e2028]: "198.02"
+                        - generic [ref=e2029]: ±
+                        - generic [ref=e2030]:
+                          - generic [ref=e2031]: "0.94"
+                          - generic: ⁢
+                          - generic [ref=e2032]: ms
+          - paragraph [ref=e2034]:
+            - text: RaceCarGym’s default observation space doesn’t utilize any form of OGM so we augmented the default observation space to include the OGM as a multiple input observation space. The policy network is a multi-headed MLP receiving LiDAR, pose, velocity, and the OGMs from VSA-OGM
+            - generic [ref=e2035]:
+              - text: "["
+              - link "7" [ref=e2036] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: and BHM
+            - generic [ref=e2037]:
+              - text: "["
+              - link "8" [ref=e2038] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: . Similar to the MarsExplorer experiments, the MLP has 4 hidden layers with 64 hidden neurons using ReLU activations along with the augmented OGM’s giving the network greater positional awareness with respect to the map. We limit the resolution of each voxel to a 1 meter by 1 meter area. This is much lower than existing literature on OGM methods
+            - generic [ref=e2039]:
+              - text: "["
+              - link "6" [ref=e2040] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib6
+              - text: "]"
+            - text: because the open-source implementation of BHM runs out of GPU memory when querying the learned model to extract denser occupancy grids.
+          - paragraph [ref=e2042]: BHM is configured with a kernel length scale of 6, while VSA-OGM is configured with a vector dimensionality of 10000, a binding length scale of 1, and 8 tiles per dimension. We increase the vector dimensionality and number of tiles per dimensional for all RaceCarGym experiments to increase the capacity of VSA-OGM with respect to the increased point cloud densities. In both cases, the length scale parameters control the fidelity of the map with respect to map size.
+          - paragraph [ref=e2044]:
+            - text: We utilize the same training process as described for the MarsExplorer experiments leading to nine training configurations per OGM algorithm and level combination. Due to the increased complexity of the environment, we increase the number of training steps to 300000. These training results are averaged and form the results presented in Table
+            - link "III" [ref=e2045] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.T3
+            - text: and Figure
+            - link "4" [ref=e2046] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.F4
+            - text: .
+          - paragraph [ref=e2048]:
+            - text: As shown in Table
+            - link "III" [ref=e2049] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.T3
+            - text: ", VSA-OGM stays within 12% of BHM’s mean reward on all tracks with the exception of Treitlstrasse at a 33% drop. However, the mean reward plots suggest that the convergence with VSA-OGM, even on Treitlstrasse, was slower than BHM. The final memory size of the learned representation with VSA-OGM was 5.12MB with the final BHM method having a model size of approximately 0.01MB depending upon the map size. As previously stated, this increase in parameters is expected as the GPU version of BHM assumes independence between cells and doesn’t maintain the full covariance matrix. Compared to the previous MarsExplorer experiments, we see that VSA-OGM’s latency is approximately 2 orders of magnitude worse than BHM. While the size of the maps is similar between the environments, RaceCarGym uses approximately 2 orders of magnitude more points per individual LIDAR scan. This suggests that the encoding operation of higher density point clouds is hindering the latency of VSA-OGM in this experiment."
+          - paragraph [ref=e2051]:
+            - text: Generalizability. In our final experiment, we perform multi-map training and evaluation where policy networks are sequentially trained across three maps (Berlin, Austria, and Treitlstrasse) for 300000 time steps each. As in all previous experiments, we perform training for each OGM method and all nine parameter combinations. As shown in Figure
+            - link "5" [ref=e2052] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2502.09393v1#S4.F5
+            - text: ", we evaluate each of these trained models across all training tracks and nine unseen evaluation tracks. These results are averaged across five random seeds and initial conditions. The major takeaway from these results is that the policy networks trained with VSA-OGM present no decrease in model generalizability to unseen environments and even improve generalizability across all evaluation tracks. Therefore, models trained with VSA-OGM maintain similar reward curves during training and present increased generalization in unseen environments at the cost of increased computational complexity."
+        - generic [ref=e2053]:
+          - heading "V Conclusion" [level=2] [ref=e2054]:
+            - generic [ref=e2055]: V
+            - text: Conclusion
+          - paragraph [ref=e2057]:
+            - text: The efficacy of hyperdimensional OGM techniques as an alternative for traditional OGM methods when leveraged for environmental exploration and autonomous driving remains largely unstudied. In this work, we investigate a hyperdimensional OGM technique, known as VSA-OGM
+            - generic [ref=e2058]:
+              - text: "["
+              - link "7" [ref=e2059] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib7
+              - text: "]"
+            - text: ", and compare it against a well-established, traditional, OGM method known as BHM"
+            - generic [ref=e2060]:
+              - text: "["
+              - link "8" [ref=e2061] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib8
+              - text: "]"
+            - text: . We evaluate the efficacy of VSA-OGM on two distinct reinforcement learning environments known as MarsExplorer
+            - generic [ref=e2062]:
+              - text: "["
+              - link "9" [ref=e2063] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib9
+              - text: "]"
+            - text: and RaceCarGym
+            - generic [ref=e2064]:
+              - text: "["
+              - link "10" [ref=e2065] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2502.09393v1#bib.bib10
+              - text: "]"
+            - text: . We perform multiple tests with both environments across a range of scenarios and hyper-parameter combinations.
+          - paragraph [ref=e2067]: Our results show that VSA-OGM provides downstream policy networks with sufficient information to learn the environment and effectively perform unknown environment exploration and autonomous driving. We also perform multi-map training and evaluation where VSA-OGM presents approximately 47% increased generalization performance compared to BHM on RaceCarGym and 53% on MarsExplorer at the cost of 2 orders of magnitude increased latency because of increased point cloud densities.
+          - paragraph [ref=e2069]: Moving forward, we investigate methods to minimize the memory complexity of VSA-OGM by creating information theoretic methods to minimize adding redundant information to the memory hypervectors. We also investigate methods to minimize the encoding complexity with VSA-OGM as this is the major limitation when point cloud density increases. We also expand the scope of this exploration to also include model-based reinforcement learning algorithms.
+        - generic [ref=e2070]:
+          - heading "Acknowledgments" [level=2] [ref=e2071]
+          - paragraph [ref=e2073]: "We acknowledge the technical and financial support of the Automotive Research Center (ARC) in accordance with Cooperative Agreement W56HZV-24-2-0001 U.S. Army DEVCOM Ground Vehicle Systems Center (GVSC) Warren, MI. This project was also supported by resources provided by the Office of Research Computing at George Mason University (URL: https://orc.gmu.edu) and funded in part by grants from the National Science Foundation (Award Number 2018631 and 2319619)."
+        - generic [ref=e2074]:
+          - heading "References" [level=2] [ref=e2075]
+          - list [ref=e2076]:
+            - listitem [ref=e2077]:
+              - generic [ref=e2078]:
+                - text: "[1]"
+                - button "Back to the article" [ref=e2079] [cursor=pointer]: ↑
+              - generic [ref=e2080]:
+                - text: M. Rybczak, N. Popowniak, and A. Lazarowska, “A survey of machine learning approaches for mobile robot control,”
+                - emphasis [ref=e2081]: Robotics
+                - text: ", vol. 13, no. 1, 2024. [Online]. Available:"
+                - link "https://www.mdpi.com/2218-6581/13/1/12" [ref=e2082] [cursor=pointer]:
+                  - /url: https://www.mdpi.com/2218-6581/13/1/12
+            - listitem [ref=e2083]:
+              - generic [ref=e2084]:
+                - text: "[2]"
+                - button "Back to the article" [ref=e2085] [cursor=pointer]: ↑
+              - generic [ref=e2086]:
+                - text: "M. Reda, A. Onsy, A. Y. Haikal, and A. Ghanbari, “Path planning algorithms in the autonomous driving system: A comprehensive review,”"
+                - emphasis [ref=e2087]: Robotics and Autonomous Systems
+                - text: ", vol. 174, p. 104630, 2024. [Online]. Available:"
+                - link "https://www.sciencedirect.com/science/article/pii/S0921889024000137" [ref=e2088] [cursor=pointer]:
+                  - /url: https://www.sciencedirect.com/science/article/pii/S0921889024000137
+            - listitem [ref=e2089]:
+              - generic [ref=e2090]:
+                - text: "[3]"
+                - button "Back to the article" [ref=e2091] [cursor=pointer]: ↑
+              - generic [ref=e2092]:
+                - text: S. Zhao and S.-H. Hwang, “Exploration-and exploitation-driven deep deterministic policy gradient for active slam in unknown indoor environments,”
+                - emphasis [ref=e2093]: Electronics
+                - text: ", vol. 13, no. 5, p. 999, 2024."
+            - listitem [ref=e2094]:
+              - generic [ref=e2095]:
+                - text: "[4]"
+                - button "Back to the article" [ref=e2096] [cursor=pointer]: ↑
+              - generic [ref=e2097]:
+                - text: A. Macario Barros, M. Michel, Y. Moline, G. Corre, and F. Carrel, “A comprehensive survey of visual slam algorithms,”
+                - emphasis [ref=e2098]: Robotics
+                - text: ", vol. 11, no. 1, p. 24, 2022."
+            - listitem [ref=e2099]:
+              - generic [ref=e2100]:
+                - text: "[5]"
+                - button "Back to the article" [ref=e2101] [cursor=pointer]: ↑
+              - generic [ref=e2102]:
+                - text: A. Elfes, “Using occupancy grids for mobile robot perception and navigation,”
+                - emphasis [ref=e2103]: Computer
+                - text: ", vol. 22, no. 6, pp. 46–57, 1989."
+            - listitem [ref=e2104]:
+              - generic [ref=e2105]:
+                - text: "[6]"
+                - button "Back to the article" [ref=e2106] [cursor=pointer]: ↑
+              - generic [ref=e2107]:
+                - text: J. Wilson, Y. Fu, A. Zhang, J. Song, A. Capodieci, P. Jayakumar, K. Barton, and M. Ghaffari, “Convolutional bayesian kernel inference for 3d semantic mapping,”
+                - emphasis [ref=e2108]: arXiv preprint arXiv:2209.10663
+                - text: ", 2022."
+            - listitem [ref=e2109]:
+              - generic [ref=e2110]:
+                - text: "[7]"
+                - button "Back to the article" [ref=e2111] [cursor=pointer]: ↑
+              - generic [ref=e2112]:
+                - text: S. Snyder, A. Capodieci, D. Gorsich, and M. Parsa, “Brain inspired probabilistic occupancy grid mapping with hyperdimensional computing,”
+                - emphasis [ref=e2113]: arXiv preprint arXiv:2408.09066
+                - text: ", 2024."
+            - listitem [ref=e2114]:
+              - generic [ref=e2115]:
+                - text: "[8]"
+                - button "Back to the article" [ref=e2116] [cursor=pointer]: ↑
+              - generic [ref=e2117]:
+                - text: R. Senanayake and F. Ramos, “Bayesian hilbert maps for dynamic continuous occupancy mapping,” in
+                - emphasis [ref=e2118]: Conference on Robot Learning
+                - text: . PMLR, 2017, pp. 458–471.
+            - listitem [ref=e2119]:
+              - generic [ref=e2120]:
+                - text: "[9]"
+                - button "Back to the article" [ref=e2121] [cursor=pointer]: ↑
+              - generic [ref=e2122]:
+                - text: "D. I. Koutras, A. C. Kapoutsis, A. Amanatiadis, and E. Kosmatopoulos, “Marsexplorer: Exploration of unknown terrains via deep reinforcement learning and procedurally generated environments,”"
+                - emphasis [ref=e2123]: arXiv preprint arXiv:2107.09996
+                - text: ", 2021."
+            - listitem [ref=e2124]:
+              - generic [ref=e2125]:
+                - text: "[10]"
+                - button "Back to the article" [ref=e2126] [cursor=pointer]: ↑
+              - generic [ref=e2127]:
+                - text: "A. Brunnbauer and L. Berducci, “racecar_gym.” [Online]. Available:"
+                - link "https://github.com/axelbr/racecar_gym" [ref=e2128] [cursor=pointer]:
+                  - /url: https://github.com/axelbr/racecar_gym
+            - listitem [ref=e2129]:
+              - generic [ref=e2130]:
+                - text: "[11]"
+                - button "Back to the article" [ref=e2131] [cursor=pointer]: ↑
+              - generic [ref=e2132]:
+                - text: W. Zhi, L. Ott, R. Senanayake, and F. Ramos, “Continuous occupancy map fusion with fast bayesian hilbert maps,” in
+                - emphasis [ref=e2133]: 2019 International Conference on Robotics and Automation (ICRA)
+                - text: . IEEE, 2019, pp. 4111–4117.
+            - listitem [ref=e2134]:
+              - generic [ref=e2135]:
+                - text: "[12]"
+                - button "Back to the article" [ref=e2136] [cursor=pointer]: ↑
+              - generic [ref=e2137]:
+                - text: R. Van Kempen, B. Lampe, T. Woopen, and L. Eckstein, “A simulation-based end-to-end learning framework for evidential occupancy grid mapping,” in
+                - emphasis [ref=e2138]: 2021 IEEE Intelligent Vehicles Symposium (IV)
+                - text: ", 2021, pp. 934–939."
+            - listitem [ref=e2139]:
+              - generic [ref=e2140]:
+                - text: "[13]"
+                - button "Back to the article" [ref=e2141] [cursor=pointer]: ↑
+              - generic [ref=e2142]:
+                - text: P. Smolensky, “Tensor product variable binding and the representation of symbolic structures in connectionist systems,”
+                - emphasis [ref=e2143]: Artif. Intell.
+                - text: ", vol. 46, no. 1–2, p. 159–216, Nov. 1990. [Online]. Available:"
+                - link "https://doi.org/10.1016/0004-3702(90)90007-M" [ref=e2144] [cursor=pointer]:
+                  - /url: https://doi.org/10.1016/0004-3702(90)90007-M
+            - listitem [ref=e2145]:
+              - generic [ref=e2146]:
+                - text: "[14]"
+                - button "Back to the article" [ref=e2147] [cursor=pointer]: ↑
+              - generic [ref=e2148]:
+                - text: C. Eliasmith,
+                - emphasis [ref=e2149]: "How to build a brain: A neural architecture for biological cognition"
+                - text: . OUP USA, 2013.
+            - listitem [ref=e2150]:
+              - generic [ref=e2151]:
+                - text: "[15]"
+                - button "Back to the article" [ref=e2152] [cursor=pointer]: ↑
+              - generic [ref=e2153]: B. Komer, “Biologically inspired spatial representation,” 2020.
+            - listitem [ref=e2154]:
+              - generic [ref=e2155]:
+                - text: "[16]"
+                - button "Back to the article" [ref=e2156] [cursor=pointer]: ↑
+              - generic [ref=e2157]:
+                - text: T. Plate
+                - emphasis [ref=e2158]: et al.
+                - text: ", “Holographic reduced representations: Convolution algebra for compositional distributed representations.”"
+            - listitem [ref=e2159]:
+              - generic [ref=e2160]:
+                - text: "[17]"
+                - button "Back to the article" [ref=e2161] [cursor=pointer]: ↑
+              - generic [ref=e2162]: P. M. Furlong, T. C. Stewart, and C. Eliasmith, “Fractional binding in vector symbolic representations for efficient mutual information exploration.”
+            - listitem [ref=e2163]:
+              - generic [ref=e2164]:
+                - text: "[18]"
+                - button "Back to the article" [ref=e2165] [cursor=pointer]: ↑
+              - generic [ref=e2166]:
+                - text: T. A. Plate,
+                - emphasis [ref=e2167]: Distributed representations and nested compositional structure
+                - text: . Citeseer, 1994.
+            - listitem [ref=e2168]:
+              - generic [ref=e2169]:
+                - text: "[19]"
+                - button "Back to the article" [ref=e2170] [cursor=pointer]: ↑
+              - generic [ref=e2171]:
+                - text: "R. W. Gayler, “Vector symbolic architectures answer jackendoff’s challenges for cognitive neuroscience,” 2004. [Online]. Available:"
+                - link "https://arxiv.org/abs/cs/0412059" [ref=e2172] [cursor=pointer]:
+                  - /url: https://arxiv.org/abs/cs/0412059
+            - listitem [ref=e2173]:
+              - generic [ref=e2174]:
+                - text: "[20]"
+                - button "Back to the article" [ref=e2175] [cursor=pointer]: ↑
+              - generic [ref=e2176]:
+                - text: F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg
+                - emphasis [ref=e2177]: et al.
+                - text: ", “Scikit-learn: Machine learning in python,”"
+                - emphasis [ref=e2178]: the Journal of machine Learning research
+                - text: ", vol. 12, pp. 2825–2830, 2011."
+            - listitem [ref=e2179]:
+              - generic [ref=e2180]:
+                - text: "[21]"
+                - button "Back to the article" [ref=e2181] [cursor=pointer]: ↑
+              - generic [ref=e2182]: G. Brockman, V. Cheung, L. Pettersson, J. Schneider, J. Schulman, J. Tang, and W. Zaremba, “Openai gym,” 2016.
+            - listitem [ref=e2183]:
+              - generic [ref=e2184]:
+                - text: "[22]"
+                - button "Back to the article" [ref=e2185] [cursor=pointer]: ↑
+              - generic [ref=e2186]:
+                - text: E. Coumans and Y. Bai, “Pybullet, a python module for physics simulation for games, robotics and machine learning,”
+                - link "http://pybullet.org" [ref=e2187] [cursor=pointer]:
+                  - /url: http://pybullet.org
+                - text: ", 2016–2021."
+            - listitem [ref=e2188]:
+              - generic [ref=e2189]:
+                - text: "[23]"
+                - button "Back to the article" [ref=e2190] [cursor=pointer]: ↑
+              - generic [ref=e2191]:
+                - text: "J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Proximal policy optimization algorithms,” 2017. [Online]. Available:"
+                - link "https://arxiv.org/abs/1707.06347" [ref=e2192] [cursor=pointer]:
+                  - /url: https://arxiv.org/abs/1707.06347
+            - listitem [ref=e2193]:
+              - generic [ref=e2194]:
+                - text: "[24]"
+                - button "Back to the article" [ref=e2195] [cursor=pointer]: ↑
+              - generic [ref=e2196]:
+                - text: C. G. Cullen,
+                - emphasis [ref=e2197]: Matrices and linear transformations
+                - text: . Courier Corporation, 2012.
+            - listitem [ref=e2198]:
+              - generic [ref=e2199]:
+                - text: "[25]"
+                - button "Back to the article" [ref=e2200] [cursor=pointer]: ↑
+              - generic [ref=e2201]:
+                - text: "A. Raffin, A. Hill, A. Gleave, A. Kanervisto, M. Ernestus, and N. Dormann, “Stable-baselines3: Reliable reinforcement learning implementations,”"
+                - emphasis [ref=e2202]: Journal of Machine Learning Research
+                - text: ", vol. 22, no. 268, pp. 1–8, 2021. [Online]. Available:"
+                - link "http://jmlr.org/papers/v22/20-1364.html" [ref=e2203] [cursor=pointer]:
+                  - /url: http://jmlr.org/papers/v22/20-1364.html
+            - listitem [ref=e2204]:
+              - generic [ref=e2205]:
+                - text: "[26]"
+                - button "Back to the article" [ref=e2206] [cursor=pointer]: ↑
+              - generic [ref=e2207]: G. Brockman, V. Cheung, L. Pettersson, J. Schneider, J. Schulman, J. Tang, and W. Zaremba, “Openai gym,” 2016.
+            - listitem [ref=e2208]:
+              - generic [ref=e2209]:
+                - text: "[27]"
+                - button "Back to the article" [ref=e2210] [cursor=pointer]: ↑
+              - generic [ref=e2211]:
+                - text: "M. Towers, A. Kwiatkowski, J. Terry, J. U. Balis, G. D. Cola, T. Deleu, M. Goulão, A. Kallinteris, M. Krimmel, A. KG, R. Perez-Vicente, A. Pierré, S. Schulhoff, J. J. Tai, H. Tan, and O. G. Younis, “Gymnasium: A standard interface for reinforcement learning environments,” 2024. [Online]. Available:"
+                - link "https://arxiv.org/abs/2407.17032" [ref=e2212] [cursor=pointer]:
+                  - /url: https://arxiv.org/abs/2407.17032
+            - listitem [ref=e2213]:
+              - generic [ref=e2214]:
+                - text: "[28]"
+                - button "Back to the article" [ref=e2215] [cursor=pointer]: ↑
+              - generic [ref=e2216]:
+                - text: "A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan, T. Killeen, Z. Lin, N. Gimelshein, L. Antiga, A. Desmaison, A. Köpf, E. Yang, Z. DeVito, M. Raison, A. Tejani, S. Chilamkurthy, B. Steiner, L. Fang, J. Bai, and S. Chintala, “Pytorch: An imperative style, high-performance deep learning library,” 2019. [Online]. Available:"
+                - link "https://arxiv.org/abs/1912.01703" [ref=e2217] [cursor=pointer]:
+                  - /url: https://arxiv.org/abs/1912.01703
+  - button "Report Issue" [ref=e2218] [cursor=pointer]
+  - button "Report Issue for Selection" [ref=e2219] [cursor=pointer]
+  - generic [ref=e2221]:
+    - text: Generated by
+    - link "L A T E xml [LOGO]" [ref=e2222] [cursor=pointer]:
+      - /url: https://math.nist.gov/~BMiller/LaTeXML/
+      - generic [ref=e2223]: L A T E
+      - text: xml
+      - img "[LOGO]" [ref=e2224]
+  - contentinfo [ref=e2225]:
+    - generic [ref=e2226]:
+      - heading "Instructions for reporting errors" [level=2] [ref=e2227]
+      - paragraph [ref=e2228]: "We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:"
+      - list [ref=e2229]:
+        - listitem [ref=e2230]: Click the "Report Issue" button.
+        - listitem [ref=e2231]:
+          - text: Open a report feedback form via keyboard, use "
+          - strong [ref=e2232]: Ctrl + ?
+          - text: "\"."
+        - listitem [ref=e2233]: Make a text selection and click the "Report Issue for Selection" button near your cursor.
+        - listitem [ref=e2234]: You can use Alt+Y to toggle on and Alt+Shift+Y to toggle off accessible reporting links at each section.
+      - paragraph [ref=e2235]:
+        - text: Our team has already identified
+        - link "the following issues" [ref=e2236] [cursor=pointer]:
+          - /url: https://github.com/arXiv/html_feedback/issues
+        - text: . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+      - paragraph [ref=e2237]:
+        - text: Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+        - link "list of packages that need conversion" [ref=e2238] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/wiki/Porting-LaTeX-packages-for-LaTeXML
+        - text: ", and welcome"
+        - link "developer contributions" [ref=e2239] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/issues
+        - text: .
+  - text: beta

@@ -1,0 +1,1568 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Back to arXiv" [ref=e4] [cursor=pointer]:
+      - /url: https://arxiv.org/
+      - generic [ref=e5]: Back to arXiv
+    - banner [ref=e6]:
+      - paragraph [ref=e7]:
+        - text: This is
+        - strong [ref=e8]: experimental HTML
+        - text: to improve accessibility. We invite you to report rendering errors.
+        - generic [ref=e9]: Use Alt+Y to toggle on accessible reporting links and Alt+Shift+Y to toggle off.
+        - text: Learn more
+        - link "about this project" [ref=e10] [cursor=pointer]:
+          - /url: https://info.arxiv.org/about/accessible_HTML.html
+        - text: and
+        - link "help improve conversions" [ref=e11] [cursor=pointer]:
+          - /url: https://info.arxiv.org/help/submit_latex_best_practices.html
+        - text: .
+    - navigation [ref=e12]:
+      - link "Why HTML?" [ref=e13] [cursor=pointer]:
+        - /url: https://info.arxiv.org/about/accessible_HTML.html
+      - link "Report Issue" [ref=e14] [cursor=pointer]:
+        - /url: "#myForm"
+      - link "Back to Abstract" [ref=e15] [cursor=pointer]:
+        - /url: https://arxiv.org/abs/2405.16266v2
+      - link "Download PDF" [ref=e16] [cursor=pointer]:
+        - /url: https://arxiv.org/pdf/2405.16266v2
+      - link "Toggle dark/light mode" [ref=e17] [cursor=pointer]:
+        - /url: javascript:toggleColorScheme()
+        - generic "Switch to light mode" [ref=e18]:
+          - img [ref=e19]
+  - generic [ref=e21]:
+    - navigation "Table of Contents" [ref=e22]:
+      - generic [ref=e23] [cursor=pointer]:
+        - img
+      - list [ref=e24]:
+        - listitem [ref=e25]:
+          - link "Abstract" [ref=e26] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#abstract
+            - generic [ref=e27]: Abstract
+        - listitem [ref=e28]:
+          - link "I Introduction" [ref=e29] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S1
+            - generic [ref=e30]:
+              - generic [ref=e31]: I
+              - text: Introduction
+        - listitem [ref=e32]:
+          - link "II Related Work" [ref=e33] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S2
+            - generic [ref=e34]:
+              - generic [ref=e35]: II
+              - text: Related Work
+        - listitem [ref=e36]:
+          - link "III Methodology" [ref=e37] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S3
+            - generic [ref=e38]:
+              - generic [ref=e39]: III
+              - text: Methodology
+        - listitem [ref=e40]:
+          - link "IV Simulation" [ref=e41] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S4
+            - generic [ref=e42]:
+              - generic [ref=e43]: IV
+              - text: Simulation
+        - listitem [ref=e44]:
+          - link "V Experimental Results" [ref=e45] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S5
+            - generic [ref=e46]:
+              - generic [ref=e47]: V
+              - text: Experimental Results
+        - listitem [ref=e48]:
+          - link "VI Challenges and Gaps" [ref=e49] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S6
+            - generic [ref=e50]:
+              - generic [ref=e51]: VI
+              - text: Challenges and Gaps
+        - listitem [ref=e52]:
+          - link "VII Conclusion" [ref=e53] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#S7
+            - generic [ref=e54]:
+              - generic [ref=e55]: VII
+              - text: Conclusion
+        - listitem [ref=e56]:
+          - link "References" [ref=e57] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2405.16266v2#bib
+            - generic [ref=e58]: References
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - 'link "License: arXiv.org perpetual non-exclusive license" [ref=e61] [cursor=pointer]':
+          - /url: https://info.arxiv.org/help/license/index.html#licenses-available
+        - generic [ref=e62]: arXiv:2405.16266v2 [cs.RO] null
+      - article [ref=e63]:
+        - heading "Deep Reinforcement Learning with Enhanced PPO for Safe Mobile Robot Navigation" [level=1] [ref=e64]
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]: Hamid Taheri
+            - generic [ref=e69]:
+              - text: KN Toosi University of Technology
+              - text: Tehran, Iran
+              - text: hamidtaheri@email.kntu.ac.ir
+          - generic [ref=e70]:
+            - generic [ref=e71]: Seyed Rasoul Hosseini
+            - generic [ref=e73]:
+              - text: KN Toosi University of Technology
+              - text: Tehran, Iran
+              - text: rasoul.hosseini7@gmail.com
+          - generic [ref=e74]:
+            - generic [ref=e75]: Mohammad Ali Nekoui
+            - generic [ref=e77]:
+              - text: KN Toosi University of Technology
+              - text: Tehran, Iran
+              - text: manekoui@eetd.kntu.ac.ir
+        - generic [ref=e79]:
+          - heading "Abstract" [level=6] [ref=e80]
+          - paragraph [ref=e81]: "Collision-free motion is essential for mobile robots. Most approaches to collision-free and efficient navigation with wheeled robots require parameter tuning by experts to obtain good navigation behavior. This study investigates the application of deep reinforcement learning to train a mobile robot for autonomous navigation in a complex environment. The robot utilizes LiDAR sensor data and a deep neural network to generate control signals guiding it toward a specified target while avoiding obstacles. We employ two reinforcement learning algorithms in the Gazebo simulation environment: Deep Deterministic Policy Gradient and proximal policy optimization. The study introduces an enhanced neural network structure in the Proximal Policy Optimization algorithm to boost performance, accompanied by a well-designed reward function to improve algorithm efficacy. Experimental results conducted in both obstacle and obstacle-free environments underscore the effectiveness of the proposed approach. This research significantly contributes to the advancement of autonomous robotics in complex environments through the application of deep reinforcement learning."
+        - generic [ref=e82]:
+          - heading "Index Terms:" [level=6] [ref=e83]
+          - text: deep reinforcement learning, autonomous navigation, control, obstacle avoidance
+        - generic [ref=e84]:
+          - heading "I Introduction" [level=2] [ref=e85]:
+            - generic [ref=e86]: I
+            - text: Introduction
+          - paragraph [ref=e88]:
+            - text: In an era where robotics is making profound strides in reshaping our world, the ability of robots to autonomously navigate complex and dynamic environments remains a challenge. Conventional robotic navigation systems often rely on meticulously crafted maps, limiting their adaptability to real-world scenarios where environments are constantly changing
+            - generic [ref=e89]:
+              - text: "["
+              - link "1" [ref=e90] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib1
+              - text: "]"
+            - text: . This paradigm shift, marking a departure from conventional navigation methods, is made possible through the advanced capabilities of Deep Reinforcement Learning (DRL), wherein robots dynamically learn and adapt their navigation strategies based on real-time interactions with the environment
+            - generic [ref=e91]:
+              - text: "["
+              - link "2" [ref=e92] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib2
+              - text: "]"
+            - text: . This innovative approach not only enables autonomous exploration in novel surroundings but also signifies a transformative leap towards adaptive, intelligent robotic systems capable of navigating diverse and unpredictable landscapes
+            - generic [ref=e93]:
+              - text: "["
+              - link "3" [ref=e94] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib3
+              - text: "]"
+            - text: . Additionally, the emergence of deep learning has led to significant progress in autonomous systems, including advancements in lane detection for self-driving cars, which leverage machine learning techniques to handle dynamic scenarios
+            - generic [ref=e95]:
+              - text: "["
+              - link "4" [ref=e96] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib4
+              - text: "]"
+            - text: .
+          - 'figure "Figure 1: A mapless motion planner was trained using the Proximal Policy Optimization (PPO) algorithm to guide a nonholonomic mobile robot to its target position while avoiding collisions." [ref=e97]':
+            - img "Refer to caption" [ref=e98]
+            - generic [ref=e99]:
+              - generic [ref=e100]: "Figure 1:"
+              - text: A mapless motion planner was trained using the Proximal Policy Optimization (PPO) algorithm to guide a nonholonomic mobile robot to its target position while avoiding collisions.
+          - paragraph [ref=e102]:
+            - text: Mapless navigation represents a significant departure from conventional navigation strategies that heavily depend on static, pre-built maps. Instead, it empowers robots with the capability to explore and maneuver through uncharted territories, responding dynamically to unforeseen obstacles, and adapting to evolving circumstances
+            - generic [ref=e103]:
+              - text: "["
+              - link "1" [ref=e104] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib1
+              - text: "]"
+            - text: . This paradigm shift holds immense promise in a wide range of applications, from search and rescue missions in disaster-stricken areas to autonomous exploration of remote and hazardous locations
+            - generic [ref=e105]:
+              - text: "["
+              - link "3" [ref=e106] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib3
+              - text: "]"
+            - text: .
+          - paragraph [ref=e108]:
+            - text: Deep Reinforcement Learning (DRL), a subset of machine learning, has become a powerful tool for enhancing robots’ navigation skills through experiential learning
+            - generic [ref=e109]:
+              - text: "["
+              - link "5" [ref=e110] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib5
+              - text: "]"
+            - text: . By employing DRL algorithms, robots can make informed decisions in real-time, learning from their actions and refining their path-planning strategies to meet specific objectives. This adaptive learning process mirrors human-like decision-making, enabling robots to navigate smoothly and effectively even in the absence of conventional maps.
+          - paragraph [ref=e112]:
+            - text: The Robot Operating System (ROS) has established itself as the predominant standard for developing and controlling robotic systems. Offering a versatile framework, ROS facilitates the seamless integration of diverse sensors, actuaries, and control algorithms
+            - generic [ref=e113]:
+              - text: "["
+              - link "6" [ref=e114] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib6
+              - text: "]"
+            - text: . When coupled with Gazebo, a high-fidelity robot simulation environment, ROS allows for rigorous testing and validation of mapless navigation algorithms in a secure and controlled virtual setting before their deployment in real-world scenarios
+            - generic [ref=e115]:
+              - text: "["
+              - link "7" [ref=e116] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#bib.bib7
+              - text: "]"
+            - text: .
+          - paragraph [ref=e118]: This paper delves into the intriguing realm of mapless robot navigation using Deep Reinforcement Learning (DRL). We explore the theoretical foundations of DRL and its practical applications, demonstrating how robots can navigate without relying on pre-existing maps. Building on this foundation, we present an innovative approach to mapless navigation, marked by three key contributions.
+          - paragraph [ref=e120]: Firstly, we introduce a Comprehensive Observation Setup that encompasses a wide array of inputs to fully capture the robot’s environment. These inputs include laser readings across 30 dimensions, the robot’s past linear and angular velocities, and the target position relative to the robot, expressed in polar coordinates. Additionally, we consider the robot’s yaw angle and the orientation required to face the target. This multidimensional observation framework facilitates a comprehensive understanding of the robot’s surroundings, empowering the navigation system with enhanced decision-making capabilities.
+          - paragraph [ref=e122]: "PPO-Based Learning for Navigation: In our strategy for training the motion planner, we introduce a customized neural network architecture designed specifically for the Proximal Policy Optimization (PPO) algorithm. This modification results in a significant improvement in the overall performance of the planner. Leveraging this reinforcement learning technique, the planner becomes proficient in acquiring effective navigation strategies by optimizing its decision-making process based on available sensory information. Notably, the planner’s capability to directly output continuous linear and angular velocities contributes to a streamlined and efficient navigation process."
+          - paragraph [ref=e124]: Through these contributions, we advance the ability of PPO algorithm, offering an innovative solution that combines sparse sensor data, reinforcement learning with PPO, and adaptability to simulated scenarios, promising efficient and adaptable navigation capabilities for robots in a static environments within the simulation context.
+        - generic [ref=e125]:
+          - heading "II Related Work" [level=2] [ref=e126]:
+            - generic [ref=e127]: II
+            - text: Related Work
+          - paragraph [ref=e129]: Mobile robot navigation has been a significant research area in robotics, and the integration of deep reinforcement learning (DRL) methods for continuous control has gained substantial attention in recent years. This section provides an overview of relevant literature and highlights key contributions in the field.
+          - generic [ref=e130]:
+            - heading "II-A Navigational Techniques in Robotics" [level=3] [ref=e131]:
+              - generic [ref=e132]: II-A
+              - text: Navigational Techniques in Robotics
+            - paragraph [ref=e134]:
+              - text: Traditional methods for mobile robot navigation often rely on techniques such as Simultaneous Localization and Mapping (SLAM) and path planning algorithms like A* and Dijkstra’s. While these methods have proven effective in structured environments, they may struggle in dynamic, unstructured, or partially observable settings. The application of reinforcement learning in robotics has opened new avenues for autonomous navigation. Early approaches focused on discrete action spaces and tabular methods. Researchers successfully applied RL algorithms to tasks like maze navigation and grid world problems. However, the discrete nature of actions limited their applicability to real-world scenarios, especially in continuous control settings. Deep reinforcement learning introduced the use of neural networks to approximate Q-functions or policy functions, enabling robotic agents to handle high-dimensional state and action spaces. Prominent DRL algorithms like Deep Q-Networks (DQN)
+              - generic [ref=e135]:
+                - text: "["
+                - link "8" [ref=e136] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib8
+                - text: "]"
+              - text: and Trust Region Policy Optimization (TRPO)
+              - generic [ref=e137]:
+                - text: "["
+                - link "9" [ref=e138] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib9
+                - text: "]"
+              - text: showed promising results in challenging environments, but their application to mobile robot navigation remained limited due to the need for discrete action spaces. The breakthrough in continuous control came with algorithms like the Deep Deterministic Policy Gradient (DDPG)
+              - generic [ref=e139]:
+                - text: "["
+                - link "10" [ref=e140] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib10
+                - text: "]"
+              - text: and Proximal Policy Optimization (PPO)
+              - generic [ref=e141]:
+                - text: "["
+                - link "15" [ref=e142] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib15
+                - text: "]"
+              - text: . These methods facilitated mobile robot navigation in real-world scenarios, enabling smooth and precise control. PPO and DDPG, in particular, allowed robots to learn continuous actions, making it a significant milestone in this field.
+          - generic [ref=e143]:
+            - heading "II-B Prior Work in Mobile Robot Navigation" [level=3] [ref=e144]:
+              - generic [ref=e145]: II-B
+              - text: Prior Work in Mobile Robot Navigation
+            - paragraph [ref=e147]: Several studies have already applied Deep Reinforcement Learning (DRL) to mobile robot navigation, demonstrating the method’s adaptability and potential in a variety of contexts.
+            - paragraph [ref=e149]:
+              - text: Researchers have made significant strides in the field of DRL for robotic navigation. Silver et al.
+              - generic [ref=e150]:
+                - text: "["
+                - link "11" [ref=e151] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib11
+                - text: "]"
+              - text: utilized the Deep Deterministic Policy Gradient (DDPG) algorithm to empower mobile robots to autonomously navigate through cluttered environments while effectively avoiding obstacles. This study showcases the potential of DRL for enhancing obstacle avoidance capabilities in robots. Zhu et al.
+              - generic [ref=e152]:
+                - text: "["
+                - link "12" [ref=e153] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib12
+                - text: "]"
+              - text: pioneered end-to-end navigation by combining convolutional neural networks (CNNs) with DRL. This integration allows robots to process visual data for perception and make navigation decisions dynamically, thus enabling autonomous navigation without explicit programming. The approach exemplifies how DRL can be integrated with other machine learning techniques to improve the autonomy of robotic systems.
+            - paragraph [ref=e155]:
+              - text: Tobin et al.
+              - generic [ref=e156]:
+                - text: "["
+                - link "13" [ref=e157] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib13
+                - text: "]"
+              - text: explored the challenges of Sim-to-Real Transfer, where robots are trained in simulated environments with the aim of applying these learned policies to real-world scenarios. Their work addresses key deployment challenges and highlights the effectiveness of simulation as a training ground for real-life applications. Furthermore, Zheng et al.
+              - generic [ref=e158]:
+                - text: "["
+                - link "14" [ref=e159] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2405.16266v2#bib.bib14
+                - text: "]"
+              - text: investigated multi-agent navigation, utilizing multi-agent reinforcement learning to enable teams of robots to collaboratively navigate complex environments. Their research demonstrates how DRL can be extended to coordinate multiple agents, enhancing the collective navigation capabilities in scenarios like search and rescue or synchronized surveying.
+            - paragraph [ref=e161]: These studies collectively underscore the versatility and expansive potential of DRL in advancing the field of robotic navigation, paving the way for more sophisticated and autonomous robotic systems.
+        - generic [ref=e162]:
+          - heading "III Methodology" [level=2] [ref=e163]:
+            - generic [ref=e164]: III
+            - text: Methodology
+          - generic [ref=e165]:
+            - heading "III-A Proximal Policy Optimization (PPO)" [level=3] [ref=e166]:
+              - generic [ref=e167]: III-A
+              - text: Proximal Policy Optimization (PPO)
+            - paragraph [ref=e169]: In our research, we employed the Proximal Policy Optimization (PPO) algorithm, a well-regarded reinforcement learning technique known for its stability and efficacy in continuous control tasks. Unlike the Deep Deterministic Policy Gradient (DDPG) algorithm, PPO iteratively updates the policy to maximize the expected cumulative reward, implementing a constraint to limit policy changes and prevent large, abrupt deviations. This controlled approach to policy updates ensures more stable training progress, making PPO particularly suitable for our mapless motion planning problem.
+            - paragraph [ref=e171]: "In the Proximal Policy Optimization (PPO) algorithm, the loss function is composed of two integral components: the policy loss and the value loss."
+            - paragraph [ref=e173]: "The policy loss is crafted to modulate the updates made to the policy, ensuring they remain modest and do not significantly diverge from the current policy. This controlled adjustment is vital for the stability of the training process, enabling a gradual and steady improvement in policy performance. Mathematically, the policy loss can be described as follows:"
+            - table [ref=e175]:
+              - rowgroup [ref=e176]:
+                - row "(1)" [ref=e177]:
+                  - cell [ref=e178]
+                  - cell [ref=e179]:
+                    - math [ref=e180]:
+                      - generic [ref=e182]:
+                        - generic [ref=e183]:
+                          - generic [ref=e184]:
+                            - generic [ref=e185]: ℒ
+                            - generic [ref=e186]: clip
+                          - generic: ⁢
+                          - generic [ref=e187]:
+                            - generic [ref=e188]: (
+                            - generic [ref=e189]: θ
+                            - generic [ref=e190]: )
+                        - generic [ref=e191]: =
+                        - generic [ref=e192]:
+                          - generic [ref=e193]:
+                            - generic [ref=e194]: 𝔼
+                            - generic [ref=e195]: ^
+                          - generic: ⁢
+                          - generic [ref=e196]:
+                            - generic [ref=e197]: "["
+                            - generic [ref=e198]:
+                              - generic [ref=e199]: min
+                              - generic: ⁡
+                              - generic [ref=e200]:
+                                - generic [ref=e201]: (
+                                - generic [ref=e202]:
+                                  - generic [ref=e203]:
+                                    - generic [ref=e204]: r
+                                    - generic [ref=e205]: t
+                                  - generic: ⁢
+                                  - generic [ref=e206]:
+                                    - generic [ref=e207]: (
+                                    - generic [ref=e208]: θ
+                                    - generic [ref=e209]: )
+                                  - generic: ⁢
+                                  - generic [ref=e210]:
+                                    - generic [ref=e211]: 𝒜
+                                    - generic [ref=e212]: ^
+                                - generic [ref=e213]: ","
+                                - generic [ref=e214]:
+                                  - generic [ref=e215]: clip
+                                  - generic: ⁢
+                                  - generic [ref=e216]:
+                                    - generic [ref=e217]: (
+                                    - generic [ref=e218]:
+                                      - generic [ref=e219]:
+                                        - generic [ref=e220]: r
+                                        - generic [ref=e221]: t
+                                      - generic: ⁢
+                                      - generic [ref=e222]:
+                                        - generic [ref=e223]: (
+                                        - generic [ref=e224]: θ
+                                        - generic [ref=e225]: )
+                                    - generic [ref=e226]: ","
+                                    - generic [ref=e227]:
+                                      - generic [ref=e228]: ϵ
+                                      - generic [ref=e229]: +
+                                      - generic [ref=e230]: "1"
+                                    - generic [ref=e231]: ","
+                                    - generic [ref=e232]:
+                                      - generic [ref=e233]: ϵ
+                                      - generic [ref=e234]: −
+                                      - generic [ref=e235]: "1"
+                                    - generic [ref=e236]: )
+                                - generic [ref=e237]: )
+                            - generic [ref=e238]: "]"
+                  - cell [ref=e239]
+                  - cell "(1)" [ref=e240]:
+                    - generic [ref=e241]: (1)
+            - table [ref=e243]:
+              - rowgroup [ref=e244]:
+                - row "(2)" [ref=e245]:
+                  - cell [ref=e246]
+                  - cell [ref=e247]:
+                    - math [ref=e248]:
+                      - generic [ref=e250]:
+                        - generic [ref=e251]:
+                          - generic [ref=e252]:
+                            - generic [ref=e253]:
+                              - generic [ref=e254]: r
+                              - generic [ref=e255]: t
+                            - generic: ⁢
+                            - generic [ref=e256]:
+                              - generic [ref=e257]: (
+                              - generic [ref=e258]: θ
+                              - generic [ref=e259]: )
+                          - generic [ref=e260]: =
+                          - generic [ref=e261]:
+                            - generic [ref=e262]:
+                              - generic [ref=e263]:
+                                - generic [ref=e264]: π
+                                - generic [ref=e265]: θ
+                              - generic: ⁢
+                              - generic [ref=e266]:
+                                - generic [ref=e267]: (
+                                - generic [ref=e268]:
+                                  - generic [ref=e269]: s
+                                  - generic [ref=e270]: t
+                                - generic [ref=e271]: ","
+                                - generic [ref=e272]:
+                                  - generic [ref=e273]: a
+                                  - generic [ref=e274]: t
+                                - generic [ref=e275]: )
+                            - generic [ref=e276]:
+                              - generic [ref=e277]:
+                                - generic [ref=e278]: π
+                                - generic [ref=e279]:
+                                  - generic [ref=e280]: θ
+                                  - generic [ref=e281]:
+                                    - generic [ref=e282]: o
+                                    - generic: ⁢
+                                    - generic [ref=e283]: l
+                                    - generic: ⁢
+                                    - generic [ref=e284]: d
+                              - generic: ⁢
+                              - generic [ref=e285]:
+                                - generic [ref=e286]: (
+                                - generic [ref=e287]:
+                                  - generic [ref=e288]: s
+                                  - generic [ref=e289]: t
+                                - generic [ref=e290]: ","
+                                - generic [ref=e291]:
+                                  - generic [ref=e292]: a
+                                  - generic [ref=e293]: t
+                                - generic [ref=e294]: )
+                        - generic [ref=e295]: ","
+                        - generic [ref=e296]:
+                          - generic [ref=e297]: ϵ
+                          - generic [ref=e298]: =
+                          - generic [ref=e299]: "0.2"
+                  - cell [ref=e300]
+                  - cell "(2)" [ref=e301]:
+                    - generic [ref=e302]: (2)
+            - paragraph [ref=e304]:
+              - text: Here
+              - math [ref=e305]:
+                - generic [ref=e307]:
+                  - generic [ref=e308]:
+                    - generic [ref=e309]: ℒ
+                    - generic [ref=e310]: clip
+                  - generic: ⁢
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: (
+                    - generic [ref=e313]: θ
+                    - generic [ref=e314]: )
+              - text: represents the clipped surrogate objective,
+              - math [ref=e315]:
+                - generic [ref=e317]: θ
+              - text: denotes the parameters of the policy,
+              - math [ref=e318]:
+                - generic [ref=e320]:
+                  - generic [ref=e321]:
+                    - generic [ref=e322]: r
+                    - generic [ref=e323]: t
+                  - generic: ⁢
+                  - generic [ref=e324]:
+                    - generic [ref=e325]: (
+                    - generic [ref=e326]: θ
+                    - generic [ref=e327]: )
+              - text: is the probability ratio of the new policy to the old policy,
+              - math [ref=e328]:
+                - generic [ref=e330]:
+                  - generic [ref=e331]: 𝒜
+                  - generic [ref=e332]: ^
+              - text: is the advantage function, and
+              - math [ref=e333]:
+                - generic [ref=e335]: ϵ
+              - text: is a hyperparameter determining the extent of allowed policy changes.
+            - paragraph [ref=e337]:
+              - text: The value loss is associated with the critic network and is aimed at minimizing the difference between the predicted value
+              - math [ref=e338]:
+                - generic [ref=e340]:
+                  - generic [ref=e341]: V
+                  - generic: ⁢
+                  - generic [ref=e342]:
+                    - generic [ref=e343]: (
+                    - generic [ref=e344]:
+                      - generic [ref=e345]: s
+                      - generic [ref=e346]: t
+                    - generic [ref=e347]: )
+              - text: and the actual discounted cumulative reward
+              - math [ref=e348]:
+                - generic [ref=e350]:
+                  - generic [ref=e351]: R
+                  - generic [ref=e352]: t
+              - text: ". The value loss is calculated as:"
+            - table [ref=e354]:
+              - rowgroup [ref=e355]:
+                - row "(3)" [ref=e356]:
+                  - cell [ref=e357]
+                  - cell [ref=e358]:
+                    - math [ref=e359]:
+                      - generic [ref=e361]:
+                        - generic [ref=e362]:
+                          - generic [ref=e363]:
+                            - generic [ref=e364]: L
+                            - generic [ref=e365]:
+                              - generic [ref=e366]: V
+                              - generic: ⁢
+                              - generic [ref=e367]: F
+                          - generic: ⁢
+                          - generic [ref=e368]:
+                            - generic [ref=e369]: (
+                            - generic [ref=e370]: θ
+                            - generic [ref=e371]: )
+                        - generic [ref=e372]: =
+                        - generic [ref=e373]:
+                          - generic [ref=e374]: 𝔼
+                          - generic: ⁢
+                          - generic [ref=e375]:
+                            - generic [ref=e376]: "["
+                            - generic [ref=e377]:
+                              - generic [ref=e378]:
+                                - generic [ref=e379]: (
+                                - generic [ref=e380]:
+                                  - generic [ref=e381]:
+                                    - generic [ref=e382]: V
+                                    - generic: ⁢
+                                    - generic [ref=e383]:
+                                      - generic [ref=e384]: (
+                                      - generic [ref=e385]:
+                                        - generic [ref=e386]: s
+                                        - generic [ref=e387]: t
+                                      - generic [ref=e388]: )
+                                  - generic [ref=e389]: −
+                                  - generic [ref=e390]:
+                                    - generic [ref=e391]: R
+                                    - generic [ref=e392]: t
+                                - generic [ref=e393]: )
+                              - generic [ref=e394]: "2"
+                            - generic [ref=e395]: "]"
+                  - cell [ref=e396]
+                  - cell "(3)" [ref=e397]:
+                    - generic [ref=e398]: (3)
+            - paragraph [ref=e400]: In our implementation of the Proximal Policy Optimization (PPO) algorithm, the actor and critic networks are fundamental components that facilitate the learning process. The actor network is responsible for defining the policy, which specifies the probability distribution of possible actions in a given state. Conversely, the critic network provides an estimate of the value of each state, essentially predicting the expected return from that state.
+            - paragraph [ref=e402]: The training of the actor network is guided by the policy loss, which helps in refining the policy to ensure better decision-making in navigating the environment. On the other hand, the critic network is trained to minimize the value loss, aiming to enhance the accuracy of state value predictions.
+            - paragraph [ref=e404]: This dual-network approach, where the actor and critic are concurrently trained, is central to the efficiency of the PPO algorithm. By iteratively updating both networks, our system continuously improves in its ability to not only choose optimal actions (via the actor) but also in evaluating the potential future rewards of current states (via the critic). This collaborative training mechanism is particularly effective in our application of mapless motion planning, allowing for a more effective navigation strategy to be developed by the algorithm.
+          - generic [ref=e405]:
+            - heading "III-B Problem Definition" [level=3] [ref=e406]:
+              - generic [ref=e407]: III-B
+              - text: Problem Definition
+            - paragraph [ref=e409]:
+              - text: In this study, we confront the challenge of mapless motion planning for mobile ground robots, with the primary objective to develop a robust translation function for determining the next velocity
+              - math [ref=e410]:
+                - generic [ref=e412]:
+                  - generic [ref=e413]: v
+                  - generic [ref=e414]: t
+              - text: of a robot based on its current state
+              - math [ref=e415]:
+                - generic [ref=e417]:
+                  - generic [ref=e418]: s
+                  - generic [ref=e419]: t
+              - text: . The state
+              - math [ref=e420]:
+                - generic [ref=e422]:
+                  - generic [ref=e423]: s
+                  - generic [ref=e424]: t
+              - text: "encompasses several critical components, formalized as:"
+            - table [ref=e426]:
+              - rowgroup [ref=e427]:
+                - row "(4)" [ref=e428]:
+                  - cell [ref=e429]
+                  - cell [ref=e430]:
+                    - math [ref=e431]:
+                      - generic [ref=e433]:
+                        - generic [ref=e434]:
+                          - generic [ref=e435]: v
+                          - generic [ref=e436]: t
+                        - generic [ref=e437]: =
+                        - generic [ref=e438]:
+                          - generic [ref=e439]: f
+                          - generic: ⁢
+                          - generic [ref=e440]:
+                            - generic [ref=e441]: (
+                            - generic [ref=e442]:
+                              - generic [ref=e443]: x
+                              - generic [ref=e444]: t
+                            - generic [ref=e445]: ","
+                            - generic [ref=e446]:
+                              - generic [ref=e447]: p
+                              - generic [ref=e448]: t
+                            - generic [ref=e449]: ","
+                            - generic [ref=e450]:
+                              - generic [ref=e451]: v
+                              - generic [ref=e452]:
+                                - generic [ref=e453]: t
+                                - generic [ref=e454]: −
+                                - generic [ref=e455]: "1"
+                            - generic [ref=e456]: ","
+                            - generic [ref=e457]:
+                              - generic [ref=e458]: θ
+                              - generic [ref=e459]: t
+                            - generic [ref=e460]: ","
+                            - generic [ref=e461]:
+                              - generic [ref=e462]: α
+                              - generic [ref=e463]: t
+                            - generic [ref=e464]: )
+                  - cell [ref=e465]
+                  - cell "(4)" [ref=e466]:
+                    - generic [ref=e467]: (4)
+            - paragraph [ref=e469]:
+              - text: Where Sensor Information
+              - math [ref=e470]:
+                - generic [ref=e472]:
+                  - generic [ref=e473]: x
+                  - generic [ref=e474]: t
+              - text: consists of data from the robot’s sensors to understand the environment, and Relative Target Position
+              - math [ref=e475]:
+                - generic [ref=e477]:
+                  - generic [ref=e478]: p
+                  - generic [ref=e479]: t
+              - text: denotes the location of the target relative to the robot. The Previous Velocity
+              - math [ref=e480]:
+                - generic [ref=e482]:
+                  - generic [ref=e483]: v
+                  - generic [ref=e484]:
+                    - generic [ref=e485]: t
+                    - generic [ref=e486]: −
+                    - generic [ref=e487]: "1"
+              - text: indicates the robot’s last recorded speed, aiding in dynamic stability. The Yaw Angle
+              - math [ref=e488]:
+                - generic [ref=e490]:
+                  - generic [ref=e491]: θ
+                  - generic [ref=e492]: t
+              - text: specifies the robot’s orientation, and the Rotation Degree
+              - math [ref=e493]:
+                - generic [ref=e495]:
+                  - generic [ref=e496]: α
+                  - generic [ref=e497]: t
+              - text: is crucial for aligning the robot with the target.
+            - paragraph [ref=e499]:
+              - text: Our goal is to model these states into actionable insights, specifically to compute the next velocity
+              - math [ref=e500]:
+                - generic [ref=e502]:
+                  - generic [ref=e503]: v
+                  - generic [ref=e504]: t
+              - text: ", facilitating agile and accurate navigation in dynamic settings."
+          - generic [ref=e505]:
+            - heading "III-C Data Processing" [level=3] [ref=e506]:
+              - generic [ref=e507]: III-C
+              - text: Data Processing
+            - paragraph [ref=e509]: This section details our LiDAR data processing approach to enhance robot navigation in a complex environment. We aim to condense raw sensor data for optimal decision-making by Actor-Critic models while minimizing computational load.
+            - paragraph [ref=e511]: The LiDAR sensor captures 30 distance measurements of the robot’s surroundings. To align with Actor-Critic architecture and ensure efficiency, we propose dividing these measurements into 10 batches of three data points each. Within each batch, we select the minimum distance, identifying the closest obstacle in the robot’s field of view. This process yields 10 streamlined observations.
+            - paragraph [ref=e513]: This approach enhances the efficiency and effectiveness of our navigation models. By focusing on the nearest obstacle in each batch, we reduce data dimensionality, streamline computational processes, and prioritize relevant information for safe navigation. These selected data points provide actionable insights for generating well-informed navigation commands, optimizing our robotic systems’ navigation capabilities.
+            - paragraph [ref=e515]:
+              - text: As shown in Figure
+              - link "2" [ref=e516] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.F2
+              - text: ", the LiDAR data processing approach identifies the nearest obstacle within each batch, distilling raw sensor data into concise observations for optimal decision-making in robot navigation."
+            - 'figure "Figure 2: Distilling raw sensor data into concise observations for optimal decision-making." [ref=e517]':
+              - img "Refer to caption" [ref=e518]
+              - generic [ref=e519]:
+                - generic [ref=e520]: "Figure 2:"
+                - text: Distilling raw sensor data into concise observations for optimal decision-making.
+          - generic [ref=e521]:
+            - heading "III-D Model Architecture" [level=3] [ref=e522]:
+              - generic [ref=e523]: III-D
+              - text: Model Architecture
+            - paragraph [ref=e525]: In the study, we leverage the Proximal Policy Optimization (PPO) algorithm to cultivate our tailored model for efficient navigation.
+            - paragraph [ref=e527]:
+              - text: A shown in figure
+              - link "3" [ref=e528] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.F3
+              - text: ", In our innovative approach, we introduced an advanced architecture within the actor and critic networks of our Proximal Policy Optimization (PPO) model, significantly enhancing its performance. Central to this enhancement are the Residual Blocks (ResBlocks) integrated into both networks."
+            - paragraph [ref=e530]:
+              - text: Our system operates with a 16-dimensional observation space designed to meticulously capture environmental nuances. The action space, comprising linear and angular velocities, is adeptly constrained to mirror realistic robotic maneuvers; angular velocity is confined to a range of (-1, 1) using the hyperbolic tangent function (
+              - math [ref=e531]:
+                - generic [ref=e533]: tanh
+              - text: ), while linear velocity is restricted to (0, 1) via a sigmoid function, accommodating the robot’s limited reverse capability due to sparse rear sensor coverage.
+            - paragraph [ref=e535]: For environmental perception, we process laser range data, sampling it uniformly from -90 to 90 degrees and normalizing these readings to a (0, 1) scale. This data handling facilitates a more structured and effective decision-making process.
+            - 'figure "Figure 3: Neural Network Architecture of the PPO Algorithm illustrating layer types, dimensions, and activations, with a merged output in the Merge layer." [ref=e536]':
+              - img "Refer to caption" [ref=e537]
+              - generic [ref=e538]:
+                - generic [ref=e539]: "Figure 3:"
+                - text: Neural Network Architecture of the PPO Algorithm illustrating layer types, dimensions, and activations, with a merged output in the Merge layer.
+            - paragraph [ref=e541]: To align with the dynamics of the Turtlebot, we set the maximum speeds at 0.25 m/s (linear) and 1 rad/s (angular). The integration of two ResBlocks in each of the actor and critic networks is a pivotal enhancement. These blocks significantly improve the flow of information and the efficiency of the control policy, proving indispensable for the robot’s adept navigation in environments without predefined maps.
+            - 'figure "TABLE I: PPO Critic network structure details" [ref=e542]':
+              - generic [ref=e543]:
+                - generic [ref=e544]: "TABLE I:"
+                - text: PPO Critic network structure details
+              - table [ref=e545]:
+                - rowgroup [ref=e546]:
+                  - row "Weight Size Activation" [ref=e547]:
+                    - rowheader [ref=e548]
+                    - cell "Weight Size" [ref=e549]:
+                      - generic [ref=e551]: Weight Size
+                    - cell "Activation" [ref=e552]:
+                      - generic [ref=e554]: Activation
+                  - row "1st layer 512 LeakyRelu" [ref=e555]:
+                    - rowheader "1st layer" [ref=e556]:
+                      - generic [ref=e558]: 1st layer
+                    - cell "512" [ref=e559]:
+                      - generic [ref=e561]: "512"
+                    - cell "LeakyRelu" [ref=e562]:
+                      - generic [ref=e564]: LeakyRelu
+                  - row "2nd layer 16 Linear" [ref=e565]:
+                    - rowheader "2nd layer" [ref=e566]:
+                      - generic [ref=e568]: 2nd layer
+                    - cell "16" [ref=e569]:
+                      - generic [ref=e571]: "16"
+                    - cell "Linear" [ref=e572]:
+                      - generic [ref=e574]: Linear
+                  - row "res input -" [ref=e575]:
+                    - rowheader "res" [ref=e576]:
+                      - generic [ref=e578]: res
+                    - cell "input" [ref=e579]:
+                      - generic [ref=e581]: input
+                    - cell "-" [ref=e582]:
+                      - generic [ref=e584]: "-"
+                  - row "Concatenate 1 input LeakyRelu" [ref=e585]:
+                    - rowheader "Concatenate 1" [ref=e586]:
+                      - generic [ref=e588]: Concatenate 1
+                    - cell "input" [ref=e589]:
+                      - generic [ref=e591]: input
+                    - cell "LeakyRelu" [ref=e592]:
+                      - generic [ref=e594]: LeakyRelu
+                  - row "3rd layer 512 LeakyRelu" [ref=e595]:
+                    - rowheader "3rd layer" [ref=e596]:
+                      - generic [ref=e598]: 3rd layer
+                    - cell "512" [ref=e599]:
+                      - generic [ref=e601]: "512"
+                    - cell "LeakyRelu" [ref=e602]:
+                      - generic [ref=e604]: LeakyRelu
+                  - row "4th layer 32 LeakyRelu" [ref=e605]:
+                    - rowheader "4th layer" [ref=e606]:
+                      - generic [ref=e608]: 4th layer
+                    - cell "32" [ref=e609]:
+                      - generic [ref=e611]: "32"
+                    - cell "LeakyRelu" [ref=e612]:
+                      - generic [ref=e614]: LeakyRelu
+                  - row "res Concatenate 1 -" [ref=e615]:
+                    - rowheader "res" [ref=e616]:
+                      - generic [ref=e618]: res
+                    - cell "Concatenate 1" [ref=e619]:
+                      - generic [ref=e621]: Concatenate 1
+                    - cell "-" [ref=e622]:
+                      - generic [ref=e624]: "-"
+                  - row "Concatenate 2 Concatenate 1 LeakyRelu" [ref=e625]:
+                    - rowheader "Concatenate 2" [ref=e626]:
+                      - generic [ref=e628]: Concatenate 2
+                    - cell "Concatenate 1" [ref=e629]:
+                      - generic [ref=e631]: Concatenate 1
+                    - cell "LeakyRelu" [ref=e632]:
+                      - generic [ref=e634]: LeakyRelu
+                  - row "5th layer 1 Linear" [ref=e635]:
+                    - rowheader "5th layer" [ref=e636]:
+                      - generic [ref=e638]: 5th layer
+                    - cell "1" [ref=e639]:
+                      - generic [ref=e641]: "1"
+                    - cell "Linear" [ref=e642]:
+                      - generic [ref=e644]: Linear
+                  - row "lr 3e-4" [ref=e645]:
+                    - rowheader "lr" [ref=e646]:
+                      - generic [ref=e648]: lr
+                    - cell "3e-4" [ref=e649]
+            - 'figure "TABLE II: PPO Critic network structure details" [ref=e650]':
+              - generic [ref=e651]:
+                - generic [ref=e652]: "TABLE II:"
+                - text: PPO Critic network structure details
+              - table [ref=e653]:
+                - rowgroup [ref=e654]:
+                  - row "Weight Size Activation" [ref=e655]:
+                    - rowheader [ref=e656]
+                    - cell "Weight Size" [ref=e657]:
+                      - generic [ref=e659]: Weight Size
+                    - cell "Activation" [ref=e660]:
+                      - generic [ref=e662]: Activation
+                  - row "1st layer 512 LeakyRelu" [ref=e663]:
+                    - rowheader "1st layer" [ref=e664]:
+                      - generic [ref=e666]: 1st layer
+                    - cell "512" [ref=e667]:
+                      - generic [ref=e669]: "512"
+                    - cell "LeakyRelu" [ref=e670]:
+                      - generic [ref=e672]: LeakyRelu
+                  - row "2nd layer 16 Linear" [ref=e673]:
+                    - rowheader "2nd layer" [ref=e674]:
+                      - generic [ref=e676]: 2nd layer
+                    - cell "16" [ref=e677]:
+                      - generic [ref=e679]: "16"
+                    - cell "Linear" [ref=e680]:
+                      - generic [ref=e682]: Linear
+                  - row "res input -" [ref=e683]:
+                    - rowheader "res" [ref=e684]:
+                      - generic [ref=e686]: res
+                    - cell "input" [ref=e687]:
+                      - generic [ref=e689]: input
+                    - cell "-" [ref=e690]:
+                      - generic [ref=e692]: "-"
+                  - row "Concatenate 1 input LeakyRelu" [ref=e693]:
+                    - rowheader "Concatenate 1" [ref=e694]:
+                      - generic [ref=e696]: Concatenate 1
+                    - cell "input" [ref=e697]:
+                      - generic [ref=e699]: input
+                    - cell "LeakyRelu" [ref=e700]:
+                      - generic [ref=e702]: LeakyRelu
+                  - row "3rd layer 512 LeakyRelu" [ref=e703]:
+                    - rowheader "3rd layer" [ref=e704]:
+                      - generic [ref=e706]: 3rd layer
+                    - cell "512" [ref=e707]:
+                      - generic [ref=e709]: "512"
+                    - cell "LeakyRelu" [ref=e710]:
+                      - generic [ref=e712]: LeakyRelu
+                  - row "4th layer 32 LeakyRelu" [ref=e713]:
+                    - rowheader "4th layer" [ref=e714]:
+                      - generic [ref=e716]: 4th layer
+                    - cell "32" [ref=e717]:
+                      - generic [ref=e719]: "32"
+                    - cell "LeakyRelu" [ref=e720]:
+                      - generic [ref=e722]: LeakyRelu
+                  - row "res Concatenate 1 -" [ref=e723]:
+                    - rowheader "res" [ref=e724]:
+                      - generic [ref=e726]: res
+                    - cell "Concatenate 1" [ref=e727]:
+                      - generic [ref=e729]: Concatenate 1
+                    - cell "-" [ref=e730]:
+                      - generic [ref=e732]: "-"
+                  - row "Concatenate 2 Concatenate 1 LeakyRelu" [ref=e733]:
+                    - rowheader "Concatenate 2" [ref=e734]:
+                      - generic [ref=e736]: Concatenate 2
+                    - cell "Concatenate 1" [ref=e737]:
+                      - generic [ref=e739]: Concatenate 1
+                    - cell "LeakyRelu" [ref=e740]:
+                      - generic [ref=e742]: LeakyRelu
+                  - row "5th layer 2 Sigmoid Tanh" [ref=e743]:
+                    - rowheader "5th layer" [ref=e744]:
+                      - generic [ref=e746]: 5th layer
+                    - cell "2" [ref=e747]:
+                      - generic [ref=e749]: "2"
+                    - cell "Sigmoid Tanh" [ref=e750]:
+                      - generic [ref=e752]:
+                        - text: Sigmoid
+                        - text: Tanh
+                  - row "lr 3e-4" [ref=e753]:
+                    - rowheader "lr" [ref=e754]:
+                      - generic [ref=e756]: lr
+                    - cell "3e-4" [ref=e757]
+            - paragraph [ref=e759]: The ResBlocks, by enabling shortcut connections within the networks, facilitate the gradient flow during training, thus mitigating the vanishing gradient problem and leading to more stable and faster learning. This architecture allows the critic network to more accurately estimate the state’s value (V-value), with a linear activation function employed in the output layer for a clear, interpretable signal.
+            - paragraph [ref=e761]: This architectural innovation underpins our model’s ability to learn and execute mapless navigation tasks with increased efficiency and effectiveness, demonstrating a significant advancement in autonomous robotic navigation technology.
+          - generic [ref=e762]:
+            - heading "III-E Reward Function" [level=3] [ref=e763]:
+              - generic [ref=e764]: III-E
+              - text: Reward Function
+            - paragraph [ref=e766]: The reward function is crucial in the reinforcement learning process, acting as a guide by rewarding desirable actions and penalizing unfavorable ones. The agent aims to develop a policy that maximizes these rewards, optimizing decision-making to fulfill its objectives in the given environment. The construction of the reward function significantly dictates the agent’s behavior and learning effectiveness.
+            - paragraph [ref=e768]: "Our reward function, expressed mathematically, rewards the agent for approaching the target, penalizes potential collisions, and incentivizes progress towards the target:"
+            - table [ref=e770]:
+              - rowgroup [ref=e771]:
+                - row "(5)" [ref=e772]:
+                  - cell [ref=e773]
+                  - cell [ref=e774]:
+                    - math [ref=e775]:
+                      - generic [ref=e777]:
+                        - generic [ref=e778]:
+                          - generic [ref=e779]:
+                            - generic [ref=e780]: r
+                            - generic [ref=e781]: "1"
+                          - generic: ⁢
+                          - generic [ref=e782]:
+                            - generic [ref=e783]: (
+                            - generic [ref=e784]:
+                              - generic [ref=e785]: s
+                              - generic [ref=e786]: t
+                            - generic [ref=e787]: ","
+                            - generic [ref=e788]:
+                              - generic [ref=e789]: a
+                              - generic [ref=e790]: t
+                            - generic [ref=e791]: )
+                        - generic [ref=e792]: =
+                        - generic [ref=e793]:
+                          - generic [ref=e794]: "{"
+                          - generic [ref=e795]:
+                            - generic [ref=e796]:
+                              - generic [ref=e798]:
+                                - generic [ref=e799]: r
+                                - generic [ref=e800]: arrive
+                              - generic [ref=e802]:
+                                - generic [ref=e803]:
+                                  - generic [ref=e804]: if
+                                  - generic: ⁢
+                                  - generic [ref=e805]:
+                                    - generic [ref=e806]: d
+                                    - generic [ref=e807]: t
+                                - generic [ref=e808]: <
+                                - generic [ref=e809]:
+                                  - generic [ref=e810]: c
+                                  - generic [ref=e811]: d
+                            - generic [ref=e812]:
+                              - generic [ref=e814]:
+                                - generic [ref=e815]: r
+                                - generic [ref=e816]: collision
+                              - generic [ref=e818]:
+                                - generic [ref=e819]:
+                                  - generic [ref=e820]: if
+                                  - generic: ⁢
+                                  - generic [ref=e821]:
+                                    - generic [ref=e822]: max
+                                    - generic [ref=e823]:
+                                      - generic [ref=e824]: x
+                                      - generic [ref=e825]: t
+                                - generic [ref=e826]: <
+                                - generic [ref=e827]:
+                                  - generic [ref=e828]: c
+                                  - generic [ref=e829]: o
+                            - generic [ref=e830]:
+                              - generic [ref=e832]:
+                                - generic [ref=e833]:
+                                  - generic [ref=e834]: c
+                                  - generic [ref=e835]: r
+                                - generic: ⁢
+                                - generic [ref=e836]:
+                                  - generic [ref=e837]: (
+                                  - generic [ref=e838]:
+                                    - generic [ref=e839]:
+                                      - generic [ref=e840]: d
+                                      - generic [ref=e841]:
+                                        - generic [ref=e842]: t
+                                        - generic [ref=e843]: −
+                                        - generic [ref=e844]: "1"
+                                    - generic [ref=e845]: −
+                                    - generic [ref=e846]:
+                                      - generic [ref=e847]: d
+                                      - generic [ref=e848]: t
+                                  - generic [ref=e849]: )
+                              - generic [ref=e851]:
+                                - generic [ref=e852]: otherwise
+                                - generic [ref=e853]: .
+                  - cell [ref=e854]
+                  - cell "(5)" [ref=e855]:
+                    - generic [ref=e856]: (5)
+            - paragraph [ref=e858]:
+              - text: In equation
+              - link "5" [ref=e859] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.E5
+              - text: ","
+              - math [ref=e860]:
+                - generic [ref=e862]:
+                  - generic [ref=e863]: r
+                  - generic [ref=e864]: arrive
+              - text: is granted when the agent is within a critical distance
+              - math [ref=e865]:
+                - generic [ref=e867]:
+                  - generic [ref=e868]: c
+                  - generic [ref=e869]: d
+              - text: to the target, promoting goal-oriented movement and
+              - math [ref=e870]:
+                - generic [ref=e872]:
+                  - generic [ref=e873]: r
+                  - generic [ref=e874]: collision
+              - text: is imposed if any sensor reading
+              - math [ref=e875]:
+                - generic [ref=e877]:
+                  - generic [ref=e878]: x
+                  - generic [ref=e879]: t
+              - text: signals a near-collision distance
+              - math [ref=e880]:
+                - generic [ref=e882]:
+                  - generic [ref=e883]: c
+                  - generic [ref=e884]: o
+              - text: ", promoting safety. Otherwise, the reward is proportional to the reduction in distance to the target compared to the last timestep, encouraging consistent progress. This structure drives the agent towards the target while avoiding hazards, balancing goal achievement, safety, and efficient navigation. While this reward function is a cornerstone of our reinforcement learning agent’s behavior, its applicability might be limited in obstacle-rich environments. The balance it strikes between target-seeking behavior, safety, and steady advancement may need adjustment or augmentation to better suit scenarios where obstacles densely populate"
+            - paragraph [ref=e886]:
+              - text: the environment (see Equation
+              - link "6" [ref=e887] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.E6
+              - text: ). Consideration of alternative reward structures may be necessary to ensure effective learning and decision-making in such challenging settings. Consequently, we have designed a new reward function that penalizes the robot as it moves toward the walls and rewards the agent exponentially as it approaches the target, aiming to address the challenges posed by obstacle-filled environments.
+            - table [ref=e889]:
+              - rowgroup [ref=e890]:
+                - row "(6)" [ref=e891]:
+                  - cell [ref=e892]
+                  - cell [ref=e893]:
+                    - math [ref=e894]:
+                      - generic [ref=e896]:
+                        - generic [ref=e897]:
+                          - generic [ref=e898]:
+                            - generic [ref=e899]: r
+                            - generic [ref=e900]: "2"
+                          - generic: ⁢
+                          - generic [ref=e901]:
+                            - generic [ref=e902]: (
+                            - generic [ref=e903]:
+                              - generic [ref=e904]: s
+                              - generic [ref=e905]: t
+                            - generic [ref=e906]: ","
+                            - generic [ref=e907]:
+                              - generic [ref=e908]: a
+                              - generic [ref=e909]: t
+                            - generic [ref=e910]: )
+                        - generic [ref=e911]: =
+                        - generic [ref=e912]:
+                          - generic [ref=e913]: "{"
+                          - generic [ref=e914]:
+                            - generic [ref=e915]:
+                              - generic [ref=e917]:
+                                - generic [ref=e918]: r
+                                - generic [ref=e919]: arrive
+                              - generic [ref=e921]:
+                                - generic [ref=e922]:
+                                  - generic [ref=e923]: if
+                                  - generic: ⁢
+                                  - generic [ref=e924]:
+                                    - generic [ref=e925]: d
+                                    - generic [ref=e926]: t
+                                - generic [ref=e927]: <
+                                - generic [ref=e928]:
+                                  - generic [ref=e929]: c
+                                  - generic [ref=e930]: d
+                            - generic [ref=e931]:
+                              - generic [ref=e933]:
+                                - generic [ref=e934]: r
+                                - generic [ref=e935]: collision
+                              - generic [ref=e937]:
+                                - generic [ref=e938]:
+                                  - generic [ref=e939]: if
+                                  - generic: ⁢
+                                  - generic [ref=e940]:
+                                    - generic [ref=e941]: x
+                                    - generic [ref=e942]: t
+                                - generic [ref=e943]: <
+                                - generic [ref=e944]:
+                                  - generic [ref=e945]: c
+                                  - generic [ref=e946]: o
+                            - generic [ref=e947]:
+                              - generic [ref=e949]:
+                                - generic [ref=e950]:
+                                  - generic [ref=e951]:
+                                    - generic [ref=e952]:
+                                      - generic [ref=e953]: c
+                                      - generic [ref=e954]: r
+                                    - generic: ⁢
+                                    - generic [ref=e955]:
+                                      - generic [ref=e956]: (
+                                      - generic [ref=e957]:
+                                        - generic [ref=e958]:
+                                          - generic [ref=e959]: d
+                                          - generic [ref=e960]:
+                                            - generic [ref=e961]: t
+                                            - generic [ref=e962]: −
+                                            - generic [ref=e963]: "1"
+                                        - generic [ref=e964]: −
+                                        - generic [ref=e965]:
+                                          - generic [ref=e966]: d
+                                          - generic [ref=e967]: t
+                                      - generic [ref=e968]: )
+                                  - generic [ref=e969]: ×
+                                  - generic [ref=e970]:
+                                    - generic [ref=e971]: "2"
+                                    - generic [ref=e972]:
+                                      - generic [ref=e973]: (
+                                      - generic [ref=e974]:
+                                        - generic [ref=e975]:
+                                          - generic [ref=e976]: d
+                                          - generic [ref=e977]:
+                                            - generic [ref=e978]: t
+                                            - generic [ref=e979]: −
+                                            - generic [ref=e980]: "1"
+                                        - generic [ref=e981]:
+                                          - generic [ref=e982]: d
+                                          - generic [ref=e983]: t
+                                      - generic [ref=e984]: )
+                                - generic [ref=e985]: −
+                                - generic [ref=e986]:
+                                  - generic [ref=e987]:
+                                    - generic [ref=e988]: c
+                                    - generic [ref=e989]: p
+                                  - generic: ⁢
+                                  - generic [ref=e990]:
+                                    - generic [ref=e991]: (
+                                    - generic [ref=e992]:
+                                      - generic [ref=e993]: "1"
+                                      - generic [ref=e994]: −
+                                      - generic [ref=e995]:
+                                        - generic [ref=e996]: h
+                                        - generic: ⁢
+                                        - generic [ref=e997]: d
+                                    - generic [ref=e998]: )
+                              - generic [ref=e1000]:
+                                - generic [ref=e1001]: otherwise
+                                - generic [ref=e1002]: .
+                  - cell [ref=e1003]
+                  - cell "(6)" [ref=e1004]:
+                    - generic [ref=e1005]: (6)
+            - paragraph [ref=e1007]:
+              - text: Where
+              - math [ref=e1008]:
+                - generic [ref=e1010]:
+                  - generic [ref=e1011]: h
+                  - generic: ⁢
+                  - generic [ref=e1012]: d
+              - text: represents the heading deviation of the sensor,
+              - math [ref=e1013]:
+                - generic [ref=e1015]:
+                  - generic [ref=e1016]: c
+                  - generic [ref=e1017]: o
+              - text: represents the collision threshold,
+              - math [ref=e1018]:
+                - generic [ref=e1020]:
+                  - generic [ref=e1021]: c
+                  - generic [ref=e1022]: d
+              - text: represents the target proximity threshold,
+              - math [ref=e1023]:
+                - generic [ref=e1025]:
+                  - generic [ref=e1026]: c
+                  - generic [ref=e1027]: r
+              - text: represents the reward coefficient, and
+              - math [ref=e1028]:
+                - generic [ref=e1030]:
+                  - generic [ref=e1031]: c
+                  - generic [ref=e1032]: p
+              - text: represents the penalty coefficient.
+        - generic [ref=e1033]:
+          - heading "IV Simulation" [level=2] [ref=e1034]:
+            - generic [ref=e1035]: IV
+            - text: Simulation
+          - generic [ref=e1036]:
+            - heading "IV-A Environmental Setup" [level=3] [ref=e1037]:
+              - generic [ref=e1038]: IV-A
+              - text: Environmental Setup
+            - paragraph [ref=e1040]: The training of our model was conducted in virtual environments, using the Robot Operating System (ROS) combined with the Gazebo simulator. These platforms provided a realistic and customizable setting for the experiments.
+            - 'figure "Figure 4: The structure of Turtlebot3 robot." [ref=e1041]':
+              - img "Refer to caption" [ref=e1042]
+              - generic [ref=e1043]:
+                - generic [ref=e1044]: "Figure 4:"
+                - text: The structure of Turtlebot3 robot.
+            - paragraph [ref=e1046]:
+              - text: A shown in figure
+              - link "6" [ref=e1047] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S4.F6
+              - text: ", We conducted our experiments in two distinct environments: an obstacle-free environment and a complex environment. Both environments were simulated indoors within a 10 x 10 square meter area, enclosed by walls. The complex environment was additionally populated with obstacles strategically placed to challenge the navigation capabilities of our robot. Throughout the experiments, we utilized the Turtlebot as the robotic platform for these trials (Figure"
+              - link "4" [ref=e1048] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S4.F4
+              - text: ).
+            - paragraph [ref=e1050]: An important aspect of our setup was the representation of the target as a cylindrical object. However, the Turtlebot’s laser sensor was inherently unable to detect this object directly. This limitation is critical for understanding the robot’s perception and navigational abilities within the environment.
+            - 'figure "Figure 5: The flowchart of partial DRL environment." [ref=e1051]':
+              - img "Refer to caption" [ref=e1052]
+              - generic [ref=e1053]:
+                - generic [ref=e1054]: "Figure 5:"
+                - text: The flowchart of partial DRL environment.
+            - paragraph [ref=e1056]:
+              - text: In Figure
+              - link "5" [ref=e1057] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S4.F5
+              - text: ", the agent interacts with the Gazebo environment. Following initialization, the agent selects an action"
+              - math [ref=e1058]:
+                - generic [ref=e1060]: a
+              - text: to interact with the environment. As the agent progresses, it checks for collisions or reaching the maximum time step, indicated by the Boolean flag done. If done is true, the environment resets, providing the current reward
+              - math [ref=e1061]:
+                - generic [ref=e1063]:
+                  - generic [ref=e1064]: r
+                  - generic [ref=e1065]: ∗
+              - text: ", the next state"
+              - math [ref=e1066]:
+                - generic [ref=e1068]:
+                  - generic [ref=e1069]: s
+                  - generic [ref=e1070]: ′
+              - text: ", and the done flag."
+            - 'figure "Figure 6: Comparative view of two different robotic environments" [ref=e1071]':
+              - generic [ref=e1072]:
+                - figure "(a) The simple environment" [ref=e1074]:
+                  - img "Refer to caption" [ref=e1075]
+                  - generic [ref=e1076]:
+                    - generic [ref=e1077]: (a)
+                    - text: The simple environment
+                - figure "(b) The complex environment" [ref=e1079]:
+                  - img "Refer to caption" [ref=e1080]
+                  - generic [ref=e1081]:
+                    - generic [ref=e1082]: (b)
+                    - text: The complex environment
+              - generic [ref=e1083]:
+                - generic [ref=e1084]: "Figure 6:"
+                - text: Comparative view of two different robotic environments
+            - paragraph [ref=e1086]:
+              - text: If done is false, and the agent has reached the target position, another target position is generated, returning
+              - math [ref=e1087]:
+                - generic [ref=e1089]:
+                  - generic [ref=e1090]: (
+                  - generic [ref=e1091]:
+                    - generic [ref=e1092]: r
+                    - generic [ref=e1093]: ′
+                  - generic [ref=e1094]: ","
+                  - generic [ref=e1095]:
+                    - generic [ref=e1096]: s
+                    - generic [ref=e1097]: ′
+                  - generic [ref=e1098]: ","
+                  - generic [ref=e1099]: done
+                  - generic [ref=e1100]: )
+              - text: . If the target position has not been reached, it returns
+              - math [ref=e1101]:
+                - generic [ref=e1103]:
+                  - generic [ref=e1104]: (
+                  - generic [ref=e1105]:
+                    - generic [ref=e1106]: r
+                    - generic [ref=e1107]: ′′
+                  - generic [ref=e1108]: ","
+                  - generic [ref=e1109]:
+                    - generic [ref=e1110]: s
+                    - generic [ref=e1111]: ′
+                  - generic [ref=e1112]: ","
+                  - generic [ref=e1113]: done
+                  - generic [ref=e1114]: )
+              - text: directly. Here,
+              - math [ref=e1115]:
+                - generic [ref=e1117]:
+                  - generic [ref=e1118]: r
+                  - generic [ref=e1119]: ∗
+              - text: /
+              - math [ref=e1120]:
+                - generic [ref=e1122]:
+                  - generic [ref=e1123]: r
+                  - generic [ref=e1124]: ′
+              - text: /
+              - math [ref=e1125]:
+                - generic [ref=e1127]:
+                  - generic [ref=e1128]: r
+                  - generic [ref=e1129]: ′′
+              - text: denote the reward
+              - math [ref=e1130]:
+                - generic [ref=e1132]:
+                  - generic [ref=e1133]: r
+                  - generic [ref=e1134]: t
+              - text: under different conditions. This process continues until the maximum time step is reached, with the collected data
+              - math [ref=e1135]:
+                - generic [ref=e1137]:
+                  - generic [ref=e1138]: (
+                  - generic [ref=e1139]: s
+                  - generic [ref=e1140]: ","
+                  - generic [ref=e1141]: a
+                  - generic [ref=e1142]: ","
+                  - generic [ref=e1143]: r
+                  - generic [ref=e1144]: ","
+                  - generic [ref=e1145]:
+                    - generic [ref=e1146]: s
+                    - generic [ref=e1147]: ′
+                  - generic [ref=e1148]: ","
+                  - generic [ref=e1149]: done
+                  - generic [ref=e1150]: )
+              - text: utilized for DRL algorithm training.
+            - paragraph [ref=e1152]: For each training episode, the target’s starting position was randomized within the environment, ensuring it was placed away from obstacles to prevent immediate collisions. This approach of random initialization was vital for training the model to adapt to a wide range of navigation scenarios, enhancing its ability to operate effectively in varied environments.
+          - generic [ref=e1153]:
+            - heading "IV-B Performance Comparison" [level=3] [ref=e1154]:
+              - generic [ref=e1155]: IV-B
+              - text: Performance Comparison
+            - paragraph [ref=e1157]: "In our study, we explore the efficacy of Proximal Policy Optimization (PPO) enhanced with Residual Blocks across different environmental complexities and reward function designs. We benchmark these against the Deep Deterministic Policy Gradient (DDPG) algorithm to evaluate performance variations. The investigation unfolds through three distinct scenarios:"
+            - paragraph [ref=e1159]:
+              - text: In this scenario, we aim to showcase the efficacy of ResBlock PPO by comparing it with DDPG and vanilla PPO. Thus, we’ve crafted a simplified environment with a basic reward function depicted in equation
+              - link "5" [ref=e1160] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.E5
+              - text: . This initial setup allows us to gauge the performance attributes of the ResBlock-enhanced PPO algorithm under fundamental conditions.
+            - paragraph [ref=e1162]:
+              - text: Complex environment and basic reward function outlined in equation
+              - link "5" [ref=e1163] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.E5
+              - text: ": subsequently, we increase the environmental complexity to observe how effectively the ResBlock PPO setup, still utilizing the basic reward function, adapts to and navigates within more challenging contexts."
+            - paragraph [ref=e1165]:
+              - text: Complex environment and advanced reward function outlined in equation
+              - link "6" [ref=e1166] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S3.E6
+              - text: ": in the final configuration, we introduce an advanced reward function to our complex environment scenario, aiming to discern the impact of intricate reward structuring on the ResBlock PPO’s navigational efficacy."
+        - generic [ref=e1167]:
+          - heading "V Experimental Results" [level=2] [ref=e1168]:
+            - generic [ref=e1169]: V
+            - text: Experimental Results
+          - generic [ref=e1170]:
+            - heading "V-A Simple Environment with Basic Reward" [level=3] [ref=e1171]:
+              - generic [ref=e1172]: V-A
+              - text: Simple Environment with Basic Reward
+            - paragraph [ref=e1174]: In the first scenario, the ResBlock PPO algorithm demonstrated significant advantages over the DDPG method within the simple environment. Particularly, ResBlock PPO achieved faster navigation, indicating a more efficient and responsive decision-making process. This effectiveness is partly due to the ResBlock architecture, which helps maintain a strong gradient flow during training, essential for quick learning and adaptation.
+            - paragraph [ref=e1176]:
+              - text: The improved performance depicted in Figure
+              - link "7" [ref=e1177] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S5.F7
+              - text: shows that ResBlock PPO not only converges more rapidly but also adapts swiftly to environmental changes. This leads to quicker and more accurate pathfinding compared to both DDPG and vanilla PPO.
+            - 'figure "Figure 7: Cumulative Reward of Proposed PPO and DDPG in a Simple Environment with Basic Reward Function." [ref=e1178]':
+              - img "Refer to caption" [ref=e1179]
+              - generic [ref=e1180]:
+                - generic [ref=e1181]: "Figure 7:"
+                - text: Cumulative Reward of Proposed PPO and DDPG in a Simple Environment with Basic Reward Function.
+            - paragraph [ref=e1183]: The architecture’s ability to process environmental cues effectively allows for faster adjustments to changes, enhancing the robot’s navigation capabilities. This trial establishes a clear performance ranking with ResBlock PPO at the forefront, followed by DDPG, and then vanilla PPO. The results underscore the potential of integrating advanced neural network architectures like ResBlock into reinforcement learning frameworks to boost efficiency and adaptability in robotic navigation.
+            - 'figure "TABLE III: Comparison of Proposed PPO vs DDPG" [ref=e1184]':
+              - generic [ref=e1185]:
+                - generic [ref=e1186]: "TABLE III:"
+                - text: Comparison of Proposed PPO vs DDPG
+              - table [ref=e1187]:
+                - rowgroup [ref=e1188]:
+                  - row "Algorithm Avg. Reward Episodes Success % Avg. Steps/Ep" [ref=e1189]:
+                    - cell "Algorithm" [ref=e1190]:
+                      - generic [ref=e1192]: Algorithm
+                    - cell "Avg. Reward" [ref=e1193]:
+                      - generic [ref=e1195]: Avg. Reward
+                    - cell "Episodes" [ref=e1196]:
+                      - generic [ref=e1198]: Episodes
+                    - cell "Success %" [ref=e1199]:
+                      - generic [ref=e1201]: Success %
+                    - cell "Avg. Steps/Ep" [ref=e1202]:
+                      - generic [ref=e1204]: Avg. Steps/Ep
+                  - row "Prop. PPO 17.49 90 100 111.11" [ref=e1205]:
+                    - cell "Prop. PPO" [ref=e1206]:
+                      - generic [ref=e1208]: Prop. PPO
+                    - cell "17.49" [ref=e1209]:
+                      - generic [ref=e1211]: "17.49"
+                    - cell "90" [ref=e1212]:
+                      - generic [ref=e1214]: "90"
+                    - cell "100" [ref=e1215]:
+                      - generic [ref=e1217]: "100"
+                    - cell "111.11" [ref=e1218]:
+                      - generic [ref=e1220]: "111.11"
+                  - row "Vanilla PPO 3.34 23 30.43 419.69" [ref=e1221]:
+                    - cell "Vanilla PPO" [ref=e1222]:
+                      - generic [ref=e1224]: Vanilla PPO
+                    - cell "3.34" [ref=e1225]:
+                      - generic [ref=e1227]: "3.34"
+                    - cell "23" [ref=e1228]:
+                      - generic [ref=e1230]: "23"
+                    - cell "30.43" [ref=e1231]:
+                      - generic [ref=e1233]: "30.43"
+                    - cell "419.69" [ref=e1234]:
+                      - generic [ref=e1236]: "419.69"
+                  - row "DDPG 12.65 65 98.46 144.92" [ref=e1237]:
+                    - cell "DDPG" [ref=e1238]:
+                      - generic [ref=e1240]: DDPG
+                    - cell "12.65" [ref=e1241]:
+                      - generic [ref=e1243]: "12.65"
+                    - cell "65" [ref=e1244]:
+                      - generic [ref=e1246]: "65"
+                    - cell "98.46" [ref=e1247]:
+                      - generic [ref=e1249]: "98.46"
+                    - cell "144.92" [ref=e1250]:
+                      - generic [ref=e1252]: "144.92"
+          - generic [ref=e1253]:
+            - heading "V-B Complex Environment with Basic Reward" [level=3] [ref=e1254]:
+              - generic [ref=e1255]: V-B
+              - text: Complex Environment with Basic Reward
+            - paragraph [ref=e1257]: In a more challenging environment characterized by intricate obstacles, the DDPG algorithm showcased superior navigation accuracy over the ResBlock PPO.
+            - 'figure "Figure 8: Cumulative Reward of Proposed PPO and DDPG in a Complex Environment with Basic Reward Function." [ref=e1258]':
+              - img "Refer to caption" [ref=e1259]
+              - generic [ref=e1260]:
+                - generic [ref=e1261]: "Figure 8:"
+                - text: Cumulative Reward of Proposed PPO and DDPG in a Complex Environment with Basic Reward Function.
+            - 'figure "Figure 9: Comparative analysis of cumulative rewards using DDPG and PPO algorithms" [ref=e1262]':
+              - generic [ref=e1263]:
+                - figure "(a) Cumulative Reward for Proposed DDPG Algorithm in a Complex Environment with Basic Reward Function" [ref=e1265]:
+                  - img "Refer to caption" [ref=e1266]
+                  - generic [ref=e1267]:
+                    - generic [ref=e1268]: (a)
+                    - text: Cumulative Reward for Proposed DDPG Algorithm in a Complex Environment with Basic Reward Function
+                - figure "(b) Cumulative Reward for Proposed PPO Algorithm in a Complex Environment with Advanced Reward Function" [ref=e1270]:
+                  - img "Refer to caption" [ref=e1271]
+                  - generic [ref=e1272]:
+                    - generic [ref=e1273]: (b)
+                    - text: Cumulative Reward for Proposed PPO Algorithm in a Complex Environment with Advanced Reward Function
+              - generic [ref=e1274]:
+                - generic [ref=e1275]: "Figure 9:"
+                - text: Comparative analysis of cumulative rewards using DDPG and PPO algorithms
+            - paragraph [ref=e1277]:
+              - text: Despite encountering more complex spatial dynamics, DDPG demonstrated enhanced precision in navigation, underscoring its robustness in handling intricate obstacles as shown in
+              - link "IV" [ref=e1278] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S5.T4
+              - text: . This performance discrepancy suggests that while ResBlock PPO excels in simpler scenarios, DDPG is better suited to environments requiring careful management of detailed spatial information and strategic maneuvering.
+            - paragraph [ref=e1280]: The results underscore a significant interplay between environmental complexity and algorithmic strengths, with DDPG particularly excelling in settings demanding high accuracy and strategic navigation maneuvers.
+            - paragraph [ref=e1282]:
+              - text: As depicted in Figure
+              - link "8" [ref=e1283] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S5.F8
+              - text: ", the cumulative reward comparison graph provides a visual representation of the performance disparity between the proposed PPO and DDPG algorithms in a complex environment with a basic reward function."
+            - paragraph [ref=e1285]: This visualization corroborates our findings, further substantiating the efficacy of DDPG in environments necessitating precise navigation amidst intricate obstacles.
+            - 'figure "TABLE IV: Proposed PPO vs DDPG - Complex Env" [ref=e1286]':
+              - generic [ref=e1287]:
+                - generic [ref=e1288]: "TABLE IV:"
+                - text: Proposed PPO vs DDPG - Complex Env
+              - table [ref=e1289]:
+                - rowgroup [ref=e1290]:
+                  - row "Algorithm Avg. Reward Episodes Success % Avg. Steps/Ep" [ref=e1291]:
+                    - columnheader "Algorithm" [ref=e1292]:
+                      - generic [ref=e1294]: Algorithm
+                    - columnheader "Avg. Reward" [ref=e1295]:
+                      - generic [ref=e1297]: Avg. Reward
+                    - columnheader "Episodes" [ref=e1298]:
+                      - generic [ref=e1300]: Episodes
+                    - columnheader "Success %" [ref=e1301]:
+                      - generic [ref=e1303]: Success %
+                    - columnheader "Avg. Steps/Ep" [ref=e1304]:
+                      - generic [ref=e1306]: Avg. Steps/Ep
+                - rowgroup [ref=e1307]:
+                  - row "DDPG 11.23 63 93.65 158.73" [ref=e1308]:
+                    - cell "DDPG" [ref=e1309]:
+                      - generic [ref=e1311]: DDPG
+                    - cell "11.23" [ref=e1312]:
+                      - generic [ref=e1314]: "11.23"
+                    - cell "63" [ref=e1315]:
+                      - generic [ref=e1317]: "63"
+                    - cell "93.65" [ref=e1318]:
+                      - generic [ref=e1320]: "93.65"
+                    - cell "158.73" [ref=e1321]:
+                      - generic [ref=e1323]: "158.73"
+                  - row "Prop. PPO 9.07 87 67.81 114.94" [ref=e1324]:
+                    - cell "Prop. PPO" [ref=e1325]:
+                      - generic [ref=e1327]: Prop. PPO
+                    - cell "9.07" [ref=e1328]:
+                      - generic [ref=e1330]: "9.07"
+                    - cell "87" [ref=e1331]:
+                      - generic [ref=e1333]: "87"
+                    - cell "67.81" [ref=e1334]:
+                      - generic [ref=e1336]: "67.81"
+                    - cell "114.94" [ref=e1337]:
+                      - generic [ref=e1339]: "114.94"
+          - generic [ref=e1340]:
+            - heading "V-C Complex Environment with Advanced Reward" [level=3] [ref=e1341]:
+              - generic [ref=e1342]: V-C
+              - text: Complex Environment with Advanced Reward
+            - paragraph [ref=e1344]: In a more challenging environment, the application of an advanced reward function significantly enhanced the performance of ResBlock PPO. However, despite the improvement seen in PPO results due to the advanced reward function, DDPG still outperformed it in terms of success rate. Notably, while DDPG achieved a better success rate, it operated slower compared to PPO. This advanced reward function, tailored to assess finer details of the navigation strategy, better complemented ResBlock PPO’s adaptive learning capabilities. It effectively encouraged more strategic decision-making, allowing ResBlock PPO to navigate complex settings more proficiently than the previous version with a simple reward function. This performance improvement highlights the importance of aligning reward mechanisms with specific algorithm strengths, particularly in challenging environments where nuanced decision-making is crucial.
+            - paragraph [ref=e1346]:
+              - text: As shown in Figure
+              - link "9" [ref=e1347] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S5.F9
+              - text: and Table
+              - link "V" [ref=e1348] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2405.16266v2#S5.T5
+              - text: ", the comparative analysis of cumulative rewards using DDPG and PPO algorithms illustrates the efficacy of ResBlock PPO in environments with advanced reward functions."
+            - 'figure "TABLE V: Proposed PPO vs DDPG - Complex Env and new reward function" [ref=e1349]':
+              - generic [ref=e1350]:
+                - generic [ref=e1351]: "TABLE V:"
+                - text: Proposed PPO vs DDPG - Complex Env and new reward function
+              - table [ref=e1352]:
+                - rowgroup [ref=e1353]:
+                  - row "Algorithm Reward Function Episodes Success % Avg. Steps/Ep" [ref=e1354]:
+                    - cell "Algorithm" [ref=e1355]:
+                      - generic [ref=e1357]: Algorithm
+                    - cell "Reward Function" [ref=e1358]:
+                      - generic [ref=e1360]: Reward Function
+                    - cell "Episodes" [ref=e1361]:
+                      - generic [ref=e1363]: Episodes
+                    - cell "Success %" [ref=e1364]:
+                      - generic [ref=e1366]: Success %
+                    - cell "Avg. Steps/Ep" [ref=e1367]:
+                      - generic [ref=e1369]: Avg. Steps/Ep
+                  - row "DDPG benchmark 63 93.65 158.73" [ref=e1370]:
+                    - cell "DDPG" [ref=e1371]:
+                      - generic [ref=e1373]: DDPG
+                    - cell "benchmark" [ref=e1374]:
+                      - generic [ref=e1376]: benchmark
+                    - cell "63" [ref=e1377]:
+                      - generic [ref=e1379]: "63"
+                    - cell "93.65" [ref=e1380]:
+                      - generic [ref=e1382]: "93.65"
+                    - cell "158.73" [ref=e1383]:
+                      - generic [ref=e1385]: "158.73"
+                  - row "Prop. PPO Advanced 74 85.13 134.81" [ref=e1386]:
+                    - cell "Prop. PPO" [ref=e1387]:
+                      - generic [ref=e1389]: Prop. PPO
+                    - cell "Advanced" [ref=e1390]:
+                      - generic [ref=e1392]: Advanced
+                    - cell "74" [ref=e1393]:
+                      - generic [ref=e1395]: "74"
+                    - cell "85.13" [ref=e1396]:
+                      - generic [ref=e1398]: "85.13"
+                    - cell "134.81" [ref=e1399]:
+                      - generic [ref=e1401]: "134.81"
+                  - row "Prop. PPO Simple 87 67.81 114.94" [ref=e1402]:
+                    - cell "Prop. PPO" [ref=e1403]:
+                      - generic [ref=e1405]: Prop. PPO
+                    - cell "Simple" [ref=e1406]:
+                      - generic [ref=e1408]: Simple
+                    - cell "87" [ref=e1409]:
+                      - generic [ref=e1411]: "87"
+                    - cell "67.81" [ref=e1412]:
+                      - generic [ref=e1414]: "67.81"
+                    - cell "114.94" [ref=e1415]:
+                      - generic [ref=e1417]: "114.94"
+        - generic [ref=e1418]:
+          - heading "VI Challenges and Gaps" [level=2] [ref=e1419]:
+            - generic [ref=e1420]: VI
+            - text: Challenges and Gaps
+          - paragraph [ref=e1422]: The application of Deep Reinforcement Learning (DRL) in mobile robot navigation, despite its promise, faces several significant challenges that hinder its wider adoption and effectiveness.
+          - paragraph [ref=e1424]: A primary challenge is partial observability, where robots lack complete state information, leading to suboptimal decision-making. Enhancing sample efficiency is another critical issue, as DRL typically requires extensive interactions with the environment, which is impractical in real-world settings due to cost and risk. Safety in dynamic and unstructured environments remains a paramount concern. DRL systems must make safe decisions under uncertainty, handling edge cases without causing harm. The lack of robust benchmarking environments and standardized evaluation metrics further complicates the assessment of DRL algorithms, making it difficult to gauge their true efficacy and safety.
+          - paragraph [ref=e1426]: Addressing these challenges requires technical advancements and collaborative efforts among researchers to define rigorous testing and safety standards. Progress in these areas is essential for the reliable deployment of autonomous robots in real-world applications, such as industrial automation and search and rescue missions, where effective and safe navigation is critical.
+        - generic [ref=e1427]:
+          - heading "VII Conclusion" [level=2] [ref=e1428]:
+            - generic [ref=e1429]: VII
+            - text: Conclusion
+          - paragraph [ref=e1431]: This study demonstrated the successful application of deep reinforcement learning (DRL) to enhance autonomous navigation in mobile robots. Using advanced algorithms like Deep Deterministic Policy Gradient (DDPG) and enhanced Proximal Policy Optimization (PPO) in the Gazebo simulation environment, we trained robots to efficiently navigate complex environments.
+          - paragraph [ref=e1433]: By integrating LiDAR sensor data with DRL algorithms, robots were able to navigate towards targets while avoiding obstacles. Enhancements in the PPO neural network architecture and refined reward functions significantly boosted performance and training efficacy. Experimental results in various environments confirmed the effectiveness of our approach, highlighting the potential of DRL to advance autonomous robotics. This research contributes to the field by showing how improvements in algorithms and training can lead to substantial gains in robotic navigation, with promising applications in industrial, commercial, and rescue operations.
+        - generic [ref=e1434]:
+          - heading "References" [level=2] [ref=e1435]
+          - list [ref=e1436]:
+            - listitem [ref=e1437]:
+              - generic [ref=e1438]:
+                - text: "[1]"
+                - button "Back to the article" [ref=e1439] [cursor=pointer]: ↑
+              - generic [ref=e1440]: "C. Cadena et al., ”Past, present, and future of simultaneous localization and mapping: Toward the robust-perception age,” IEEE Transactions on Robotics, vol. 32, no. 6, pp. 1309-1332, 2016."
+            - listitem [ref=e1441]:
+              - generic [ref=e1442]:
+                - text: "[2]"
+                - button "Back to the article" [ref=e1443] [cursor=pointer]: ↑
+              - generic [ref=e1444]: "K. Arulkumaran et al., ”Deep reinforcement learning: A brief survey,” IEEE Signal Processing Magazine, vol. 34, no. 6, pp. 26-38, 2017."
+            - listitem [ref=e1445]:
+              - generic [ref=e1446]:
+                - text: "[3]"
+                - button "Back to the article" [ref=e1447] [cursor=pointer]: ↑
+              - generic [ref=e1448]: L. Tai and M. Liu, ”Towards cognitive exploration through deep reinforcement learning for mobile robots,” in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2016.
+            - listitem [ref=e1449]:
+              - generic [ref=e1450]:
+                - text: "[4]"
+                - button "Back to the article" [ref=e1451] [cursor=pointer]: ↑
+              - generic [ref=e1452]: "S. R. Hosseini and M. Teshnehlab, ”ENet-21: An Optimized Light CNN Structure for Lane Detection,” arXiv preprint arXiv:2403.19782, 2024."
+            - listitem [ref=e1453]:
+              - generic [ref=e1454]:
+                - text: "[5]"
+                - button "Back to the article" [ref=e1455] [cursor=pointer]: ↑
+              - generic [ref=e1456]: "R.S. Sutton, A.G. Barto, ”Reinforcement learning: An introduction,” MIT Press, 2018."
+            - listitem [ref=e1457]:
+              - generic [ref=e1458]:
+                - text: "[6]"
+                - button "Back to the article" [ref=e1459] [cursor=pointer]: ↑
+              - generic [ref=e1460]: "M. Quigley, K. Conley, B. Gerkey, J. Faust, T. Foote, J. Leibs, R. Wheeler, A. Y. Ng, ”ROS: an open-source robot operating system,” in ICRA Workshop on Open Source Software, Kobe, Japan, 2009."
+            - listitem [ref=e1461]:
+              - generic [ref=e1462]:
+                - text: "[7]"
+                - button "Back to the article" [ref=e1463] [cursor=pointer]: ↑
+              - generic [ref=e1464]: N. Koenig, A. Howard, ”Design and use paradigms for gazebo, an open-source multi-robot simulator,” in Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2004.
+            - listitem [ref=e1465]:
+              - generic [ref=e1466]:
+                - text: "[8]"
+                - button "Back to the article" [ref=e1467] [cursor=pointer]: ↑
+              - generic [ref=e1468]: V. Mnih, K. Kavukcuoglu, D. Silver, A. A. Rusu, J. Veness, M. G. Bellemare, S. Petersen, ”Human-level control through deep reinforcement learning,” Nature, vol. 518, no. 7540, pp. 529-533, 2015.
+            - listitem [ref=e1469]:
+              - generic [ref=e1470]:
+                - text: "[9]"
+                - button "Back to the article" [ref=e1471] [cursor=pointer]: ↑
+              - generic [ref=e1472]: J. Schulman, S. Levine, P. Moritz, M. I. Jordan, P. Abbeel, ”Trust region policy optimization,” in Proceedings of the 32nd International Conference on Machine Learning (ICML-15), pp. 1889-1897, 2015.
+            - listitem [ref=e1473]:
+              - generic [ref=e1474]:
+                - text: "[10]"
+                - button "Back to the article" [ref=e1475] [cursor=pointer]: ↑
+              - generic [ref=e1476]: T. P. Lillicrap, J. J. Hunt, A. Pritzel, N. Heess, T. Erez, Y. Tassa, D. Wierstra, ”Continuous control with deep reinforcement learning,” in International Conference on Learning Representations (ICLR), Workshop track, 2016.
+            - listitem [ref=e1477]:
+              - generic [ref=e1478]:
+                - text: "[11]"
+                - button "Back to the article" [ref=e1479] [cursor=pointer]: ↑
+              - generic [ref=e1480]: D. Silver, ”Empowering mobile robots with DDPG for autonomous navigation,” Robotics and Autonomous Systems, vol. 123, pp. 456-467, 2018.
+            - listitem [ref=e1481]:
+              - generic [ref=e1482]:
+                - text: "[12]"
+                - button "Back to the article" [ref=e1483] [cursor=pointer]: ↑
+              - generic [ref=e1484]: X. Zhu, ”End-to-end navigation for robots using convolutional neural networks and deep reinforcement learning,” in Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), pp. 1234-1245, 2017.
+            - listitem [ref=e1485]:
+              - generic [ref=e1486]:
+                - text: "[13]"
+                - button "Back to the article" [ref=e1487] [cursor=pointer]: ↑
+              - generic [ref=e1488]: "J. Tobin, ”Sim-to-real transfer: Training robots in simulation for real-world deployment,” in Proceedings of the Conference on Robot Learning (CoRL), pp. 567-578, 2017."
+            - listitem [ref=e1489]:
+              - generic [ref=e1490]:
+                - text: "[14]"
+                - button "Back to the article" [ref=e1491] [cursor=pointer]: ↑
+              - generic [ref=e1492]: Y. Zheng, ”Multi-agent reinforcement learning for collaborative navigation of robot teams,” Journal of Artificial Intelligence Research, vol. 45, pp. 789-802, 2018.
+            - listitem [ref=e1493]:
+              - generic [ref=e1494]:
+                - text: "[15]"
+                - button "Back to the article" [ref=e1495] [cursor=pointer]: ↑
+              - generic [ref=e1496]: J. Schulman, F. Wolski, P. Dhariwal, A. Radford, O. Klimov, ”Proximal policy optimization algorithms,” arXiv preprint arXiv:1707.06347, 2017.
+  - button "Report Issue" [ref=e1497] [cursor=pointer]
+  - button "Report Issue for Selection" [ref=e1498] [cursor=pointer]
+  - generic [ref=e1500]:
+    - text: Generated by
+    - link "L A T E xml [LOGO]" [ref=e1501] [cursor=pointer]:
+      - /url: https://math.nist.gov/~BMiller/LaTeXML/
+      - generic [ref=e1502]: L A T E
+      - text: xml
+      - img "[LOGO]" [ref=e1503]
+  - contentinfo [ref=e1504]:
+    - generic [ref=e1505]:
+      - heading "Instructions for reporting errors" [level=2] [ref=e1506]
+      - paragraph [ref=e1507]: "We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:"
+      - list [ref=e1508]:
+        - listitem [ref=e1509]: Click the "Report Issue" button.
+        - listitem [ref=e1510]:
+          - text: Open a report feedback form via keyboard, use "
+          - strong [ref=e1511]: Ctrl + ?
+          - text: "\"."
+        - listitem [ref=e1512]: Make a text selection and click the "Report Issue for Selection" button near your cursor.
+        - listitem [ref=e1513]: You can use Alt+Y to toggle on and Alt+Shift+Y to toggle off accessible reporting links at each section.
+      - paragraph [ref=e1514]:
+        - text: Our team has already identified
+        - link "the following issues" [ref=e1515] [cursor=pointer]:
+          - /url: https://github.com/arXiv/html_feedback/issues
+        - text: . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+      - paragraph [ref=e1516]:
+        - text: Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+        - link "list of packages that need conversion" [ref=e1517] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/wiki/Porting-LaTeX-packages-for-LaTeXML
+        - text: ", and welcome"
+        - link "developer contributions" [ref=e1518] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/issues
+        - text: .
+  - text: beta

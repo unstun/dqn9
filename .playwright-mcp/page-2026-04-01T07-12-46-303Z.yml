@@ -1,0 +1,2196 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Back to arXiv" [ref=e4] [cursor=pointer]:
+      - /url: https://arxiv.org/
+      - generic [ref=e5]: Back to arXiv
+    - banner [ref=e6]:
+      - paragraph [ref=e7]:
+        - text: This is
+        - strong [ref=e8]: experimental HTML
+        - text: to improve accessibility. We invite you to report rendering errors.
+        - generic [ref=e9]: Use Alt+Y to toggle on accessible reporting links and Alt+Shift+Y to toggle off.
+        - text: Learn more
+        - link "about this project" [ref=e10] [cursor=pointer]:
+          - /url: https://info.arxiv.org/about/accessible_HTML.html
+        - text: and
+        - link "help improve conversions" [ref=e11] [cursor=pointer]:
+          - /url: https://info.arxiv.org/help/submit_latex_best_practices.html
+        - text: .
+    - navigation [ref=e12]:
+      - link "Why HTML?" [ref=e13] [cursor=pointer]:
+        - /url: https://info.arxiv.org/about/accessible_HTML.html
+      - link "Report Issue" [ref=e14] [cursor=pointer]:
+        - /url: "#myForm"
+      - link "Back to Abstract" [ref=e15] [cursor=pointer]:
+        - /url: https://arxiv.org/abs/2408.05744v1
+      - link "Download PDF" [ref=e16] [cursor=pointer]:
+        - /url: https://arxiv.org/pdf/2408.05744v1
+      - link "Toggle dark/light mode" [ref=e17] [cursor=pointer]:
+        - /url: javascript:toggleColorScheme()
+        - generic "Switch to light mode" [ref=e18]:
+          - img [ref=e19]
+  - generic [ref=e21]:
+    - navigation "Table of Contents" [ref=e22]:
+      - generic [ref=e23] [cursor=pointer]:
+        - img
+      - list [ref=e24]:
+        - listitem [ref=e25]:
+          - link "Abstract" [ref=e26] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#abstract
+            - generic [ref=e27]: Abstract
+        - listitem [ref=e28]:
+          - link "1 Introduction" [ref=e29] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#S1
+            - generic [ref=e30]:
+              - generic [ref=e31]: "1"
+              - text: Introduction
+        - listitem [ref=e32]:
+          - link "2 Related Works" [ref=e33] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#S2
+            - generic [ref=e34]:
+              - generic [ref=e35]: "2"
+              - text: Related Works
+        - listitem [ref=e36]:
+          - link "3 Methodology" [ref=e37] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#S3
+            - generic [ref=e38]:
+              - generic [ref=e39]: "3"
+              - text: Methodology
+        - listitem [ref=e40]:
+          - link "4 Experimental Results" [ref=e41] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#S4
+            - generic [ref=e42]:
+              - generic [ref=e43]: "4"
+              - text: Experimental Results
+        - listitem [ref=e44]:
+          - link "5 Conclusion" [ref=e45] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#S5
+            - generic [ref=e46]:
+              - generic [ref=e47]: "5"
+              - text: Conclusion
+        - listitem [ref=e48]:
+          - link "References" [ref=e49] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2408.05744v1#bib
+            - generic [ref=e50]: References
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - 'link "License: CC BY 4.0" [ref=e53] [cursor=pointer]':
+          - /url: https://info.arxiv.org/help/license/index.html#licenses-available
+        - generic [ref=e54]: arXiv:2408.05744v1 [cs.RO] 11 Aug 2024
+      - article [ref=e55]:
+        - generic [ref=e56]:
+          - text: \affils
+          - paragraph [ref=e57]:
+            - superscript [ref=e58]: "1"
+            - text: Intelligent Robot Laboratory, University of Tsukuba, (victorkich98@gmail.com)
+            - superscript [ref=e59]: ∗
+            - generic [ref=e60]:
+              - text: Corresponding author
+              - superscript [ref=e61]: "2"
+            - text: Federal University of Rio Grande,
+            - superscript [ref=e62]: "3"
+            - text: Federal University of Santa Maria,
+            - superscript [ref=e63]: "4"
+            - text: Technological University of Uruguay
+        - heading "Parallel Distributional Deep Reinforcement Learning for Mapless Navigation of Terrestrial Mobile Robots" [level=1] [ref=e64]
+        - generic [ref=e65]:
+          - generic [ref=e67]:
+            - text: Victor A. Kich
+            - superscript [ref=e68]: 1∗
+          - generic [ref=e70]:
+            - text: Alisson H. Kolling
+            - superscript [ref=e71]: "2"
+          - generic [ref=e73]:
+            - text: Junior Costa de Jesus
+            - superscript [ref=e74]: "2"
+          - generic [ref=e76]:
+            - text: Gabriel V. Heisler
+            - superscript [ref=e77]: "3"
+          - generic [ref=e79]:
+            - text: Hiago Jacobs
+            - superscript [ref=e80]: "4"
+          - generic [ref=e82]:
+            - text: Jair A. Bottega
+            - superscript [ref=e83]: 1∗
+          - generic [ref=e85]:
+            - text: André L. da S. Kelbouscas
+            - superscript [ref=e86]: "4"
+          - generic [ref=e88]:
+            - text: Akihisa Ohya
+            - superscript [ref=e89]: "1"
+          - generic [ref=e91]:
+            - text: Ricardo B. Grando
+            - superscript [ref=e92]: 2,4
+          - generic [ref=e94]:
+            - text: Paulo L. J. Drews-Jr
+            - superscript [ref=e95]: "2"
+          - generic [ref=e97]:
+            - text: Daniel F. T. Gamarra
+            - superscript [ref=e98]: "3"
+        - generic [ref=e99]:
+          - heading "Abstract" [level=6] [ref=e100]
+          - paragraph [ref=e101]: This paper introduces novel deep reinforcement learning (Deep-RL) techniques using parallel distributional actor-critic networks for navigating terrestrial mobile robots. Our approaches use laser range findings, relative distance, and angle to the target to guide the robot. We trained agents in the Gazebo simulator and deployed them in real scenarios. Results show that parallel distributional Deep-RL algorithms enhance decision-making and outperform non-distributional and behavior-based approaches in navigation and spatial generalization.
+        - generic [ref=e102]:
+          - heading "keywords:" [level=6] [ref=e103]
+          - text: Parallel Distributional Deep Reinforcement Learning, Terrestrial Mobile Robot, Mapless Navigation
+        - generic [ref=e104]:
+          - heading "1 Introduction" [level=2] [ref=e105]:
+            - generic [ref=e106]: "1"
+            - text: Introduction
+          - paragraph [ref=e108]:
+            - text: Deep Reinforcement Learning (Deep-RL) has shown significant potential in engineering and robotics for controlling discrete and continuous systems
+            - generic [ref=e109]:
+              - text: "["
+              - link "1" [ref=e110] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib1
+              - text: "]"
+            - text: . Initially applied to stable environments
+            - generic [ref=e111]:
+              - text: "["
+              - link "2" [ref=e112] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib2
+              - text: "]"
+            - text: ", its complexity increases with non-stationary robots like terrestrial mobile robots due to environmental interactions."
+          - paragraph [ref=e114]:
+            - text: To address this, new Deep-RL techniques focusing on action discretization have been developed
+            - generic [ref=e115]:
+              - text: "["
+              - link "3" [ref=e116] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib3
+              - text: "]"
+            - text: ", achieving success in mapless navigation for various mobile robots"
+            - generic [ref=e117]:
+              - text: "["
+              - link "4" [ref=e118] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib4
+              - text: "]"
+            - text: ","
+            - generic [ref=e119]:
+              - text: "["
+              - link "5" [ref=e120] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib5
+              - text: "]"
+            - text: ","
+            - generic [ref=e121]:
+              - text: "["
+              - link "6" [ref=e122] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib6
+              - text: "]"
+            - text: . Distributed Deep-RL approaches offer promising solutions to the training time issue in limited simulated environments
+            - generic [ref=e123]:
+              - text: "["
+              - link "7" [ref=e124] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib7
+              - text: "]"
+            - text: . However, autonomous navigation of terrestrial mobile robots in complex environments remains challenging.
+          - paragraph [ref=e126]:
+            - text: "We present two new Deep-RL approaches using parallel distributional techniques: Parallel Distributional Deterministic Reinforcement Learning (PDDRL) and Parallel Distributional Stochastic Reinforcement Learning (PDSRL), incorporating prioritized memory replay for enhanced navigation in complex scenarios. As shown in Fig."
+            - link "1" [ref=e127] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S1.F1
+            - text: ", our methods use 24-dimensional range findings and the relative distance and angle to the target. Multiple agents’ simultaneous learning improves performance in both simulation and real-world scenarios. We used the Turtlebot3 Burger robot for extensive evaluations in four increasingly complex scenarios, including an additional real scenario for spatial generalization testing."
+          - 'figure "Figure 1: Left: Turtlebot3 Burger navigating a real-world obstacle scenario. Right: Input and output structure of our proposed PDDRL and PDSRL approaches." [ref=e128]':
+            - img "Refer to caption" [ref=e129]
+            - generic [ref=e130]:
+              - generic [ref=e131]: "Figure 1:"
+              - text: "Left: Turtlebot3 Burger navigating a real-world obstacle scenario. Right: Input and output structure of our proposed PDDRL and PDSRL approaches."
+          - generic [ref=e132]:
+            - paragraph [ref=e133]: "This work’s contributions include:"
+            - list [ref=e134]:
+              - listitem [ref=e135]:
+                - text: •
+                - paragraph [ref=e137]: Two new distributional Deep-RL approaches for improving goal-oriented mapless navigation using a simple range-based sensing architecture.
+              - listitem [ref=e138]:
+                - text: •
+                - paragraph [ref=e140]: Demonstration of the feasibility of our approaches through sim-to-real evaluation, addressing challenges such as imprecision and delays.
+              - listitem [ref=e141]:
+                - text: •
+                - paragraph [ref=e143]: Evidence that the stochastic actor-critic technique with prioritized experience replay outperforms non-distributional techniques and classic algorithms, marking the first extensive sim-to-real evaluation for mapless navigation of terrestrial mobile robots using parallel distributional Deep-RL approaches.
+          - paragraph [ref=e145]:
+            - text: "A video showcasing the experiments can be accessed at:"
+            - link "https://youtu.be/cOVOijEwLUA" [ref=e146] [cursor=pointer]:
+              - /url: https://youtu.be/cOVOijEwLUA
+            - text: ". Code, Docker image, and pre-trained models are available at:"
+            - link "https://github.com/victorkich/Parallel-Turtle-DRL" [ref=e147] [cursor=pointer]:
+              - /url: https://github.com/victorkich/Parallel-Turtle-DRL
+            - text: .
+        - generic [ref=e148]:
+          - heading "2 Related Works" [level=2] [ref=e149]:
+            - generic [ref=e150]: "2"
+            - text: Related Works
+          - paragraph [ref=e152]:
+            - text: Traditional Deep-RL models rewards as a single value, but Bellemare
+            - emphasis [ref=e153]: et al.
+            - generic [ref=e154]:
+              - text: "["
+              - link "8" [ref=e155] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib8
+              - text: "]"
+            - text: proposed modeling it as a probabilistic distribution. This idea was extended to the Soft Actor-Critic (SAC) algorithm by Duan
+            - emphasis [ref=e156]: et al.
+            - generic [ref=e157]:
+              - text: "["
+              - link "9" [ref=e158] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib9
+              - text: "]"
+            - text: ", which inspired our approaches."
+          - paragraph [ref=e160]:
+            - text: Distributed Deep-RL, introduced to speed up training, involves distributing computation across multiple processors
+            - generic [ref=e161]:
+              - text: "["
+              - link "10" [ref=e162] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib10
+              - text: "]"
+            - text: . Mnih
+            - emphasis [ref=e163]: et al.
+            - generic [ref=e164]:
+              - text: "["
+              - link "11" [ref=e165] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib11
+              - text: "]"
+            - text: used asynchronous actor-critic methods, while Horgan
+            - emphasis [ref=e166]: et al.
+            - text: developed the Ape-X method, which decouples the actor from the learner
+            - generic [ref=e167]:
+              - text: "["
+              - link "10" [ref=e168] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib10
+              - text: "]"
+            - text: . Barth-Maron
+            - emphasis [ref=e169]: et al.
+            - generic [ref=e170]:
+              - text: "["
+              - link "7" [ref=e171] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib7
+              - text: "]"
+            - text: further improved this with the Deep Deterministic Policy Gradient (DDPG) algorithm.
+          - paragraph [ref=e173]:
+            - text: Tai
+            - emphasis [ref=e174]: et al.
+            - generic [ref=e175]:
+              - text: "["
+              - link "12" [ref=e176] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib12
+              - text: "]"
+            - text: demonstrated Deep-RL’s application in mobile robotics, inspiring advancements in mapless navigation for terrestrial robots
+            - generic [ref=e177]:
+              - text: "["
+              - link "3" [ref=e178] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib3
+              - text: "]"
+            - text: . Jesus
+            - emphasis [ref=e179]: et al.
+            - generic [ref=e180]:
+              - text: "["
+              - link "4" [ref=e181] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib4
+              - text: "]"
+            - text: explored deterministic and stochastic approaches in mapless navigation without parallel networks.
+          - paragraph [ref=e183]:
+            - text: Our work introduces parallel Deep-RL approaches for mapless navigation of terrestrial mobile robots, addressing more complex scenarios with sim-to-real evaluation. We propose PDDRL (deterministic) and PDSRL (stochastic) approaches, compared with the traditional Behavior-based algorithm (BBA)
+            - generic [ref=e184]:
+              - text: "["
+              - link "13" [ref=e185] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#bib.bib13
+              - text: "]"
+            - text: and parallel versions of DDPG and SAC using both classic and prioritized memory replay.
+        - generic [ref=e186]:
+          - heading "3 Methodology" [level=2] [ref=e187]:
+            - generic [ref=e188]: "3"
+            - text: Methodology
+          - paragraph [ref=e190]: In this section, we introduce the central concept of Deep-RL, encompassing the details of both deterministic and stochastic approaches. Additionally, we present our simulated and real scenarios, addressing specific issues such as the rewarding system and the network architecture.
+          - generic [ref=e191]:
+            - heading "3.1 Deep Reinforcement Learning" [level=3] [ref=e192]:
+              - generic [ref=e193]: "3.1"
+              - text: Deep Reinforcement Learning
+            - generic [ref=e194]:
+              - paragraph [ref=e195]:
+                - text: The objective of standard reinforcement learning is to maximize the expectation of the sum of discounted rewards. The state-action value function is a mathematical model that describes the expected return when taking an action
+                - math [ref=e196]:
+                  - generic [ref=e198]: a
+                - text: from a state
+                - math [ref=e199]:
+                  - generic [ref=e201]: s
+                - text: ", and then acting according to the policy"
+                - math [ref=e202]:
+                  - generic [ref=e204]: π
+                - text: . This function, known as
+              - table [ref=e205]:
+                - rowgroup [ref=e206]:
+                  - row "(1)" [ref=e207]:
+                    - cell [ref=e208]
+                    - cell [ref=e209]:
+                      - math [ref=e210]:
+                        - generic [ref=e212]:
+                          - generic [ref=e213]:
+                            - generic [ref=e214]:
+                              - generic [ref=e215]:
+                                - generic [ref=e216]: Q
+                                - generic [ref=e217]: π
+                              - generic: ⁢
+                              - generic [ref=e218]:
+                                - generic [ref=e219]: (
+                                - generic [ref=e220]: s
+                                - generic [ref=e221]: ","
+                                - generic [ref=e222]: a
+                                - generic [ref=e223]: )
+                            - generic [ref=e224]: =
+                            - generic [ref=e225]:
+                              - generic [ref=e226]: 𝔼
+                              - generic: ⁢
+                              - generic [ref=e227]:
+                                - generic [ref=e228]: "["
+                                - generic [ref=e229]:
+                                  - generic [ref=e230]:
+                                    - generic [ref=e231]: ∑
+                                    - generic [ref=e232]:
+                                      - generic [ref=e233]: t
+                                      - generic [ref=e234]: =
+                                      - generic [ref=e235]: "0"
+                                    - generic [ref=e236]: ∞
+                                  - generic [ref=e237]:
+                                    - generic [ref=e238]:
+                                      - generic [ref=e239]: γ
+                                      - generic [ref=e240]: t
+                                    - generic: ⁢
+                                    - generic [ref=e241]: r
+                                    - generic: ⁢
+                                    - generic [ref=e242]:
+                                      - generic [ref=e243]: (
+                                      - generic [ref=e244]:
+                                        - generic [ref=e245]: s
+                                        - generic [ref=e246]: t
+                                      - generic [ref=e247]: ","
+                                      - generic [ref=e248]:
+                                        - generic [ref=e249]: a
+                                        - generic [ref=e250]: t
+                                      - generic [ref=e251]: )
+                                - generic [ref=e252]: "]"
+                          - generic [ref=e253]: ","
+                    - cell [ref=e254]
+                    - cell "(1)" [ref=e255]:
+                      - generic [ref=e256]: (1)
+              - paragraph [ref=e257]: is typically utilized to evaluate the quality of a policy.
+            - generic [ref=e258]:
+              - paragraph [ref=e259]: At each time step, the networks predict the behavior for the present state and generate a signal of temporal difference (TD) error. The Bellman operator
+              - table [ref=e260]:
+                - rowgroup [ref=e261]:
+                  - row "(2)" [ref=e262]:
+                    - cell [ref=e263]
+                    - cell [ref=e264]:
+                      - math [ref=e265]:
+                        - generic [ref=e267]:
+                          - generic [ref=e268]:
+                            - generic [ref=e269]:
+                              - generic [ref=e270]: (
+                              - generic [ref=e271]:
+                                - generic [ref=e272]:
+                                  - generic [ref=e273]: T
+                                  - generic [ref=e274]: π
+                                - generic: ⁢
+                                - generic [ref=e275]: Q
+                              - generic [ref=e276]: )
+                            - generic: ⁢
+                            - generic [ref=e277]:
+                              - generic [ref=e278]: (
+                              - generic [ref=e279]: s
+                              - generic [ref=e280]: ","
+                              - generic [ref=e281]: a
+                              - generic [ref=e282]: )
+                          - generic [ref=e283]: =
+                          - generic [ref=e284]:
+                            - generic [ref=e285]:
+                              - generic [ref=e286]: r
+                              - generic: ⁢
+                              - generic [ref=e287]:
+                                - generic [ref=e288]: (
+                                - generic [ref=e289]: s
+                                - generic [ref=e290]: ","
+                                - generic [ref=e291]: a
+                                - generic [ref=e292]: )
+                            - generic [ref=e293]: +
+                            - generic [ref=e294]:
+                              - generic [ref=e295]: γ
+                              - generic: ⁢
+                              - generic [ref=e296]: 𝔼
+                              - generic: ⁢
+                              - generic [ref=e297]:
+                                - generic [ref=e298]: "["
+                                - generic [ref=e299]:
+                                  - generic [ref=e300]:
+                                    - generic [ref=e301]: Q
+                                    - generic: ⁢
+                                    - generic [ref=e302]:
+                                      - generic [ref=e303]: (
+                                      - generic [ref=e304]:
+                                        - generic [ref=e305]: s
+                                        - generic [ref=e306]: ′
+                                      - generic [ref=e307]: ","
+                                      - generic [ref=e308]:
+                                        - generic [ref=e309]: π
+                                        - generic: ⁢
+                                        - generic [ref=e310]:
+                                          - generic [ref=e311]: (
+                                          - generic [ref=e312]:
+                                            - generic [ref=e313]: s
+                                            - generic [ref=e314]: ′
+                                          - generic [ref=e315]: )
+                                      - generic [ref=e316]: )
+                                  - generic [ref=e317]: "|"
+                                  - generic [ref=e318]:
+                                    - generic [ref=e319]: s
+                                    - generic [ref=e320]: ","
+                                    - generic [ref=e321]: a
+                                - generic [ref=e322]: "]"
+                    - cell [ref=e323]
+                    - cell "(2)" [ref=e324]:
+                      - generic [ref=e325]: (2)
+              - paragraph [ref=e326]:
+                - text: can minimize this TD error, whose expectation is computed with respect to the next state
+                - math [ref=e327]:
+                  - generic [ref=e329]:
+                    - generic [ref=e330]: s
+                    - generic [ref=e331]: ′
+                - text: .
+            - paragraph [ref=e333]:
+              - text: This work employs two distinct neural networks, namely an actor and a critic, to evaluate the TD error. The TD error is assessed under a separate target policy and value network, where the networks have distinct parameters
+              - math [ref=e334]:
+                - generic [ref=e336]:
+                  - generic [ref=e337]: (
+                  - generic [ref=e338]:
+                    - generic [ref=e339]: θ
+                    - generic [ref=e340]: ′
+                  - generic [ref=e341]: ","
+                  - generic [ref=e342]:
+                    - generic [ref=e343]: ω
+                    - generic [ref=e344]: ′
+                  - generic [ref=e345]: )
+              - text: to stabilize learning. The critic-network generates the Q-value for action, whereas the output of the actor-network is a real value that represents the selected action.
+          - generic [ref=e346]:
+            - heading "3.2 Parallel Distributional Deterministic RL" [level=3] [ref=e347]:
+              - generic [ref=e348]: "3.2"
+              - text: Parallel Distributional Deterministic RL
+            - paragraph [ref=e350]:
+              - text: The DDPG
+              - generic [ref=e351]:
+                - text: "["
+                - link "14" [ref=e352] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib14
+                - text: "]"
+              - text: architecture, proposed as an extension to the DQN, has been a cornerstone in Deep-RL applications of mobile robots in continuous observation spaces
+              - generic [ref=e353]:
+                - text: "["
+                - link "15" [ref=e354] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib15
+                - text: "]"
+              - text: . It adopts an actor-critic approach that employs approximation functions to learn continuous space policies.
+            - generic [ref=e355]:
+              - paragraph [ref=e356]: The main difference between DDPG and D4PG is the use of the distributional Bellman operator to perform the optimization process. This function can be defined as
+              - table [ref=e357]:
+                - rowgroup [ref=e358]:
+                  - row "(3)" [ref=e359]:
+                    - cell [ref=e360]
+                    - cell [ref=e361]:
+                      - math [ref=e362]:
+                        - generic [ref=e364]:
+                          - generic [ref=e365]:
+                            - generic [ref=e366]:
+                              - generic [ref=e367]:
+                                - generic [ref=e368]: (
+                                - generic [ref=e369]:
+                                  - generic [ref=e370]:
+                                    - generic [ref=e371]: T
+                                    - generic [ref=e372]: π
+                                  - generic: ⁢
+                                  - generic [ref=e373]: Z
+                                - generic [ref=e374]: )
+                              - generic: ⁢
+                              - generic [ref=e375]:
+                                - generic [ref=e376]: (
+                                - generic [ref=e377]: s
+                                - generic [ref=e378]: ","
+                                - generic [ref=e379]: a
+                                - generic [ref=e380]: )
+                            - generic [ref=e381]: =
+                            - generic [ref=e382]:
+                              - generic [ref=e383]:
+                                - generic [ref=e384]: r
+                                - generic: ⁢
+                                - generic [ref=e385]:
+                                  - generic [ref=e386]: (
+                                  - generic [ref=e387]: s
+                                  - generic [ref=e388]: ","
+                                  - generic [ref=e389]: a
+                                  - generic [ref=e390]: )
+                              - generic [ref=e391]: +
+                              - generic [ref=e392]:
+                                - generic [ref=e393]: γ
+                                - generic: ⁢
+                                - generic [ref=e394]: 𝔼
+                                - generic: ⁢
+                                - generic [ref=e395]:
+                                  - generic [ref=e396]: "["
+                                  - generic [ref=e397]:
+                                    - generic [ref=e398]:
+                                      - generic [ref=e399]: Z
+                                      - generic: ⁢
+                                      - generic [ref=e400]:
+                                        - generic [ref=e401]: (
+                                        - generic [ref=e402]:
+                                          - generic [ref=e403]: s
+                                          - generic [ref=e404]: ′
+                                        - generic [ref=e405]: ","
+                                        - generic [ref=e406]:
+                                          - generic [ref=e407]: π
+                                          - generic: ⁢
+                                          - generic [ref=e408]:
+                                            - generic [ref=e409]: (
+                                            - generic [ref=e410]:
+                                              - generic [ref=e411]: s
+                                              - generic [ref=e412]: ′
+                                            - generic [ref=e413]: )
+                                        - generic [ref=e414]: )
+                                    - generic [ref=e415]: "|"
+                                    - generic [ref=e416]:
+                                      - generic [ref=e417]: s
+                                      - generic [ref=e418]: ","
+                                      - generic [ref=e419]: a
+                                  - generic [ref=e420]: "]"
+                          - generic [ref=e421]: ","
+                    - cell [ref=e422]
+                    - cell "(3)" [ref=e423]:
+                      - generic [ref=e424]: (3)
+              - paragraph [ref=e425]:
+                - text: where
+                - math [ref=e426]:
+                  - generic [ref=e428]:
+                    - generic [ref=e429]:
+                      - generic [ref=e430]:
+                        - generic [ref=e431]: Q
+                        - generic [ref=e432]: π
+                      - generic: ⁢
+                      - generic [ref=e433]:
+                        - generic [ref=e434]: (
+                        - generic [ref=e435]: s
+                        - generic [ref=e436]: ","
+                        - generic [ref=e437]: a
+                        - generic [ref=e438]: )
+                    - generic [ref=e439]: =
+                    - generic [ref=e440]:
+                      - generic [ref=e441]: 𝔼
+                      - generic: ⁢
+                      - generic [ref=e442]:
+                        - generic [ref=e443]: Z
+                        - generic [ref=e444]: π
+                      - generic: ⁢
+                      - generic [ref=e445]:
+                        - generic [ref=e446]: (
+                        - generic [ref=e447]: s
+                        - generic [ref=e448]: ","
+                        - generic [ref=e449]: a
+                        - generic [ref=e450]: )
+                - text: and
+                - math [ref=e451]:
+                  - generic [ref=e453]:
+                    - generic [ref=e454]: Z
+                    - generic [ref=e455]: π
+                - text: returns a distributional variable. Another important feature of D4PG is the use of the
+                - math [ref=e456]:
+                  - generic [ref=e458]: "N"
+                - text: "-step return"
+                - generic [ref=e459]:
+                  - text: "["
+                  - link "11" [ref=e460] [cursor=pointer]:
+                    - /url: https://arxiv.org/html/2408.05744v1#bib.bib11
+                  - text: "]"
+                - text: when estimating the TD error, turning the loss function into
+              - table [ref=e461]:
+                - rowgroup [ref=e462]:
+                  - row "(4)" [ref=e463]:
+                    - cell [ref=e464]
+                    - cell [ref=e465]:
+                      - math [ref=e466]:
+                        - generic [ref=e468]:
+                          - generic [ref=e469]:
+                            - generic [ref=e470]: (
+                            - generic [ref=e471]:
+                              - generic [ref=e472]:
+                                - generic [ref=e473]: T
+                                - generic [ref=e474]: π
+                                - generic [ref=e475]: "N"
+                              - generic: ⁢
+                              - generic [ref=e476]: Q
+                            - generic [ref=e477]: )
+                          - generic: ⁢
+                          - generic [ref=e478]:
+                            - generic [ref=e479]: (
+                            - generic [ref=e480]: s
+                            - generic [ref=e481]: ","
+                            - generic [ref=e482]: a
+                            - generic [ref=e483]: )
+                    - cell [ref=e484]:
+                      - math [ref=e485]:
+                        - generic [ref=e487]:
+                          - generic [ref=e488]: =
+                          - generic [ref=e489]:
+                            - generic [ref=e490]:
+                              - generic [ref=e491]: r
+                              - generic: ⁢
+                              - generic [ref=e492]:
+                                - generic [ref=e493]: (
+                                - generic [ref=e494]: s
+                                - generic [ref=e495]: ","
+                                - generic [ref=e496]: a
+                                - generic [ref=e497]: )
+                            - generic [ref=e498]: +
+                    - cell [ref=e499]
+                    - cell "(4)" [ref=e500]:
+                      - generic [ref=e501]: (4)
+                  - row [ref=e502]:
+                    - cell [ref=e503]
+                    - cell [ref=e504]
+                    - cell [ref=e505]:
+                      - math [ref=e506]:
+                        - generic [ref=e508]:
+                          - generic [ref=e509]:
+                            - generic [ref=e510]: 𝔼
+                            - generic: ⁢
+                            - generic [ref=e511]:
+                              - generic [ref=e512]: "["
+                              - generic [ref=e513]:
+                                - generic [ref=e514]:
+                                  - generic [ref=e516]:
+                                    - generic [ref=e517]: ∑
+                                    - generic [ref=e518]:
+                                      - generic [ref=e519]: "n"
+                                      - generic [ref=e520]: =
+                                      - generic [ref=e521]: "1"
+                                    - generic [ref=e522]:
+                                      - generic [ref=e523]: "N"
+                                      - generic [ref=e524]: −
+                                      - generic [ref=e525]: "1"
+                                  - generic [ref=e526]:
+                                    - generic [ref=e527]:
+                                      - generic [ref=e528]: γ
+                                      - generic [ref=e529]: "n"
+                                    - generic: ⁢
+                                    - generic [ref=e530]: r
+                                    - generic: ⁢
+                                    - generic [ref=e531]:
+                                      - generic [ref=e532]: (
+                                      - generic [ref=e533]:
+                                        - generic [ref=e534]: s
+                                        - generic [ref=e535]: "n"
+                                      - generic [ref=e536]: ","
+                                      - generic [ref=e537]:
+                                        - generic [ref=e538]: a
+                                        - generic [ref=e539]: "n"
+                                      - generic [ref=e540]: )
+                                - generic [ref=e541]: +
+                                - generic [ref=e542]:
+                                  - generic [ref=e543]:
+                                    - generic [ref=e544]:
+                                      - generic [ref=e545]: γ
+                                      - generic [ref=e546]: "N"
+                                    - generic: ⁢
+                                    - generic [ref=e547]: Q
+                                    - generic: ⁢
+                                    - generic [ref=e548]:
+                                      - generic [ref=e549]: (
+                                      - generic [ref=e550]:
+                                        - generic [ref=e551]: s
+                                        - generic [ref=e552]: "N"
+                                      - generic [ref=e553]: ","
+                                      - generic [ref=e554]:
+                                        - generic [ref=e555]: π
+                                        - generic: ⁢
+                                        - generic [ref=e556]:
+                                          - generic [ref=e557]: (
+                                          - generic [ref=e558]:
+                                            - generic [ref=e559]: s
+                                            - generic [ref=e560]: "N"
+                                          - generic [ref=e561]: )
+                                      - generic [ref=e562]: )
+                                  - generic [ref=e563]: "|"
+                                  - generic [ref=e564]:
+                                    - generic [ref=e565]: s
+                                    - generic [ref=e566]: ","
+                                    - generic [ref=e567]: a
+                              - generic [ref=e568]: "]"
+                          - generic [ref=e569]: .
+                    - cell [ref=e570]
+            - generic [ref=e571]:
+              - paragraph [ref=e572]:
+                - text: Therefore, we have developed a deterministic approach called PDDRL, which is based on the D4PG. Our approach includes an extension of n-step returns and a critic value function modeled as a categorical distribution
+                - generic [ref=e573]:
+                  - text: "["
+                  - link "8" [ref=e574] [cursor=pointer]:
+                    - /url: https://arxiv.org/html/2408.05744v1#bib.bib8
+                  - text: "]"
+                - text: with an exploration policy added to the actor-network policy. The deterministic policy is denoted by
+                - math [ref=e575]:
+                  - generic [ref=e577]: μ
+                - text: while a noisy action is represented by
+                - math [ref=e578]:
+                  - generic [ref=e580]:
+                    - generic [ref=e581]: μ
+                    - generic [ref=e582]: ′
+                - text: ", and the noise process is described as:"
+              - table [ref=e583]:
+                - rowgroup [ref=e584]:
+                  - row "(5)" [ref=e585]:
+                    - cell [ref=e586]
+                    - cell [ref=e587]:
+                      - math [ref=e588]:
+                        - generic [ref=e590]:
+                          - generic [ref=e591]:
+                            - generic [ref=e592]:
+                              - generic [ref=e593]: μ
+                              - generic [ref=e594]: ′
+                            - generic [ref=e595]: =
+                            - generic [ref=e596]:
+                              - generic [ref=e597]:
+                                - generic [ref=e598]: μ
+                                - generic: ⁢
+                                - generic [ref=e599]:
+                                  - generic [ref=e600]: (
+                                  - generic [ref=e601]:
+                                    - generic [ref=e602]: s
+                                    - generic [ref=e603]: t
+                                  - generic [ref=e604]: )
+                              - generic [ref=e605]: +
+                              - generic [ref=e606]: 𝒩
+                          - generic [ref=e607]: ","
+                    - cell [ref=e608]
+                    - cell "(5)" [ref=e609]:
+                      - generic [ref=e610]: (5)
+              - paragraph [ref=e611]:
+                - text: where
+                - math [ref=e612]:
+                  - generic [ref=e614]: 𝒩
+                - text: is the Ornstein-Uhlenbeck noise method
+                - generic [ref=e615]:
+                  - text: "["
+                  - link "16" [ref=e616] [cursor=pointer]:
+                    - /url: https://arxiv.org/html/2408.05744v1#bib.bib16
+                  - text: "]"
+                - text: .
+            - paragraph [ref=e618]:
+              - text: Because of the non-consistent experimental results obtained by the original D4PG paper
+              - generic [ref=e619]:
+                - text: "["
+                - link "7" [ref=e620] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib7
+                - text: "]"
+              - text: ", we decided to fork our approach and train the agent using a classical and a prioritized replay memory"
+              - generic [ref=e621]:
+                - text: "["
+                - link "17" [ref=e622] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib17
+                - text: "]"
+              - text: . So, we have an approach called PDDRL which uses the classical replay memory, and another called PDDRL-P that uses prioritized replay memory.
+            - generic [ref=e623]:
+              - paragraph [ref=e624]:
+                - text: Finally, a target network needs to be established to control the learning and stability. This network is a clone of the actor and critic network with ”soft” updates. The new
+                - math [ref=e625]:
+                  - generic [ref=e627]:
+                    - generic [ref=e628]: θ
+                    - generic [ref=e629]: ′
+                - text: weights are slowly modified, taking into account the
+                - math [ref=e630]:
+                  - generic [ref=e632]: τ
+                - text: "factor:"
+              - table [ref=e633]:
+                - rowgroup [ref=e634]:
+                  - row "(6)" [ref=e635]:
+                    - cell [ref=e636]
+                    - cell [ref=e637]:
+                      - math [ref=e638]:
+                        - generic [ref=e640]:
+                          - generic [ref=e641]:
+                            - generic [ref=e642]:
+                              - generic [ref=e643]: θ
+                              - generic [ref=e644]: ′
+                            - generic [ref=e645]: =
+                            - generic [ref=e646]:
+                              - generic [ref=e647]:
+                                - generic [ref=e648]: τ
+                                - generic: ⁢
+                                - generic [ref=e649]: θ
+                              - generic [ref=e650]: +
+                              - generic [ref=e651]:
+                                - generic [ref=e652]:
+                                  - generic [ref=e653]: (
+                                  - generic [ref=e654]:
+                                    - generic [ref=e655]: "1"
+                                    - generic [ref=e656]: −
+                                    - generic [ref=e657]: τ
+                                  - generic [ref=e658]: )
+                                - generic: ⁢
+                                - generic [ref=e659]:
+                                  - generic [ref=e660]: θ
+                                  - generic [ref=e661]: ′
+                          - generic [ref=e662]: .
+                    - cell [ref=e663]
+                    - cell "(6)" [ref=e664]:
+                      - generic [ref=e665]: (6)
+          - generic [ref=e666]:
+            - heading "3.3 Parallel Distributional Stochastic RL" [level=3] [ref=e667]:
+              - generic [ref=e668]: "3.3"
+              - text: Parallel Distributional Stochastic RL
+            - generic [ref=e669]:
+              - paragraph [ref=e670]:
+                - text: The SAC architecture
+                - generic [ref=e671]:
+                  - text: "["
+                  - link "18" [ref=e672] [cursor=pointer]:
+                    - /url: https://arxiv.org/html/2408.05744v1#bib.bib18
+                  - text: "]"
+                - text: was proposed as a stochastic version of the actor-critic deterministic techniques such as the DDPG. The SAC algorithm adopts a bias-stochastic actor-critic structure, which employs approximation functions to learn policies in continuous action spaces. Differently from (
+                - link "2" [ref=e673] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#S3.E2
+                - text: ), SAC uses a Bellman function with addition of entropy, which is defined as
+              - table [ref=e674]:
+                - rowgroup [ref=e675]:
+                  - row "(7)" [ref=e676]:
+                    - cell [ref=e677]
+                    - cell [ref=e678]:
+                      - math [ref=e679]:
+                        - generic [ref=e681]:
+                          - generic [ref=e682]:
+                            - generic [ref=e683]:
+                              - generic [ref=e684]:
+                                - generic [ref=e685]: (
+                                - generic [ref=e686]:
+                                  - generic [ref=e687]:
+                                    - generic [ref=e688]: T
+                                    - generic [ref=e689]: π
+                                  - generic: ⁢
+                                  - generic [ref=e690]: Q
+                                - generic [ref=e691]: )
+                              - generic: ⁢
+                              - generic [ref=e692]:
+                                - generic [ref=e693]: (
+                                - generic [ref=e694]: s
+                                - generic [ref=e695]: ","
+                                - generic [ref=e696]: a
+                                - generic [ref=e697]: )
+                            - generic [ref=e698]: =
+                            - generic [ref=e699]:
+                              - generic [ref=e700]:
+                                - generic [ref=e701]: r
+                                - generic: ⁢
+                                - generic [ref=e702]:
+                                  - generic [ref=e703]: (
+                                  - generic [ref=e704]: s
+                                  - generic [ref=e705]: ","
+                                  - generic [ref=e706]: a
+                                  - generic [ref=e707]: )
+                              - generic [ref=e708]: +
+                              - generic [ref=e709]:
+                                - generic [ref=e710]: γ
+                                - generic: ⁢
+                                - generic [ref=e711]: 𝔼
+                                - generic: ⁢
+                                - generic [ref=e712]:
+                                  - generic [ref=e713]: "["
+                                  - generic [ref=e714]:
+                                    - generic [ref=e715]:
+                                      - generic [ref=e716]: Q
+                                      - generic: ⁢
+                                      - generic [ref=e717]:
+                                        - generic [ref=e718]: (
+                                        - generic [ref=e719]:
+                                          - generic [ref=e720]: s
+                                          - generic [ref=e721]: ′
+                                        - generic [ref=e722]: ","
+                                        - generic [ref=e723]:
+                                          - generic [ref=e724]: a
+                                          - generic [ref=e725]: ′
+                                        - generic [ref=e726]: )
+                                    - generic [ref=e727]: −
+                                    - generic [ref=e728]:
+                                      - generic [ref=e729]:
+                                        - generic [ref=e730]: α
+                                        - generic: ⁢
+                                        - generic [ref=e731]:
+                                          - generic [ref=e732]: log
+                                          - generic: ⁡
+                                          - generic [ref=e733]: π
+                                        - generic: ⁢
+                                        - generic [ref=e734]:
+                                          - generic [ref=e735]: (
+                                          - generic [ref=e736]:
+                                            - generic [ref=e737]:
+                                              - generic [ref=e738]: a
+                                              - generic [ref=e739]: ′
+                                            - generic [ref=e740]: "|"
+                                            - generic [ref=e741]:
+                                              - generic [ref=e742]: s
+                                              - generic [ref=e743]: ′
+                                          - generic [ref=e744]: )
+                                      - generic [ref=e745]: "|"
+                                      - generic [ref=e746]:
+                                        - generic [ref=e747]: s
+                                        - generic [ref=e748]: ","
+                                        - generic [ref=e749]: a
+                                  - generic [ref=e750]: "]"
+                          - generic [ref=e751]: .
+                    - cell [ref=e752]
+                    - cell "(7)" [ref=e753]:
+                      - generic [ref=e754]: (7)
+            - paragraph [ref=e756]: In addition to maximizing the reward, the SAC algorithm aims to increase the entropy of the policy. Entropy is a measure of the unpredictability of a variable, and higher entropy encourages exploration of new states. When a variable remains constant, its entropy is zero, and there is no incentive to modify it. To promote exploration, the algorithm assigns equal probability to actions with the same Q-value and ensures that the policy does not fail due to a single uncertain action in the Q-function approximation.
+            - generic [ref=e757]:
+              - paragraph [ref=e758]:
+                - text: Similarly to the deterministic case, the main difference between SAC and DSAC is the Bellman operator of DSAC that uses the maximum entropy of (
+                - link "7" [ref=e759] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#S3.E7
+                - text: ) and the distributional of (
+                - link "3" [ref=e760] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#S3.E3
+                - text: ), creating a distributional soft Bellman defined as
+              - table [ref=e761]:
+                - rowgroup [ref=e762]:
+                  - row "(8)" [ref=e763]:
+                    - cell [ref=e764]
+                    - cell [ref=e765]:
+                      - math [ref=e766]:
+                        - generic [ref=e768]:
+                          - generic [ref=e769]:
+                            - generic [ref=e770]:
+                              - generic [ref=e771]:
+                                - generic [ref=e772]: (
+                                - generic [ref=e773]:
+                                  - generic [ref=e774]:
+                                    - generic [ref=e775]: T
+                                    - generic [ref=e776]: π
+                                  - generic: ⁢
+                                  - generic [ref=e777]: Z
+                                - generic [ref=e778]: )
+                              - generic: ⁢
+                              - generic [ref=e779]:
+                                - generic [ref=e780]: (
+                                - generic [ref=e781]: s
+                                - generic [ref=e782]: ","
+                                - generic [ref=e783]: a
+                                - generic [ref=e784]: )
+                            - generic [ref=e785]: =
+                            - generic [ref=e786]:
+                              - generic [ref=e787]:
+                                - generic [ref=e788]: r
+                                - generic: ⁢
+                                - generic [ref=e789]:
+                                  - generic [ref=e790]: (
+                                  - generic [ref=e791]: s
+                                  - generic [ref=e792]: ","
+                                  - generic [ref=e793]: a
+                                  - generic [ref=e794]: )
+                              - generic [ref=e795]: +
+                              - generic [ref=e796]:
+                                - generic [ref=e797]: γ
+                                - generic: ⁢
+                                - generic [ref=e798]:
+                                  - generic [ref=e799]: "["
+                                  - generic [ref=e800]:
+                                    - generic [ref=e801]:
+                                      - generic [ref=e802]: Z
+                                      - generic: ⁢
+                                      - generic [ref=e803]:
+                                        - generic [ref=e804]: (
+                                        - generic [ref=e805]:
+                                          - generic [ref=e806]: s
+                                          - generic [ref=e807]: ′
+                                        - generic [ref=e808]: ","
+                                        - generic [ref=e809]:
+                                          - generic [ref=e810]: a
+                                          - generic [ref=e811]: ′
+                                        - generic [ref=e812]: )
+                                    - generic [ref=e813]: −
+                                    - generic [ref=e814]:
+                                      - generic [ref=e815]:
+                                        - generic [ref=e816]: α
+                                        - generic: ⁢
+                                        - generic [ref=e817]:
+                                          - generic [ref=e818]: log
+                                          - generic: ⁡
+                                          - generic [ref=e819]: π
+                                        - generic: ⁢
+                                        - generic [ref=e820]:
+                                          - generic [ref=e821]: (
+                                          - generic [ref=e822]:
+                                            - generic [ref=e823]:
+                                              - generic [ref=e824]: a
+                                              - generic [ref=e825]: ′
+                                            - generic [ref=e826]: "|"
+                                            - generic [ref=e827]:
+                                              - generic [ref=e828]: s
+                                              - generic [ref=e829]: ′
+                                          - generic [ref=e830]: )
+                                      - generic [ref=e831]: "|"
+                                      - generic [ref=e832]:
+                                        - generic [ref=e833]: s
+                                        - generic [ref=e834]: ","
+                                        - generic [ref=e835]: a
+                                  - generic [ref=e836]: "]"
+                          - generic [ref=e837]: ","
+                    - cell [ref=e838]
+                    - cell "(8)" [ref=e839]:
+                      - generic [ref=e840]: (8)
+              - paragraph [ref=e841]: where
+              - table [ref=e842]:
+                - rowgroup [ref=e843]:
+                  - row "(9)" [ref=e844]:
+                    - cell [ref=e845]
+                    - cell [ref=e846]:
+                      - math [ref=e847]:
+                        - generic [ref=e849]:
+                          - generic [ref=e850]:
+                            - generic [ref=e851]:
+                              - generic [ref=e852]:
+                                - generic [ref=e853]: Z
+                                - generic [ref=e854]: π
+                              - generic: ⁢
+                              - generic [ref=e855]:
+                                - generic [ref=e856]: (
+                                - generic [ref=e857]: s
+                                - generic [ref=e858]: ","
+                                - generic [ref=e859]: a
+                                - generic [ref=e860]: )
+                            - generic [ref=e861]: =
+                            - generic [ref=e862]:
+                              - generic [ref=e863]:
+                                - generic [ref=e864]: ∑
+                                - generic [ref=e865]:
+                                  - generic [ref=e866]: t
+                                  - generic [ref=e867]: =
+                                  - generic [ref=e868]: "0"
+                                - generic [ref=e869]: ∞
+                              - generic [ref=e870]:
+                                - generic [ref=e871]: "["
+                                - generic [ref=e872]:
+                                  - generic [ref=e873]:
+                                    - generic [ref=e874]:
+                                      - generic [ref=e875]: r
+                                      - generic: ⁢
+                                      - generic [ref=e876]:
+                                        - generic [ref=e877]: (
+                                        - generic [ref=e878]: s
+                                        - generic [ref=e879]: ","
+                                        - generic [ref=e880]: a
+                                        - generic [ref=e881]: )
+                                    - generic [ref=e882]: +
+                                    - generic [ref=e883]: γ
+                                  - generic [ref=e884]: −
+                                  - generic [ref=e885]:
+                                    - generic [ref=e886]:
+                                      - generic [ref=e887]: α
+                                      - generic: ⁢
+                                      - generic [ref=e888]:
+                                        - generic [ref=e889]: log
+                                        - generic: ⁡
+                                        - generic [ref=e890]: π
+                                      - generic: ⁢
+                                      - generic [ref=e891]:
+                                        - generic [ref=e892]: (
+                                        - generic [ref=e893]:
+                                          - generic [ref=e894]:
+                                            - generic [ref=e895]: a
+                                            - generic [ref=e896]:
+                                              - generic [ref=e897]: t
+                                              - generic [ref=e898]: +
+                                              - generic [ref=e899]: "1"
+                                          - generic [ref=e900]: "|"
+                                          - generic [ref=e901]:
+                                            - generic [ref=e902]: s
+                                            - generic [ref=e903]:
+                                              - generic [ref=e904]: t
+                                              - generic [ref=e905]: +
+                                              - generic [ref=e906]: "1"
+                                        - generic [ref=e907]: )
+                                    - generic [ref=e908]: "|"
+                                    - generic [ref=e909]:
+                                      - generic [ref=e910]: s
+                                      - generic [ref=e911]: ","
+                                      - generic [ref=e912]: a
+                                - generic [ref=e913]: "]"
+                          - generic [ref=e914]: .
+                    - cell [ref=e915]
+                    - cell "(9)" [ref=e916]:
+                      - generic [ref=e917]: (9)
+            - paragraph [ref=e919]:
+              - text: We have proposed a novel method, which we refer to as PDSRL, based on the DSAC algorithm
+              - generic [ref=e920]:
+                - text: "["
+                - link "19" [ref=e921] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib19
+                - text: "]"
+              - text: . For a fair comparison, we also implemented an approach (PDSRL) that uses the classical replay memory and another that uses prioritized replay memory (PDSRL-P). A
+              - math [ref=e922]:
+                - generic [ref=e924]: "100000"
+              - text: "-step sized replay memory was used for all Deep-RL approaches as well."
+          - generic [ref=e925]:
+            - heading "3.4 Network Structure" [level=3] [ref=e926]:
+              - generic [ref=e927]: "3.4"
+              - text: Network Structure
+            - 'figure "Figure 2: Parallel Deep-RL training process structure." [ref=e928]':
+              - img "Refer to caption" [ref=e929]
+              - generic [ref=e930]:
+                - generic [ref=e931]: "Figure 2:"
+                - text: Parallel Deep-RL training process structure.
+            - paragraph [ref=e933]:
+              - text: All the approaches in our work employ a neural network with 26 inputs and two outputs. The inputs comprise 24 range findings of a Lidar, as well as the relative position and relative angles to the target. The sensor samples range from
+              - math [ref=e934]:
+                - generic [ref=e936]:
+                  - generic [ref=e937]: "0"
+                  - generic [ref=e938]: ∘
+              - text: to
+              - math [ref=e939]:
+                - generic [ref=e941]:
+                  - generic [ref=e942]: "360"
+                  - generic [ref=e943]: ∘
+              - text: ", and are equally spaced by"
+              - math [ref=e944]:
+                - generic [ref=e946]:
+                  - generic [ref=e947]: "15"
+                  - generic [ref=e948]: ∘
+              - text: . The input angles serve to direct the vehicle towards the target and enhance the learning process, while the target distance encourages the network to minimize it. Meanwhile, the outputs are the linear and angular velocities that enable control of the vehicle. As a point of comparison with the Deep-RL approaches, we employed a traditional technique BBA, which uses hardcoded navigation procedures. It is important to note that the BBA uses the same amount of sensor distance information as the other approaches for a fair comparison.
+            - paragraph [ref=e950]:
+              - text: The neural networks employed in all approaches have three hidden fully-connected layers, with 256 neurons each. These layers are connected through ReLU activation. The range of action is between
+              - math [ref=e951]:
+                - generic [ref=e953]:
+                  - generic [ref=e954]: −
+                  - generic [ref=e955]: "1"
+              - text: and
+              - math [ref=e956]:
+                - generic [ref=e958]: "1"
+              - text: ", and the activation function for the actor-network is the hyperbolic tangent function (Tanh). The outputs for the linear velocity are scaled between"
+              - math [ref=e959]:
+                - generic [ref=e961]:
+                  - generic [ref=e962]: −
+                  - generic [ref=e963]: "0.12"
+              - text: and
+              - math [ref=e964]:
+                - generic [ref=e966]: "0.15"
+              - text: meters, while the outputs for the angular velocity are scaled between
+              - math [ref=e967]:
+                - generic [ref=e969]:
+                  - generic [ref=e970]: −
+                  - generic [ref=e971]: "0.1"
+              - math [ref=e972]:
+                - generic [ref=e974]:
+                  - generic [ref=e975]: m
+                  - generic [ref=e976]: /
+                  - generic [ref=e977]: s
+              - text: and
+              - math [ref=e978]:
+                - generic [ref=e980]: "0.1"
+              - math [ref=e981]:
+                - generic [ref=e983]:
+                  - generic [ref=e984]: m
+                  - generic [ref=e985]: /
+                  - generic [ref=e986]: s
+              - text: . In both approaches, the critic network predicts the Q-value of the current state, while the actor-network predicts the current state. During the training phase of the parallel approaches, four agents were employed for training, and one agent was employed for evaluation. The training process is depicted in Fig.
+              - link "2" [ref=e987] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#S3.F2
+              - text: .
+            - 'figure "Figure 3: Simulated and real setups." [ref=e988]':
+              - img "Refer to caption" [ref=e989]
+              - generic [ref=e990]:
+                - generic [ref=e991]: "Figure 3:"
+                - text: Simulated and real setups.
+            - 'figure "Figure 4: Moving average of the agent’s reward at each training step for all parallel approaches in each scenario." [ref=e992]':
+              - generic [ref=e993]:
+                - img "Refer to caption" [ref=e995]
+                - img "Refer to caption" [ref=e997]
+                - img "Refer to caption" [ref=e999]
+                - img "Refer to caption" [ref=e1001]
+              - generic [ref=e1002]:
+                - generic [ref=e1003]: "Figure 4:"
+                - text: Moving average of the agent’s reward at each training step for all parallel approaches in each scenario.
+            - 'figure "Figure 5: The behavior of each parallel approach was evaluated by conducting 100 navigation trials in each simulated scenario. The lines illustrate the paths taken by the agents, with each agent given 25 attempts to capture each target." [ref=e1004]':
+              - img "Refer to caption" [ref=e1005]
+              - generic [ref=e1006]:
+                - generic [ref=e1007]: "Figure 5:"
+                - text: The behavior of each parallel approach was evaluated by conducting 100 navigation trials in each simulated scenario. The lines illustrate the paths taken by the agents, with each agent given 25 attempts to capture each target.
+            - 'figure "Figure 6: BBA approach evaluated in simulated and real scenarios over 100 and 12 trials, respectively. Lines represent agents’ paths, with 25 (simulated) and 3 (real) attempts to capture each target." [ref=e1008]':
+              - img "Refer to caption" [ref=e1009]
+              - generic [ref=e1010]:
+                - generic [ref=e1011]: "Figure 6:"
+                - text: BBA approach evaluated in simulated and real scenarios over 100 and 12 trials, respectively. Lines represent agents’ paths, with 25 (simulated) and 3 (real) attempts to capture each target.
+          - generic [ref=e1012]:
+            - heading "3.5 Simulation and Real Scenarios" [level=3] [ref=e1013]:
+              - generic [ref=e1014]: "3.5"
+              - text: Simulation and Real Scenarios
+            - paragraph [ref=e1016]:
+              - text: The simulations of the robot and the scenario use the Gazebo simulator
+              - generic [ref=e1017]:
+                - text: "["
+                - link "20" [ref=e1018] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2408.05744v1#bib.bib20
+                - text: "]"
+              - text: . The connection between the robot and the agents was made using Robot Operating System (ROS). For distributing the agents, multiple instances of the Gazebo simulator are created in parallel and the data acquired are published to the replay buffer. The robot chosen here is the TurtleBot3 Burger version. The real and simulated Turtlebot3 Burger used can be seen in Fig.
+              - link "3" [ref=e1019] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#S3.F3
+              - text: .
+            - paragraph [ref=e1021]:
+              - text: Four simulation scenarios were employed in this study. The first scenario represents a navigable area for the robot to move, with the walls being the only obstacle that could cause the robot to collide. In the event of a collision with the wall or any obstacle, a negative reward is issued for the action, and the current episode is terminated. The second scenario features four fixed cylinder-shaped obstacles with a radius of 25 centimeters each. The third and fourth scenarios were built in order to create more challenging paths for the robot to reach the final goal. The third scenario includes a “U”-shaped object that presents the agent with two possible trajectories of equal cost, with the obstacle creating a dead-end in the middle. The fourth scenario is asymmetrical and more complex, requiring the intelligent agent to develop better strategies to avoid collisions. Both real and simulated scenarios are appropriately labeled in Fig.
+              - link "3" [ref=e1022] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#S3.F3
+              - text: .
+            - paragraph [ref=e1024]:
+              - text: After training the approaches through simulation, we evaluated our approaches in real scenarios. Some of the necessary data in the real scenario were obtained by image processing using OpenCV. All four real scenarios resembled the simulated ones, but their geometry is not equal. The differences of each one are more visually demonstrated in Section
+              - link "4" [ref=e1025] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2408.05744v1#S4
+              - text: .
+          - generic [ref=e1026]:
+            - heading "3.6 Reward Function" [level=3] [ref=e1027]:
+              - generic [ref=e1028]: "3.6"
+              - text: Reward Function
+            - 'figure "Table 1: Precision over 100 (for simulation) and 12 (for real) navigation trials in four different scenarios for all approaches." [ref=e1029]':
+              - generic [ref=e1030]:
+                - generic [ref=e1031]: "Table 1:"
+                - text: Precision over
+                - math [ref=e1032]:
+                  - generic [ref=e1034]: "100"
+                - text: (for simulation) and
+                - math [ref=e1035]:
+                  - generic [ref=e1037]: "12"
+                - text: (for real) navigation trials in four different scenarios for all approaches.
+              - table [ref=e1038]:
+                - rowgroup [ref=e1039]:
+                  - row "Scenario BBA DDPG SAC DDPG-P SAC-P PDDRL PDSRL PDDRL-P PDSRL-P" [ref=e1040]:
+                    - columnheader "Scenario" [ref=e1041]
+                    - columnheader "BBA" [ref=e1042]
+                    - columnheader "DDPG" [ref=e1043]
+                    - columnheader "SAC" [ref=e1044]
+                    - columnheader "DDPG-P" [ref=e1045]
+                    - columnheader "SAC-P" [ref=e1046]
+                    - columnheader "PDDRL" [ref=e1047]
+                    - columnheader "PDSRL" [ref=e1048]
+                    - columnheader "PDDRL-P" [ref=e1049]
+                    - columnheader "PDSRL-P" [ref=e1050]
+                - rowgroup [ref=e1051]:
+                  - row "First Sim." [ref=e1052]:
+                    - rowheader "First Sim." [ref=e1053]
+                    - cell [ref=e1054]:
+                      - math [ref=e1055]:
+                        - generic [ref=e1057]:
+                          - generic [ref=e1058]: "100"
+                          - generic [ref=e1059]: "%"
+                    - cell [ref=e1060]:
+                      - math [ref=e1061]:
+                        - generic [ref=e1063]:
+                          - generic [ref=e1064]: "100"
+                          - generic [ref=e1065]: "%"
+                    - cell [ref=e1066]:
+                      - math [ref=e1067]:
+                        - generic [ref=e1069]:
+                          - generic [ref=e1070]: "100"
+                          - generic [ref=e1071]: "%"
+                    - cell [ref=e1072]:
+                      - math [ref=e1073]:
+                        - generic [ref=e1075]:
+                          - generic [ref=e1076]: "100"
+                          - generic [ref=e1077]: "%"
+                    - cell [ref=e1078]:
+                      - math [ref=e1079]:
+                        - generic [ref=e1081]:
+                          - generic [ref=e1082]: "100"
+                          - generic [ref=e1083]: "%"
+                    - cell [ref=e1084]:
+                      - math [ref=e1085]:
+                        - generic [ref=e1087]:
+                          - generic [ref=e1088]: "100"
+                          - generic [ref=e1089]: "%"
+                    - cell [ref=e1090]:
+                      - math [ref=e1091]:
+                        - generic [ref=e1093]:
+                          - generic [ref=e1094]: "100"
+                          - generic [ref=e1095]: "%"
+                    - cell [ref=e1096]:
+                      - math [ref=e1097]:
+                        - generic [ref=e1099]:
+                          - generic [ref=e1100]: "100"
+                          - generic [ref=e1101]: "%"
+                    - cell [ref=e1102]:
+                      - math [ref=e1103]:
+                        - generic [ref=e1105]:
+                          - generic [ref=e1106]: "100"
+                          - generic [ref=e1107]: "%"
+                  - row "Second Sim." [ref=e1108]:
+                    - rowheader "Second Sim." [ref=e1109]
+                    - cell [ref=e1110]:
+                      - math [ref=e1111]:
+                        - generic [ref=e1113]:
+                          - generic [ref=e1114]: "62"
+                          - generic [ref=e1115]: "%"
+                    - cell [ref=e1116]:
+                      - math [ref=e1117]:
+                        - generic [ref=e1119]:
+                          - generic [ref=e1120]: "100"
+                          - generic [ref=e1121]: "%"
+                    - cell [ref=e1122]:
+                      - math [ref=e1123]:
+                        - generic [ref=e1125]:
+                          - generic [ref=e1126]: "0.0"
+                          - generic [ref=e1127]: "%"
+                    - cell [ref=e1128]:
+                      - math [ref=e1129]:
+                        - generic [ref=e1131]:
+                          - generic [ref=e1132]: "85"
+                          - generic [ref=e1133]: "%"
+                    - cell [ref=e1134]:
+                      - math [ref=e1135]:
+                        - generic [ref=e1137]:
+                          - generic [ref=e1138]: "64"
+                          - generic [ref=e1139]: "%"
+                    - cell [ref=e1140]:
+                      - math [ref=e1141]:
+                        - generic [ref=e1143]:
+                          - generic [ref=e1144]: "100"
+                          - generic [ref=e1145]: "%"
+                    - cell [ref=e1146]:
+                      - math [ref=e1147]:
+                        - generic [ref=e1149]:
+                          - generic [ref=e1150]: "100"
+                          - generic [ref=e1151]: "%"
+                    - cell [ref=e1152]:
+                      - math [ref=e1153]:
+                        - generic [ref=e1155]:
+                          - generic [ref=e1156]: "100"
+                          - generic [ref=e1157]: "%"
+                    - cell [ref=e1158]:
+                      - math [ref=e1159]:
+                        - generic [ref=e1161]:
+                          - generic [ref=e1162]: "100"
+                          - generic [ref=e1163]: "%"
+                  - row "Third Sim." [ref=e1164]:
+                    - rowheader "Third Sim." [ref=e1165]
+                    - cell [ref=e1166]:
+                      - math [ref=e1167]:
+                        - generic [ref=e1169]:
+                          - generic [ref=e1170]: "75"
+                          - generic [ref=e1171]: "%"
+                    - cell [ref=e1172]:
+                      - math [ref=e1173]:
+                        - generic [ref=e1175]:
+                          - generic [ref=e1176]: "74"
+                          - generic [ref=e1177]: "%"
+                    - cell [ref=e1178]:
+                      - math [ref=e1179]:
+                        - generic [ref=e1181]:
+                          - generic [ref=e1182]: "0.0"
+                          - generic [ref=e1183]: "%"
+                    - cell [ref=e1184]:
+                      - math [ref=e1185]:
+                        - generic [ref=e1187]:
+                          - generic [ref=e1188]: "75"
+                          - generic [ref=e1189]: "%"
+                    - cell [ref=e1190]:
+                      - math [ref=e1191]:
+                        - generic [ref=e1193]:
+                          - generic [ref=e1194]: "0.0"
+                          - generic [ref=e1195]: "%"
+                    - cell [ref=e1196]:
+                      - math [ref=e1197]:
+                        - generic [ref=e1199]:
+                          - generic [ref=e1200]: "100"
+                          - generic [ref=e1201]: "%"
+                    - cell [ref=e1202]:
+                      - math [ref=e1203]:
+                        - generic [ref=e1205]:
+                          - generic [ref=e1206]: "100"
+                          - generic [ref=e1207]: "%"
+                    - cell [ref=e1208]:
+                      - math [ref=e1209]:
+                        - generic [ref=e1211]:
+                          - generic [ref=e1212]: "70"
+                          - generic [ref=e1213]: "%"
+                    - cell [ref=e1214]:
+                      - math [ref=e1215]:
+                        - generic [ref=e1217]:
+                          - generic [ref=e1218]: "100"
+                          - generic [ref=e1219]: "%"
+                  - row "Fourth Sim." [ref=e1220]:
+                    - rowheader "Fourth Sim." [ref=e1221]
+                    - cell [ref=e1222]:
+                      - math [ref=e1223]:
+                        - generic [ref=e1225]:
+                          - generic [ref=e1226]: "73"
+                          - generic [ref=e1227]: "%"
+                    - cell [ref=e1228]:
+                      - math [ref=e1229]:
+                        - generic [ref=e1231]:
+                          - generic [ref=e1232]: "81"
+                          - generic [ref=e1233]: "%"
+                    - cell [ref=e1234]:
+                      - math [ref=e1235]:
+                        - generic [ref=e1237]:
+                          - generic [ref=e1238]: "25"
+                          - generic [ref=e1239]: "%"
+                    - cell [ref=e1240]:
+                      - math [ref=e1241]:
+                        - generic [ref=e1243]:
+                          - generic [ref=e1244]: "92"
+                          - generic [ref=e1245]: "%"
+                    - cell [ref=e1246]:
+                      - math [ref=e1247]:
+                        - generic [ref=e1249]:
+                          - generic [ref=e1250]: "0.0"
+                          - generic [ref=e1251]: "%"
+                    - cell [ref=e1252]:
+                      - math [ref=e1253]:
+                        - generic [ref=e1255]:
+                          - generic [ref=e1256]: "83"
+                          - generic [ref=e1257]: "%"
+                    - cell [ref=e1258]:
+                      - math [ref=e1259]:
+                        - generic [ref=e1261]:
+                          - generic [ref=e1262]: "98"
+                          - generic [ref=e1263]: "%"
+                    - cell [ref=e1264]:
+                      - math [ref=e1265]:
+                        - generic [ref=e1267]:
+                          - generic [ref=e1268]: "76"
+                          - generic [ref=e1269]: "%"
+                    - cell [ref=e1270]:
+                      - math [ref=e1271]:
+                        - generic [ref=e1273]:
+                          - generic [ref=e1274]: "100"
+                          - generic [ref=e1275]: "%"
+                  - row "First Real" [ref=e1276]:
+                    - rowheader "First Real" [ref=e1277]
+                    - cell [ref=e1278]:
+                      - math [ref=e1279]:
+                        - generic [ref=e1281]:
+                          - generic [ref=e1282]: "100"
+                          - generic [ref=e1283]: "%"
+                    - cell [ref=e1284]:
+                      - math [ref=e1285]:
+                        - generic [ref=e1287]:
+                          - generic [ref=e1288]: "100"
+                          - generic [ref=e1289]: "%"
+                    - cell [ref=e1290]:
+                      - math [ref=e1291]:
+                        - generic [ref=e1293]:
+                          - generic [ref=e1294]: "100"
+                          - generic [ref=e1295]: "%"
+                    - cell [ref=e1296]:
+                      - math [ref=e1297]:
+                        - generic [ref=e1299]:
+                          - generic [ref=e1300]: "100"
+                          - generic [ref=e1301]: "%"
+                    - cell [ref=e1302]:
+                      - math [ref=e1303]:
+                        - generic [ref=e1305]:
+                          - generic [ref=e1306]: "100"
+                          - generic [ref=e1307]: "%"
+                    - cell [ref=e1308]:
+                      - math [ref=e1309]:
+                        - generic [ref=e1311]:
+                          - generic [ref=e1312]: "100"
+                          - generic [ref=e1313]: "%"
+                    - cell [ref=e1314]:
+                      - math [ref=e1315]:
+                        - generic [ref=e1317]:
+                          - generic [ref=e1318]: "100"
+                          - generic [ref=e1319]: "%"
+                    - cell [ref=e1320]:
+                      - math [ref=e1321]:
+                        - generic [ref=e1323]:
+                          - generic [ref=e1324]: "100"
+                          - generic [ref=e1325]: "%"
+                    - cell [ref=e1326]:
+                      - math [ref=e1327]:
+                        - generic [ref=e1329]:
+                          - generic [ref=e1330]: "100"
+                          - generic [ref=e1331]: "%"
+                  - row "Second Real" [ref=e1332]:
+                    - rowheader "Second Real" [ref=e1333]
+                    - cell [ref=e1334]:
+                      - math [ref=e1335]:
+                        - generic [ref=e1337]:
+                          - generic [ref=e1338]: "83.3"
+                          - generic [ref=e1339]: "%"
+                    - cell [ref=e1340]:
+                      - math [ref=e1341]:
+                        - generic [ref=e1343]:
+                          - generic [ref=e1344]: "100"
+                          - generic [ref=e1345]: "%"
+                    - cell [ref=e1346]:
+                      - math [ref=e1347]:
+                        - generic [ref=e1349]:
+                          - generic [ref=e1350]: "0.0"
+                          - generic [ref=e1351]: "%"
+                    - cell [ref=e1352]:
+                      - math [ref=e1353]:
+                        - generic [ref=e1355]:
+                          - generic [ref=e1356]: "100"
+                          - generic [ref=e1357]: "%"
+                    - cell [ref=e1358]:
+                      - math [ref=e1359]:
+                        - generic [ref=e1361]:
+                          - generic [ref=e1362]: "41.6"
+                          - generic [ref=e1363]: "%"
+                    - cell [ref=e1364]:
+                      - math [ref=e1365]:
+                        - generic [ref=e1367]:
+                          - generic [ref=e1368]: "100"
+                          - generic [ref=e1369]: "%"
+                    - cell [ref=e1370]:
+                      - math [ref=e1371]:
+                        - generic [ref=e1373]:
+                          - generic [ref=e1374]: "91.6"
+                          - generic [ref=e1375]: "%"
+                    - cell [ref=e1376]:
+                      - math [ref=e1377]:
+                        - generic [ref=e1379]:
+                          - generic [ref=e1380]: "100"
+                          - generic [ref=e1381]: "%"
+                    - cell [ref=e1382]:
+                      - math [ref=e1383]:
+                        - generic [ref=e1385]:
+                          - generic [ref=e1386]: "100"
+                          - generic [ref=e1387]: "%"
+                  - row "Third Real" [ref=e1388]:
+                    - rowheader "Third Real" [ref=e1389]
+                    - cell [ref=e1390]:
+                      - math [ref=e1391]:
+                        - generic [ref=e1393]:
+                          - generic [ref=e1394]: "75"
+                          - generic [ref=e1395]: "%"
+                    - cell [ref=e1396]:
+                      - math [ref=e1397]:
+                        - generic [ref=e1399]:
+                          - generic [ref=e1400]: "100"
+                          - generic [ref=e1401]: "%"
+                    - cell [ref=e1402]:
+                      - math [ref=e1403]:
+                        - generic [ref=e1405]:
+                          - generic [ref=e1406]: "0.0"
+                          - generic [ref=e1407]: "%"
+                    - cell [ref=e1408]:
+                      - math [ref=e1409]:
+                        - generic [ref=e1411]:
+                          - generic [ref=e1412]: "100"
+                          - generic [ref=e1413]: "%"
+                    - cell [ref=e1414]:
+                      - math [ref=e1415]:
+                        - generic [ref=e1417]:
+                          - generic [ref=e1418]: "0.0"
+                          - generic [ref=e1419]: "%"
+                    - cell [ref=e1420]:
+                      - math [ref=e1421]:
+                        - generic [ref=e1423]:
+                          - generic [ref=e1424]: "100"
+                          - generic [ref=e1425]: "%"
+                    - cell [ref=e1426]:
+                      - math [ref=e1427]:
+                        - generic [ref=e1429]:
+                          - generic [ref=e1430]: "100"
+                          - generic [ref=e1431]: "%"
+                    - cell [ref=e1432]:
+                      - math [ref=e1433]:
+                        - generic [ref=e1435]:
+                          - generic [ref=e1436]: "0.0"
+                          - generic [ref=e1437]: "%"
+                    - cell [ref=e1438]:
+                      - math [ref=e1439]:
+                        - generic [ref=e1441]:
+                          - generic [ref=e1442]: "100"
+                          - generic [ref=e1443]: "%"
+                  - row "Fourth Real" [ref=e1444]:
+                    - rowheader "Fourth Real" [ref=e1445]
+                    - cell [ref=e1446]:
+                      - math [ref=e1447]:
+                        - generic [ref=e1449]:
+                          - generic [ref=e1450]: "75"
+                          - generic [ref=e1451]: "%"
+                    - cell [ref=e1452]:
+                      - math [ref=e1453]:
+                        - generic [ref=e1455]:
+                          - generic [ref=e1456]: "66.6"
+                          - generic [ref=e1457]: "%"
+                    - cell [ref=e1458]:
+                      - math [ref=e1459]:
+                        - generic [ref=e1461]:
+                          - generic [ref=e1462]: "25"
+                          - generic [ref=e1463]: "%"
+                    - cell [ref=e1464]:
+                      - math [ref=e1465]:
+                        - generic [ref=e1467]:
+                          - generic [ref=e1468]: "100"
+                          - generic [ref=e1469]: "%"
+                    - cell [ref=e1470]:
+                      - math [ref=e1471]:
+                        - generic [ref=e1473]:
+                          - generic [ref=e1474]: "25"
+                          - generic [ref=e1475]: "%"
+                    - cell [ref=e1476]:
+                      - math [ref=e1477]:
+                        - generic [ref=e1479]:
+                          - generic [ref=e1480]: "25"
+                          - generic [ref=e1481]: "%"
+                    - cell [ref=e1482]:
+                      - math [ref=e1483]:
+                        - generic [ref=e1485]:
+                          - generic [ref=e1486]: "75"
+                          - generic [ref=e1487]: "%"
+                    - cell [ref=e1488]:
+                      - math [ref=e1489]:
+                        - generic [ref=e1491]:
+                          - generic [ref=e1492]: "75"
+                          - generic [ref=e1493]: "%"
+                    - cell [ref=e1494]:
+                      - math [ref=e1495]:
+                        - generic [ref=e1497]:
+                          - generic [ref=e1498]: "100"
+                          - generic [ref=e1499]: "%"
+            - generic [ref=e1500]:
+              - paragraph [ref=e1501]: "In order to facilitate learning, it is essential to establish a reward system that encourages good actions and penalizes poor ones by the agent. This system has been designed based on empirical knowledge obtained through empirical evaluation. The reward system implemented for this work is provided below:"
+              - table [ref=e1502]:
+                - rowgroup [ref=e1503]:
+                  - row "(10)" [ref=e1504]:
+                    - cell [ref=e1505]
+                    - cell [ref=e1506]:
+                      - math [ref=e1507]:
+                        - generic [ref=e1509]:
+                          - generic [ref=e1510]:
+                            - generic [ref=e1511]: r
+                            - generic: ⁢
+                            - generic [ref=e1512]:
+                              - generic [ref=e1513]: (
+                              - generic [ref=e1514]:
+                                - generic [ref=e1515]: s
+                                - generic [ref=e1516]: t
+                              - generic [ref=e1517]: ","
+                              - generic [ref=e1518]:
+                                - generic [ref=e1519]: a
+                                - generic [ref=e1520]: t
+                              - generic [ref=e1521]: )
+                          - generic [ref=e1522]: =
+                          - generic [ref=e1523]:
+                            - generic [ref=e1524]: "{"
+                            - generic [ref=e1525]:
+                              - generic [ref=e1528]:
+                                - generic [ref=e1529]:
+                                  - generic [ref=e1530]:
+                                    - generic [ref=e1531]: r
+                                    - generic [ref=e1532]:
+                                      - generic [ref=e1533]: a
+                                      - generic: ⁢
+                                      - generic [ref=e1534]: r
+                                      - generic: ⁢
+                                      - generic [ref=e1535]: r
+                                  - generic: ⁢
+                                  - generic [ref=e1536]: if
+                                  - generic: ⁢
+                                  - generic [ref=e1537]:
+                                    - generic [ref=e1538]: d
+                                    - generic [ref=e1539]: t
+                                - generic [ref=e1540]: <
+                                - generic [ref=e1541]:
+                                  - generic [ref=e1542]: c
+                                  - generic [ref=e1543]: d
+                              - generic [ref=e1547]:
+                                - generic [ref=e1548]:
+                                  - generic [ref=e1549]:
+                                    - generic [ref=e1550]: r
+                                    - generic [ref=e1551]:
+                                      - generic [ref=e1552]: c
+                                      - generic: ⁢
+                                      - generic [ref=e1553]: o
+                                      - generic: ⁢
+                                      - generic [ref=e1554]: l
+                                      - generic: ⁢
+                                      - generic [ref=e1555]: l
+                                  - generic: ⁢
+                                  - generic [ref=e1556]: if
+                                  - generic: ⁢
+                                  - generic [ref=e1557]: m
+                                  - generic: ⁢
+                                  - generic [ref=e1558]: i
+                                  - generic: ⁢
+                                  - generic [ref=e1559]:
+                                    - generic [ref=e1560]: "n"
+                                    - generic [ref=e1561]: x
+                                - generic [ref=e1562]: <
+                                - generic [ref=e1563]:
+                                  - generic [ref=e1564]: c
+                                  - generic [ref=e1565]: o
+                              - generic [ref=e1569]:
+                                - generic [ref=e1570]:
+                                  - generic [ref=e1571]:
+                                    - generic [ref=e1572]: r
+                                    - generic [ref=e1573]:
+                                      - generic [ref=e1574]: i
+                                      - generic: ⁢
+                                      - generic [ref=e1575]: d
+                                      - generic: ⁢
+                                      - generic [ref=e1576]: l
+                                      - generic: ⁢
+                                      - generic [ref=e1577]: e
+                                  - generic: ⁢
+                                  - generic [ref=e1578]: if
+                                  - generic: ⁢
+                                  - generic [ref=e1579]: m
+                                  - generic: ⁢
+                                  - generic [ref=e1580]: i
+                                  - generic: ⁢
+                                  - generic [ref=e1581]:
+                                    - generic [ref=e1582]: "n"
+                                    - generic [ref=e1583]: x
+                                - generic [ref=e1584]: ≥
+                                - generic [ref=e1585]:
+                                  - generic [ref=e1586]:
+                                    - generic [ref=e1587]: c
+                                    - generic [ref=e1588]: o
+                                  - generic: ⁢
+                                  - generic [ref=e1589]: and
+                                  - generic: ⁢
+                                  - generic [ref=e1590]:
+                                    - generic [ref=e1591]: d
+                                    - generic [ref=e1592]: t
+                                - generic [ref=e1593]: ≥
+                                - generic [ref=e1594]:
+                                  - generic [ref=e1595]: c
+                                  - generic [ref=e1596]: d
+                    - cell [ref=e1598]
+                    - cell "(10)" [ref=e1599]:
+                      - generic [ref=e1600]: (10)
+            - paragraph [ref=e1602]:
+              - text: "A simple rewarding function is defined, providing only three types of rewards: one for successfully completing the task, another for failing to complete the task, and a final one in the event that neither of the previous two occurred. A reward of"
+              - math [ref=e1603]:
+                - generic [ref=e1605]: "200"
+              - text: is given to the agent for successfully reaching the goal within a margin of
+              - math [ref=e1606]:
+                - generic [ref=e1608]:
+                  - generic [ref=e1609]: c
+                  - generic [ref=e1610]: d
+              - text: meters, which was set at
+              - math [ref=e1611]:
+                - generic [ref=e1613]: "0.25"
+              - text: meters. If the agent collides with an obstacle or reaches the limits of the scenario, a negative reward
+              - math [ref=e1614]:
+                - generic [ref=e1616]:
+                  - generic [ref=e1617]: r
+                  - generic [ref=e1618]:
+                    - generic [ref=e1619]: c
+                    - generic: ⁢
+                    - generic [ref=e1620]: o
+                    - generic: ⁢
+                    - generic [ref=e1621]: l
+                    - generic: ⁢
+                    - generic [ref=e1622]: l
+              - text: of
+              - math [ref=e1623]:
+                - generic [ref=e1625]:
+                  - generic [ref=e1626]: −
+                  - generic [ref=e1627]: "20"
+              - text: is given. Collisions are detected when distance sensor readings are less than a distance of
+              - math [ref=e1628]:
+                - generic [ref=e1630]:
+                  - generic [ref=e1631]: c
+                  - generic [ref=e1632]: o
+              - text: ", which is set at"
+              - math [ref=e1633]:
+                - generic [ref=e1635]: "0.12"
+              - text: meters. If the agent’s Lidar distance is greater than
+              - math [ref=e1636]:
+                - generic [ref=e1638]:
+                  - generic [ref=e1639]: c
+                  - generic [ref=e1640]: o
+              - text: and the target distance is greater than
+              - math [ref=e1641]:
+                - generic [ref=e1643]:
+                  - generic [ref=e1644]: c
+                  - generic [ref=e1645]: d
+              - text: ", a reward"
+              - math [ref=e1646]:
+                - generic [ref=e1648]:
+                  - generic [ref=e1649]: r
+                  - generic [ref=e1650]:
+                    - generic [ref=e1651]: i
+                    - generic: ⁢
+                    - generic [ref=e1652]: d
+                    - generic: ⁢
+                    - generic [ref=e1653]: l
+                    - generic: ⁢
+                    - generic [ref=e1654]: e
+              - text: of
+              - math [ref=e1655]:
+                - generic [ref=e1657]: "0"
+              - text: is given. This function enables a focus on the Deep-RL approaches themselves, their similarities and differences, rather than the scenario.
+        - generic [ref=e1658]:
+          - heading "4 Experimental Results" [level=2] [ref=e1659]:
+            - generic [ref=e1660]: "4"
+            - text: Experimental Results
+          - paragraph [ref=e1662]:
+            - text: We evaluated the navigation ability and spatial generalization of all approaches in both simulation and real-world scenarios. After the training phase, consisting of
+            - math [ref=e1663]:
+              - generic [ref=e1665]: "30000"
+            - text: steps for the first scenario and
+            - math [ref=e1666]:
+              - generic [ref=e1668]: "200000"
+            - text: steps for the others, we analyzed the moving average of rewards (Fig.
+            - link "4" [ref=e1669] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.F4
+            - text: ).
+          - paragraph [ref=e1671]: The results showed that stochastic distributional approaches outperformed others in all scenarios, despite a slower start. DDPG had similar reward means to the top approaches. In more complex scenarios, approaches without prioritized memory had slower knowledge acquisition.
+          - paragraph [ref=e1673]:
+            - text: Each approach was evaluated over
+            - math [ref=e1674]:
+              - generic [ref=e1676]: "100"
+            - text: episodes with predetermined target coordinates, as shown in Fig.
+            - link "4" [ref=e1677] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.F4
+            - text: .
+          - paragraph [ref=e1679]:
+            - text: Table
+            - link "1" [ref=e1680] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.T1
+            - text: shows the results from the simulation experiments. Figs.
+            - link "5" [ref=e1681] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.F5
+            - text: and
+            - link "6" [ref=e1682] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.F6
+            - text: illustrate the behavior of Deep-RL and classical approaches. In scenario 1, all achieved
+            - math [ref=e1683]:
+              - generic [ref=e1685]:
+                - generic [ref=e1686]: "100"
+                - generic [ref=e1687]: "%"
+            - text: accuracy. In more complex scenarios, distributional algorithms maintained
+            - math [ref=e1688]:
+              - generic [ref=e1690]:
+                - generic [ref=e1691]: "100"
+                - generic [ref=e1692]: "%"
+            - text: accuracy, while others varied. DDPG matched the distributional algorithms.
+          - paragraph [ref=e1694]:
+            - text: In Scenario 3, distributional approaches outperformed others, except for PDDRL-P, which had
+            - math [ref=e1695]:
+              - generic [ref=e1697]:
+                - generic [ref=e1698]: "70"
+                - generic [ref=e1699]: "%"
+            - text: accuracy. This issue is known in the literature, where prioritized memory may limit the generalization capacity of the deterministic distributional agent based on the D4PG algorithm. In Scenario 4, only the PDSRL-P approach captured all points, followed by PDSRL with
+            - math [ref=e1700]:
+              - generic [ref=e1702]:
+                - generic [ref=e1703]: "98"
+                - generic [ref=e1704]: "%"
+            - text: accuracy. Notably, DDPG-P achieved
+            - math [ref=e1705]:
+              - generic [ref=e1707]:
+                - generic [ref=e1708]: "92"
+                - generic [ref=e1709]: "%"
+            - text: accuracy, surpassing deterministic distributional algorithms.
+          - paragraph [ref=e1711]:
+            - text: Fig.
+            - link "5" [ref=e1712] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S3.F5
+            - text: shows PDSRL and PDSRL-P had smoother trajectories. DDPG showed instability with repeated collisions in Scenario 3. Prioritization reduced collisions in Scenario 4, but instability remained.
+          - 'figure "Figure 7: The behavior of each parallel approach was evaluated by conducting 12 navigation trials in each real scenario. The lines illustrate the paths taken by the agents, with each agent given 3 attempts to capture each target." [ref=e1713]':
+            - img "Refer to caption" [ref=e1714]
+            - generic [ref=e1715]:
+              - generic [ref=e1716]: "Figure 7:"
+              - text: The behavior of each parallel approach was evaluated by conducting 12 navigation trials in each real scenario. The lines illustrate the paths taken by the agents, with each agent given 3 attempts to capture each target.
+          - paragraph [ref=e1718]:
+            - text: Real environment experiments used target points similar to simulations. Fig.
+            - link "7" [ref=e1719] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S4.F7
+            - text: shows trajectories in all real scenarios. PDSRL-P and DDPG-P achieved
+            - math [ref=e1720]:
+              - generic [ref=e1722]:
+                - generic [ref=e1723]: "100"
+                - generic [ref=e1724]: "%"
+            - text: accuracy in real environments. Performance differences between PDDRL and PDDRL-P were significant in scenarios 3 and 4. Real scenarios introduced delays, affecting performance.
+          - 'figure "Figure 8: Behavior of the best classified parallel approaches evaluated in the extra real scenario over 12 navigation trials. The lines illustrate the paths taken by the agents, with each agent given 3 attempts to capture each target." [ref=e1725]':
+            - generic [ref=e1726]:
+              - img "Refer to caption" [ref=e1728]
+              - img "Refer to caption" [ref=e1730]
+              - img "Refer to caption" [ref=e1732]
+              - img "Refer to caption" [ref=e1734]
+              - img "Refer to caption" [ref=e1736]
+            - generic [ref=e1737]:
+              - generic [ref=e1738]: "Figure 8:"
+              - text: Behavior of the best classified parallel approaches evaluated in the extra real scenario over 12 navigation trials. The lines illustrate the paths taken by the agents, with each agent given 3 attempts to capture each target.
+          - 'figure "Table 2: Precision and distance metrics over 12 navigation trials in the extra scenario for top approaches." [ref=e1739]':
+            - generic [ref=e1740]:
+              - generic [ref=e1741]: "Table 2:"
+              - text: Precision and distance metrics over 12 navigation trials in the extra scenario for top approaches.
+            - table [ref=e1742]:
+              - rowgroup [ref=e1743]:
+                - row "Algorithm Precision (%) Crashes (%)" [ref=e1744]:
+                  - columnheader "Algorithm" [ref=e1745]
+                  - columnheader "Precision (%)" [ref=e1746]
+                  - columnheader "Crashes (%)" [ref=e1747]
+              - rowgroup [ref=e1748]:
+                - row "DDPG" [ref=e1749]:
+                  - rowheader "DDPG" [ref=e1750]
+                  - cell [ref=e1751]:
+                    - math [ref=e1752]:
+                      - generic [ref=e1754]:
+                        - generic [ref=e1755]: "58.3"
+                        - generic [ref=e1756]: "%"
+                  - cell [ref=e1757]:
+                    - math [ref=e1758]:
+                      - generic [ref=e1760]:
+                        - generic [ref=e1761]: "41.6"
+                        - generic [ref=e1762]: "%"
+                - row "DDPG-P" [ref=e1763]:
+                  - rowheader "DDPG-P" [ref=e1764]
+                  - cell [ref=e1765]:
+                    - math [ref=e1766]:
+                      - generic [ref=e1768]:
+                        - generic [ref=e1769]: "100"
+                        - generic [ref=e1770]: "%"
+                  - cell [ref=e1771]:
+                    - math [ref=e1772]:
+                      - generic [ref=e1774]:
+                        - generic [ref=e1775]: "0.0"
+                        - generic [ref=e1776]: "%"
+                - row "PDDRL" [ref=e1777]:
+                  - rowheader "PDDRL" [ref=e1778]
+                  - cell [ref=e1779]:
+                    - math [ref=e1780]:
+                      - generic [ref=e1782]:
+                        - generic [ref=e1783]: "100"
+                        - generic [ref=e1784]: "%"
+                  - cell [ref=e1785]:
+                    - math [ref=e1786]:
+                      - generic [ref=e1788]:
+                        - generic [ref=e1789]: "0.0"
+                        - generic [ref=e1790]: "%"
+                - row "PDSRL" [ref=e1791]:
+                  - rowheader "PDSRL" [ref=e1792]
+                  - cell [ref=e1793]:
+                    - math [ref=e1794]:
+                      - generic [ref=e1796]:
+                        - generic [ref=e1797]: "75"
+                        - generic [ref=e1798]: "%"
+                  - cell [ref=e1799]:
+                    - math [ref=e1800]:
+                      - generic [ref=e1802]:
+                        - generic [ref=e1803]: "8.3"
+                        - generic [ref=e1804]: "%"
+                - row "PDSRL-P" [ref=e1805]:
+                  - rowheader "PDSRL-P" [ref=e1806]
+                  - cell [ref=e1807]:
+                    - math [ref=e1808]:
+                      - generic [ref=e1810]:
+                        - generic [ref=e1811]: "100"
+                        - generic [ref=e1812]: "%"
+                  - cell [ref=e1813]:
+                    - math [ref=e1814]:
+                      - generic [ref=e1816]:
+                        - generic [ref=e1817]: "0.0"
+                        - generic [ref=e1818]: "%"
+          - paragraph [ref=e1820]:
+            - text: We proposed a novel scenario where pre-trained models from scenario 3 were evaluated in an unseen environment. Fig.
+            - link "8" [ref=e1821] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S4.F8
+            - text: and Table
+            - link "2" [ref=e1822] [cursor=pointer]:
+              - /url: https://arxiv.org/html/2408.05744v1#S4.T2
+            - text: show the results. DDPG had high crash rates, while PDSRL minimized crashes but didn’t always achieve rewards. DDPG-P, PDDRL, and PDSRL-P achieved
+            - math [ref=e1823]:
+              - generic [ref=e1825]:
+                - generic [ref=e1826]: "100"
+                - generic [ref=e1827]: "%"
+            - text: accuracy, demonstrating strong spatial generalization.
+          - paragraph [ref=e1829]: Our extensive validation shows the proposed approaches perform well in all scenarios, including the novel one. Deep-RL approaches outperformed traditional algorithms in real-world challenges. Prioritized versions achieved the best success rates, particularly PDSRL-P. Evaluation in a novel scenario confirmed the approaches’ learning capabilities and spatial generalization.
+        - generic [ref=e1830]:
+          - heading "5 Conclusion" [level=2] [ref=e1831]:
+            - generic [ref=e1832]: "5"
+            - text: Conclusion
+          - paragraph [ref=e1834]: This work introduces novel Deep Reinforcement Learning (Deep-RL) techniques for terrestrial mobile robots to perform mapless navigation, demonstrating their learning capabilities in simulation and potential for real-world implementation. The results highlight that parallel distributional Deep-RL approaches can effectively tackle complex real-world robotics problems that non-learning-based and non-distributional approaches without prioritized memory replay cannot address.
+        - generic [ref=e1835]:
+          - heading "References" [level=2] [ref=e1836]
+          - list [ref=e1837]:
+            - listitem [ref=e1838]:
+              - generic [ref=e1839]:
+                - text: "[1]"
+                - button "Back to the article" [ref=e1840] [cursor=pointer]: ↑
+              - generic [ref=e1841]:
+                - text: T. P. Lillicrap, J. J. Hunt, A. Pritzel, N. Heess, T. Erez, Y. Tassa, D. Silver, and D. Wierstra, “Continuous control with deep reinforcement learning,” in
+                - emphasis [ref=e1842]: ICLR
+                - text: . PMLR, 2016.
+            - listitem [ref=e1843]:
+              - generic [ref=e1844]:
+                - text: "[2]"
+                - button "Back to the article" [ref=e1845] [cursor=pointer]: ↑
+              - generic [ref=e1846]:
+                - text: S. Gu, T. Lillicrap, I. Sutskever, and S. Levine, “Continuous deep q-learning with model-based acceleration,” in
+                - emphasis [ref=e1847]: ICML
+                - text: ", 2016, pp. 2829–2838."
+            - listitem [ref=e1848]:
+              - generic [ref=e1849]:
+                - text: "[3]"
+                - button "Back to the article" [ref=e1850] [cursor=pointer]: ↑
+              - generic [ref=e1851]:
+                - text: Y. Zhu, R. Mottaghi, E. Kolve, J. J. Lim, A. Gupta, L. Fei-Fei, and A. Farhadi, “Target-driven visual navigation in indoor scenes using deep reinforcement learning,” in
+                - emphasis [ref=e1852]: IEEE ICRA
+                - text: . IEEE, 2017, pp. 3357–3364.
+            - listitem [ref=e1853]:
+              - generic [ref=e1854]:
+                - text: "[4]"
+                - button "Back to the article" [ref=e1855] [cursor=pointer]: ↑
+              - generic [ref=e1856]:
+                - text: J. C. de Jesus, V. A. Kich, A. H. Kolling, R. B. Grando, M. A. d. S. L. Cuadros, and D. F. T. Gamarra, “Soft actor-critic for navigation of mobile robots,”
+                - emphasis [ref=e1857]: Journal of Intelligent & Robotic Systems
+                - text: ", vol. 102, no. 2, pp. 1–11, 2021."
+            - listitem [ref=e1858]:
+              - generic [ref=e1859]:
+                - text: "[5]"
+                - button "Back to the article" [ref=e1860] [cursor=pointer]: ↑
+              - generic [ref=e1861]:
+                - text: R. B. Grando, J. C. de Jesus, V. A. Kich, A. H. Kolling, N. P. Bortoluzzi, P. M. Pinheiro, A. A. Neto, and P. L. Drews, “Deep reinforcement learning for mapless navigation of a hybrid aerial underwater vehicle with medium transition,” in
+                - emphasis [ref=e1862]: IEEE ICRA
+                - text: . IEEE, 2021, pp. 1088–1094.
+            - listitem [ref=e1863]:
+              - generic [ref=e1864]:
+                - text: "[6]"
+                - button "Back to the article" [ref=e1865] [cursor=pointer]: ↑
+              - generic [ref=e1866]:
+                - text: R. B. Grando, J. C. de Jesus, V. A. Kich, A. H. Kolling, and P. L. J. Drews-Jr, “Double critic deep reinforcement learning for mapless 3d navigation of unmanned aerial vehicles,”
+                - emphasis [ref=e1867]: Journal of Intelligent & Robotic Systems
+                - text: ", vol. 104, no. 2, pp. 1–14, 2022."
+            - listitem [ref=e1868]:
+              - generic [ref=e1869]:
+                - text: "[7]"
+                - button "Back to the article" [ref=e1870] [cursor=pointer]: ↑
+              - generic [ref=e1871]:
+                - text: G. Barth-Maron, M. W. Hoffman, D. Budden, W. Dabney, D. Horgan, D. Tb, A. Muldal, N. Heess, and T. Lillicrap, “Distributed distributional deterministic policy gradients,”
+                - emphasis [ref=e1872]: ICLR
+                - text: ", 2018."
+            - listitem [ref=e1873]:
+              - generic [ref=e1874]:
+                - text: "[8]"
+                - button "Back to the article" [ref=e1875] [cursor=pointer]: ↑
+              - generic [ref=e1876]:
+                - text: M. G. Bellemare, W. Dabney, and R. Munos, “A distributional perspective on reinforcement learning,” in
+                - emphasis [ref=e1877]: ICML
+                - text: . PMLR, 2017, pp. 449–458.
+            - listitem [ref=e1878]:
+              - generic [ref=e1879]:
+                - text: "[9]"
+                - button "Back to the article" [ref=e1880] [cursor=pointer]: ↑
+              - generic [ref=e1881]:
+                - text: "J. Duan, Y. Guan, S. E. Li, Y. Ren, Q. Sun, and B. Cheng, “Distributional soft actor-critic: Off-policy reinforcement learning for addressing value estimation errors,”"
+                - emphasis [ref=e1882]: IEEE Transactions on Neural Networks and Learning Systems (TNNLS)
+                - text: ", 2021."
+            - listitem [ref=e1883]:
+              - generic [ref=e1884]:
+                - text: "[10]"
+                - button "Back to the article" [ref=e1885] [cursor=pointer]: ↑
+              - generic [ref=e1886]:
+                - text: D. Horgan, J. Quan, D. Budden, G. Barth-Maron, M. Hessel, H. van Hasselt, and D. Silver, “Distributed prioritized experience replay,” in
+                - emphasis [ref=e1887]: ICLR
+                - text: . PMLR, 2018.
+            - listitem [ref=e1888]:
+              - generic [ref=e1889]:
+                - text: "[11]"
+                - button "Back to the article" [ref=e1890] [cursor=pointer]: ↑
+              - generic [ref=e1891]:
+                - text: V. Mnih, A. P. Badia, M. Mirza, A. Graves, T. Lillicrap, T. Harley, D. Silver, and K. Kavukcuoglu, “Asynchronous methods for deep reinforcement learning,” in
+                - emphasis [ref=e1892]: ICML
+                - text: ", vol. 48. New York, New York, USA: PMLR, 20–22 Jun 2016, pp. 1928–1937."
+            - listitem [ref=e1893]:
+              - generic [ref=e1894]:
+                - text: "[12]"
+                - button "Back to the article" [ref=e1895] [cursor=pointer]: ↑
+              - generic [ref=e1896]:
+                - text: "L. Tai, G. Paolo, and M. Liu, “Virtual-to-real deep reinforcement learning: Continuous control of mobile robots for mapless navigation,” in"
+                - emphasis [ref=e1897]: IEEE/RSJ IROS
+                - text: . IEEE, 2017, pp. 31–36.
+            - listitem [ref=e1898]:
+              - generic [ref=e1899]:
+                - text: "[13]"
+                - button "Back to the article" [ref=e1900] [cursor=pointer]: ↑
+              - generic [ref=e1901]:
+                - text: V. J. Lumelsky and A. A. Stepanov, “Path-planning strategies for a point mobile automaton moving amidst unknown obstacles of arbitrary shape,”
+                - emphasis [ref=e1902]: Algorithmica
+                - text: ", vol. 2, no. 1, pp. 403–430, Nov 1987."
+            - listitem [ref=e1903]:
+              - generic [ref=e1904]:
+                - text: "[14]"
+                - button "Back to the article" [ref=e1905] [cursor=pointer]: ↑
+              - generic [ref=e1906]:
+                - text: D. Silver, G. Lever, N. Heess, T. Degris, D. Wierstra, and M. Riedmiller, “Deterministic policy gradient algorithms,” in
+                - emphasis [ref=e1907]: ICML
+                - text: . PMLR, 2014, pp. 387–395.
+            - listitem [ref=e1908]:
+              - generic [ref=e1909]:
+                - text: "[15]"
+                - button "Back to the article" [ref=e1910] [cursor=pointer]: ↑
+              - generic [ref=e1911]: L. Tai and M. Liu, “Towards cognitive exploration through deep reinforcement learning for mobile robots,” 2016.
+            - listitem [ref=e1912]:
+              - generic [ref=e1913]:
+                - text: "[16]"
+                - button "Back to the article" [ref=e1914] [cursor=pointer]: ↑
+              - generic [ref=e1915]:
+                - text: G. E. Uhlenbeck and L. S. Ornstein, “On the theory of the brownian motion,”
+                - emphasis [ref=e1916]: Physical review
+                - text: ", vol. 36, no. 5, p. 823, 1930."
+            - listitem [ref=e1917]:
+              - generic [ref=e1918]:
+                - text: "[17]"
+                - button "Back to the article" [ref=e1919] [cursor=pointer]: ↑
+              - generic [ref=e1920]:
+                - text: T. Schaul, J. Quan, I. Antonoglou, and D. Silver, “Prioritized experience replay,” in
+                - emphasis [ref=e1921]: ICLR
+                - text: . PMLR, 2016.
+            - listitem [ref=e1922]:
+              - generic [ref=e1923]:
+                - text: "[18]"
+                - button "Back to the article" [ref=e1924] [cursor=pointer]: ↑
+              - generic [ref=e1925]:
+                - text: T. Haarnoja, A. Zhou, K. Hartikainen, G. Tucker, S. Ha, J. Tan, V. Kumar, H. Zhu, A. Gupta, P. Abbeel
+                - emphasis [ref=e1926]: et al.
+                - text: ", “Soft actor-critic algorithms and applications,” 2018."
+            - listitem [ref=e1927]:
+              - generic [ref=e1928]:
+                - text: "[19]"
+                - button "Back to the article" [ref=e1929] [cursor=pointer]: ↑
+              - generic [ref=e1930]: "X. Ma, L. Xia, Z. Zhou, J. Yang, and Q. Zhao, “Dsac: Distributional soft actor critic for risk-sensitive reinforcement learning,” 2020."
+            - listitem [ref=e1931]:
+              - generic [ref=e1932]:
+                - text: "[20]"
+                - button "Back to the article" [ref=e1933] [cursor=pointer]: ↑
+              - generic [ref=e1934]:
+                - text: C. Fairchild and T. L. Harman,
+                - emphasis [ref=e1935]: ROS Robotics By Example
+                - text: . Packt Publishing Ltd, 2016.
+  - button "Report Issue" [ref=e1936] [cursor=pointer]
+  - button "Report Issue for Selection" [ref=e1937] [cursor=pointer]
+  - generic [ref=e1939]:
+    - text: Generated by
+    - link "L A T E xml [LOGO]" [ref=e1940] [cursor=pointer]:
+      - /url: https://math.nist.gov/~BMiller/LaTeXML/
+      - generic [ref=e1941]: L A T E
+      - text: xml
+      - img "[LOGO]" [ref=e1942]
+  - contentinfo [ref=e1943]:
+    - generic [ref=e1944]:
+      - heading "Instructions for reporting errors" [level=2] [ref=e1945]
+      - paragraph [ref=e1946]: "We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:"
+      - list [ref=e1947]:
+        - listitem [ref=e1948]: Click the "Report Issue" button.
+        - listitem [ref=e1949]:
+          - text: Open a report feedback form via keyboard, use "
+          - strong [ref=e1950]: Ctrl + ?
+          - text: "\"."
+        - listitem [ref=e1951]: Make a text selection and click the "Report Issue for Selection" button near your cursor.
+        - listitem [ref=e1952]: You can use Alt+Y to toggle on and Alt+Shift+Y to toggle off accessible reporting links at each section.
+      - paragraph [ref=e1953]:
+        - text: Our team has already identified
+        - link "the following issues" [ref=e1954] [cursor=pointer]:
+          - /url: https://github.com/arXiv/html_feedback/issues
+        - text: . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+      - paragraph [ref=e1955]:
+        - text: Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+        - link "list of packages that need conversion" [ref=e1956] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/wiki/Porting-LaTeX-packages-for-LaTeXML
+        - text: ", and welcome"
+        - link "developer contributions" [ref=e1957] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/issues
+        - text: .
+  - text: beta

@@ -1,0 +1,1647 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#content"
+    - complementary [ref=e4]:
+      - paragraph [ref=e6]: Advertisement
+    - banner [ref=e7]:
+      - generic [ref=e10]:
+        - link "Scientific Reports" [ref=e12] [cursor=pointer]:
+          - /url: /srep
+          - img "Scientific Reports" [ref=e14]
+        - list [ref=e15]:
+          - listitem [ref=e16]:
+            - link "View all journals" [ref=e17] [cursor=pointer]:
+              - /url: https://www.nature.com/siteindex
+              - generic [ref=e18]: View all journals
+          - listitem [ref=e19]:
+            - button "Search" [ref=e20] [cursor=pointer]:
+              - img [ref=e21]
+              - generic [ref=e23]: Search
+          - listitem [ref=e24]:
+            - link "Log in" [ref=e25] [cursor=pointer]:
+              - /url: https://idp.nature.com/auth/personal/springernature?redirect_uri=https://www.nature.com/articles/s41598-024-72857-3
+              - generic [ref=e26]: Log in
+      - generic [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - button "Explore content" [ref=e32] [cursor=pointer]:
+              - generic [ref=e33]: Explore content
+              - img [ref=e34]
+          - listitem [ref=e36]:
+            - button "About the journal" [ref=e37] [cursor=pointer]:
+              - generic [ref=e38]: About the journal
+              - img [ref=e39]
+          - listitem [ref=e41]:
+            - button "Publish with us" [ref=e42] [cursor=pointer]:
+              - generic [ref=e43]: Publish with us
+              - img [ref=e44]
+        - list [ref=e46]:
+          - listitem [ref=e47]:
+            - link "Sign up for alerts" [ref=e48] [cursor=pointer]:
+              - /url: https://journal-alerts.springernature.com/subscribe?journal_id=41598
+              - generic [ref=e49]: Sign up for alerts
+              - img [ref=e50]
+          - listitem [ref=e52]:
+            - link "RSS feed" [ref=e53] [cursor=pointer]:
+              - /url: https://www.nature.com/srep.rss
+              - generic [ref=e54]: RSS feed
+    - navigation "breadcrumbs" [ref=e55]:
+      - list [ref=e57]:
+        - listitem [ref=e58]:
+          - link "nature" [ref=e59] [cursor=pointer]:
+            - /url: /
+          - img [ref=e60]
+        - listitem [ref=e62]:
+          - link "scientific reports" [ref=e63] [cursor=pointer]:
+            - /url: /srep
+          - img [ref=e64]
+        - listitem [ref=e66]:
+          - link "articles" [ref=e67] [cursor=pointer]:
+            - /url: /srep/articles?type=article
+          - img [ref=e68]
+        - listitem [ref=e70]: article
+  - generic [ref=e71]:
+    - main [ref=e72]:
+      - article [ref=e73]:
+        - generic [ref=e75]:
+          - list [ref=e76]:
+            - listitem [ref=e77]: Article
+            - listitem [ref=e78]:
+              - link "Open access" [ref=e79] [cursor=pointer]:
+                - /url: https://www.springernature.com/gp/open-science/about/the-fundamentals-of-open-access-and-open-research
+            - listitem [ref=e80]:
+              - text: "Published:"
+              - time [ref=e81]: 01 October 2024
+          - heading "Intelligent mobile robot navigation in unknown and complex environment using reinforcement learning technique" [level=1] [ref=e82]
+          - list [ref=e83]:
+            - listitem [ref=e84]:
+              - link "Ravi Raj" [ref=e85] [cursor=pointer]:
+                - /url: "#auth-Ravi-Raj-Aff1"
+                - text: Ravi Raj
+                - img [ref=e86]
+              - text: "&"
+            - listitem [ref=e88]:
+              - link "Andrzej Kos" [ref=e89] [cursor=pointer]:
+                - /url: "#auth-Andrzej-Kos-Aff1"
+          - paragraph [ref=e90]:
+            - link "Scientific Reports" [ref=e91] [cursor=pointer]:
+              - /url: /srep
+            - generic [ref=e92]:
+              - generic [ref=e93]: volume
+              - text: "14"
+            - text: ", Article number: 22852 (2024)"
+            - link "Cite this article" [ref=e94] [cursor=pointer]:
+              - /url: "#citeas"
+          - list [ref=e96]:
+            - listitem [ref=e97]:
+              - paragraph [ref=e98]: 10k Accesses
+            - listitem [ref=e99]:
+              - paragraph [ref=e100]: 27 Citations
+            - listitem [ref=e101]:
+              - paragraph [ref=e102]:
+                - link "Metrics details" [ref=e103] [cursor=pointer]:
+                  - /url: /articles/s41598-024-72857-3/metrics
+                  - text: Metrics
+                  - generic [ref=e104]: details
+        - generic [ref=e105]:
+          - region "Abstract" [ref=e106]:
+            - generic [ref=e107]:
+              - heading "Abstract" [level=2] [ref=e108]
+              - paragraph [ref=e110]: The usage of mobile robots (MRs) has expanded dramatically in the last several years across a wide range of industries, including manufacturing, surveillance, healthcare, and warehouse automation. To ensure the efficient and safe operation of these MRs, it is crucial to design effective control strategies that can adapt to changing environments. In this paper, we propose a new technique for controlling MRs using reinforcement learning (RL). Our approach involves mathematical model generation and later training a neural network (NN) to learn a policy for robot control using RL. The policy is learned through trial and error, where MR explores the environment and receives rewards based on its actions. The rewards are designed to encourage the robot to move towards its goal while avoiding obstacles. In this work, a deep Q-learning (QL) agent is used to enable robots to autonomously learn to avoid collisions with obstacles and enhance navigation abilities in an unknown environment. When operating MR independently within an unfamiliar area, a RL model is used to identify the targeted location, and the Deep Q-Network (DQN) is used to navigate to the goal location. We evaluate our approach using a simulation using the Epsilon-Greedy algorithm. The results show that our approach outperforms traditional MR control strategies in terms of both efficiency and safety.
+          - region "Similar content being viewed by others" [ref=e111]:
+            - heading "Similar content being viewed by others" [level=3] [ref=e112]
+            - generic [ref=e113]:
+              - article [ref=e115]:
+                - generic [ref=e117]:
+                  - heading "Enhanced Q learning and deep reinforcement learning for unmanned combat intelligence planning in adversarial environments" [level=3] [ref=e118]:
+                    - link "Enhanced Q learning and deep reinforcement learning for unmanned combat intelligence planning in adversarial environments" [ref=e119] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s41598-025-13752-3?fromPaywallRec=false
+                  - generic [ref=e120]:
+                    - text: Article Open access
+                    - generic [ref=e121]: 04 August 2025
+              - article [ref=e123]:
+                - generic [ref=e125]:
+                  - heading "Self-correcting quantum many-body control using reinforcement learning with tensor networks" [level=3] [ref=e126]:
+                    - link "Self-correcting quantum many-body control using reinforcement learning with tensor networks" [ref=e127] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s42256-023-00687-5?fromPaywallRec=false
+                  - generic [ref=e128]:
+                    - text: Article Open access
+                    - generic [ref=e129]: 21 July 2023
+              - article [ref=e131]:
+                - generic [ref=e133]:
+                  - heading "Learning vision-based agile flight via differentiable physics" [level=3] [ref=e134]:
+                    - link "Learning vision-based agile flight via differentiable physics" [ref=e135] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s42256-025-01048-0?fromPaywallRec=false
+                  - generic [ref=e136]: Article 16 June 2025
+          - generic [ref=e137]:
+            - generic [ref=e139]:
+              - heading "Introduction" [level=2] [ref=e140]
+              - generic [ref=e141]:
+                - paragraph [ref=e142]:
+                  - text: As Artificial Intelligence (AI) technology rapidly advances, MRs are evolving and becoming more proficient at performing tasks that were previously too complex and hard, including space exploration, heavy-weight carriage, security, and many more. By integrating AI and robotics, robots might become intelligent and autonomous, performing tasks without assistance from humans
+                  - superscript [ref=e143]:
+                    - link "Reference 1" [ref=e144] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR1
+                      - text: "1"
+                  - text: . MRs are becoming more proficient by virtue of AI technology and can be employed in a wide range of domains, including defense, freight, infrastructure development and inspection, postal delivery, security, healthcare, customer support, and more. MR utilizes the sensors along with additional technologies to recognize its surroundings and execute its assigned assignment
+                  - superscript [ref=e145]:
+                    - link "Reference 2" [ref=e146] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR2
+                      - text: "2"
+                  - text: . The diversity of fundamental problems, which extend from difficult computational challenges to others that are exceptionally logical, is certainly among the most significant and fascinating features of MRs that allow them to solve these problems easily
+                  - superscript [ref=e147]:
+                    - link "Reference 3" [ref=e148] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR3
+                      - text: "3"
+                  - text: ". To complete a predetermined work, the MR generally goes through three phases: perception (sensing), path planning and synthesis (process), and motion (action). Finding the optimal routes to reach the target while avoiding obstacles is an important step in the navigation of MRs"
+                  - superscript [ref=e149]:
+                    - link "Reference 4" [ref=e150] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR4
+                      - text: "4"
+                  - text: . For a navigational system, one of the most important factors is determining how long and how much energy a robotic device needs to travel a given course
+                  - superscript [ref=e151]:
+                    - link "Reference 5" [ref=e152] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR5
+                      - text: "5"
+                    - text: ","
+                    - link "Reference 6" [ref=e153] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR6
+                      - text: "6"
+                  - text: . Since artificial intelligence (AI) approaches are accurate for generating findings, numerous researchers are employing them to automate the trajectory formulation method
+                  - superscript [ref=e154]:
+                    - link "Reference 7" [ref=e155] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR7
+                      - text: "7"
+                  - text: . One of the most challenging areas of robot development continues to be path modeling. One of the main driving forces behind the analysis and study of mobile robots is the algorithm’s broad range of applications and the complex nature of its design and development
+                  - superscript [ref=e156]:
+                    - link "Reference 8" [ref=e157] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR8
+                      - text: "8"
+                  - text: . For researchers, the most important part of the development of MRs for implementation in the real world is how they operate in tropical environments.
+                - paragraph [ref=e158]:
+                  - text: The capability of autonomous learning is not present in the conventional MR navigation technique. MRs must be able to navigate unknown areas autonomously while avoiding both static and moving obstacles. Classical and heuristic approaches are both utilized for developing the operating technique of MRs. Traditional approaches can become tiresome and may stop producing the best results whenever environments become more complex. Nowadays, researchers choose heuristic methods more and more because of the extent to which they imitate the way humans acquire behavior
+                  - superscript [ref=e159]:
+                    - link "Reference 9" [ref=e160] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR9
+                      - text: "9"
+                  - text: . Among the most well-known heuristic methods is reinforcement learning (RL), which is often used in MR navigation. The observed rotation angle around obstacles is refined using the RL-based controller
+                  - superscript [ref=e161]:
+                    - link "Reference 10" [ref=e162] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR10
+                      - text: "10"
+                  - text: . The RL approach allows MR to identify the route based on past behavior. The MR, additionally known to be an agent, recognizes the environment, makes a choice, and gets rewarded or penalized in accordance with the environment, allowing the successful use of the RL approach. Whenever the MR ultimately receives a higher reward, it subsequently modifies its technique, and the agent might acquire various behavioral patterns through the development of an extensive number of rules
+                  - superscript [ref=e163]:
+                    - link "Reference 11" [ref=e164] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR11
+                      - text: "11"
+                  - text: .
+                - paragraph [ref=e165]:
+                  - text: RL has received interest from researchers for being able to overcome the fundamental navigation challenges faced by MRs, because of its powerful illustration and capacity for learning from experience. Experts have developed two distinct learning techniques, including Monte Carlo and Temporal-Difference (TD) learning because full flexibility of data and substantial use of memory are essential in programming with variables that aren’t feasible. The Bellman equations and the Markov decision process (MDP), among other concepts, were integrated with TD learning to create the Q-learning approach in
+                  - superscript [ref=e166]:
+                    - link "Reference 12" [ref=e167] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR12
+                      - text: "12"
+                  - text: . After that, the RL technique made immense advancements, and RL concepts are implemented in a range of real-world problems, especially MR navigation. Due to its strong visualizations and flexibility over experiences-based Q-learning, RL has attracted a lot of attention for its ability to overcome the fundamental navigation difficulty encountered by MRs. When mobile robots are used in crowded circumstances, they must be able to move safely and interact socially amid people and different barriers
+                  - superscript [ref=e168]:
+                    - link "Reference 13" [ref=e169] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR13
+                      - text: "13"
+                  - text: . Some of the key issues with deep learning in robots are that it does not ensure the reliability or accuracy of a learned policy, which presents an additional barrier to learning-based collision prevention
+                  - superscript [ref=e170]:
+                    - link "Reference 14" [ref=e171] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR14
+                      - text: "14"
+                  - text: Since it is challenging to produce training data for physical robots in an efficient and secure way, and due to the quantity and quality of the training data acquired has a significant impact on robot learning efficiency, the collision-avoidance policy used in this study is trained via simulations instead of in the real environment.
+                - paragraph [ref=e172]:
+                  - text: As seen in Fig.
+                  - link "1" [ref=e173] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig1
+                  - text: ", the conventional navigation strategy maps an unknown region using simultaneous localization and mapping (SLAM), determines MRs present location using an orientation localization technique, and employs a path planning mechanism to navigate it to its target. The conventional navigational framework’s inability to control an unfamiliar and unpredictable setting stems from its reliance on high-precision global mapping, which is highly sensitive to sensor noise. The designated complexity of multimodal situations constitutes a challenge for the traditional DRL approach, where the computation stress increases substantially as the diversity of inputs rises. Through the training process of a deep neural network (DNN), the deep learning (DL) approach models functions that are nonlinear while learning the underlying rules and characteristics of the original data. Deep reinforcement learning (DRL) has been generated by fusing RL with a DNN. The traditional navigation method is currently being supplemented or replaced in several experiments by DRL-based MR navigation. Professionals from across the world have worked to find a solution to the navigation challenge for the last 20 years. Integrating many distinct techniques is a widely utilized method."
+                - figure "Fig. 1" [ref=e175]:
+                  - generic [ref=e177]: Fig. 1
+                  - generic [ref=e178]:
+                    - generic [ref=e179]:
+                      - img "Fig. 1" [ref=e181]
+                      - link "Full size image figure 1" [ref=e183] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/1
+                        - text: Full size image
+                        - img [ref=e184]
+                    - paragraph [ref=e187]:
+                      - text: Illustration of the MR navigation using traditional technique, based on
+                      - superscript [ref=e188]:
+                        - link "Reference 15" [ref=e189] [cursor=pointer]:
+                          - /url: /articles/s41598-024-72857-3#ref-CR15
+                          - text: "15"
+                      - text: .
+                - paragraph [ref=e190]:
+                  - text: The phenomenal modeling capabilities of deep neural networks and the robust interaction, exploration, and self-learning features of RL have led to the widespread use of deep learning, particularly DRL-based techniques, enabling map-free navigation in recent times. In DRL, the agent automatically explores the surroundings by trial and error and then adapts the action based on the rewards received. Therefore, regardless of previous experience, including maps, autonomous navigation might be conducted with DRL. Deep Q-network (DQN), introduced by
+                  - superscript [ref=e191]:
+                    - link "Reference 16" [ref=e192] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR16
+                      - text: "16"
+                  - text: ", is an early method to integrate DL with DRL, and while it considerably increases the practical skills of DRL, the actions taken by this technique are only discrete. In"
+                  - superscript [ref=e193]:
+                    - link "Reference 17" [ref=e194] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR17
+                      - text: "17"
+                  - text: ", a novel learning framework for DRL is suggested that drastically reduces the time of training. This study is enhancing the capability of visual navigation with a camera-equipped robot. The navigation difficulties can be separated into multiple manageably simple assignments using a distributed training strategy using the DRL that is proposed in"
+                  - superscript [ref=e195]:
+                    - link "Reference 18" [ref=e196] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR18
+                      - text: "18"
+                  - text: to ensure the robot might successfully navigate in a substantial and complicated interior region without requiring the use of a map.
+                - paragraph [ref=e197]:
+                  - text: "The remaining article is divided into the following ways: Section “"
+                  - link "Literature survey" [ref=e198] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec2
+                  - text: ” contains a literature survey; Section “
+                  - link "Background information" [ref=e199] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec3
+                  - text: ” describes the contribution of this research; Section “
+                  - link "Theoretical methodology" [ref=e200] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec7
+                  - text: ” provides background information and proposed research techniques; Section “
+                  - link "Simulation and experimental analysis" [ref=e201] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec16
+                  - text: ” describes the theoretical concept of the proposed approach; Section “
+                  - link "Main contributions of this research" [ref=e202] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec001
+                  - text: ” discusses simulation and experimental analysis; and Section “
+                  - link "Conclusion and future perspectives" [ref=e203] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Sec17
+                  - text: ” provides the conclusion and future research trends of this research.
+            - generic [ref=e205]:
+              - heading "Literature survey" [level=2] [ref=e206]
+              - generic [ref=e207]:
+                - paragraph [ref=e208]:
+                  - text: In recent years, many researchers have focused on the development of an effective framework based on the DDRL technique for the navigation of MR in a partially or fully unknown environment. Singla et al.
+                  - superscript [ref=e209]:
+                    - link "Reference 19" [ref=e210] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR19
+                      - text: "19"
+                  - text: explain a technique for allowing an unmanned aerial vehicle (UAV) quadrotor using a monocular camera to avoid obstacles by itself within unplanned and unexplored indoor environments. This study implements a memory-based DDRL for the avoidance of obstacles for UAVs, considering partial information about the environment. Li et al.
+                  - superscript [ref=e211]:
+                    - link "Reference 20" [ref=e212] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: address the issue of automated exploration in a completely new environment, which is crucial when using a robotic system for various social activities. To improve the functional flexibility of the robot system, this study designs a generic exploring architecture by breaking down the methods of exploration in planning, decision-making, and mapping categories. This research suggests a DDRL-based decision technique that relies on this structure, which makes use of a DNN to learn an exploration approach considering the partial map.
+                - paragraph [ref=e213]:
+                  - text: Cai et al.
+                  - superscript [ref=e214]:
+                    - link "Reference 21" [ref=e215] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR21
+                      - text: "21"
+                  - text: propose a Linear Temporal Logic (LTL) formula-based deep policy gradient technique for directing a robot with uncertain dynamics working in a crowded environment. This paper presents a unique route-planning-guided reward system that incorporates sampling-based methodologies for successfully completing target-reaching tasks and tackles the sustainability issue of exploration in training. Yan et al.
+                  - superscript [ref=e216]:
+                    - link "Reference 22" [ref=e217] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR22
+                      - text: "22"
+                  - text: "suggest a multi-robot navigation architecture that uses option-based hierarchy DDRL, enabling quick and secure navigation. Two control schemes are included in this architecture: a lower-level version that utilizes sub-policies to produce actions and a higher-level version that autonomously develops a reliable and steady behavior selection policy. Ali et al."
+                  - superscript [ref=e218]:
+                    - link "Reference 23" [ref=e219] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR23
+                      - text: "23"
+                  - text: present a technique to utilize DDRL to enable autonomous exploration of unfamiliar environments. In this study, the environment is explored using external and curiosity-driven reward mechanisms. By anticipating future states, the curiosity-based reward mechanism encourages an agent to search for previously unexplored areas, while the external incentive function helps the agent avoid collisions.
+                - paragraph [ref=e220]:
+                  - text: Xue et al.
+                  - superscript [ref=e221]:
+                    - link "Reference 24" [ref=e222] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR24
+                      - text: "24"
+                  - text: focused on the challenge of enabling efficient UAV navigation in large-scale unknown regions involving many obstacles utilizing DDRL techniques. In this study, a UAV through perception-constrained navigation is represented as a partially observable MDP and an actor-critic-based rapid recurrent stochastic valued gradient method has been developed for a real-time solution. Wang et al.
+                  - superscript [ref=e223]:
+                    - link "Reference 25" [ref=e224] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR25
+                      - text: "25"
+                  - text: present a hierarchical navigation system that integrates model-based control with DRL-based perception. A DDRL network built using the Long Short-Term Memory (LSTM) and Soft Actor-Critic (SAC) algorithms can be trained to estimate 2D lidar inputs, goal locations, and the state of robots into a set of local checkpoints that are ideal in terms of avoiding collisions. Zeng et al.
+                  - superscript [ref=e225]:
+                    - link "Reference 26" [ref=e226] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR26
+                      - text: "26"
+                  - text: provide a unique DDRL technique that can maneuver non-holonomic robots into an uncertain, unfamiliar environment containing moving obstacles while maintaining constant control. Simulation tests demonstrate that the suggested strategy, by continuously issuing acceleration instructions, can achieve excellent robotic maneuvering in unfamiliar and difficult settings when compared to traditional approaches.
+                - paragraph [ref=e227]:
+                  - text: Zhu et al.
+                  - superscript [ref=e228]:
+                    - link "Reference 27" [ref=e229] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR27
+                      - text: "27"
+                  - text: "provide a hierarchical DRL architecture for quick and secure navigation that has an excellent rate of sampling and sim-to-real transferring skill: The robot might follow toward the goal point while maintaining an adequate distance from obstacles thanks to the minimal DRL policy; additional a high degree DRL policy is added for further enhanced navigational reliability. With the goal of minimizing state space and preventing inadequate reward, this method chooses a waypoint that is on a trajectory that leads the robot toward the desired destination as the subgoal. Furthermore, the path is created using a regional or global map, which may greatly enhance the suggested DRL framework’s adaptation capacity, security, and sampling accuracy. To increase mobility accuracy and decrease action space, a target-directed illustration of the action space might additionally be developed from the subgoal. Xue et al."
+                  - superscript [ref=e230]:
+                    - link "Reference 28" [ref=e231] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR28
+                      - text: "28"
+                  - text: propose a novel technique for guiding the multi-UAV’s navigational activities depending upon the gradient algorithm of the depth deterministic policy, which is known as multi-agent recurrent deterministic policy gradient (MARDPG). To be more precise, every critic network trains centralized, enabling every UAV to determine the policies of different UAVs, and overcoming the delayed convergence issue brought due to the uncertain surroundings. The requirement for resources to communicate between UAVs is eliminated by distributed operation. In critic’s network, sharing variables speeds up training.
+            - generic [ref=e233]:
+              - heading "Background information" [level=2] [ref=e234]
+              - generic [ref=e235]:
+                - paragraph [ref=e236]:
+                  - text: To perform autonomous navigation while navigating through an unfamiliar area, MR acquires sensor data and simultaneously creates a map of its environment. The MR exploration algorithm is required to generate a map that looks more like the real world. In conventional navigation approaches, the MR creates an environment map by itself and finds its own location. DL and RL have progressed throughout the decades, and with their assistance, numerous end-to-end control techniques have been created. These technologies integrate sensor information and the environment into deep neural networks (DNN) as inputs and outputs for MR control. One major benefit of end-to-end approaches is their conciseness
+                  - superscript [ref=e237]:
+                    - link "Reference 29" [ref=e238] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR29
+                      - text: "29"
+                  - text: . Despite this, there is a significant lag before using the method on an actual MR. Since end-to-end learning techniques require extensive trial and error, many academics have implemented this method of learning in simulation environments. Since the MR begins by acquiring the ability to navigate to discover a new environment, the algorithm takes a while to converge. It cannot be assured that the mapping that a DNN learns in a simulation setting will have a better generalization for the actual world because the two environments are not exactly similar. The relationship between surroundings and an agent might be represented by the MDP. MDPs apply several variables, such as the surroundings, agent action, and rewards, to decide what the optimum next action of the framework will take. An MDP describes an iterative decision-making problem in which an agent must select an array of actions to maximize reward-based criteria. Equation (
+                  - link "1" [ref=e239] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ1
+                  - text: ) is the abbreviation for an MDP (M)
+                  - superscript [ref=e240]:
+                    - link "Reference 30" [ref=e241] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR30
+                      - text: "30"
+                    - text: ","
+                    - link "Reference 31" [ref=e242] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR31
+                      - text: "31"
+                  - text: .
+                - generic [ref=e243]:
+                  - generic [ref=e244]: $$\:M=\left(S,A,T,R\right)$$
+                  - generic [ref=e245]: (1)
+                - paragraph [ref=e246]: "Where \\(\\:S\\) is the number of finite states, \\(\\:A\\) is a set of possible actions, \\(\\:T\\left(s,{s}^{{\\prime\\:}}\\right)={T}_{r}({s}_{t+1}={s}^{{\\prime\\:}}|{s}_{t}=s,{a}_{t}=a)\\) is the transition probability that action \\(\\:a\\) takes for state \\(\\:s\\) at time \\(\\:t\\) that will forward to state \\(\\:{s}^{{\\prime\\:}}\\) at time \\(\\:t+1\\), and \\(\\:R(s,{s}^{{\\prime\\:}})\\) is the possible reward value after the transition between state \\(\\:s\\) to state \\(\\:{s}^{{\\prime\\:}}\\) because of action \\(\\:a\\)."
+                - paragraph [ref=e247]:
+                  - text: "To enable MRs to avoid obstacles and navigate safely in previously unknown complex environments, we developed an RL-based regional planner that translates acquired sensory information directly to robotic behaviors. Also, we divide the MR exploration strategies into three different parts: planning, mapping, and decision. Thus, as each component acts independently from the others, we can create the planning techniques for various MRs using a single decision segment. The MR’s abilities to navigate effectively in a familiar area without requiring any training are guaranteed by the planning algorithms. Utilizing conventional navigation techniques, the decision section concentrates on an effective exploration approach. Figure"
+                  - link "2" [ref=e248] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig2
+                  - text: "depicts the interaction between all three parts that compose the exploratory architecture. The decision element gets information from the mapping element and forwards it through the planning element. The complete MR exploration technique is divided into subsections in the following ways:"
+                - figure "Fig. 2" [ref=e250]:
+                  - generic [ref=e252]: Fig. 2
+                  - generic [ref=e253]:
+                    - generic [ref=e254]:
+                      - img "Fig. 2" [ref=e256]
+                      - link "Full size image figure 2" [ref=e258] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/2
+                        - text: Full size image
+                        - img [ref=e259]
+                    - paragraph [ref=e262]: Relationship between planning, mapping, and decision.
+                - heading "Planning strategy" [level=3] [ref=e263]
+                - paragraph [ref=e264]:
+                  - text: Finding a plausible path from the present location to the desired location is the main objective of this section. The planning strategy is abbreviated as Eq. (
+                  - link "2" [ref=e265] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ2
+                  - text: )
+                  - superscript [ref=e266]:
+                    - link "Reference 20" [ref=e267] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: ":"
+                - generic [ref=e268]:
+                  - generic [ref=e269]: "$$\\Gamma _{{t:t + T}} = f_{{plan}} \\left( {l_{{0:t}} ,g,m_{t} } \\right)$$"
+                  - generic [ref=e270]: (2)
+                - paragraph [ref=e271]: "Where the planning trajectory is denoted by \\(\\Gamma _{{t:t + T}}\\), \\(\\:{f}_{plan}\\) is the planning function, positions of MR from time 0 to t are denoted by \\(\\:{l}_{0:t}\\), the target point is denoted by \\(\\:g\\), and \\(\\:{m}_{t}\\) is the map created in the environment at time t."
+                - paragraph [ref=e272]: Local planning and global planning techniques are two of the most extensively studied frameworks for several strategies that carry out the planning function. For turning the route into a trajectory and modifying it according to the real-time data collected from sensors, the objective of this research is to find the shortest route over the map between the current location and the target location.
+                - heading "Mapping strategy" [level=3] [ref=e273]
+                - paragraph [ref=e274]:
+                  - text: The mapping section, which is additionally referred to as simultaneous localization and mapping (SLAM), generates the MR position and environment mapping at every moment by systematically processing the sensor data. The SLAM function is expressed as in Eq. (
+                  - link "3" [ref=e275] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ3
+                  - text: )
+                  - superscript [ref=e276]:
+                    - link "Reference 20" [ref=e277] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: ":"
+                - generic [ref=e278]:
+                  - generic [ref=e279]: "$$\\:{m}_{t},\\:{l}_{t}={f}_{map}\\left({l}_{t-1},{m}_{t-1},{c}_{t},\\:{o}_{t}\\right)$$"
+                  - generic [ref=e280]: (3)
+                - paragraph [ref=e281]: "Where control and observation are \\(\\:{c}_{t}\\) and \\(\\:{o}_{t}\\) consecutively, \\(\\:{f}_{map}\\) is the mapping function, the location of MR is denoted by \\(\\:{l}_{t-1}\\) at time \\(\\:t-1\\), and \\(\\:{m}_{t-1}\\) is the map created in the environment at time \\(\\:t-1\\)."
+                - paragraph [ref=e282]:
+                  - text: The two main types of SLAM techniques are filter-based and graph-based. Filter-based techniques modify the predicted value of both landmark and MR positions using a Kalman filter as well as the expanded Kalman filter. The graph-based techniques use nonlinear optimization for predicting the MR location by building a position graph using both control and observation data. We use a graph-based approach in this study because it is easy to apply and performs well in most scenarios. The graph-based technique can minimize errors and reliably provide the obtained answer when compared with the filter-based technique
+                  - superscript [ref=e283]:
+                    - link "Reference 32" [ref=e284] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR32
+                      - text: "32"
+                  - text: .
+                - heading "Decision strategy" [level=3] [ref=e285]
+                - paragraph [ref=e286]:
+                  - text: This component selects the target point, or the location, that the MR needs to reach based on past observations. The map for the surrounding area generated by the mapping section serves as the input for this work. The decision strategy can be expressed as in Eq. (
+                  - link "4" [ref=e287] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ4
+                  - text: )
+                  - superscript [ref=e288]:
+                    - link "Reference 20" [ref=e289] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: ":"
+                - generic [ref=e290]:
+                  - generic [ref=e291]: "$$\\:{g}_{t}={f}_{dec}\\left({l}_{0:t},{m}_{t}\\right)$$"
+                  - generic [ref=e292]: (4)
+                - paragraph [ref=e293]: "Where the goal point at time t is denoted by \\(\\:{g}_{t}\\), the position of MR from time 0 to t is represented by \\(\\:{l}_{0:t}\\), the surrounding map generated at time t is \\(\\:{m}_{t}\\), and the decision function is \\(\\:{f}_{dec}\\)."
+                - paragraph [ref=e294]: "These techniques lead to significant reliance on knowledge, as they are necessary to build extensive rules for complicated contexts. The primary goal of this study is to determine the simplest and most common function \\(\\:{f}_{dec}\\). Our approach addresses more complicated scenarios and learns the workable technique by trial and error, as compared to stacking the rules for study."
+            - generic [ref=e296]:
+              - heading "Theoretical methodology" [level=2] [ref=e297]
+              - generic [ref=e298]:
+                - paragraph [ref=e299]: Mobile robots must have the ability to discover how to travel independently in unfamiliar interior scenarios while avoiding both dynamic and static obstacles. By finding the ideal Q-value function that produces the best outcomes across every situation, RL seeks to educate the agent on how to act in a strange setting. After choosing action over every state, the agent adopts rewards from the surroundings to modify Q-values towards optimality convergence. For an RL algorithm, there is a conflict between exploring and exploiting when the surroundings are unknown. By choosing the course of action with the highest assessed value, the agent makes use of its existing understanding. If the agent chooses any of the remaining actions, on the other hand, it suggests that the agent is exploring to refine and enhance its assessment of the act’s values.
+                - paragraph [ref=e300]:
+                  - text: Developing a surroundings map that is as close to replicating the real-world scenario as possible is the aim of MR Exploring. In Fig.
+                  - link "3" [ref=e301] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig3
+                  - text: ", the agent, and surroundings within the DRL-based system of navigation are shown collaborating with each other. The DRL agent drives toward the intended destination while avoiding static and dynamic obstacles, substituting the localizing, map-generating, and planning of local paths that make up the traditional navigation approach. The global route planning element in Fig."
+                  - link "3" [ref=e302] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig3
+                  - text: establishes a series of landmarks to act as transitional locations of references throughout DRL-based MR movement, enabling an integrated navigation system for carrying out extended-distance movement through challenging terrain.
+                - figure "Fig. 3" [ref=e304]:
+                  - generic [ref=e306]: Fig. 3
+                  - generic [ref=e307]:
+                    - generic [ref=e308]:
+                      - img "Fig. 3" [ref=e310]
+                      - link "Full size image figure 3" [ref=e312] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/3
+                        - text: Full size image
+                        - img [ref=e313]
+                    - paragraph [ref=e316]:
+                      - text: Illustration of the MR navigation technique using DRL, based on
+                      - superscript [ref=e317]:
+                        - link "Reference 15" [ref=e318] [cursor=pointer]:
+                          - /url: /articles/s41598-024-72857-3#ref-CR15
+                          - text: "15"
+                      - text: .
+                - paragraph [ref=e319]: The MR can navigate through the environment and avoid obstacles while achieving its goal on time in this study. Now, we explain the objective function and DRL for the proposed technique in detail.
+                - heading "Objective function" [level=3] [ref=e320]
+                - paragraph [ref=e321]:
+                  - text: When exploring the area, MR is meant to take the shortest route possible to conserve battery life. Next, we provide the subsequent objective function in Eq. (
+                  - link "5" [ref=e322] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ5
+                  - text: )
+                  - superscript [ref=e323]:
+                    - link "Reference 20" [ref=e324] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: ":"
+                - generic [ref=e325]:
+                  - generic [ref=e326]: "$$Z(\\hat{m},y_{{t = 0:T}} ) = D(y_{{t = 0:T}} ) + \\mathop {min}\\limits_{{u_{{t = 0:T}} }} \\left\\| {m - \\hat{m}} \\right\\|^{2}$$"
+                  - generic [ref=e327]: (5)
+                - paragraph [ref=e328]: "Where the real map is \\(\\:m\\), the estimation map is \\(\\:\\widehat{m}\\), and \\(\\:D\\left(\\right)\\) is the distance between the starting point to the target point."
+                - paragraph [ref=e329]:
+                  - text: However, it is challenging to regulate the objective function and determine an optimal approach because the real map is unavailable because of the unknown surroundings. Our utilization of the occupancy grid map to depict the environment is motivated by the application of the Shannon entropy during the estimation of the exploration
+                  - superscript [ref=e330]:
+                    - link "Reference 33" [ref=e331] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR33
+                      - text: "33"
+                  - text: ". The cross-grid occupied probability is \\(\\:p\\left({m}_{i,j}\\right)\\) for column \\(\\:i\\) and row j. The mapping entropy is expressed in Eq. ("
+                  - link "6" [ref=e332] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ6
+                  - text: )
+                  - superscript [ref=e333]:
+                    - link "Reference 20" [ref=e334] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR20
+                      - text: "20"
+                  - text: ":"
+                - generic [ref=e335]:
+                  - generic [ref=e336]: "$$E\\left( m \\right) = - \\sum\\limits_{i} {\\sum\\limits_{j} {p\\left( {m_{{i,j}} } \\right)logp\\left( {m_{{i,j}} } \\right)} }$$"
+                  - generic [ref=e337]: (6)
+                - paragraph [ref=e338]: "There are three states that can occur on every grid in the map: occupied, free, and uncertain. This objective function assesses the constructed map’s uncertainty. The proposed DRL technique used for this study is explained in subsection A; the strategy of action space and state space for the experiment is explained in subsection B; and the proposed model is illustrated in subsection C of this section."
+                - heading "Mobile robot learning" [level=3] [ref=e339]
+                - paragraph [ref=e340]:
+                  - text: A standard robotics issue with multispectral applications across many industries is MR navigation. Numerous industries, including healthcare, robotics, smart surveillance systems, human-computer interfaces, and several more, employ human activity recognition extensively
+                  - superscript [ref=e341]:
+                    - link "Reference 34" [ref=e342] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR34
+                      - text: "34"
+                    - text: ","
+                    - link "Reference 35" [ref=e343] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR35
+                      - text: "35"
+                  - text: ", or RL. Rather than attempting an extensive investigation for a space this vast, we just address the issue of indoor navigation. Getting to a target on a collision-free path in the least amount of time is often the goal of navigation. Perhaps the most crucial ability that an autonomous MR must possess is the practice of localization learning, as determining the robot’s position is necessary to decide what to do next. In various mapping-based robot systems of navigation, an environment remains available for the robot since it was originally specified in a metric map. Here, MR learns its surroundings using the RL algorithm using DQN and Double Deep Q- Network (DDQN) techniques. RL algorithms enable MR to learn the environment without predefined mapping. Nowadays, most RL-based techniques are used by robotics to perform navigation tasks that establish a mapping link between the control strategy and raw sensor inputs."
+                - paragraph [ref=e344]:
+                  - text: To learn how to select either discrete or continuous navigation activities for movement utilizing internal sensory input in an area with either a known
+                  - superscript [ref=e345]:
+                    - link "36" [ref=e346] [cursor=pointer]:
+                      - /url: "#ref-CR36"
+                    - text: ","
+                    - link "37" [ref=e347] [cursor=pointer]:
+                      - /url: "#ref-CR37"
+                    - text: ","
+                    - link "Reference 38" [ref=e348] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR38
+                      - text: "38"
+                  - text: or unidentified
+                  - superscript [ref=e349]:
+                    - link "Reference 39" [ref=e350] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR39
+                      - text: "39"
+                  - text: flat surface, DRL has been the primary learning approach used to teach robots to navigate. However, most of these initiatives concentrate on navigation in stationary environments, making them impractical for most real-life applications as different types of moving items need to be considered.
+                - heading "Deep Q-networks" [level=4] [ref=e351]
+                - paragraph [ref=e352]:
+                  - text: A model-free RL technique called Q-learning is implemented to determine the worth of some action in each situation. It can address issues with stochastic transitioning and reward despite the need for modifications, and it doesn’t demand environment modeling. To simulate the impacts of receptive fields, the DeepMind approach uses a deep convolutional neural network (DCNN) comprising layers of convolutional filtering. The trained network might achieve a level comparable to the level of human beings shortly after playing 49 games, according to research done in 2015 and originally published in Nature by Mnih et al.
+                  - superscript [ref=e353]:
+                    - link "Reference 16" [ref=e354] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR16
+                      - text: "16"
+                  - text: . DQN is dependent upon Q-learning, where the action value function is represented by DCNN, and the reward feedback received from the game is responsible for training the network. Gradient descent is used for updating the neural network’s parameters. The DQN’s loss function is indicated in Eq. (
+                  - link "7" [ref=e355] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ7
+                  - text: )
+                  - superscript [ref=e356]:
+                    - link "Reference 15" [ref=e357] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR15
+                      - text: "15"
+                  - text: ":"
+                - generic [ref=e358]:
+                  - generic [ref=e359]: "$$L(\\theta _{i} ) = F\\left[ {\\left( {R + \\lambda \\mathop {max}\\limits_{{A^{\\prime } }} Q\\left( {S^{\\prime } ,A^{\\prime } ;\\theta _{i}^{ - } } \\right) - Q(S,A;\\theta _{i} )} \\right)^{2} } \\right]$$"
+                  - generic [ref=e360]: (7)
+                - paragraph [ref=e361]: "Where the discount factor is denoted by \\(\\:\\lambda\\:\\)\\(\\:\\in\\:\\left[\\text{0,1}\\right],\\:S\\) is the state, \\(\\:R\\) is the reward, \\(\\:A\\) is the action, \\(\\:{S}^{{\\prime\\:}}={S}_{t+1}\\), \\(\\:{A}^{{\\prime\\:}}={A}_{t+1}\\), and \\(\\theta _{i}\\) is the parameter for the current Q-network \\(Q(S,A;\\theta _{i} )\\) is replicated to \\(\\:{\\theta\\:}_{i}^{-}\\) for the goal Q-network \\(\\:Q\\left({S}^{{\\prime\\:}},{A}^{{\\prime\\:}};{\\theta\\:}_{i}^{-}\\right)\\) at each step of n-time."
+                - heading "Double deep Q-networks" [level=4] [ref=e362]
+                - paragraph [ref=e363]:
+                  - text: Although DQN’s introduction aided in the general adoption of DRL, it has several drawbacks, one of which is that it overestimates the action value function. Van Hasselt et al.
+                  - superscript [ref=e364]:
+                    - link "Reference 40" [ref=e365] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR40
+                      - text: "40"
+                  - text: noted that overestimating occurs for the value function whenever the DQN computes the temporal-difference (TD) error and an identical Q network is used to choose actions and compute value functions; therefore, they have suggested the DDQN technique. For the goal Q function, a dual network architecture is used by DDQN, where the goal Q network estimates the specified optimal action and the current Q network is responsible for the selection of optimal action. The action decision and assessment of policy activities are divided into two sets of variables, which lowers the chance of overestimation. The DDQN’s loss function is indicated in Eq. (
+                  - link "8" [ref=e366] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Equ8
+                  - text: )
+                  - superscript [ref=e367]:
+                    - link "Reference 15" [ref=e368] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR15
+                      - text: "15"
+                  - text: ":"
+                - generic [ref=e369]:
+                  - generic [ref=e370]: "$$L\\left( {\\theta _{i} } \\right) = F\\left[ {\\left( {R + \\lambda Q(S^{\\prime } ,arg\\mathop {max}\\limits_{{A^{\\prime } }} Q\\left( {S^{\\prime } ,A^{\\prime } ;\\theta _{i} ;\\theta _{i}^{ - } } \\right) - Q(S,A;\\theta _{i} )} \\right)^{2} } \\right]$$"
+                  - generic [ref=e371]: (8)
+                - heading "Reinforcement learning-based navigation" [level=3] [ref=e372]
+                - paragraph [ref=e373]:
+                  - text: "DL is basically a set of frameworks enabling non-linear function estimations by using DNNs to abstract characteristics that are buried in inputs, which is now frequently employed in the field of robotics, including indoor navigation and robot manipulation. Aerial vehicles, autonomous vehicles, and two- or three-dimensional moving ships are examples of MRs. Finding the best or least undesirable route between the starting point and a destination while avoiding obstacles is the purpose of MR navigation. We have limited our attention to a two-dimensional (2D) space navigation issue with the objective of simplifying this assignment. The mobile robot navigation problem essentially consists of obstacle avoidance and point-to-point (P2P) motion: (1) The target point’s location in relation to the initial location is necessary to complete the P2P assignment"
+                  - superscript [ref=e374]:
+                    - link "Reference 41" [ref=e375] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR41
+                      - text: "41"
+                  - text: ", and (2) The three types of obstacles that are susceptible to detection by cameras, ultrasonic sensors, laser rangefinders, and other sensors involve those characterized as static, dynamic, and physically consistent. A hallway or wall are examples of natural environmental structures that are referred to as physically consistent obstacles in this study. These obstacles create an interior or labyrinthine setting. With its significant representation and knowledge-based learning skills, RL has received considerable interest as an alternative solution to the fundamental navigation problem faced by robotics systems"
+                  - superscript [ref=e376]:
+                    - link "Reference 42" [ref=e377] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR42
+                      - text: "42"
+                  - text: .
+                - paragraph [ref=e378]:
+                  - text: When utilizing the DRL technique for autonomy in navigation, the goal is to determine the optimal path of action for directing MR toward its destination by interacting with its surroundings. The conventional navigational system might be merged with or replaced by DRL-based navigation. Because RL utilizes a trial-and-error learning system, it is forbidden for MR to crash into surrounding obstacles during the physical training phase. Before being implemented in an actual MR for navigation and making decisions in real-time, the DNN is often trained in a simulated setting. The mechanism of agent-environment interaction in the DRL-based navigation system is depicted in Fig.
+                  - link "3" [ref=e379] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig3
+                  - text: . The DRL agent proceeds in the direction of the destination location while preventing dynamic, static, and basic physically constant obstacles. Subsequently substitutes both the localization and map-building modules along with the local route planning section of the standard navigation system. Nonetheless, the agent could encounter a local trap in a setting with excessively complicated, structurally persistent obstacles
+                  - superscript [ref=e380]:
+                    - link "Reference 43" [ref=e381] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR43
+                      - text: "43"
+                  - text: . The process of acquisition is continuous, with an agent gaining knowledge of the policy through interactions with its surroundings. Figure
+                  - link "4" [ref=e382] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig4
+                  - text: illustrates how the agent determines what to do after determining the current situation. After carrying out the decision-made action, it gets feedback—that is, the reward—and monitors the subsequent state to decide on its subsequent course of action.
+                - figure "Fig. 4" [ref=e384]:
+                  - generic [ref=e386]: Fig. 4
+                  - generic [ref=e387]:
+                    - generic [ref=e388]:
+                      - img "Fig. 4" [ref=e390]
+                      - link "Full size image figure 4" [ref=e392] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/4
+                        - text: Full size image
+                        - img [ref=e393]
+                    - paragraph [ref=e396]: Relationship between agent, decision, and environment.
+                - paragraph [ref=e397]:
+                  - text: The global planning of paths section, as seen in Fig.
+                  - link "3" [ref=e398] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig3
+                  - text: ", creates a sequence of touchpoints that serve as middle objective points for DRL-based navigation, which allows the combined navigational system to do long-range movement into a complicated structural domain. Depending on whether RL employs an explicit policy or not, it might be either active or passive. Only the set policy’s effectiveness is the focus of passive learning. Considering the surroundings are unknown, the agent’s main problem is that it remains unaware of both the transitional model and the reward function. To determine the expected outcome of every state, the agent uses the predefined policy to carry out a series of experiments. Active learning, as opposed to passive learning, also tries to learn how to behave in the environment. The agent needs to comprehend the transition model to be able to identify the best policy because it is ignorant about the surroundings and the policy. The operational scenarios and the RL algorithm’s effectiveness are significantly determined by three essential components, including state space, action space, and reward function, of the DRL-based MR navigational framework."
+                - heading "State space" [level=4] [ref=e399]
+                - paragraph [ref=e400]: The initial point, objective point, and obstacles are the state-space configurations that are typically implemented. The MR’s initial and target coordinates serve as the initial position and target position representations, respectively. Many studies transform global Cartesian positions into regional polar positions and then define the goal point location using the angle and distance with respect to MR. The state of an obstacle can be expressed as the velocity, location, and dimension of the dynamic obstacles (agent leveling), or it can be expressed as a state of sensor-level through treating sensor information, such as depth camera data, lidar/ultrasonic range data, or monocular camera images. The state space is denoted by S.
+                - heading "Action space" [level=4] [ref=e401]
+                - paragraph [ref=e402]: There are mainly three types of actions in the DRL based MR navigation, including discrete moving actions (turning left, turning right, moving forward, moving backward, and many more), motor speed commands (the required speed of the right and left motor), and continuous velocity commands (the angular and linear velocity of the MR). The sensor-level states might be used to accomplish end-to-end commands through motor velocity commands, although the corresponding training is substantially more challenging. Proportional-integral-derivative (PID) or equivalent lower-level controllers are often needed to generate control of mobility commands for MR and operate the MR to accomplish the required motion for discrete motions and continuous velocity instructions. The action space is denoted by A. Robots move and change directions by using several components including actuators, control algorithms, and sensors.
+                - heading "Reward function" [level=4] [ref=e403]
+                - paragraph [ref=e404]: The RL agent is trained to do a task using the reward function. The rewards are given positive or negative only, when MR hitting obstacles or reaching the goal, which means this reward is small. The agent cannot rapidly converge when rewards are few. Most research employs dense reward-shaping techniques to increase training efficiency. A positive reward is always given to MR when it reaches the target and is close to the target point. When an MR reaches or collides with obstacles, it usually gets a negative reward. A time-stepping penalty represents a penalty that MR receives at every step in order to motivate it to travel toward the goal more quickly. The reward function is denoted by R.
+            - generic [ref=e406]:
+              - heading "Simulation and experimental analysis" [level=2] [ref=e407]
+              - generic [ref=e408]:
+                - paragraph [ref=e409]:
+                  - text: "Researchers are concentrating on autonomous interaction with surroundings and self-learning methodologies, notably on RL systems, to enhance the ability to generalize while preventing manually gathering supervised information. The following is a description of the intended navigation challenge in this article: A mobile robot with scattered regional distance sensors provides all that is needed to go reliably to a goal controlled by constant guidelines over an initially unfamiliar area with broadly dispersed topography, such as lengthy hallways and dead corners. The MR can build an independent environmental model through exploration because, initially, it does not know anything about its surroundings. The dynamic and unpredictable nature of surroundings with dynamic obstacles adds significantly to their complexity. We implement into operation an RL-based regional plan that interprets observable sensory information into activities for secure navigation and avoiding obstacles in dynamic, previously unexplored areas. We add several frequent patterns to the basic RL approaches to allow navigation in complicated situations and improve performance. We also anticipate better navigation performance in more complicated situations, including alleyways, long hallways, and concave regions, because the memory section can think about several sensor perceptions instead of depending only on the present perception. Figure"
+                  - link "5" [ref=e410] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig5
+                  - text: shows a binary occupancy grid map containing different types of obstacles and the start and target positions for robot path planning., which is used for the simulation to demonstrate the starting and final positions for the navigation of MR.
+                - figure "Fig. 5" [ref=e412]:
+                  - generic [ref=e414]: Fig. 5
+                  - generic [ref=e415]:
+                    - generic [ref=e416]:
+                      - img "Fig. 5" [ref=e418]
+                      - link "Full size image figure 5" [ref=e420] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/5
+                        - text: Full size image
+                        - img [ref=e421]
+                    - paragraph [ref=e424]: Binary occupancy grid map for navigation tasks.
+                - paragraph [ref=e425]:
+                  - text: The ability for autonomous learning is absent in the conventional robot navigation strategy. MRs must be able to navigate unknown areas independently and avoid static and dynamic obstacles. Navigation is the capacity of the robot to make decisions based on its internal skills and sensor data with the objective of achieving its goal locations as quickly and effectively as feasible, providing a partial understanding of its surroundings and a desired location or set of locations. A virtual robot is used for the simulated environment to carry out the chosen actions at every stage of the episodes. The training process for a neural network can be extrapolated into a dataset of accessible training instances, enabling the acquisition of viable answers for comparable conditions that might not have been observed in demonstrations. To assess this proposed approach, simulation tests are performed. The dimensions of an environmental mapping are 250 m by 250 m. The obstacles are dispersed arbitrarily around the surroundings. The robot’s starting point coordinate is shown on the map as a red triangle, which is located at (10, 10), and the goal location is shown as a green circle, which is located at (240, 240). The robot’s task is to begin at the starting point and choose the best route to take for the purpose of reaching the goal without hitting any obstacles. Table
+                  - link "1" [ref=e426] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Tab1
+                  - text: illustrates the list of hyperparameters and their descriptions, which are used in this experiment.
+                - figure "Table 1 List of hyperparameters." [ref=e428]:
+                  - generic [ref=e429]: Table 1 List of hyperparameters.
+                  - link "Full size table 1" [ref=e431] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3/tables/1
+                    - text: Full size table
+                    - img [ref=e432]
+                - paragraph [ref=e434]:
+                  - text: The robot is sent to perform a navigation task within an unfamiliar and novel environment. The simulation’s primary goal is to produce an ideal Q-value matrix. In contrast to the tests, the robot is initially unaware of the quantity, dimensions, and locations of the obstacles. It is also noticed that, although the pathways the robot selected may not have been the optimal routes since it did not completely understand its surroundings, they were nevertheless perfectly adequate and met standard reference. The algorithm for the navigation of MR based on RL is abbreviated in Table
+                  - link "2" [ref=e435] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Tab2
+                  - text: .
+                - figure "Table 2 Algorithm for navigation based on RL." [ref=e437]:
+                  - generic [ref=e438]: Table 2 Algorithm for navigation based on RL.
+                  - link "Full size table 2" [ref=e440] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3/tables/2
+                    - text: Full size table
+                    - img [ref=e441]
+                - paragraph [ref=e443]:
+                  - text: The process of training an MR involves placing it in several unpredictable scenarios, referred to as episodes. Every episode assumes a distinct goal direction. Every episode uses a variable quantity of obstacles as well. It is considered that some of these obstacles are stationary while others are considered to be dynamic. The more episodes that are utilized to train the robot, the more skilled it will become at maneuvering its dynamic surroundings
+                  - superscript [ref=e444]:
+                    - link "Reference 44" [ref=e445] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR44
+                      - text: "44"
+                  - text: . The proposed approach has been developed to operate in simulation environments. We are examining how the pathways differ from one another since they are not the most effective routes. Figure
+                  - link "6" [ref=e446] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig6
+                  - text: shows four different environments for the navigation of mobile robots, where the starting and goal location is predefined. Blue curved lines represent the normal route for navigation while red curved line represents the optimal or shortest path.
+                - figure "Fig. 6" [ref=e448]:
+                  - generic [ref=e450]: Fig. 6
+                  - generic [ref=e451]:
+                    - generic [ref=e452]:
+                      - img "Fig. 6" [ref=e454]
+                      - link "Full size image figure 6" [ref=e456] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/6
+                        - text: Full size image
+                        - img [ref=e457]
+                    - paragraph [ref=e460]: Illustration of RL-based autonomous navigation results in various scenarios.
+                - paragraph [ref=e461]: The suggested system generates a state collection with dynamic variables such that, once it successfully navigates a specific situation, it might be effective within another, wherever the barriers and goals are situated at different positions. How to characterize the reward function—the way the environment reacts to the cognitive agent’s actions—is another criterion for making decisions.
+                - paragraph [ref=e462]:
+                  - text: The number of successful learning episodes for every 50 episodes is shown in Fig.
+                  - link "7" [ref=e463] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig7
+                  - text: . This quickly increasing pattern of successful episodes in Fig.
+                  - link "7" [ref=e464] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig7
+                  - text: with respect to the number of episodes demonstrated that the proposed DRL algorithm improved the robot’s intelligence. An epsilon-greedy algorithm is used in simulation. Figure
+                  - link "8" [ref=e465] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig8
+                  - text: shows the variance graph for reward and epsilon during simulation. The score of reward and epsilon with respect to the number of episodes has been shown in Fig.
+                  - link "8" [ref=e466] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig8
+                  - text: .
+                - figure "Fig. 7" [ref=e468]:
+                  - generic [ref=e470]: Fig. 7
+                  - generic [ref=e471]:
+                    - generic [ref=e472]:
+                      - img "Fig. 7" [ref=e474]
+                      - link "Full size image figure 7" [ref=e476] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/7
+                        - text: Full size image
+                        - img [ref=e477]
+                    - paragraph [ref=e480]: Illustration of the number of successful learning episodes in simulation for every 50 episodes.
+                - figure "Fig. 8" [ref=e482]:
+                  - generic [ref=e484]: Fig. 8
+                  - generic [ref=e485]:
+                    - generic [ref=e486]:
+                      - img "Fig. 8" [ref=e488]
+                      - link "Full size image figure 8" [ref=e490] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/8
+                        - text: Full size image
+                        - img [ref=e491]
+                    - paragraph [ref=e494]: Illustration of Reward and Epsilon variance score per episode during simulation.
+                - paragraph [ref=e495]:
+                  - text: Initially, the simulation carried out for the experimental studies only used the Adam optimizer algorithm. We evaluate the three algorithms various performances using the simulation environment. This is necessary to demonstrate that finite state space algorithms might be an effective choice for robotics and to provide a consistent quantitative assessment of the technique. We compared this approach by using three different optimizers including the Adam optimizer algorithm, SGD optimizer algorithm, and RMSprop optimizer algorithm to validate the proposed technique for 100 episodes. Figure
+                  - link "9" [ref=e496] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig9
+                  - text: shows an illustration of the reward value comparison between the Adam optimizer, SGD optimizer, and RMSprop optimizer. As shown in Fig.
+                  - link "9" [ref=e497] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig9
+                  - text: ", the Adam optimizer receives the highest reward during simulation."
+                - figure "Fig. 9" [ref=e499]:
+                  - generic [ref=e501]: Fig. 9
+                  - generic [ref=e502]:
+                    - generic [ref=e503]:
+                      - img "Fig. 9" [ref=e505]
+                      - link "Full size image figure 9" [ref=e507] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/9
+                        - text: Full size image
+                        - img [ref=e508]
+                    - paragraph [ref=e511]: Illustration of comparative graph for reward value when using Adam, SGD, and RMSprop optimizers in simulation.
+                - paragraph [ref=e512]:
+                  - text: We conducted relevant research and compared the findings with other optimization algorithms to validate the produced RL technique’s better sampling performance, speedy mobility, substantial target-reach success rate, and greater extrapolation with regard to diverse motion situations and surroundings. The proposed algorithm is compared with Proximal Policy Optimization (PPO) to analyze the effectiveness of our approach. PPO is an RL technique that trains the cognitive role of a computer agent or robot to complete challenging tasks
+                  - superscript [ref=e513]:
+                    - link "Reference 45" [ref=e514] [cursor=pointer]:
+                      - /url: /articles/s41598-024-72857-3#ref-CR45
+                      - text: "45"
+                  - text: . Figure
+                  - link "10" [ref=e515] [cursor=pointer]:
+                    - /url: /articles/s41598-024-72857-3#Fig10
+                  - text: shows a comparative reward value assessment between the proposed approach algorithm and the PPO algorithm. The Q-learning algorithm approach outperforms the PPO algorithm as shown in the comparative graph.
+                - figure "Fig. 10" [ref=e517]:
+                  - generic [ref=e519]: Fig. 10
+                  - generic [ref=e520]:
+                    - generic [ref=e521]:
+                      - img "Fig. 10" [ref=e523]
+                      - link "Full size image figure 10" [ref=e525] [cursor=pointer]:
+                        - /url: /articles/s41598-024-72857-3/figures/10
+                        - text: Full size image
+                        - img [ref=e526]
+                    - paragraph [ref=e529]: Comparison between the reward of the proposed algorithm and the PPO algorithm.
+            - generic [ref=e531]:
+              - heading "Main contributions of this research" [level=2] [ref=e532]
+              - paragraph [ref=e534]: The proposed approach has several advantages when compared with the above techniques. First, it does not require explicit modeling of the environment or the robot’s dynamics. Second, it can adapt to changing environments and tasks without requiring manual tuning of control parameters. Third, it can learn from experience and improve its performance over time. This approach has a higher rate of accuracy compared to the traditional MR control strategy. However, most of the such DRL-based movement control strategies are primarily effective in plain indoor environments. To the best of our knowledge, only some research has successfully controlled MR in an unknown environment. We are presenting an end-to-end mobility control technique based on DRL to make it easier for MR to operate effectively in an unknown and complicated environment to get beyond the constraints of the earlier techniques that were discussed. The proposed approach is carried out in a simulation environment, so there is a possibility of variation in the real-world application scenario. The tracking challenge for non-holonomic robots in unpredictable circumstances with constant control of movement is the primary subject of this research. Our goal is to present a DRL method that can quickly and safely navigate through complicated settings while also having excellent training and adaptation capacity across different settings and robotic systems.
+            - generic [ref=e536]:
+              - heading "Conclusion and future perspectives" [level=2] [ref=e537]
+              - generic [ref=e538]:
+                - paragraph [ref=e539]: For continuous-state problems, sampling every possible solution is impractical, and in the absence of a specific instructor, RL algorithms are the preferred method in supervised learning for the DL domain. This paper presents a comprehensive methodology for DRL-based regional plan training and deployment in extremely complex and dynamic contexts for the navigation of MR. We have tested the proposed autonomous navigation approach for four different environmental settings, where each environment contains different obstacles shapes, and positions. The optimal path while avoiding obstacles between the start point to the goal point has been explored in the simulation. In conclusion, our approach shows promising results for intelligent MR control using DRL. In this approach, to carry out its collision-free navigation, the MR is using the DRL to gather background information about its surroundings from the sensor data. The proposed technique has been validated by using the Adam optimizer and a comparative analysis has been carried out using three different optimizers including Adam, SGD, and RMSprop optimizers. The proposed approach is a very simple but effective simulation system that demonstrated quick and effective training rates as well as the ability to transmit the frameworks to the actual robot. The outcomes demonstrated an apparent increase in the dependability and safety of navigating in complicated surroundings, but at the expense of effectiveness due to an extended exploration phase. Simulations demonstrated the effectiveness of our complete learning framework, as there is a significant likelihood that the robot might be able to navigate freely in an unfamiliar area.
+                - paragraph [ref=e540]: The proposed approach has been delivered promising outcomes, it can continue to be improved to improve its learning and performance rate. To enhance the learning approach and raise the rate of accuracy of completely autonomous navigation in an unfamiliar environment, the reward function can be modified in future studies. The experiment carried out in this study is in a simulation environment, so the outcomes can be slightly different in the real-world implementation. Future work will focus on applying our approach to real-world MR systems and evaluating their performance in various applications.
+          - generic [ref=e541]:
+            - generic [ref=e543]:
+              - heading "Data availability" [level=2] [ref=e544]
+              - paragraph [ref=e546]: Correspondence and requests for materials should be addressed to the corresponding author on reasonable request.
+            - region "References" [ref=e548]:
+              - generic [ref=e549]:
+                - heading "References" [level=2] [ref=e550]
+                - generic [ref=e552]:
+                  - list [ref=e553]:
+                    - listitem [ref=e554]:
+                      - text: "1."
+                      - paragraph [ref=e555]:
+                        - text: "Raj, R. & Kos, A. A. Comprehensive study of mobile robot: History, developments, applications, and future research perspectives. Appl. Sci.12, 6951."
+                        - link "https://doi.org/10.3390/app12146951" [ref=e556] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390/app12146951
+                        - text: (2022).
+                      - paragraph [ref=e557]:
+                        - link "Article reference 1" [ref=e558] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390%2Fapp12146951
+                          - text: Article
+                        - link "CAS reference 1" [ref=e559] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BB38XhvFCqsrrM
+                          - text: CAS
+                        - link "Google Scholar reference 1" [ref=e560] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Comprehensive%20study%20of%20mobile%20robot%3A%20History%2C%20developments%2C%20applications%2C%20and%20future%20research%20perspectives&journal=Appl.%20Sci.&doi=10.3390%2Fapp12146951&volume=12&publication_year=2022&author=Raj%2CR&author=Kos%2CAA
+                          - text: Google Scholar
+                    - listitem [ref=e561]:
+                      - text: "2."
+                      - paragraph [ref=e562]:
+                        - text: "Raj, R. & Kos, A. Artificial intelligence: Evolution, developments, applications, and future scope. Przeglad Elektrotechniczny. 2, 1–13."
+                        - link "https://doi.org/10.15199/48.2023.02.01" [ref=e563] [cursor=pointer]:
+                          - /url: https://doi.org/10.15199/48.2023.02.01
+                        - text: (2023).
+                      - paragraph [ref=e564]:
+                        - link "Article reference 2" [ref=e565] [cursor=pointer]:
+                          - /url: https://doi.org/10.15199%2F48.2023.02.01
+                          - text: Article
+                        - link "Google Scholar reference 2" [ref=e566] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Artificial%20intelligence%3A%20Evolution%2C%20developments%2C%20applications%2C%20and%20future%20scope&journal=Przeglad%20Elektrotechniczny&doi=10.15199%2F48.2023.02.01&volume=2&pages=1-13&publication_year=2023&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e567]:
+                      - text: "3."
+                      - paragraph [ref=e568]:
+                        - text: "Oommen, B., Iyengar, S., Rao, N. & Kashyap, R. Robot navigation in unknown terrains using learned visibility graphs. Part I: The disjoint convex obstacle case. IEEE J. Robot Autom.3, 672–681."
+                        - link "https://doi.org/10.1109/JRA.1987.1087133" [ref=e569] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/JRA.1987.1087133
+                        - text: (1987).
+                      - paragraph [ref=e570]:
+                        - link "Article reference 3" [ref=e571] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FJRA.1987.1087133
+                          - text: Article
+                        - link "Google Scholar reference 3" [ref=e572] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Robot%20navigation%20in%20unknown%20terrains%20using%20learned%20visibility%20graphs.%20Part%20I%3A%20The%20disjoint%20convex%20obstacle%20case&journal=IEEE%20J.%20Robot%20Autom.&doi=10.1109%2FJRA.1987.1087133&volume=3&pages=672-681&publication_year=1987&author=Oommen%2CB&author=Iyengar%2CS&author=Rao%2CN&author=Kashyap%2CR
+                          - text: Google Scholar
+                    - listitem [ref=e573]:
+                      - text: "4."
+                      - paragraph [ref=e574]:
+                        - text: Raj, R. & Kos, A. An optimized energy and time constraints-based path planning for the navigation of mobile robots using an intelligent particle swarm optimization technique. Appl. Sci.13, 9667.
+                        - link "https://doi.org/10.3390/app13179667" [ref=e575] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390/app13179667
+                        - text: (2023).
+                      - paragraph [ref=e576]:
+                        - link "Article reference 4" [ref=e577] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390%2Fapp13179667
+                          - text: Article
+                        - link "CAS reference 4" [ref=e578] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BB3sXhvVOkur3I
+                          - text: CAS
+                        - link "Google Scholar reference 4" [ref=e579] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=An%20optimized%20energy%20and%20time%20constraints-based%20path%20planning%20for%20the%20navigation%20of%20mobile%20robots%20using%20an%20intelligent%20particle%20swarm%20optimization%20technique&journal=Appl.%20Sci.&doi=10.3390%2Fapp13179667&volume=13&publication_year=2023&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e580]:
+                      - text: "5."
+                      - paragraph [ref=e581]:
+                        - text: Kashyap, A. K. & Parhi, D. R. Dynamic posture stabilization of humanoid robot NAO using 3D-multilinked dual spring-loaded inverted pendulum model for uneven and inclined floor. Int. J. Humanoid Robot.
+                        - link "https://doi.org/10.1142/S021984362350007X" [ref=e582] [cursor=pointer]:
+                          - /url: https://doi.org/10.1142/S021984362350007X
+                        - text: (2023).
+                    - listitem [ref=e583]:
+                      - text: "6."
+                      - paragraph [ref=e584]:
+                        - text: Kashyap, A. K. & Parhi, D. R. Stable locomotion of humanoid robots on uneven terrain employing enhanced DAYANI arc contour intelligent algorithm. J. Autonomous Vehicles Syst. 2, 4, 041002 (2022). (2023).
+                        - link "https://doi.org/10.1115/1.4063055" [ref=e585] [cursor=pointer]:
+                          - /url: https://doi.org/10.1115/1.4063055
+                    - listitem [ref=e586]:
+                      - text: "7."
+                      - paragraph [ref=e587]:
+                        - text: Kashyap, A. K. & Parhi, D. R. Dynamic walking of multi-humanoid robots using BFGS Quasi-newton method aided artificial potential field approach for uneven terrain. Soft Comput.27, 5893–5910.
+                        - link "https://doi.org/10.1007/s00500-022-07606-7" [ref=e588] [cursor=pointer]:
+                          - /url: https://doi.org/10.1007/s00500-022-07606-7
+                        - text: (2023).
+                      - paragraph [ref=e589]:
+                        - link "Article reference 7" [ref=e590] [cursor=pointer]:
+                          - /url: https://link.springer.com/doi/10.1007/s00500-022-07606-7
+                          - text: Article
+                        - link "Google Scholar reference 7" [ref=e591] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Dynamic%20walking%20of%20multi-humanoid%20robots%20using%20BFGS%20Quasi-newton%20method%20aided%20artificial%20potential%20field%20approach%20for%20uneven%20terrain&journal=Soft%20Comput.&doi=10.1007%2Fs00500-022-07606-7&volume=27&pages=5893-5910&publication_year=2023&author=Kashyap%2CAK&author=Parhi%2CDR
+                          - text: Google Scholar
+                    - listitem [ref=e592]:
+                      - text: "8."
+                      - paragraph [ref=e593]:
+                        - text: Kashyap, A. K. & Parhi, D. R. Implementation of intelligent navigational techniques for inter-collision avoidance of multiple humanoid robots in complex environment. Appl. Soft Comput.124, 109001.
+                        - link "https://doi.org/10.1016/j.asoc.2022.109001" [ref=e594] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016/j.asoc.2022.109001
+                        - text: (2022).
+                      - paragraph [ref=e595]:
+                        - link "Article reference 8" [ref=e596] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016%2Fj.asoc.2022.109001
+                          - text: Article
+                        - link "Google Scholar reference 8" [ref=e597] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Implementation%20of%20intelligent%20navigational%20techniques%20for%20inter-collision%20avoidance%20of%20multiple%20humanoid%20robots%20in%20complex%20environment&journal=Appl.%20Soft%20Comput.&doi=10.1016%2Fj.asoc.2022.109001&volume=124&publication_year=2022&author=Kashyap%2CAK&author=Parhi%2CDR
+                          - text: Google Scholar
+                    - listitem [ref=e598]:
+                      - text: "9."
+                      - paragraph [ref=e599]:
+                        - text: M, M. J., Mathew, R. & Hiremath, S. S. Reinforcement learning based approach for mobile robot navigation. in International Conference on Computational Intelligence and Knowledge Economy (ICCIKE), 523–526 (2019). (2019).
+                        - link "https://doi.org/10.1109/ICCIKE47802.2019.9004256" [ref=e600] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ICCIKE47802.2019.9004256
+                    - listitem [ref=e601]:
+                      - text: "10."
+                      - paragraph [ref=e602]:
+                        - text: Kashyap, A. K., Parhi, D. R. & Kumar, V. Navigation for multi-humanoid using MFO-aided reinforcement learning approach. Robotica. 41, 1, 346–369.
+                        - link "https://doi.org/10.1017/S0263574722001357" [ref=e603] [cursor=pointer]:
+                          - /url: https://doi.org/10.1017/S0263574722001357
+                        - text: (2023).
+                      - paragraph [ref=e604]:
+                        - link "Article reference 10" [ref=e605] [cursor=pointer]:
+                          - /url: https://doi.org/10.1017%2FS0263574722001357
+                          - text: Article
+                        - link "Google Scholar reference 10" [ref=e606] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Navigation%20for%20multi-humanoid%20using%20MFO-aided%20reinforcement%20learning%20approach&journal=Robotica&doi=10.1017%2FS0263574722001357&volume=41&pages=346-369&publication_year=2023&author=Kashyap%2CAK&author=Parhi%2CDR&author=Kumar%2CV
+                          - text: Google Scholar
+                    - listitem [ref=e607]:
+                      - text: "11."
+                      - paragraph [ref=e608]:
+                        - text: Raj, R. & Kos, A. Dynamic obstacle avoidance technique for mobile robot navigation using deep reinforcement learning. Int. J. Emerg. Trends Eng. Res.11, 307–314.
+                        - link "https://doi.org/10.30534/ijeter/2023/031192023" [ref=e609] [cursor=pointer]:
+                          - /url: https://doi.org/10.30534/ijeter/2023/031192023
+                        - text: (2023).
+                      - paragraph [ref=e610]:
+                        - link "Article reference 11" [ref=e611] [cursor=pointer]:
+                          - /url: https://doi.org/10.30534%2Fijeter%2F2023%2F031192023
+                          - text: Article
+                        - link "Google Scholar reference 11" [ref=e612] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Dynamic%20obstacle%20avoidance%20technique%20for%20mobile%20robot%20navigation%20using%20deep%20reinforcement%20learning&journal=Int.%20J.%20Emerg.%20Trends%20Eng.%20Res.&doi=10.30534%2Fijeter%2F2023%2F031192023&volume=11&pages=307-314&publication_year=2023&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e613]:
+                      - text: "12."
+                      - paragraph [ref=e614]:
+                        - text: Watkins, C. J. C. H. & Dayan, P. Q-Learning. Mach. Learn.8, 279–292
+                        - link "https://doi.org/10.1007/bf00992698" [ref=e615] [cursor=pointer]:
+                          - /url: https://doi.org/10.1007/bf00992698
+                        - text: (1992).
+                      - paragraph [ref=e616]:
+                        - link "Article reference 12" [ref=e617] [cursor=pointer]:
+                          - /url: https://link.springer.com/doi/10.1007/bf00992698
+                          - text: Article
+                        - link "Google Scholar reference 12" [ref=e618] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Q-Learning&journal=Mach.%20Learn.&doi=10.1007%2Fbf00992698&volume=8&pages=279-292&publication_year=1992&author=Watkins%2CCJCH&author=Dayan%2CP
+                          - text: Google Scholar
+                    - listitem [ref=e619]:
+                      - text: "13."
+                      - paragraph [ref=e620]:
+                        - text: Liu, L., Dugas, D., Cesari, G., Siegwart, R. & Dubé, R. Robot navigation in crowded environments using deep reinforcement learning. in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Las Vegas, NV, USA, 5671–5677 (2020). (2020).
+                        - link "https://doi.org/10.1109/IROS45743.2020.9341540" [ref=e621] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/IROS45743.2020.9341540
+                    - listitem [ref=e622]:
+                      - text: "14."
+                      - paragraph [ref=e623]:
+                        - text: Fan, T., Long, P., Liu, W. & Pan, J. Distributed multi-robot collision avoidance via deep reinforcement learning for navigation in complex scenarios. Int. J. Robot Res.39, 7, 856–892.
+                        - link "https://doi.org/10.1177/0278364920916531" [ref=e624] [cursor=pointer]:
+                          - /url: https://doi.org/10.1177/0278364920916531
+                        - text: (2020).
+                      - paragraph [ref=e625]:
+                        - link "Article reference 14" [ref=e626] [cursor=pointer]:
+                          - /url: https://doi.org/10.1177%2F0278364920916531
+                          - text: Article
+                        - link "Google Scholar reference 14" [ref=e627] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Distributed%20multi-robot%20collision%20avoidance%20via%20deep%20reinforcement%20learning%20for%20navigation%20in%20complex%20scenarios&journal=Int.%20J.%20Robot%20Res.&doi=10.1177%2F0278364920916531&volume=39&pages=856-892&publication_year=2020&author=Fan%2CT&author=Long%2CP&author=Liu%2CW&author=Pan%2CJ
+                          - text: Google Scholar
+                    - listitem [ref=e628]:
+                      - text: "15."
+                      - paragraph [ref=e629]:
+                        - text: "Zhu, K. & Zhang, T. Deep reinforcement learning based mobile robot navigation: a review. Tsinghua Sci. Technol.26, 674–691."
+                        - link "https://doi.org/10.26599/TST.2021.9010012" [ref=e630] [cursor=pointer]:
+                          - /url: https://doi.org/10.26599/TST.2021.9010012
+                        - text: (2021).
+                      - paragraph [ref=e631]:
+                        - link "Article reference 15" [ref=e632] [cursor=pointer]:
+                          - /url: https://doi.org/10.26599%2FTST.2021.9010012
+                          - text: Article
+                        - link "Google Scholar reference 15" [ref=e633] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Deep%20reinforcement%20learning%20based%20mobile%20robot%20navigation%3A%20a%20review&journal=Tsinghua%20Sci.%20Technol.&doi=10.26599%2FTST.2021.9010012&volume=26&pages=674-691&publication_year=2021&author=Zhu%2CK&author=Zhang%2CT
+                          - text: Google Scholar
+                    - listitem [ref=e634]:
+                      - text: "16."
+                      - paragraph [ref=e635]:
+                        - text: Mnih, V. et al. Human-level control through deep reinforcement learning. Nature. 518, 529–533.
+                        - link "https://doi.org/10.1038/nature14236" [ref=e636] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038/nature14236
+                        - text: (2015).
+                      - paragraph [ref=e637]:
+                        - link "Article reference 16" [ref=e638] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038%2Fnature14236
+                          - text: Article
+                        - link "ADS reference 16" [ref=e639] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2015Natur.518..529M
+                          - text: ADS
+                        - link "CAS reference 16" [ref=e640] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BC2MXjsVagur0%3D
+                          - text: CAS
+                        - link "PubMed reference 16" [ref=e641] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=25719670
+                          - text: PubMed
+                        - link "Google Scholar reference 16" [ref=e642] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Human-level%20control%20through%20deep%20reinforcement%20learning&journal=Nature&doi=10.1038%2Fnature14236&volume=518&pages=529-533&publication_year=2015&author=Mnih%2CV
+                          - text: Google Scholar
+                    - listitem [ref=e643]:
+                      - text: "17."
+                      - paragraph [ref=e644]:
+                        - text: Kulhánek, J., Derner, E., de Bruin, T. & Babuška, R. Vision-based navigation using deep reinforcement learning. in European Conference on Mobile Robots (ECMR), Prague, Czech Republic, 1–8 (2019). (2019).
+                        - link "https://doi.org/10.1109/ECMR.2019.8870964" [ref=e645] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ECMR.2019.8870964
+                    - listitem [ref=e646]:
+                      - text: "18."
+                      - paragraph [ref=e647]:
+                        - text: Hsu, S. H., Chan, S. H., Wu, P. T., Xiao, K. & Fu, L. C. Distributed deep reinforcement learning based indoor visual navigation. in. IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2532–2537 (2018). (2018).
+                        - link "https://doi.org/10.1109/IROS.2018.8594352" [ref=e648] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/IROS.2018.8594352
+                    - listitem [ref=e649]:
+                      - text: "19."
+                      - paragraph [ref=e650]:
+                        - text: Singla, A., Padakandla, S. & Bhatnagar, S. Memory-based deep reinforcement learning for obstacle avoidance in UAV with limited environment knowledge. IEEE Trans. Intell. Transp. Syst.22, 107–118.
+                        - link "https://doi.org/10.1109/TITS.2019.2954952" [ref=e651] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/TITS.2019.2954952
+                        - text: (2021).
+                      - paragraph [ref=e652]:
+                        - link "Article reference 19" [ref=e653] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FTITS.2019.2954952
+                          - text: Article
+                        - link "Google Scholar reference 19" [ref=e654] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Memory-based%20deep%20reinforcement%20learning%20for%20obstacle%20avoidance%20in%20UAV%20with%20limited%20environment%20knowledge&journal=IEEE%20Trans.%20Intell.%20Transp.%20Syst.&doi=10.1109%2FTITS.2019.2954952&volume=22&pages=107-118&publication_year=2021&author=Singla%2CA&author=Padakandla%2CS&author=Bhatnagar%2CS
+                          - text: Google Scholar
+                    - listitem [ref=e655]:
+                      - text: "20."
+                      - paragraph [ref=e656]:
+                        - text: Li, H., Zhang, Q. & Zhao, D. Deep reinforcement learning-based automatic exploration for navigation in unknown environment. IEEE Trans. Neural Netw. Learn. Syst.31, 2064–2076.
+                        - link "https://doi.org/10.1109/TNNLS.2019.2927869" [ref=e657] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/TNNLS.2019.2927869
+                        - text: (2020).
+                      - paragraph [ref=e658]:
+                        - link "Article reference 20" [ref=e659] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FTNNLS.2019.2927869
+                          - text: Article
+                        - link "ADS reference 20" [ref=e660] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2016ITPSy..31.2064L
+                          - text: ADS
+                        - link "PubMed reference 20" [ref=e661] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=31398138
+                          - text: PubMed
+                        - link "Google Scholar reference 20" [ref=e662] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Deep%20reinforcement%20learning-based%20automatic%20exploration%20for%20navigation%20in%20unknown%20environment&journal=IEEE%20Trans.%20Neural%20Netw.%20Learn.%20Syst.&doi=10.1109%2FTNNLS.2019.2927869&volume=31&pages=2064-2076&publication_year=2020&author=Li%2CH&author=Zhang%2CQ&author=Zhao%2CD
+                          - text: Google Scholar
+                    - listitem [ref=e663]:
+                      - text: "21."
+                      - paragraph [ref=e664]:
+                        - text: "Cai, M., Aasi, E., Belta, C. & Vasile, C. I. Overcoming exploration: deep reinforcement learning for continuous control in cluttered environments from temporal logic specifications. IEEE Robot Automat Lett.8, 2158–2165."
+                        - link "https://doi.org/10.1109/LRA.2023.3246844" [ref=e665] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/LRA.2023.3246844
+                        - text: (2023).
+                      - paragraph [ref=e666]:
+                        - link "Article reference 21" [ref=e667] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FLRA.2023.3246844
+                          - text: Article
+                        - link "Google Scholar reference 21" [ref=e668] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Overcoming%20exploration%3A%20deep%20reinforcement%20learning%20for%20continuous%20control%20in%20cluttered%20environments%20from%20temporal%20logic%20specifications&journal=IEEE%20Robot%20Automat%20Lett.&doi=10.1109%2FLRA.2023.3246844&volume=8&pages=2158-2165&publication_year=2023&author=Cai%2CM&author=Aasi%2CE&author=Belta%2CC&author=Vasile%2CCI
+                          - text: Google Scholar
+                    - listitem [ref=e669]:
+                      - text: "22."
+                      - paragraph [ref=e670]:
+                        - text: Yan, W., Sun, J., Li, Z. & Wang, G. Decentralized multi-robot navigation in unknown environments via hierarchical deep reinforcement learning. in 42nd Chinese Control Conference (CCC), Tianjin, China, 4292–4297 (2023). (2023).
+                        - link "https://doi.org/10.23919/CCC58697.2023.10240139" [ref=e671] [cursor=pointer]:
+                          - /url: https://doi.org/10.23919/CCC58697.2023.10240139
+                    - listitem [ref=e672]:
+                      - text: "23."
+                      - paragraph [ref=e673]:
+                        - text: Ali, A., Gul, S., Mahmood, T. & Ullah, A. Exploration of unknown environment using deep reinforcement learning. in International Conference on Robotics and Automation in Industry (ICRAI), Peshawar, Pakistan, 1–6 (2023). (2023).
+                        - link "https://doi.org/10.1109/ICRAI57502.2023.10089589" [ref=e674] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ICRAI57502.2023.10089589
+                    - listitem [ref=e675]:
+                      - text: "24."
+                      - paragraph [ref=e676]:
+                        - text: Xue, Y. & Chen, W. A UAV navigation approach based on deep reinforcement learning in large cluttered 3D environments. IEEE Trans. Vehic Technol.72, 3001–3014.
+                        - link "https://doi.org/10.1109/TVT.2022.3218855" [ref=e677] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/TVT.2022.3218855
+                        - text: (2023).
+                      - paragraph [ref=e678]:
+                        - link "Article reference 24" [ref=e679] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FTVT.2022.3218855
+                          - text: Article
+                        - link "Google Scholar reference 24" [ref=e680] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=A%20UAV%20navigation%20approach%20based%20on%20deep%20reinforcement%20learning%20in%20large%20cluttered%203D%20environments&journal=IEEE%20Trans.%20Vehic%20Technol.&doi=10.1109%2FTVT.2022.3218855&volume=72&pages=3001-3014&publication_year=2023&author=Xue%2CY&author=Chen%2CW
+                          - text: Google Scholar
+                    - listitem [ref=e681]:
+                      - text: "25."
+                      - paragraph [ref=e682]:
+                        - text: Wang, J. & Huang, R. A Mapless navigation method based on deep reinforcement learning and path planning. IEEE International Conference on Robotics and Biomimetics (ROBIO), Jinghong, China, 1781–1786 (2022). (2022).
+                        - link "https://doi.org/10.1109/ROBIO55434.2022.10011923" [ref=e683] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ROBIO55434.2022.10011923
+                    - listitem [ref=e684]:
+                      - text: "26."
+                      - paragraph [ref=e685]:
+                        - text: Zeng, J. et al. Navigation in unknown dynamic environments based on deep reinforcement learning. Sensors. 19, 3837.
+                        - link "https://doi.org/10.3390/s19183837" [ref=e686] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390/s19183837
+                        - text: (2019).
+                      - paragraph [ref=e687]:
+                        - link "Article reference 26" [ref=e688] [cursor=pointer]:
+                          - /url: https://doi.org/10.3390%2Fs19183837
+                          - text: Article
+                        - link "ADS reference 26" [ref=e689] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2019Senso..19.3837Z
+                          - text: ADS
+                        - link "PubMed reference 26" [ref=e690] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=31491927
+                          - text: PubMed
+                        - link "PubMed Central reference 26" [ref=e691] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/pmc/articles/PMC6767106
+                          - text: PubMed Central
+                        - link "Google Scholar reference 26" [ref=e692] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Navigation%20in%20unknown%20dynamic%20environments%20based%20on%20deep%20reinforcement%20learning&journal=Sensors&doi=10.3390%2Fs19183837&volume=19&publication_year=2019&author=Zeng%2CJ
+                          - text: Google Scholar
+                    - listitem [ref=e693]:
+                      - text: "27."
+                      - paragraph [ref=e694]:
+                        - text: Zhu, W. & Hayashibe, M. A hierarchical deep reinforcement learning framework with high efficiency and generalization for fast and safe navigation. IEEE Trans. Ind. Electron. 70, 5, 4962–4971.
+                        - link "https://doi.org/10.1109/TIE.2022.3190850" [ref=e695] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/TIE.2022.3190850
+                        - text: (2023).
+                      - paragraph [ref=e696]:
+                        - link "Article reference 27" [ref=e697] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FTIE.2022.3190850
+                          - text: Article
+                        - link "Google Scholar reference 27" [ref=e698] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=A%20hierarchical%20deep%20reinforcement%20learning%20framework%20with%20high%20efficiency%20and%20generalization%20for%20fast%20and%20safe%20navigation&journal=IEEE%20Trans.%20Ind.%20Electron.&doi=10.1109%2FTIE.2022.3190850&volume=70&pages=4962-4971&publication_year=2023&author=Zhu%2CW&author=Hayashibe%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e699]:
+                      - text: "28."
+                      - paragraph [ref=e700]:
+                        - text: Xue, Y. & Chen, W. Multi-agent deep reinforcement learning for UAVs navigation in unknown complex environment. IEEE Trans. Intell. Veh.9, 1, 2290–2303.
+                        - link "https://doi.org/10.1109/TIV.2023.3298292" [ref=e701] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/TIV.2023.3298292
+                        - text: (2024).
+                      - paragraph [ref=e702]:
+                        - link "Article reference 28" [ref=e703] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FTIV.2023.3298292
+                          - text: Article
+                        - link "Google Scholar reference 28" [ref=e704] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Multi-agent%20deep%20reinforcement%20learning%20for%20UAVs%20navigation%20in%20unknown%20complex%20environment&journal=IEEE%20Trans.%20Intell.%20Veh.&doi=10.1109%2FTIV.2023.3298292&volume=9&pages=2290-2303&publication_year=2024&author=Xue%2CY&author=Chen%2CW
+                          - text: Google Scholar
+                    - listitem [ref=e705]:
+                      - text: "29."
+                      - paragraph [ref=e706]:
+                        - text: Xiong, H., Ma, T., Zhang, L. & Diao, X. Comparison of end-to-end and hybrid deep reinforcement learning strategies for controlling cable-driven parallel robots. Neurocomputing. 377, 73–84.
+                        - link "https://doi.org/10.1016/j.neucom.2019.10.020" [ref=e707] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016/j.neucom.2019.10.020
+                        - text: (2020).
+                      - paragraph [ref=e708]:
+                        - link "Article reference 29" [ref=e709] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016%2Fj.neucom.2019.10.020
+                          - text: Article
+                        - link "Google Scholar reference 29" [ref=e710] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Comparison%20of%20end-to-end%20and%20hybrid%20deep%20reinforcement%20learning%20strategies%20for%20controlling%20cable-driven%20parallel%20robots&journal=Neurocomputing&doi=10.1016%2Fj.neucom.2019.10.020&volume=377&pages=73-84&publication_year=2020&author=Xiong%2CH&author=Ma%2CT&author=Zhang%2CL&author=Diao%2CX
+                          - text: Google Scholar
+                    - listitem [ref=e711]:
+                      - text: "30."
+                      - paragraph [ref=e712]:
+                        - text: "Sutton, R. S. & Barto, A. G. Reinforcement Learning: An Introduction. (MIT Press, 1998)."
+                        - link "https://mitpress.mit.edu/9780262039246/reinforcement-learning/" [ref=e713] [cursor=pointer]:
+                          - /url: https://mitpress.mit.edu/9780262039246/reinforcement-learning/
+                        - text: (accessed on June 2, 2024).
+                    - listitem [ref=e714]:
+                      - text: "31."
+                      - paragraph [ref=e715]:
+                        - text: Puterman, M. L. Chapter 8 Markov decision processes. in Handbooks in Operations Research and Management Science, Elsevier 2, 331–434 ISSN 0927-0507, ISBN 9780444874733. (1990).
+                        - link "https://doi.org/10.1016/S0927-0507(05)80172-0" [ref=e716] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016/S0927-0507(05)80172-0
+                    - listitem [ref=e717]:
+                      - text: "32."
+                      - paragraph [ref=e718]:
+                        - text: Grisetti, G., KümmeDRLe, R., Stachniss, C. & Burgard, W. A tutorial on graph-based SLAM. IEEE Intell. Transp. Syst. Mag. 2, 31–43.
+                        - link "https://doi.org/10.1109/MITS.2010.939925" [ref=e719] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/MITS.2010.939925
+                        - text: (2010).
+                      - paragraph [ref=e720]:
+                        - link "Article reference 32" [ref=e721] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2FMITS.2010.939925
+                          - text: Article
+                        - link "Google Scholar reference 32" [ref=e722] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=A%20tutorial%20on%20graph-based%20SLAM&journal=IEEE%20Intell.%20Transp.%20Syst.%20Mag&doi=10.1109%2FMITS.2010.939925&volume=2&pages=31-43&publication_year=2010&author=Grisetti%2CG&author=K%C3%BCmmeDRLe%2CR&author=Stachniss%2CC&author=Burgard%2CW
+                          - text: Google Scholar
+                    - listitem [ref=e723]:
+                      - text: "33."
+                      - paragraph [ref=e724]:
+                        - text: Bourgault, F., Makarenko, A. A., Williams, S. B., Grocholsky, B. & Durrant-Whyte, H. F. Information based adaptive robotic exploration. in IEEE/RSJ International Conference on Intelligent Robots and Systems, Lausanne, Switzerland, 540–545 (2002).
+                        - link "https://doi.org/10.1109/IRDS.2002.1041446" [ref=e725] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/IRDS.2002.1041446
+                    - listitem [ref=e726]:
+                      - text: "34."
+                      - paragraph [ref=e727]:
+                        - text: Raj, R. & Kos, A. Different techniques for human activity recognition. 2022 29th Int. Conf. Mixed Des. Integr. Circuits Syst. (MIXDES). 171-176
+                        - link "https://doi.org/10.23919/MIXDES55591.2022.9838050" [ref=e728] [cursor=pointer]:
+                          - /url: https://doi.org/10.23919/MIXDES55591.2022.9838050
+                        - text: (2022).
+                    - listitem [ref=e729]:
+                      - text: "35."
+                      - paragraph [ref=e730]:
+                        - text: Raj, R. & Kos, A. An improved human activity recognition technique based on convolutional neural network. Sci. Rep.13, 22581.
+                        - link "https://doi.org/10.1038/s41598-023-49739-1" [ref=e731] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038/s41598-023-49739-1
+                        - text: (2023).
+                      - paragraph [ref=e732]:
+                        - link "Article reference 35" [ref=e733] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038%2Fs41598-023-49739-1
+                          - text: Article
+                        - link "ADS reference 35" [ref=e734] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2023NatSR..1322581R
+                          - text: ADS
+                        - link "CAS reference 35" [ref=e735] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BB2cXlt1U%3D
+                          - text: CAS
+                        - link "PubMed reference 35" [ref=e736] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=38114574
+                          - text: PubMed
+                        - link "PubMed Central reference 35" [ref=e737] [cursor=pointer]:
+                          - /url: http://www.ncbi.nlm.nih.gov/pmc/articles/PMC10730728
+                          - text: PubMed Central
+                        - link "Google Scholar reference 35" [ref=e738] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=An%20improved%20human%20activity%20recognition%20technique%20based%20on%20convolutional%20neural%20network&journal=Sci.%20Rep.&doi=10.1038%2Fs41598-023-49739-1&volume=13&publication_year=2023&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e739]:
+                      - text: "36."
+                      - paragraph [ref=e740]:
+                        - text: Zhang, J., Springenberg, J. T., Boedecker, J. & Burgard, W. Deep reinforcement learning with successor features for navigation across similar environments. in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Vancouver, BC, Canada, 2371–2378 (2017). (2017).
+                        - link "https://doi.org/10.1109/IROS.2017.8206049" [ref=e741] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/IROS.2017.8206049
+                    - listitem [ref=e742]:
+                      - text: "37."
+                      - paragraph [ref=e743]:
+                        - text: Kahn, G., Villaflor, A., Ding, B., Abbeel, P. & Levine, S. Self-supervised deep reinforcement learning with generalized computation graphs for robot navigation. in IEEE International Conference on Robotics and Automation (ICRA), Brisbane, QLD, Australia, 5129–5136 (2018). (2018).
+                        - link "https://doi.org/10.1109/ICRA.2018.8460655" [ref=e744] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ICRA.2018.8460655
+                    - listitem [ref=e745]:
+                      - text: "38."
+                      - paragraph [ref=e746]:
+                        - text: Raj, R. & Kos, A. Study and analysis of discrete event-driven autonomous system with a case study for a robotics task. Przeglad Elektrotechniczny. 9, 50–56.
+                        - link "https://doi.org/10.15199/48.2023.09.09" [ref=e747] [cursor=pointer]:
+                          - /url: https://doi.org/10.15199/48.2023.09.09
+                        - text: (2023).
+                      - paragraph [ref=e748]:
+                        - link "Article reference 38" [ref=e749] [cursor=pointer]:
+                          - /url: https://doi.org/10.15199%2F48.2023.09.09
+                          - text: Article
+                        - link "Google Scholar reference 38" [ref=e750] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Study%20and%20analysis%20of%20discrete%20event-driven%20autonomous%20system%20with%20a%20case%20study%20for%20a%20robotics%20task&journal=Przeglad%20Elektrotechniczny&doi=10.15199%2F48.2023.09.09&volume=9&pages=50-56&publication_year=2023&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e751]:
+                      - text: "39."
+                      - paragraph [ref=e752]:
+                        - text: "Tai, L., Paolo, G. & Liu, M. Virtual-to-real deep reinforcement learning: Continuous control of mobile robots for mapless navigation. in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Vancouver, BC, Canada, 31–36 (2017). (2017)."
+                        - link "https://doi.org/10.1109/IROS.2017.8202134" [ref=e753] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/IROS.2017.8202134
+                    - listitem [ref=e754]:
+                      - text: "40."
+                      - paragraph [ref=e755]:
+                        - text: Van Hasselt, H., Guez, A. & Silver, D. Deep reinforcement learning with double Q-learning. In Proceedings of the AAAI Conference on Artificial Intelligence 30, (2016).
+                        - link "https://doi.org/10.1609/aaai.v30i1.10295" [ref=e756] [cursor=pointer]:
+                          - /url: https://doi.org/10.1609/aaai.v30i1.10295
+                    - listitem [ref=e757]:
+                      - text: "41."
+                      - paragraph [ref=e758]:
+                        - text: Shi, Q., Zhao, S., Cui, X., Lu, M. & Jia, M. Anchor self-localization algorithm based on UWB ranging and inertial measurements. Tsinghua Sci. Technol.24, 728–737.
+                        - link "https://doi.org/10.26599/TST.2018.9010102" [ref=e759] [cursor=pointer]:
+                          - /url: https://doi.org/10.26599/TST.2018.9010102
+                        - text: (2019).
+                      - paragraph [ref=e760]:
+                        - link "Article reference 41" [ref=e761] [cursor=pointer]:
+                          - /url: https://doi.org/10.26599%2FTST.2018.9010102
+                          - text: Article
+                        - link "Google Scholar reference 41" [ref=e762] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Anchor%20self-localization%20algorithm%20based%20on%20UWB%20ranging%20and%20inertial%20measurements&journal=Tsinghua%20Sci.%20Technol.&doi=10.26599%2FTST.2018.9010102&volume=24&pages=728-737&publication_year=2019&author=Shi%2CQ&author=Zhao%2CS&author=Cui%2CX&author=Lu%2CM&author=Jia%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e763]:
+                      - text: "42."
+                      - paragraph [ref=e764]:
+                        - text: Raj, R. & Kos, A. Discussion on different controllers used for the navigation of mobile robot. Int. J. Electron. Telecommun. 70, 1, 229–239.
+                        - link "https://doi.org/10.24425/ijet.2024.149535" [ref=e765] [cursor=pointer]:
+                          - /url: https://doi.org/10.24425/ijet.2024.149535
+                        - text: (2024).
+                      - paragraph [ref=e766]:
+                        - link "Article reference 42" [ref=e767] [cursor=pointer]:
+                          - /url: https://doi.org/10.24425%2Fijet.2024.149535
+                          - text: Article
+                        - link "Google Scholar reference 42" [ref=e768] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Discussion%20on%20different%20controllers%20used%20for%20the%20navigation%20of%20mobile%20robot&journal=Int.%20J.%20Electron.%20Telecommun&doi=10.24425%2Fijet.2024.149535&volume=70&pages=229-239&publication_year=2024&author=Raj%2CR&author=Kos%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e769]:
+                      - text: "43."
+                      - paragraph [ref=e770]:
+                        - text: "Faust, A. et al. PRM-RL: Long-range robotic navigation tasks by combining reinforcement learning and sampling-based planning. in Proc. 2018 IEEE Int. Conf. Robotics and Automation, Brisbane, Australia, 5113–5120 (2018)."
+                        - link "https://doi.org/10.1109/ICRA.2018.8461096" [ref=e771] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ICRA.2018.8461096
+                    - listitem [ref=e772]:
+                      - text: "44."
+                      - paragraph [ref=e773]:
+                        - text: Jaradat, M. A. K., Al-Rousan, M. & Quadan, L. Reinforcement based mobile robot navigation in dynamic environment. Robot Computer-integrated Manufact. 27, 135–149.
+                        - link "https://doi.org/10.1016/j.rcim.2010.06.019" [ref=e774] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016/j.rcim.2010.06.019
+                        - text: (2011).
+                      - paragraph [ref=e775]:
+                        - link "Article reference 44" [ref=e776] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016%2Fj.rcim.2010.06.019
+                          - text: Article
+                        - link "Google Scholar reference 44" [ref=e777] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Reinforcement%20based%20mobile%20robot%20navigation%20in%20dynamic%20environment&journal=Robot%20Computer-integrated%20Manufact&doi=10.1016%2Fj.rcim.2010.06.019&volume=27&pages=135-149&publication_year=2011&author=Jaradat%2CMAK&author=Al-Rousan%2CM&author=Quadan%2CL
+                          - text: Google Scholar
+                    - listitem [ref=e778]:
+                      - text: "45."
+                      - paragraph [ref=e779]:
+                        - text: Marchesini, E. & Farinelli, A. Discrete deep reinforcement learning for Mapless navigation. in IEEE International Conference on Robotics and Automation (ICRA), Paris, France, 10688–10694 (2020). (2020).
+                        - link "https://doi.org/10.1109/ICRA40945.2020.9196739" [ref=e780] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109/ICRA40945.2020.9196739
+                  - paragraph [ref=e781]:
+                    - link "Download references" [ref=e782] [cursor=pointer]:
+                      - /url: https://citation-needed.springer.com/v2/references/10.1038/s41598-024-72857-3?format=refman&flavour=references
+                      - text: Download references
+                      - img [ref=e783]
+            - generic [ref=e786]:
+              - heading "Acknowledgements" [level=2] [ref=e787]
+              - paragraph [ref=e789]: The authors wish to express their thanks for financial support from subvention No. 16.16.230.434 paid for by the AGH University of Krakow, Poland.
+            - region "Author information" [ref=e790]:
+              - generic [ref=e791]:
+                - heading "Author information" [level=2] [ref=e792]
+                - generic [ref=e793]:
+                  - heading "Authors and Affiliations" [level=3] [ref=e794]
+                  - list [ref=e795]:
+                    - listitem [ref=e796]:
+                      - paragraph [ref=e797]: Faculty of Computer Science, Electronics, and Telecommunications, AGH University of Krakow, Aleja Adama Mickiewicza 30, Krakow, 30-059, Poland
+                      - paragraph [ref=e798]: Ravi Raj & Andrzej Kos
+                  - heading "Contributions" [level=3] [ref=e799]
+                  - paragraph [ref=e800]: Conceptualization, R.R. and A.K.; methodology, R.R.; software, R.R.; validation, R.R.; formal analysis, R.R.; investigation, R.R.; resources, R.R. and A.K.; data curation, R.R.; writing—original draft preparation, R.R.; writing—review and editing, R.R. and A.K.; visualization, R.R. and A.K.; supervision, A.K.; all authors have read and equally contributed to the manuscript.
+                  - heading "Corresponding author" [level=3] [ref=e801]
+                  - paragraph [ref=e802]:
+                    - text: Correspondence to
+                    - link "email Ravi Raj" [ref=e803] [cursor=pointer]:
+                      - /url: mailto:raj@agh.edu.pl
+                      - text: Ravi Raj
+                    - text: .
+            - generic [ref=e805]:
+              - heading "Ethics declarations" [level=2] [ref=e806]
+              - generic [ref=e807]:
+                - heading "Competing interests" [level=3] [ref=e808]
+                - paragraph [ref=e809]: The authors declare no competing interests.
+            - generic [ref=e811]:
+              - heading "Additional information" [level=2] [ref=e812]
+              - generic [ref=e813]:
+                - heading "Publisher’s note" [level=3] [ref=e814]
+                - paragraph [ref=e815]: Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+            - generic [ref=e817]:
+              - heading "Rights and permissions" [level=2] [ref=e818]
+              - generic [ref=e819]:
+                - paragraph [ref=e820]:
+                  - text: Open Access This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits any non-commercial use, sharing, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if you modified the licensed material. You do not have permission under this licence to share adapted material derived from this article or parts of it. The images or other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit
+                  - link "http://creativecommons.org/licenses/by-nc-nd/4.0/" [ref=e821] [cursor=pointer]:
+                    - /url: http://creativecommons.org/licenses/by-nc-nd/4.0/
+                  - text: .
+                - paragraph [ref=e822]:
+                  - link "Reprints and permissions" [ref=e823] [cursor=pointer]:
+                    - /url: https://s100.copyright.com/AppDispatchServlet?title=Intelligent%20mobile%20robot%20navigation%20in%20unknown%20and%20complex%20environment%20using%20reinforcement%20learning%20technique&author=Ravi%20Raj%20et%20al&contentID=10.1038%2Fs41598-024-72857-3&copyright=The%20Author%28s%29&publication=2045-2322&publicationDate=2024-10-01&publisherName=SpringerNature&orderBeanReset=true&oa=CC%20BY-NC-ND
+            - region "About this article" [ref=e824]:
+              - generic [ref=e825]:
+                - heading "About this article" [level=2] [ref=e826]
+                - generic [ref=e828]:
+                  - link "Check for updates. Verify currency and authenticity via CrossMark" [ref=e830] [cursor=pointer]:
+                    - /url: https://crossmark.crossref.org/dialog/?doi=10.1038/s41598-024-72857-3
+                    - img "Check for updates. Verify currency and authenticity via CrossMark" [ref=e831]
+                  - generic [ref=e832]:
+                    - heading "Cite this article" [level=3] [ref=e833]
+                    - paragraph [ref=e834]: Raj, R., Kos, A. Intelligent mobile robot navigation in unknown and complex environment using reinforcement learning technique. Sci Rep 14, 22852 (2024). https://doi.org/10.1038/s41598-024-72857-3
+                    - paragraph [ref=e835]:
+                      - link "Download citation" [ref=e836] [cursor=pointer]:
+                        - /url: https://citation-needed.springer.com/v2/references/10.1038/s41598-024-72857-3?format=refman&flavour=citation
+                        - text: Download citation
+                        - img [ref=e837]
+                    - list [ref=e839]:
+                      - listitem [ref=e840]:
+                        - paragraph [ref=e841]:
+                          - text: Received
+                          - time [ref=e843]: 16 March 2024
+                      - listitem [ref=e844]:
+                        - paragraph [ref=e845]:
+                          - text: Accepted
+                          - time [ref=e847]: 11 September 2024
+                      - listitem [ref=e848]:
+                        - paragraph [ref=e849]:
+                          - text: Published
+                          - time [ref=e851]: 01 October 2024
+                      - listitem [ref=e852]:
+                        - paragraph [ref=e853]:
+                          - text: Version of record
+                          - time [ref=e855]: 01 October 2024
+                      - listitem [ref=e856]:
+                        - paragraph [ref=e857]:
+                          - text: DOI
+                          - generic [ref=e858]: https://doi.org/10.1038/s41598-024-72857-3
+                    - generic [ref=e860]:
+                      - heading "Share this article" [level=3] [ref=e861]
+                      - paragraph [ref=e862]: "Anyone you share the following link with will be able to read this content:"
+                      - button "Get shareable link" [ref=e863] [cursor=pointer]
+                      - paragraph [ref=e864]: Provided by the Springer Nature SharedIt content-sharing initiative
+                    - generic [ref=e865]:
+                      - heading "Subjects" [level=3] [ref=e866]
+                      - list [ref=e867]:
+                        - listitem [ref=e868]:
+                          - link "Energy science and technology" [ref=e869] [cursor=pointer]:
+                            - /url: /subjects/energy-science-and-technology
+                        - listitem [ref=e870]:
+                          - link "Engineering" [ref=e871] [cursor=pointer]:
+                            - /url: /subjects/engineering
+          - generic [ref=e873]:
+            - heading "This article is cited by" [level=2] [ref=e874]
+            - list [ref=e876]:
+              - listitem [ref=e877]:
+                - 'heading "LLM-DWA: a hybrid path planning framework combining large language models with the dynamic window approach" [level=3] [ref=e878]':
+                  - 'link "LLM-DWA: a hybrid path planning framework combining large language models with the dynamic window approach" [ref=e879] [cursor=pointer]':
+                    - /url: https://doi.org/10.1038/s41598-026-39524-1
+                - list [ref=e880]:
+                  - listitem [ref=e881]: Jeonghee Seo
+                  - listitem [ref=e882]: ", Eunsung Kim"
+                  - listitem [ref=e883]: "& Andrew Jaeyong Choi"
+                - paragraph [ref=e884]: Scientific Reports (2026)
+              - listitem [ref=e885]:
+                - heading "Deep deterministic policy gradient algorithm based on dung beetle optimization and priority experience replay mechanism" [level=3] [ref=e886]:
+                  - link "Deep deterministic policy gradient algorithm based on dung beetle optimization and priority experience replay mechanism" [ref=e887] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41598-025-99213-3
+                - list [ref=e888]:
+                  - listitem [ref=e889]: Hengwei Zhu
+                  - listitem [ref=e890]: ", Chuiting Rong"
+                  - listitem [ref=e891]: "& Haorui Liu"
+                - paragraph [ref=e892]: Scientific Reports (2025)
+              - listitem [ref=e893]:
+                - heading "Goal-oriented autonomous decision-making for social robots via collaborative interactive inverse reinforcement learning approach" [level=3] [ref=e894]:
+                  - link "Goal-oriented autonomous decision-making for social robots via collaborative interactive inverse reinforcement learning approach" [ref=e895] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41598-025-11412-0
+                - list [ref=e896]:
+                  - listitem [ref=e897]: Mingyue Luo
+                  - listitem [ref=e898]: ", Hui Li"
+                  - listitem [ref=e899]: ... Jianan Li
+                - paragraph [ref=e900]: Scientific Reports (2025)
+              - listitem [ref=e901]:
+                - heading "Multi-objective trajectory optimization method for industrial robots based on improved TD3 algorithm" [level=3] [ref=e902]:
+                  - link "Multi-objective trajectory optimization method for industrial robots based on improved TD3 algorithm" [ref=e903] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41598-025-25949-7
+                - list [ref=e904]:
+                  - listitem [ref=e905]: Yuhang Xu
+                  - listitem [ref=e906]: ", Shuhang Kong"
+                  - listitem [ref=e907]: ... Zixi Ying
+                - paragraph [ref=e908]: Scientific Reports (2025)
+              - listitem [ref=e909]:
+                - heading "Research on intelligent regulation of layered water injection based on reinforcement learning SAC algorithm" [level=3] [ref=e910]:
+                  - link "Research on intelligent regulation of layered water injection based on reinforcement learning SAC algorithm" [ref=e911] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41598-025-11521-w
+                - list [ref=e912]:
+                  - listitem [ref=e913]: Jinzhao Hu
+                  - listitem [ref=e914]: ", Deli Jia"
+                  - listitem [ref=e915]: ... Fushen Ren
+                - paragraph [ref=e916]: Scientific Reports (2025)
+    - complementary "Article navigation" [ref=e917]:
+      - link "Download PDF" [ref=e920] [cursor=pointer]:
+        - /url: /articles/s41598-024-72857-3.pdf
+        - generic [ref=e921]: Download PDF
+        - img [ref=e922]
+      - generic [ref=e925]:
+        - tablist [ref=e926]:
+          - tab "Sections" [selected] [ref=e927] [cursor=pointer]
+          - tab "Figures" [ref=e928] [cursor=pointer]
+          - tab "References" [ref=e929] [cursor=pointer]
+        - tabpanel "Sections" [ref=e930]:
+          - list [ref=e932]:
+            - listitem [ref=e933]:
+              - link "Abstract" [ref=e934] [cursor=pointer]:
+                - /url: "#Abs1"
+            - listitem [ref=e935]:
+              - link "Introduction" [ref=e936] [cursor=pointer]:
+                - /url: "#Sec1"
+            - listitem [ref=e937]:
+              - link "Literature survey" [ref=e938] [cursor=pointer]:
+                - /url: "#Sec2"
+            - listitem [ref=e939]:
+              - link "Background information" [ref=e940] [cursor=pointer]:
+                - /url: "#Sec3"
+            - listitem [ref=e941]:
+              - link "Theoretical methodology" [ref=e942] [cursor=pointer]:
+                - /url: "#Sec7"
+            - listitem [ref=e943]:
+              - link "Simulation and experimental analysis" [ref=e944] [cursor=pointer]:
+                - /url: "#Sec16"
+            - listitem [ref=e945]:
+              - link "Main contributions of this research" [ref=e946] [cursor=pointer]:
+                - /url: "#Sec001"
+            - listitem [ref=e947]:
+              - link "Conclusion and future perspectives" [ref=e948] [cursor=pointer]:
+                - /url: "#Sec17"
+            - listitem [ref=e949]:
+              - link "Data availability" [ref=e950] [cursor=pointer]:
+                - /url: "#data-availability"
+            - listitem [ref=e951]:
+              - link "References" [ref=e952] [cursor=pointer]:
+                - /url: "#Bib1"
+            - listitem [ref=e953]:
+              - link "Acknowledgements" [ref=e954] [cursor=pointer]:
+                - /url: "#Ack1"
+            - listitem [ref=e955]:
+              - link "Author information" [ref=e956] [cursor=pointer]:
+                - /url: "#author-information"
+            - listitem [ref=e957]:
+              - link "Ethics declarations" [ref=e958] [cursor=pointer]:
+                - /url: "#ethics"
+            - listitem [ref=e959]:
+              - link "Additional information" [ref=e960] [cursor=pointer]:
+                - /url: "#additional-information"
+            - listitem [ref=e961]:
+              - link "Rights and permissions" [ref=e962] [cursor=pointer]:
+                - /url: "#rightslink"
+            - listitem [ref=e963]:
+              - link "About this article" [ref=e964] [cursor=pointer]:
+                - /url: "#article-info"
+            - listitem [ref=e965]:
+              - link "This article is cited by" [ref=e966] [cursor=pointer]:
+                - /url: "#further-reading"
+          - paragraph [ref=e970]: Advertisement
+  - contentinfo [ref=e971]:
+    - generic [ref=e975]:
+      - paragraph [ref=e976]: Scientific Reports (Sci Rep)
+      - paragraph [ref=e977]: ISSN 2045-2322 (online)
+    - generic [ref=e978]:
+      - generic [ref=e979]:
+        - heading "nature.com footer links" [level=2] [ref=e980]
+        - generic [ref=e982]:
+          - generic [ref=e983]:
+            - heading "About Nature Portfolio" [level=3] [ref=e984]
+            - list [ref=e985]:
+              - listitem [ref=e986]:
+                - link "About us" [ref=e987] [cursor=pointer]:
+                  - /url: https://www.nature.com/npg_/company_info/index.html
+              - listitem [ref=e988]:
+                - link "Press releases" [ref=e989] [cursor=pointer]:
+                  - /url: https://www.nature.com/npg_/press_room/press_releases.html
+              - listitem [ref=e990]:
+                - link "Press office" [ref=e991] [cursor=pointer]:
+                  - /url: https://press.nature.com/
+              - listitem [ref=e992]:
+                - link "Contact us" [ref=e993] [cursor=pointer]:
+                  - /url: https://support.nature.com/support/home
+          - generic [ref=e994]:
+            - heading "Discover content" [level=3] [ref=e995]
+            - list [ref=e996]:
+              - listitem [ref=e997]:
+                - link "Journals A-Z" [ref=e998] [cursor=pointer]:
+                  - /url: https://www.nature.com/siteindex
+              - listitem [ref=e999]:
+                - link "Articles by subject" [ref=e1000] [cursor=pointer]:
+                  - /url: https://www.nature.com/subjects
+              - listitem [ref=e1001]:
+                - link "protocols.io" [ref=e1002] [cursor=pointer]:
+                  - /url: https://www.protocols.io/
+              - listitem [ref=e1003]:
+                - link "Nature Index" [ref=e1004] [cursor=pointer]:
+                  - /url: https://www.natureindex.com/
+          - generic [ref=e1005]:
+            - heading "Publishing policies" [level=3] [ref=e1006]
+            - list [ref=e1007]:
+              - listitem [ref=e1008]:
+                - link "Nature portfolio policies" [ref=e1009] [cursor=pointer]:
+                  - /url: https://www.nature.com/authors/editorial_policies
+              - listitem [ref=e1010]:
+                - link "Open access" [ref=e1011] [cursor=pointer]:
+                  - /url: https://www.nature.com/nature-research/open-access
+          - generic [ref=e1012]:
+            - heading "Author & Researcher services" [level=3] [ref=e1013]
+            - list [ref=e1014]:
+              - listitem [ref=e1015]:
+                - link "Reprints & permissions" [ref=e1016] [cursor=pointer]:
+                  - /url: https://www.nature.com/reprints
+              - listitem [ref=e1017]:
+                - link "Research data" [ref=e1018] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/authors/research-data
+              - listitem [ref=e1019]:
+                - link "Language editing" [ref=e1020] [cursor=pointer]:
+                  - /url: https://authorservices.springernature.com/language-editing/
+              - listitem [ref=e1021]:
+                - link "Scientific editing" [ref=e1022] [cursor=pointer]:
+                  - /url: https://authorservices.springernature.com/scientific-editing/
+              - listitem [ref=e1023]:
+                - link "Nature Masterclasses" [ref=e1024] [cursor=pointer]:
+                  - /url: https://masterclasses.nature.com/
+              - listitem [ref=e1025]:
+                - link "Research Solutions" [ref=e1026] [cursor=pointer]:
+                  - /url: https://solutions.springernature.com/
+          - generic [ref=e1027]:
+            - heading "Libraries & institutions" [level=3] [ref=e1028]
+            - list [ref=e1029]:
+              - listitem [ref=e1030]:
+                - link "Librarian service & tools" [ref=e1031] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/tools-services
+              - listitem [ref=e1032]:
+                - link "Librarian portal" [ref=e1033] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/manage-your-account/librarianportal
+              - listitem [ref=e1034]:
+                - link "Open research" [ref=e1035] [cursor=pointer]:
+                  - /url: https://www.nature.com/openresearch/about-open-access/information-for-institutions
+              - listitem [ref=e1036]:
+                - link "Recommend to library" [ref=e1037] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/recommend-to-your-library
+          - generic [ref=e1038]:
+            - heading "Advertising & partnerships" [level=3] [ref=e1039]
+            - list [ref=e1040]:
+              - listitem [ref=e1041]:
+                - link "Advertising" [ref=e1042] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/product/digital-advertising/
+              - listitem [ref=e1043]:
+                - link "Partnerships & Services" [ref=e1044] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/
+              - listitem [ref=e1045]:
+                - link "Media kits" [ref=e1046] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/media-kits/
+              - listitem [ref=e1047]:
+                - link "Branded content" [ref=e1048] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/product/branded-content-native-advertising/
+          - generic [ref=e1049]:
+            - heading "Professional development" [level=3] [ref=e1050]
+            - list [ref=e1051]:
+              - listitem [ref=e1052]:
+                - link "Nature Awards" [ref=e1053] [cursor=pointer]:
+                  - /url: https://www.nature.com/immersive/natureawards/index.html
+              - listitem [ref=e1054]:
+                - link "Nature Careers" [ref=e1055] [cursor=pointer]:
+                  - /url: https://www.nature.com/naturecareers/
+              - listitem [ref=e1056]:
+                - link "Nature Conferences" [ref=e1057] [cursor=pointer]:
+                  - /url: https://conferences.nature.com
+                  - text: Nature
+                  - text: Conferences
+          - generic [ref=e1059]:
+            - heading "Regional websites" [level=3] [ref=e1060]
+            - list [ref=e1061]:
+              - listitem [ref=e1062]:
+                - link "Nature Africa" [ref=e1063] [cursor=pointer]:
+                  - /url: https://www.nature.com/natafrica
+              - listitem [ref=e1064]:
+                - link "Nature China" [ref=e1065] [cursor=pointer]:
+                  - /url: http://www.naturechina.com
+              - listitem [ref=e1066]:
+                - link "Nature India" [ref=e1067] [cursor=pointer]:
+                  - /url: https://www.nature.com/nindia
+              - listitem [ref=e1068]:
+                - link "Nature Japan" [ref=e1069] [cursor=pointer]:
+                  - /url: https://www.natureasia.com/ja-jp
+              - listitem [ref=e1070]:
+                - link "Nature Middle East" [ref=e1071] [cursor=pointer]:
+                  - /url: https://www.nature.com/nmiddleeast
+        - list [ref=e1073]:
+          - listitem [ref=e1074]:
+            - link "Privacy Policy" [ref=e1075] [cursor=pointer]:
+              - /url: https://www.nature.com/info/privacy
+          - listitem [ref=e1076]:
+            - link "Use of cookies" [ref=e1077] [cursor=pointer]:
+              - /url: https://www.nature.com/info/cookies
+          - listitem [ref=e1078]:
+            - button "Your privacy choices/Manage cookies" [ref=e1079] [cursor=pointer]
+          - listitem [ref=e1080]:
+            - link "Legal notice" [ref=e1081] [cursor=pointer]:
+              - /url: https://www.nature.com/info/legal-notice
+          - listitem [ref=e1082]:
+            - link "Accessibility statement" [ref=e1083] [cursor=pointer]:
+              - /url: https://www.nature.com/info/accessibility-statement
+          - listitem [ref=e1084]:
+            - link "Terms & Conditions" [ref=e1085] [cursor=pointer]:
+              - /url: https://www.nature.com/info/terms-and-conditions
+          - listitem [ref=e1086]:
+            - link "Your US state privacy rights" [ref=e1087] [cursor=pointer]:
+              - /url: https://www.springernature.com/ccpa
+      - generic [ref=e1088]:
+        - link "Springer Nature" [ref=e1089] [cursor=pointer]:
+          - /url: https://www.springernature.com/
+          - img "Springer Nature" [ref=e1090]
+        - paragraph [ref=e1091]: © 2026 Springer Nature Limited
+    - img [ref=e1093]

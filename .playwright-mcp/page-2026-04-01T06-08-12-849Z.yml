@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - link [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img [ref=e5]
+    - list [ref=e7]:
+      - listitem [ref=e8]:
+        - link "Overview (current)" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - text: Overview
+          - generic [ref=e10]: (current)
+      - listitem [ref=e11]:
+        - link "About" [ref=e12] [cursor=pointer]:
+          - /url: /about/
+  - generic [ref=e13]:
+    - heading "Deep reinforcement learning with relational inductive biases" [level=1] [ref=e14]
+    - paragraph [ref=e15]: Vinicius Zambaldi, David Raposo, Adam Santoro, Victor Bapst, Yujia Li, Igor Babuschkin, Karl Tuyls, David Reichert, Timothy Lillicrap, Edward Lockhart, Murray Shanahan, Victoria Langston, Razvan Pascanu, Matthew Botvinick, Oriol Vinyals, Peter Battaglia. ICLR 2019. (Poster PDF)
+  - contentinfo [ref=e16]:
+    - navigation [ref=e17]:
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - link "Disclaimer" [ref=e21] [cursor=pointer]:
+            - /url: /disclaimer/
+        - listitem [ref=e22]:
+          - link "Contact" [ref=e23] [cursor=pointer]:
+            - /url: /contact/

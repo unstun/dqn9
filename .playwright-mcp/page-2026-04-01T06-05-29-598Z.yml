@@ -1,0 +1,1121 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#content"
+    - complementary [ref=e4]:
+      - paragraph [ref=e6]: Advertisement
+    - banner [ref=e7]:
+      - generic [ref=e10]:
+        - link "Nature" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img "Nature" [ref=e14]
+        - list [ref=e15]:
+          - listitem [ref=e16]:
+            - link "View all journals" [ref=e17] [cursor=pointer]:
+              - /url: https://www.nature.com/siteindex
+              - generic [ref=e18]: View all journals
+          - listitem [ref=e19]:
+            - button "Search" [ref=e20] [cursor=pointer]:
+              - img [ref=e21]
+              - generic [ref=e23]: Search
+          - listitem [ref=e24]:
+            - link "Log in" [ref=e25] [cursor=pointer]:
+              - /url: https://idp.nature.com/auth/personal/springernature?redirect_uri=https://www.nature.com/articles/nature14236
+              - generic [ref=e26]: Log in
+      - generic [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - button "Explore content" [ref=e32] [cursor=pointer]:
+              - generic [ref=e33]: Explore content
+              - img [ref=e34]
+          - listitem [ref=e36]:
+            - button "About the journal" [ref=e37] [cursor=pointer]:
+              - generic [ref=e38]: About the journal
+              - img [ref=e39]
+          - listitem [ref=e41]:
+            - button "Publish with us" [ref=e42] [cursor=pointer]:
+              - generic [ref=e43]: Publish with us
+              - img [ref=e44]
+          - listitem [ref=e46]:
+            - link "Subscribe" [ref=e47] [cursor=pointer]:
+              - /url: /nature/subscribe
+              - generic [ref=e48]: Subscribe
+        - list [ref=e49]:
+          - listitem [ref=e50]:
+            - link "Sign up for alerts" [ref=e51] [cursor=pointer]:
+              - /url: https://journal-alerts.springernature.com/subscribe?journal_id=41586
+              - generic [ref=e52]: Sign up for alerts
+              - img [ref=e53]
+          - listitem [ref=e55]:
+            - link "RSS feed" [ref=e56] [cursor=pointer]:
+              - /url: https://www.nature.com/nature.rss
+              - generic [ref=e57]: RSS feed
+    - navigation "breadcrumbs" [ref=e58]:
+      - list [ref=e60]:
+        - listitem [ref=e61]:
+          - link "nature" [ref=e62] [cursor=pointer]:
+            - /url: /
+          - img [ref=e63]
+        - listitem [ref=e65]:
+          - link "letters" [ref=e66] [cursor=pointer]:
+            - /url: /nature/articles?type=letter
+          - img [ref=e67]
+        - listitem [ref=e69]: article
+  - generic [ref=e70]:
+    - main [ref=e71]:
+      - article [ref=e72]:
+        - generic [ref=e74]:
+          - list [ref=e75]:
+            - listitem [ref=e76]: Letter
+            - listitem [ref=e77]:
+              - text: "Published:"
+              - time [ref=e78]: 25 February 2015
+          - heading "Human-level control through deep reinforcement learning" [level=1] [ref=e79]
+          - list [ref=e80]:
+            - listitem [ref=e81]:
+              - link "Volodymyr Mnih" [ref=e82] [cursor=pointer]:
+                - /url: "#auth-Volodymyr-Mnih-Aff1"
+              - text: ","
+            - listitem [ref=e83]:
+              - link "Koray Kavukcuoglu" [ref=e84] [cursor=pointer]:
+                - /url: "#auth-Koray-Kavukcuoglu-Aff1"
+                - text: Koray Kavukcuoglu
+                - img [ref=e85]
+              - text: ","
+            - listitem [ref=e87]:
+              - link "David Silver" [ref=e88] [cursor=pointer]:
+                - /url: "#auth-David-Silver-Aff1"
+              - text: ","
+            - listitem [ref=e89]:
+              - link "Andrei A. Rusu" [ref=e90] [cursor=pointer]:
+                - /url: "#auth-Andrei_A_-Rusu-Aff1"
+              - text: ","
+            - listitem [ref=e91]:
+              - link "Joel Veness" [ref=e92] [cursor=pointer]:
+                - /url: "#auth-Joel-Veness-Aff1"
+              - text: ","
+            - listitem [ref=e93]:
+              - link "Marc G. Bellemare" [ref=e94] [cursor=pointer]:
+                - /url: "#auth-Marc_G_-Bellemare-Aff1"
+              - text: ","
+            - listitem [ref=e95]:
+              - link "Alex Graves" [ref=e96] [cursor=pointer]:
+                - /url: "#auth-Alex-Graves-Aff1"
+              - text: ","
+            - listitem [ref=e97]:
+              - link "Martin Riedmiller" [ref=e98] [cursor=pointer]:
+                - /url: "#auth-Martin-Riedmiller-Aff1"
+              - text: ","
+            - listitem [ref=e99]:
+              - link "Andreas K. Fidjeland" [ref=e100] [cursor=pointer]:
+                - /url: "#auth-Andreas_K_-Fidjeland-Aff1"
+              - text: ","
+            - listitem [ref=e101]:
+              - link "Georg Ostrovski" [ref=e102] [cursor=pointer]:
+                - /url: "#auth-Georg-Ostrovski-Aff1"
+              - text: ","
+            - listitem [ref=e103]:
+              - link "Stig Petersen" [ref=e104] [cursor=pointer]:
+                - /url: "#auth-Stig-Petersen-Aff1"
+              - text: ","
+            - listitem [ref=e105]:
+              - link "Charles Beattie" [ref=e106] [cursor=pointer]:
+                - /url: "#auth-Charles-Beattie-Aff1"
+              - text: ","
+            - listitem [ref=e107]:
+              - link "Amir Sadik" [ref=e108] [cursor=pointer]:
+                - /url: "#auth-Amir-Sadik-Aff1"
+              - text: ","
+            - listitem [ref=e109]:
+              - link "Ioannis Antonoglou" [ref=e110] [cursor=pointer]:
+                - /url: "#auth-Ioannis-Antonoglou-Aff1"
+              - text: ","
+            - listitem [ref=e111]:
+              - link "Helen King" [ref=e112] [cursor=pointer]:
+                - /url: "#auth-Helen-King-Aff1"
+              - text: ","
+            - listitem [ref=e113]:
+              - link "Dharshan Kumaran" [ref=e114] [cursor=pointer]:
+                - /url: "#auth-Dharshan-Kumaran-Aff1"
+              - text: ","
+            - listitem [ref=e115]:
+              - link "Daan Wierstra" [ref=e116] [cursor=pointer]:
+                - /url: "#auth-Daan-Wierstra-Aff1"
+              - text: ","
+            - listitem [ref=e117]:
+              - link "Shane Legg" [ref=e118] [cursor=pointer]:
+                - /url: "#auth-Shane-Legg-Aff1"
+              - text: "&"
+            - listitem [ref=e119]:
+              - link "Demis Hassabis" [ref=e120] [cursor=pointer]:
+                - /url: "#auth-Demis-Hassabis-Aff1"
+                - text: Demis Hassabis
+                - img [ref=e121]
+          - paragraph [ref=e123]:
+            - link "Nature" [ref=e124] [cursor=pointer]:
+              - /url: /
+            - generic [ref=e125]:
+              - generic [ref=e126]: volume
+              - text: "518"
+            - text: ","
+            - generic [ref=e127]: pages
+            - text: 529–533 (2015)
+            - link "Cite this article" [ref=e128] [cursor=pointer]:
+              - /url: "#citeas"
+          - list [ref=e130]:
+            - listitem [ref=e131]:
+              - paragraph [ref=e132]: 606k Accesses
+            - listitem [ref=e133]:
+              - paragraph [ref=e134]: 24k Citations
+            - listitem [ref=e135]:
+              - paragraph [ref=e136]: 1654 Altmetric
+            - listitem [ref=e137]:
+              - paragraph [ref=e138]:
+                - link "Metrics details" [ref=e139] [cursor=pointer]:
+                  - /url: /articles/nature14236/metrics
+                  - text: Metrics
+                  - generic [ref=e140]: details
+        - generic [ref=e141]:
+          - region "Abstract" [ref=e142]:
+            - generic [ref=e143]:
+              - heading "Abstract" [level=2] [ref=e144]
+              - paragraph [ref=e146]:
+                - text: The theory of reinforcement learning provides a normative account
+                - superscript [ref=e147]:
+                  - link "Reference 1" [ref=e148] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR1
+                    - text: "1"
+                - text: ", deeply rooted in psychological"
+                - superscript [ref=e149]:
+                  - link "Reference 2" [ref=e150] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR2
+                    - text: "2"
+                - text: and neuroscientific
+                - superscript [ref=e151]:
+                  - link "Reference 3" [ref=e152] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR3
+                    - text: "3"
+                - text: "perspectives on animal behaviour, of how agents may optimize their control of an environment. To use reinforcement learning successfully in situations approaching real-world complexity, however, agents are confronted with a difficult task: they must derive efficient representations of the environment from high-dimensional sensory inputs, and use these to generalize past experience to new situations. Remarkably, humans and other animals seem to solve this problem through a harmonious combination of reinforcement learning and hierarchical sensory processing systems"
+                - superscript [ref=e153]:
+                  - link "Reference 4" [ref=e154] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR4
+                    - text: "4"
+                  - text: ","
+                  - link "Reference 5" [ref=e155] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR5
+                    - text: "5"
+                - text: ", the former evidenced by a wealth of neural data revealing notable parallels between the phasic signals emitted by dopaminergic neurons and temporal difference reinforcement learning algorithms"
+                - superscript [ref=e156]:
+                  - link "Reference 3" [ref=e157] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR3
+                    - text: "3"
+                - text: . While reinforcement learning agents have achieved some successes in a variety of domains
+                - superscript [ref=e158]:
+                  - link "Reference 6" [ref=e159] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR6
+                    - text: "6"
+                  - text: ","
+                  - link "Reference 7" [ref=e160] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR7
+                    - text: "7"
+                  - text: ","
+                  - link "Reference 8" [ref=e161] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR8
+                    - text: "8"
+                - text: ", their applicability has previously been limited to domains in which useful features can be handcrafted, or to domains with fully observed, low-dimensional state spaces. Here we use recent advances in training deep neural networks"
+                - superscript [ref=e162]:
+                  - link "Reference 9" [ref=e163] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR9
+                    - text: "9"
+                  - text: ","
+                  - link "Reference 10" [ref=e164] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR10
+                    - text: "10"
+                  - text: ","
+                  - link "Reference 11" [ref=e165] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR11
+                    - text: "11"
+                - text: to develop a novel artificial agent, termed a deep Q-network, that can learn successful policies directly from high-dimensional sensory inputs using end-to-end reinforcement learning. We tested this agent on the challenging domain of classic Atari 2600 games
+                - superscript [ref=e166]:
+                  - link "Reference 12" [ref=e167] [cursor=pointer]:
+                    - /url: /articles/nature14236#ref-CR12
+                    - text: "12"
+                - text: . We demonstrate that the deep Q-network agent, receiving only the pixels and the game score as inputs, was able to surpass the performance of all previous algorithms and achieve a level comparable to that of a professional human games tester across a set of 49 games, using the same algorithm, network architecture and hyperparameters. This work bridges the divide between high-dimensional sensory inputs and actions, resulting in the first artificial agent that is capable of learning to excel at a diverse array of challenging tasks.
+          - paragraph [ref=e169]:
+            - text: This is a preview of subscription content,
+            - link "access via your institution" [ref=e170] [cursor=pointer]:
+              - /url: https://wayf.springernature.com?redirect_uri=https%3A%2F%2Fwww.nature.com%2Farticles%2Fnature14236
+          - heading "Access options" [level=2] [ref=e171]
+          - link "Access through your institution" [ref=e174] [cursor=pointer]:
+            - /url: https://wayf.springernature.com?redirect_uri=https%3A%2F%2Fwww.nature.com%2Farticles%2Fnature14236
+            - img [ref=e175]
+            - generic [ref=e177]: Access through your institution
+          - generic [ref=e179]:
+            - generic [ref=e181]:
+              - paragraph [ref=e182]: Subscribe to this journal
+              - paragraph [ref=e183]: Receive 51 print issues and online access
+              - generic [ref=e184]:
+                - paragraph [ref=e185]: $199.00 per year
+                - paragraph [ref=e186]: only $3.90 per issue
+              - link "Learn more" [ref=e188] [cursor=pointer]:
+                - /url: /nature/subscribe
+                - generic [ref=e189]: Learn more
+            - generic [ref=e191]:
+              - paragraph [ref=e192]: Buy this article
+              - list [ref=e193]:
+                - listitem [ref=e194]: Purchase on SpringerLink
+                - listitem [ref=e195]: Instant access to the full article PDF.
+              - paragraph [ref=e197]: USD 39.95
+              - button "Buy Now" [ref=e201] [cursor=pointer]
+            - paragraph [ref=e202]: Prices may be subject to local taxes which are calculated during checkout
+          - navigation [ref=e203]:
+            - heading "Additional access options:" [level=3] [ref=e204]
+            - list [ref=e205]:
+              - listitem [ref=e206]:
+                - link "Log in" [ref=e207] [cursor=pointer]:
+                  - /url: https://idp.nature.com/authorize/natureuser?client_id=grover&redirect_uri=https%3A%2F%2Fwww.nature.com%2Farticles%2Fnature14236
+              - listitem [ref=e208]:
+                - link "Learn about institutional subscriptions" [ref=e209] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/licensing/license-options
+              - listitem [ref=e210]:
+                - link "Read our FAQs" [ref=e211] [cursor=pointer]:
+                  - /url: https://support.nature.com/en/support/home
+              - listitem [ref=e212]:
+                - link "Contact customer support" [ref=e213] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/contact
+          - region "Similar content being viewed by others" [ref=e214]:
+            - heading "Similar content being viewed by others" [level=3] [ref=e215]
+            - generic [ref=e216]:
+              - article [ref=e218]:
+                - generic [ref=e220]:
+                  - heading "Discovering cognitive strategies with tiny recurrent neural networks" [level=3] [ref=e221]:
+                    - link "Discovering cognitive strategies with tiny recurrent neural networks" [ref=e222] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s41586-025-09142-4?fromPaywallRec=true
+                  - generic [ref=e223]:
+                    - text: Article Open access
+                    - generic [ref=e224]: 02 July 2025
+              - article [ref=e226]:
+                - generic [ref=e228]:
+                  - heading "Discovering neural policies to drive behaviour by integrating deep reinforcement learning agents with biological neural networks" [level=3] [ref=e229]:
+                    - link "Discovering neural policies to drive behaviour by integrating deep reinforcement learning agents with biological neural networks" [ref=e230] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s42256-024-00854-2?fromPaywallRec=true
+                  - generic [ref=e231]: Article 14 June 2024
+              - article [ref=e233]:
+                - generic [ref=e235]:
+                  - heading "Multi-timescale reinforcement learning in the brain" [level=3] [ref=e236]:
+                    - link "Multi-timescale reinforcement learning in the brain" [ref=e237] [cursor=pointer]:
+                      - /url: https://www.nature.com/articles/s41586-025-08929-9?fromPaywallRec=true
+                  - generic [ref=e238]: Article 04 June 2025
+          - generic [ref=e239]:
+            - region "References" [ref=e241]:
+              - generic [ref=e242]:
+                - heading "References" [level=2] [ref=e243]
+                - generic [ref=e245]:
+                  - list [ref=e246]:
+                    - listitem [ref=e247]:
+                      - text: "1"
+                      - paragraph [ref=e248]: "Sutton, R. & Barto, A. Reinforcement Learning: An Introduction (MIT Press, 1998)"
+                      - paragraph [ref=e249]:
+                        - link "MATH reference 1" [ref=e250] [cursor=pointer]:
+                          - /url: http://www.emis.de/MATH-item?1407.68009
+                          - text: MATH
+                        - link "Google Scholar reference 1" [ref=e251] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Reinforcement%20Learning%3A%20An%20Introduction&publication_year=1998&author=Sutton%2CR&author=Barto%2CA
+                          - text: Google Scholar
+                    - listitem [ref=e252]:
+                      - text: "2"
+                      - paragraph [ref=e253]: "Thorndike, E. L. Animal Intelligence: Experimental studies (Macmillan, 1911)"
+                      - paragraph [ref=e254]:
+                        - link "Book reference 2" [ref=e255] [cursor=pointer]:
+                          - /url: https://doi.org/10.5962%2Fbhl.title.55072
+                          - text: Book
+                        - link "Google Scholar reference 2" [ref=e256] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Animal%20Intelligence%3A%20Experimental%20studies&doi=10.5962%2Fbhl.title.55072&publication_year=1911&author=Thorndike%2CEL
+                          - text: Google Scholar
+                    - listitem [ref=e257]:
+                      - text: "3"
+                      - paragraph [ref=e258]: Schultz, W., Dayan, P. & Montague, P. R. A neural substrate of prediction and reward. Science 275, 1593–1599 (1997)
+                      - paragraph [ref=e259]:
+                        - link "Article reference 3" [ref=e260] [cursor=pointer]:
+                          - /url: https://doi.org/10.1126%2Fscience.275.5306.1593
+                          - text: Article
+                        - link "CAS reference 3" [ref=e261] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DyaK2sXhvFSntro%3D
+                          - text: CAS
+                        - link "Google Scholar reference 3" [ref=e262] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=A%20neural%20substrate%20of%20prediction%20and%20reward&journal=Science&doi=10.1126%2Fscience.275.5306.1593&volume=275&pages=1593-1599&publication_year=1997&author=Schultz%2CW&author=Dayan%2CP&author=Montague%2CPR
+                          - text: Google Scholar
+                    - listitem [ref=e263]:
+                      - text: "4"
+                      - paragraph [ref=e264]: Serre, T., Wolf, L. & Poggio, T. Object recognition with features inspired by visual cortex. Proc. IEEE. Comput. Soc. Conf. Comput. Vis. Pattern. Recognit. 994–1000 (2005)
+                      - paragraph [ref=e265]:
+                        - link "Google Scholar reference 4" [ref=e266] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Object%20recognition%20with%20features%20inspired%20by%20visual%20cortex&pages=994-1000&publication_year=2005&author=Serre%2CT&author=Wolf%2CL&author=Poggio%2CT
+                          - text: Google Scholar
+                    - listitem [ref=e267]:
+                      - text: "5"
+                      - paragraph [ref=e268]: "Fukushima, K. Neocognitron: A self-organizing neural network model for a mechanism of pattern recognition unaffected by shift in position. Biol. Cybern. 36, 193–202 (1980)"
+                      - paragraph [ref=e269]:
+                        - link "Article reference 5" [ref=e270] [cursor=pointer]:
+                          - /url: https://link.springer.com/doi/10.1007/BF00344251
+                          - text: Article
+                        - link "CAS reference 5" [ref=e271] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:STN:280:DyaL3c7nsFKntw%3D%3D
+                          - text: CAS
+                        - link "Google Scholar reference 5" [ref=e272] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Neocognitron%3A%20A%20self-organizing%20neural%20network%20model%20for%20a%20mechanism%20of%20pattern%20recognition%20unaffected%20by%20shift%20in%20position&journal=Biol.%20Cybern.&doi=10.1007%2FBF00344251&volume=36&pages=193-202&publication_year=1980&author=Fukushima%2CK
+                          - text: Google Scholar
+                    - listitem [ref=e273]:
+                      - text: "6"
+                      - paragraph [ref=e274]: Tesauro, G. Temporal difference learning and TD-Gammon. Commun. ACM 38, 58–68 (1995)
+                      - paragraph [ref=e275]:
+                        - link "Article reference 6" [ref=e276] [cursor=pointer]:
+                          - /url: https://doi.org/10.1145%2F203330.203343
+                          - text: Article
+                        - link "Google Scholar reference 6" [ref=e277] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Temporal%20difference%20learning%20and%20TD-Gammon&journal=Commun.%20ACM&doi=10.1145%2F203330.203343&volume=38&pages=58-68&publication_year=1995&author=Tesauro%2CG
+                          - text: Google Scholar
+                    - listitem [ref=e278]:
+                      - text: "7"
+                      - paragraph [ref=e279]: Riedmiller, M., Gabel, T., Hafner, R. & Lange, S. Reinforcement learning for robot soccer. Auton. Robots 27, 55–73 (2009)
+                      - paragraph [ref=e280]:
+                        - link "Article reference 7" [ref=e281] [cursor=pointer]:
+                          - /url: https://link.springer.com/doi/10.1007/s10514-009-9120-4
+                          - text: Article
+                        - link "Google Scholar reference 7" [ref=e282] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Reinforcement%20learning%20for%20robot%20soccer&journal=Auton.%20Robots&doi=10.1007%2Fs10514-009-9120-4&volume=27&pages=55-73&publication_year=2009&author=Riedmiller%2CM&author=Gabel%2CT&author=Hafner%2CR&author=Lange%2CS
+                          - text: Google Scholar
+                    - listitem [ref=e283]:
+                      - text: "8"
+                      - paragraph [ref=e284]: Diuk, C., Cohen, A. & Littman, M. L. An object-oriented representation for efficient reinforcement learning. Proc. Int. Conf. Mach. Learn. 240–247 (2008)
+                      - paragraph [ref=e285]:
+                        - link "Google Scholar reference 8" [ref=e286] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=An%20object-oriented%20representation%20for%20efficient%20reinforcement%20learning&pages=240-247&publication_year=2008&author=Diuk%2CC&author=Cohen%2CA&author=Littman%2CML
+                          - text: Google Scholar
+                    - listitem [ref=e287]:
+                      - text: "9"
+                      - paragraph [ref=e288]: Bengio, Y. Learning deep architectures for AI. Foundations and Trends in Machine Learning 2, 1–127 (2009)
+                      - paragraph [ref=e289]:
+                        - link "Article reference 9" [ref=e290] [cursor=pointer]:
+                          - /url: https://doi.org/10.1561%2F2200000006
+                          - text: Article
+                        - link "Google Scholar reference 9" [ref=e291] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Learning%20deep%20architectures%20for%20AI&journal=Foundations%20and%20Trends%20in%20Machine%20Learning&doi=10.1561%2F2200000006&volume=2&pages=1-127&publication_year=2009&author=Bengio%2CY
+                          - text: Google Scholar
+                    - listitem [ref=e292]:
+                      - text: "10"
+                      - paragraph [ref=e293]: Krizhevsky, A., Sutskever, I. & Hinton, G. ImageNet classification with deep convolutional neural networks. Adv. Neural Inf. Process. Syst. 25, 1106–1114 (2012)
+                      - paragraph [ref=e294]:
+                        - link "Google Scholar reference 10" [ref=e295] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks&journal=Adv.%20Neural%20Inf.%20Process.%20Syst.&volume=25&pages=1106-1114&publication_year=2012&author=Krizhevsky%2CA&author=Sutskever%2CI&author=Hinton%2CG
+                          - text: Google Scholar
+                    - listitem [ref=e296]:
+                      - text: "11"
+                      - paragraph [ref=e297]: Hinton, G. E. & Salakhutdinov, R. R. Reducing the dimensionality of data with neural networks. Science 313, 504–507 (2006)
+                      - paragraph [ref=e298]:
+                        - link "Article reference 11" [ref=e299] [cursor=pointer]:
+                          - /url: https://doi.org/10.1126%2Fscience.1127647
+                          - text: Article
+                        - link "ADS reference 11" [ref=e300] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2006Sci...313..504H
+                          - text: ADS
+                        - link "MathSciNet reference 11" [ref=e301] [cursor=pointer]:
+                          - /url: http://www.ams.org/mathscinet-getitem?mr=2242509
+                          - text: MathSciNet
+                        - link "CAS reference 11" [ref=e302] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BD28Xnt1KntrY%3D
+                          - text: CAS
+                        - link "Google Scholar reference 11" [ref=e303] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Reducing%20the%20dimensionality%20of%20data%20with%20neural%20networks&journal=Science&doi=10.1126%2Fscience.1127647&volume=313&pages=504-507&publication_year=2006&author=Hinton%2CGE&author=Salakhutdinov%2CRR
+                          - text: Google Scholar
+                    - listitem [ref=e304]:
+                      - text: "12"
+                      - paragraph [ref=e305]: "Bellemare, M. G., Naddaf, Y., Veness, J. & Bowling, M. The arcade learning environment: An evaluation platform for general agents. J. Artif. Intell. Res. 47, 253–279 (2013)"
+                      - paragraph [ref=e306]:
+                        - link "Article reference 12" [ref=e307] [cursor=pointer]:
+                          - /url: https://doi.org/10.1613%2Fjair.3912
+                          - text: Article
+                        - link "Google Scholar reference 12" [ref=e308] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents&journal=J.%20Artif.%20Intell.%20Res.&doi=10.1613%2Fjair.3912&volume=47&pages=253-279&publication_year=2013&author=Bellemare%2CMG&author=Naddaf%2CY&author=Veness%2CJ&author=Bowling%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e309]:
+                      - text: "13"
+                      - paragraph [ref=e310]: "Legg, S. & Hutter, M. Universal Intelligence: a definition of machine intelligence. Minds Mach. 17, 391–444 (2007)"
+                      - paragraph [ref=e311]:
+                        - link "Article reference 13" [ref=e312] [cursor=pointer]:
+                          - /url: https://link.springer.com/doi/10.1007/s11023-007-9079-x
+                          - text: Article
+                        - link "Google Scholar reference 13" [ref=e313] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Universal%20Intelligence%3A%20a%20definition%20of%20machine%20intelligence&journal=Minds%20Mach.&doi=10.1007%2Fs11023-007-9079-x&volume=17&pages=391-444&publication_year=2007&author=Legg%2CS&author=Hutter%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e314]:
+                      - text: "14"
+                      - paragraph [ref=e315]: "Genesereth, M., Love, N. & Pell, B. General game playing: overview of the AAAI competition. AI Mag. 26, 62–72 (2005)"
+                      - paragraph [ref=e316]:
+                        - link "Google Scholar reference 14" [ref=e317] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=General%20game%20playing%3A%20overview%20of%20the%20AAAI%20competition&journal=AI%20Mag.&volume=26&pages=62-72&publication_year=2005&author=Genesereth%2CM&author=Love%2CN&author=Pell%2CB
+                          - text: Google Scholar
+                    - listitem [ref=e318]:
+                      - text: "15"
+                      - paragraph [ref=e319]: Bellemare, M. G., Veness, J. & Bowling, M. Investigating contingency awareness using Atari 2600 games. Proc. Conf. AAAI. Artif. Intell. 864–871 (2012)
+                      - paragraph [ref=e320]:
+                        - link "Google Scholar reference 15" [ref=e321] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Investigating%20contingency%20awareness%20using%20Atari%202600%20games&pages=864-871&publication_year=2012&author=Bellemare%2CMG&author=Veness%2CJ&author=Bowling%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e322]:
+                      - text: "16"
+                      - paragraph [ref=e323]: "McClelland, J. L., Rumelhart, D. E. & Group, T. P. R. Parallel Distributed Processing: Explorations in the Microstructure of Cognition (MIT Press, 1986)"
+                      - paragraph [ref=e324]:
+                        - link "Google Scholar reference 16" [ref=e325] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Parallel%20Distributed%20Processing%3A%20Explorations%20in%20the%20Microstructure%20of%20Cognition&publication_year=1986&author=McClelland%2CJL&author=Rumelhart%2CDE&author=Group%2CTPR
+                          - text: Google Scholar
+                    - listitem [ref=e326]:
+                      - text: "17"
+                      - paragraph [ref=e327]: LeCun, Y., Bottou, L., Bengio, Y. & Haffner, P. Gradient-based learning applied to document recognition. Proc. IEEE 86, 2278–2324 (1998)
+                      - paragraph [ref=e328]:
+                        - link "Article reference 17" [ref=e329] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2F5.726791
+                          - text: Article
+                        - link "Google Scholar reference 17" [ref=e330] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Gradient-based%20learning%20applied%20to%20document%20recognition&journal=Proc.%20IEEE&doi=10.1109%2F5.726791&volume=86&pages=2278-2324&publication_year=1998&author=LeCun%2CY&author=Bottou%2CL&author=Bengio%2CY&author=Haffner%2CP
+                          - text: Google Scholar
+                    - listitem [ref=e331]:
+                      - text: "18"
+                      - paragraph [ref=e332]: Hubel, D. H. & Wiesel, T. N. Shape and arrangement of columns in cat’s striate cortex. J. Physiol. 165, 559–568 (1963)
+                      - paragraph [ref=e333]:
+                        - link "Article reference 18" [ref=e334] [cursor=pointer]:
+                          - /url: https://doi.org/10.1113%2Fjphysiol.1963.sp007079
+                          - text: Article
+                        - link "CAS reference 18" [ref=e335] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:STN:280:DyaF387kslWitA%3D%3D
+                          - text: CAS
+                        - link "Google Scholar reference 18" [ref=e336] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Shape%20and%20arrangement%20of%20columns%20in%20cat%E2%80%99s%20striate%20cortex&journal=J.%20Physiol.&doi=10.1113%2Fjphysiol.1963.sp007079&volume=165&pages=559-568&publication_year=1963&author=Hubel%2CDH&author=Wiesel%2CTN
+                          - text: Google Scholar
+                    - listitem [ref=e337]:
+                      - text: "19"
+                      - paragraph [ref=e338]: Watkins, C. J. & Dayan, P. Q-learning. Mach. Learn. 8, 279–292 (1992)
+                      - paragraph [ref=e339]:
+                        - link "MATH reference 19" [ref=e340] [cursor=pointer]:
+                          - /url: http://www.emis.de/MATH-item?0773.68062
+                          - text: MATH
+                        - link "Google Scholar reference 19" [ref=e341] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Q-learning&journal=Mach.%20Learn.&volume=8&pages=279-292&publication_year=1992&author=Watkins%2CCJ&author=Dayan%2CP
+                          - text: Google Scholar
+                    - listitem [ref=e342]:
+                      - text: "20"
+                      - paragraph [ref=e343]: Tsitsiklis, J. & Roy, B. V. An analysis of temporal-difference learning with function approximation. IEEE Trans. Automat. Contr. 42, 674–690 (1997)
+                      - paragraph [ref=e344]:
+                        - link "Article reference 20" [ref=e345] [cursor=pointer]:
+                          - /url: https://doi.org/10.1109%2F9.580874
+                          - text: Article
+                        - link "MathSciNet reference 20" [ref=e346] [cursor=pointer]:
+                          - /url: http://www.ams.org/mathscinet-getitem?mr=1454208
+                          - text: MathSciNet
+                        - link "Google Scholar reference 20" [ref=e347] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=An%20analysis%20of%20temporal-difference%20learning%20with%20function%20approximation&journal=IEEE%20Trans.%20Automat.%20Contr.&doi=10.1109%2F9.580874&volume=42&pages=674-690&publication_year=1997&author=Tsitsiklis%2CJ&author=Roy%2CBV
+                          - text: Google Scholar
+                    - listitem [ref=e348]:
+                      - text: "21"
+                      - paragraph [ref=e349]: "McClelland, J. L., McNaughton, B. L. & O’Reilly, R. C. Why there are complementary learning systems in the hippocampus and neocortex: insights from the successes and failures of connectionist models of learning and memory. Psychol. Rev. 102, 419–457 (1995)"
+                      - paragraph [ref=e350]:
+                        - link "Article reference 21" [ref=e351] [cursor=pointer]:
+                          - /url: https://doi.org/10.1037%2F0033-295X.102.3.419
+                          - text: Article
+                        - link "Google Scholar reference 21" [ref=e352] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Why%20there%20are%20complementary%20learning%20systems%20in%20the%20hippocampus%20and%20neocortex%3A%20insights%20from%20the%20successes%20and%20failures%20of%20connectionist%20models%20of%20learning%20and%20memory&journal=Psychol.%20Rev.&doi=10.1037%2F0033-295X.102.3.419&volume=102&pages=419-457&publication_year=1995&author=McClelland%2CJL&author=McNaughton%2CBL&author=O%E2%80%99Reilly%2CRC
+                          - text: Google Scholar
+                    - listitem [ref=e353]:
+                      - text: "22"
+                      - paragraph [ref=e354]: "O’Neill, J., Pleydell-Bouverie, B., Dupret, D. & Csicsvari, J. Play it again: reactivation of waking experience and memory. Trends Neurosci. 33, 220–229 (2010)"
+                      - paragraph [ref=e355]:
+                        - link "Article reference 22" [ref=e356] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016%2Fj.tins.2010.01.006
+                          - text: Article
+                        - link "Google Scholar reference 22" [ref=e357] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Play%20it%20again%3A%20reactivation%20of%20waking%20experience%20and%20memory&journal=Trends%20Neurosci.&doi=10.1016%2Fj.tins.2010.01.006&volume=33&pages=220-229&publication_year=2010&author=O%E2%80%99Neill%2CJ&author=Pleydell-Bouverie%2CB&author=Dupret%2CD&author=Csicsvari%2CJ
+                          - text: Google Scholar
+                    - listitem [ref=e358]:
+                      - text: "23"
+                      - paragraph [ref=e359]: Lin, L.-J. Reinforcement learning for robots using neural networks. Technical Report, DTIC Document. (1993)
+                    - listitem [ref=e360]:
+                      - text: "24"
+                      - paragraph [ref=e361]: "Riedmiller, M. Neural fitted Q iteration - first experiences with a data efficient neural reinforcement learning method. Mach. Learn.: ECML 3720, 317–328 (Springer, 2005)"
+                      - paragraph [ref=e362]:
+                        - link "Google Scholar reference 24" [ref=e363] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Neural%20fitted%20Q%20iteration%20-%20first%20experiences%20with%20a%20data%20efficient%20neural%20reinforcement%20learning%20method&journal=Mach.%20Learn.%3A%20ECML&volume=3720&pages=317-328&publication_year=2005&author=Riedmiller%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e364]:
+                      - text: "25"
+                      - paragraph [ref=e365]: Van der Maaten, L. J. P. & Hinton, G. E. Visualizing high-dimensional data using t-SNE. J. Mach. Learn. Res. 9, 2579–2605 (2008)
+                      - paragraph [ref=e366]:
+                        - link "MATH reference 25" [ref=e367] [cursor=pointer]:
+                          - /url: http://www.emis.de/MATH-item?1225.68219
+                          - text: MATH
+                        - link "Google Scholar reference 25" [ref=e368] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Visualizing%20high-dimensional%20data%20using%20t-SNE&journal=J.%20Mach.%20Learn.%20Res.&volume=9&pages=2579-2605&publication_year=2008&author=Van%20der%20Maaten%2CLJP&author=Hinton%2CGE
+                          - text: Google Scholar
+                    - listitem [ref=e369]:
+                      - text: "26"
+                      - paragraph [ref=e370]: Lange, S. & Riedmiller, M. Deep auto-encoder neural networks in reinforcement learning. Proc. Int. Jt. Conf. Neural. Netw. 1–8 (2010)
+                      - paragraph [ref=e371]:
+                        - link "Google Scholar reference 26" [ref=e372] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Deep%20auto-encoder%20neural%20networks%20in%20reinforcement%20learning&pages=1-8&publication_year=2010&author=Lange%2CS&author=Riedmiller%2CM
+                          - text: Google Scholar
+                    - listitem [ref=e373]:
+                      - text: "27"
+                      - paragraph [ref=e374]: Law, C.-T. & Gold, J. I. Reinforcement learning can account for associative and perceptual learning on a visual decision task. Nature Neurosci. 12, 655 (2009)
+                      - paragraph [ref=e375]:
+                        - link "Article reference 27" [ref=e376] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038%2Fnn.2304
+                          - text: Article
+                        - link "CAS reference 27" [ref=e377] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BD1MXks12ktbw%3D
+                          - text: CAS
+                        - link "Google Scholar reference 27" [ref=e378] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Reinforcement%20learning%20can%20account%20for%20associative%20and%20perceptual%20learning%20on%20a%20visual%20decision%20task&journal=Nature%20Neurosci.&doi=10.1038%2Fnn.2304&volume=12&publication_year=2009&author=Law%2CC-T&author=Gold%2CJI
+                          - text: Google Scholar
+                    - listitem [ref=e379]:
+                      - text: "28"
+                      - paragraph [ref=e380]: Sigala, N. & Logothetis, N. K. Visual categorization shapes feature selectivity in the primate temporal cortex. Nature 415, 318–320 (2002)
+                      - paragraph [ref=e381]:
+                        - link "Article reference 28" [ref=e382] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038%2F415318a
+                          - text: Article
+                        - link "ADS reference 28" [ref=e383] [cursor=pointer]:
+                          - /url: http://adsabs.harvard.edu/cgi-bin/nph-data_query?link_type=ABSTRACT&bibcode=2002Natur.415..318S
+                          - text: ADS
+                        - link "CAS reference 28" [ref=e384] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BD38Xptlajsg%3D%3D
+                          - text: CAS
+                        - link "Google Scholar reference 28" [ref=e385] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Visual%20categorization%20shapes%20feature%20selectivity%20in%20the%20primate%20temporal%20cortex&journal=Nature&doi=10.1038%2F415318a&volume=415&pages=318-320&publication_year=2002&author=Sigala%2CN&author=Logothetis%2CNK
+                          - text: Google Scholar
+                    - listitem [ref=e386]:
+                      - text: "29"
+                      - paragraph [ref=e387]: Bendor, D. & Wilson, M. A. Biasing the content of hippocampal replay during sleep. Nature Neurosci. 15, 1439–1444 (2012)
+                      - paragraph [ref=e388]:
+                        - link "Article reference 29" [ref=e389] [cursor=pointer]:
+                          - /url: https://doi.org/10.1038%2Fnn.3203
+                          - text: Article
+                        - link "CAS reference 29" [ref=e390] [cursor=pointer]:
+                          - /url: /articles/cas-redirect/1:CAS:528:DC%2BC38Xht12js7bO
+                          - text: CAS
+                        - link "Google Scholar reference 29" [ref=e391] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Biasing%20the%20content%20of%20hippocampal%20replay%20during%20sleep&journal=Nature%20Neurosci.&doi=10.1038%2Fnn.3203&volume=15&pages=1439-1444&publication_year=2012&author=Bendor%2CD&author=Wilson%2CMA
+                          - text: Google Scholar
+                    - listitem [ref=e392]:
+                      - text: "30"
+                      - paragraph [ref=e393]: "Moore, A. & Atkeson, C. Prioritized sweeping: reinforcement learning with less data and less real time. Mach. Learn. 13, 103–130 (1993)"
+                      - paragraph [ref=e394]:
+                        - link "Google Scholar reference 30" [ref=e395] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Prioritized%20sweeping%3A%20reinforcement%20learning%20with%20less%20data%20and%20less%20real%20time&journal=Mach.%20Learn.&volume=13&pages=103-130&publication_year=1993&author=Moore%2CA&author=Atkeson%2CC
+                          - text: Google Scholar
+                    - listitem [ref=e396]:
+                      - text: "31"
+                      - paragraph [ref=e397]: Jarrett, K., Kavukcuoglu, K., Ranzato, M. A. & LeCun, Y. What is the best multi-stage architecture for object recognition? Proc. IEEE. Int. Conf. Comput. Vis. 2146–2153 (2009)
+                      - paragraph [ref=e398]:
+                        - link "Google Scholar reference 31" [ref=e399] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition&pages=2146-2153&publication_year=2009&author=Jarrett%2CK&author=Kavukcuoglu%2CK&author=Ranzato%2CMA&author=LeCun%2CY
+                          - text: Google Scholar
+                    - listitem [ref=e400]:
+                      - text: "32"
+                      - paragraph [ref=e401]: Nair, V. & Hinton, G. E. Rectified linear units improve restricted Boltzmann machines. Proc. Int. Conf. Mach. Learn. 807–814 (2010)
+                    - listitem [ref=e402]:
+                      - text: "33"
+                      - paragraph [ref=e403]: Kaelbling, L. P., Littman, M. L. & Cassandra, A. R. Planning and acting in partially observable stochastic domains. Artificial Intelligence 101, 99–134 (1994)
+                      - paragraph [ref=e404]:
+                        - link "Article reference 33" [ref=e405] [cursor=pointer]:
+                          - /url: https://doi.org/10.1016%2FS0004-3702%2898%2900023-X
+                          - text: Article
+                        - link "MathSciNet reference 33" [ref=e406] [cursor=pointer]:
+                          - /url: http://www.ams.org/mathscinet-getitem?mr=1641530
+                          - text: MathSciNet
+                        - link "Google Scholar reference 33" [ref=e407] [cursor=pointer]:
+                          - /url: http://scholar.google.com/scholar_lookup?&title=Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains&journal=Artificial%20Intelligence&doi=10.1016%2FS0004-3702%2898%2900023-X&volume=101&pages=99-134&publication_year=1994&author=Kaelbling%2CLP&author=Littman%2CML&author=Cassandra%2CAR
+                          - text: Google Scholar
+                  - paragraph [ref=e408]:
+                    - link "Download references" [ref=e409] [cursor=pointer]:
+                      - /url: https://citation-needed.springer.com/v2/references/10.1038/nature14236?format=refman&flavour=references
+                      - text: Download references
+                      - img [ref=e410]
+            - generic [ref=e413]:
+              - heading "Acknowledgements" [level=2] [ref=e414]
+              - paragraph [ref=e416]: We thank G. Hinton, P. Dayan and M. Bowling for discussions, A. Cain and J. Keene for work on the visuals, K. Keller and P. Rogers for help with the visuals, G. Wayne for comments on an earlier version of the manuscript, and the rest of the DeepMind team for their support, ideas and encouragement.
+            - region "Author information" [ref=e417]:
+              - generic [ref=e418]:
+                - heading "Author information" [level=2] [ref=e419]
+                - generic [ref=e420]:
+                  - generic [ref=e421]: Author notes
+                  - list [ref=e422]:
+                    - listitem [ref=e423]:
+                      - paragraph [ref=e424]: "Volodymyr Mnih, Koray Kavukcuoglu and David Silver: These authors contributed equally to this work."
+                  - heading "Authors and Affiliations" [level=3] [ref=e425]
+                  - list [ref=e426]:
+                    - listitem [ref=e427]:
+                      - paragraph [ref=e428]: Google DeepMind, 5 New Street Square, London EC4A 3TW, UK,
+                      - paragraph [ref=e429]: Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg & Demis Hassabis
+                  - heading "Contributions" [level=3] [ref=e430]
+                  - paragraph [ref=e431]: V.M., K.K., D.S., J.V., M.G.B., M.R., A.G., D.W., S.L. and D.H. conceptualized the problem and the technical framework. V.M., K.K., A.A.R. and D.S. developed and tested the algorithms. J.V., S.P., C.B., A.A.R., M.G.B., I.A., A.K.F., G.O. and A.S. created the testing platform. K.K., H.K., S.L. and D.H. managed the project. K.K., D.K., D.H., V.M., D.S., A.G., A.A.R., J.V. and M.G.B. wrote the paper.
+                  - heading "Corresponding authors" [level=3] [ref=e432]
+                  - paragraph [ref=e433]:
+                    - text: Correspondence to
+                    - link "email Koray Kavukcuoglu" [ref=e434] [cursor=pointer]:
+                      - /url: mailto:korayk@google.com
+                      - text: Koray Kavukcuoglu
+                    - text: or
+                    - link "email Demis Hassabis" [ref=e435] [cursor=pointer]:
+                      - /url: mailto:demishassabis@google.com
+                      - text: Demis Hassabis
+                    - text: .
+            - generic [ref=e437]:
+              - heading "Ethics declarations" [level=2] [ref=e438]
+              - generic [ref=e439]:
+                - heading "Competing interests" [level=3] [ref=e440]
+                - paragraph [ref=e441]: The authors declare no competing financial interests.
+            - generic [ref=e443]:
+              - heading "Extended data figures and tables" [level=2] [ref=e444]
+              - generic [ref=e446]:
+                - generic [ref=e447]:
+                  - heading "Extended Data Figure 1 Two-dimensional t-SNE embedding of the representations in the last hidden layer assigned by DQN to game states experienced during a combination of human and agent play in Space Invaders." [level=3] [ref=e448]:
+                    - link "Extended Data Figure 1 Two-dimensional t-SNE embedding of the representations in the last hidden layer assigned by DQN to game states experienced during a combination of human and agent play in Space Invaders." [ref=e449] [cursor=pointer]:
+                      - /url: /articles/nature14236/figures/5
+                  - paragraph [ref=e451]:
+                    - text: The plot was generated by running the t-SNE algorithm
+                    - superscript [ref=e452]:
+                      - link "Reference 25" [ref=e453] [cursor=pointer]:
+                        - /url: /articles/nature14236#ref-CR25
+                        - text: "25"
+                    - text: "on the last hidden layer representation assigned by DQN to game states experienced during a combination of human (30 min) and agent (2 h) play. The fact that there is similar structure in the two-dimensional embeddings corresponding to the DQN representation of states experienced during human play (orange points) and DQN play (blue points) suggests that the representations learned by DQN do indeed generalize to data generated from policies other than its own. The presence in the t-SNE embedding of overlapping clusters of points corresponding to the network representation of states experienced during human and agent play shows that the DQN agent also follows sequences of states similar to those found in human play. Screenshots corresponding to selected states are shown (human: orange border; DQN: blue border)."
+                - generic [ref=e454]:
+                  - heading "Extended Data Figure 2 Visualization of learned value functions on two games, Breakout and Pong." [level=3] [ref=e455]:
+                    - link "Extended Data Figure 2 Visualization of learned value functions on two games, Breakout and Pong." [ref=e456] [cursor=pointer]:
+                      - /url: /articles/nature14236/figures/6
+                  - paragraph [ref=e458]: a, A visualization of the learned value function on the game Breakout. At time points 1 and 2, the state value is predicted to be ∼17 and the agent is clearing the bricks at the lowest level. Each of the peaks in the value function curve corresponds to a reward obtained by clearing a brick. At time point 3, the agent is about to break through to the top level of bricks and the value increases to ∼21 in anticipation of breaking out and clearing a large set of bricks. At point 4, the value is above 23 and the agent has broken through. After this point, the ball will bounce at the upper part of the bricks clearing many of them by itself. b, A visualization of the learned action-value function on the game Pong. At time point 1, the ball is moving towards the paddle controlled by the agent on the right side of the screen and the values of all actions are around 0.7, reflecting the expected value of this state based on previous experience. At time point 2, the agent starts moving the paddle towards the ball and the value of the ‘up’ action stays high while the value of the ‘down’ action falls to −0.9. This reflects the fact that pressing ‘down’ would lead to the agent losing the ball and incurring a reward of −1. At time point 3, the agent hits the ball by pressing ‘up’ and the expected reward keeps increasing until time point 4, when the ball reaches the left edge of the screen and the value of all actions reflects that the agent is about to receive a reward of 1. Note, the dashed line shows the past trajectory of the ball purely for illustrative purposes (that is, not shown during the game). With permission from Atari Interactive, Inc.
+                - figure "Extended Data Table 1 List of hyperparameters and their values" [ref=e461]:
+                  - generic [ref=e462]: Extended Data Table 1 List of hyperparameters and their values
+                  - link "Full size table 1" [ref=e464] [cursor=pointer]:
+                    - /url: /articles/nature14236/tables/1
+                    - text: Full size table
+                    - img [ref=e465]
+                - figure "Extended Data Table 2 Comparison of games scores obtained by DQN agents with methods from the literatureReference 12,Reference 15 and a professional human games tester" [ref=e469]:
+                  - generic [ref=e471]:
+                    - text: Extended Data Table 2 Comparison of games scores obtained by DQN agents with methods from the literature
+                    - superscript [ref=e472]:
+                      - link "Reference 12" [ref=e473] [cursor=pointer]:
+                        - /url: /articles/nature14236#ref-CR12
+                        - text: "12"
+                      - text: ","
+                      - link "Reference 15" [ref=e474] [cursor=pointer]:
+                        - /url: /articles/nature14236#ref-CR15
+                        - text: "15"
+                    - text: and a professional human games tester
+                  - link "Full size table 2" [ref=e476] [cursor=pointer]:
+                    - /url: /articles/nature14236/tables/2
+                    - text: Full size table
+                    - img [ref=e477]
+                - figure "Extended Data Table 3 The effects of replay and separating the target Q-network" [ref=e481]:
+                  - generic [ref=e482]: Extended Data Table 3 The effects of replay and separating the target Q-network
+                  - link "Full size table 3" [ref=e484] [cursor=pointer]:
+                    - /url: /articles/nature14236/tables/3
+                    - text: Full size table
+                    - img [ref=e485]
+                - figure "Extended Data Table 4 Comparison of DQN performance with linear function approximator" [ref=e489]:
+                  - generic [ref=e490]: Extended Data Table 4 Comparison of DQN performance with linear function approximator
+                  - link "Full size table 4" [ref=e492] [cursor=pointer]:
+                    - /url: /articles/nature14236/tables/4
+                    - text: Full size table
+                    - img [ref=e493]
+            - generic [ref=e496]:
+              - heading "Supplementary information" [level=2] [ref=e497]
+              - generic [ref=e499]:
+                - generic [ref=e500]:
+                  - heading "Supplementary Information (download PDF )" [level=3] [ref=e501]:
+                    - link "Supplementary Information (download PDF )" [ref=e502] [cursor=pointer]:
+                      - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM122_ESM.pdf
+                      - text: Supplementary Information (download PDF
+                      - img [ref=e503]
+                      - text: )
+                  - paragraph [ref=e506]: This file contains a Supplementary Discussion. (PDF 110 kb)
+                - generic [ref=e507]:
+                  - heading "Performance of DQN in the Game Space Invaders (download MOV )" [level=3] [ref=e508]:
+                    - link "Performance of DQN in the Game Space Invaders (download MOV )" [ref=e509] [cursor=pointer]:
+                      - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM123_ESM.mov
+                      - text: Performance of DQN in the Game Space Invaders (download MOV
+                      - img [ref=e510]
+                      - text: )
+                  - paragraph [ref=e513]: This video shows the performance of the DQN agent while playing the game of Space Invaders. The DQN agent successfully clears the enemy ships on the screen while the enemy ships move down and sideways with gradually increasing speed. (MOV 5106 kb)
+                - generic [ref=e514]:
+                  - heading "Demonstration of Learning Progress in the Game Breakout (download MOV )" [level=3] [ref=e515]:
+                    - link "Demonstration of Learning Progress in the Game Breakout (download MOV )" [ref=e516] [cursor=pointer]:
+                      - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM124_ESM.mov
+                      - text: Demonstration of Learning Progress in the Game Breakout (download MOV
+                      - img [ref=e517]
+                      - text: )
+                  - paragraph [ref=e520]: "This video shows the improvement in the performance of DQN over training (i.e. after 100, 200, 400 and 600 episodes). After 600 episodes DQN finds and exploits the optimal strategy in this game, which is to make a tunnel around the side, and then allow the ball to hit blocks by bouncing behind the wall. Note: the score is displayed at the top left of the screen (maximum for clearing one screen is 448 points), number of lives remaining is shown in the middle (starting with 5 lives), and the “1” on the top right indicates this is a 1-player game. (MOV 1500 kb)"
+            - generic [ref=e522]:
+              - heading "PowerPoint slides" [level=2] [ref=e523]
+              - generic [ref=e525]:
+                - heading "PowerPoint slide for Fig. 1 (download PPT )" [level=3] [ref=e527]:
+                  - link "PowerPoint slide for Fig. 1 (download PPT )" [ref=e528] [cursor=pointer]:
+                    - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM118_ESM.ppt
+                    - text: PowerPoint slide for Fig. 1 (download PPT
+                    - img [ref=e529]
+                    - text: )
+                - heading "PowerPoint slide for Fig. 2 (download PPT )" [level=3] [ref=e532]:
+                  - link "PowerPoint slide for Fig. 2 (download PPT )" [ref=e533] [cursor=pointer]:
+                    - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM119_ESM.ppt
+                    - text: PowerPoint slide for Fig. 2 (download PPT
+                    - img [ref=e534]
+                    - text: )
+                - heading "PowerPoint slide for Fig. 3 (download PPT )" [level=3] [ref=e537]:
+                  - link "PowerPoint slide for Fig. 3 (download PPT )" [ref=e538] [cursor=pointer]:
+                    - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM120_ESM.ppt
+                    - text: PowerPoint slide for Fig. 3 (download PPT
+                    - img [ref=e539]
+                    - text: )
+                - heading "PowerPoint slide for Fig. 4 (download PPT )" [level=3] [ref=e542]:
+                  - link "PowerPoint slide for Fig. 4 (download PPT )" [ref=e543] [cursor=pointer]:
+                    - /url: https://static-content.springer.com/esm/art%3A10.1038%2Fnature14236/MediaObjects/41586_2015_BFnature14236_MOESM121_ESM.ppt
+                    - text: PowerPoint slide for Fig. 4 (download PPT
+                    - img [ref=e544]
+                    - text: )
+            - generic [ref=e547]:
+              - heading "Rights and permissions" [level=2] [ref=e548]
+              - paragraph [ref=e550]:
+                - link "Reprints and permissions" [ref=e551] [cursor=pointer]:
+                  - /url: https://s100.copyright.com/AppDispatchServlet?title=Human-level%20control%20through%20deep%20reinforcement%20learning&author=Volodymyr%20Mnih%20et%20al&contentID=10.1038%2Fnature14236&copyright=Springer%20Nature%20Limited&publication=0028-0836&publicationDate=2015-02-25&publisherName=SpringerNature&orderBeanReset=true
+            - region "About this article" [ref=e552]:
+              - generic [ref=e553]:
+                - heading "About this article" [level=2] [ref=e554]
+                - generic [ref=e556]:
+                  - link "Check for updates. Verify currency and authenticity via CrossMark" [ref=e558] [cursor=pointer]:
+                    - /url: https://crossmark.crossref.org/dialog/?doi=10.1038/nature14236
+                    - img "Check for updates. Verify currency and authenticity via CrossMark" [ref=e559]
+                  - generic [ref=e560]:
+                    - heading "Cite this article" [level=3] [ref=e561]
+                    - paragraph [ref=e562]: Mnih, V., Kavukcuoglu, K., Silver, D. et al. Human-level control through deep reinforcement learning. Nature 518, 529–533 (2015). https://doi.org/10.1038/nature14236
+                    - paragraph [ref=e563]:
+                      - link "Download citation" [ref=e564] [cursor=pointer]:
+                        - /url: https://citation-needed.springer.com/v2/references/10.1038/nature14236?format=refman&flavour=citation
+                        - text: Download citation
+                        - img [ref=e565]
+                    - list [ref=e567]:
+                      - listitem [ref=e568]:
+                        - paragraph [ref=e569]:
+                          - text: Received
+                          - time [ref=e571]: 10 July 2014
+                      - listitem [ref=e572]:
+                        - paragraph [ref=e573]:
+                          - text: Accepted
+                          - time [ref=e575]: 16 January 2015
+                      - listitem [ref=e576]:
+                        - paragraph [ref=e577]:
+                          - text: Published
+                          - time [ref=e579]: 25 February 2015
+                      - listitem [ref=e580]:
+                        - paragraph [ref=e581]:
+                          - text: Issue date
+                          - time [ref=e583]: 26 February 2015
+                      - listitem [ref=e584]:
+                        - paragraph [ref=e585]:
+                          - text: DOI
+                          - generic [ref=e586]: https://doi.org/10.1038/nature14236
+                    - generic [ref=e587]:
+                      - heading "Subjects" [level=3] [ref=e588]
+                      - list [ref=e589]:
+                        - listitem [ref=e590]:
+                          - link "Computer science" [ref=e591] [cursor=pointer]:
+                            - /url: /subjects/computer-science
+          - generic [ref=e593]:
+            - heading "This article is cited by" [level=2] [ref=e594]
+            - list [ref=e596]:
+              - listitem [ref=e597]:
+                - heading "Deep learning model for differentiating nasal cavity masses based on nasal endoscopy images" [level=3] [ref=e598]:
+                  - link "Deep learning model for differentiating nasal cavity masses based on nasal endoscopy images" [ref=e599] [cursor=pointer]:
+                    - /url: https://doi.org/10.1186/s12911-024-02517-z
+                - list [ref=e600]:
+                  - listitem [ref=e601]: Junhu Tai
+                  - listitem [ref=e602]: ", Munsoo Han"
+                  - listitem [ref=e603]: ... Tae Hoon Kim
+                - paragraph [ref=e604]: BMC Medical Informatics and Decision Making (2024)
+              - listitem [ref=e605]:
+                - heading "Synergizing habits and goals with variational Bayes" [level=3] [ref=e606]:
+                  - link "Synergizing habits and goals with variational Bayes" [ref=e607] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41467-024-48577-7
+                - list [ref=e608]:
+                  - listitem [ref=e609]: Dongqi Han
+                  - listitem [ref=e610]: ", Kenji Doya"
+                  - listitem [ref=e611]: ... Jun Tani
+                - paragraph [ref=e612]: Nature Communications (2024)
+              - listitem [ref=e613]:
+                - heading "Revealing principles of autonomous thermal soaring in windy conditions using vulture-inspired deep reinforcement-learning" [level=3] [ref=e614]:
+                  - link "Revealing principles of autonomous thermal soaring in windy conditions using vulture-inspired deep reinforcement-learning" [ref=e615] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41467-024-48670-x
+                - list [ref=e616]:
+                  - listitem [ref=e617]: Yoav Flato
+                  - listitem [ref=e618]: ", Roi Harel"
+                  - listitem [ref=e619]: ... Tsevi Beatus
+                - paragraph [ref=e620]: Nature Communications (2024)
+              - listitem [ref=e621]:
+                - heading "Artificial intelligence in surgery" [level=3] [ref=e622]:
+                  - link "Artificial intelligence in surgery" [ref=e623] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41591-024-02970-3
+                - list [ref=e624]:
+                  - listitem [ref=e625]: Chris Varghese
+                  - listitem [ref=e626]: ", Ewen M. Harrison"
+                  - listitem [ref=e627]: ... Eric J. Topol
+                - paragraph [ref=e628]: Nature Medicine (2024)
+              - listitem [ref=e629]:
+                - heading "An automatic deep reinforcement learning bolus calculator for automated insulin delivery systems" [level=3] [ref=e630]:
+                  - link "An automatic deep reinforcement learning bolus calculator for automated insulin delivery systems" [ref=e631] [cursor=pointer]:
+                    - /url: https://doi.org/10.1038/s41598-024-62912-4
+                - list [ref=e632]:
+                  - listitem [ref=e633]: Sayyar Ahmad
+                  - listitem [ref=e634]: ", Aleix Beneyto"
+                  - listitem [ref=e635]: ... Josep Vehi
+                - paragraph [ref=e636]: Scientific Reports (2024)
+          - generic [ref=e638]:
+            - heading "Comments" [level=2] [ref=e639]
+            - generic [ref=e640]:
+              - paragraph [ref=e641]: Commenting on this article is now closed.
+              - list [ref=e642]:
+                - listitem [ref=e643]:
+                  - paragraph [ref=e644]:
+                    - text: Rodney Barbati
+                    - time [ref=e645]: 21 May 2018, 18:13
+                  - paragraph [ref=e646]: I wonder how long it will be before we see robots anonymously competing against humans in online gaming. I could see someone releasing such bots in order to sell their achievements - like someone putting a bot on Eve online so that they could sell the resulting artifacts for real money.
+    - complementary "Article navigation" [ref=e647]:
+      - generic [ref=e650]:
+        - link "Access through your institution" [ref=e652] [cursor=pointer]:
+          - /url: https://wayf.springernature.com?redirect_uri=https%3A%2F%2Fwww.nature.com%2Farticles%2Fnature14236
+          - img [ref=e653]
+          - generic [ref=e655]: Access through your institution
+        - link "Buy or subscribe" [ref=e657] [cursor=pointer]:
+          - /url: "#access-options"
+          - generic [ref=e658]: Buy or subscribe
+      - generic [ref=e660]:
+        - heading "Editorial Summary" [level=2] [ref=e661]
+        - heading "Self-taught AI agent masters Atari arcade games" [level=3] [ref=e662]
+        - paragraph [ref=e664]: For an artificial agent to be considered truly intelligent it needs to excel at a variety of tasks considered challenging for humans. To date, it has only been possible to create individual algorithms able to master a single discipline — for example, IBM's Deep Blue beat the human world champion at chess but was not able to do anything else. Now a team working at Google's DeepMind subsidiary has developed an artificial agent — dubbed a deep Q-network — that learns to play 49 classic Atari 2600 'arcade' games directly from sensory experience, achieving performance on a par with that of an expert human player. By combining reinforcement learning (selecting actions that maximize reward — in this case the game score) with deep learning (multilayered feature extraction from high-dimensional data — in this case the pixels), the game-playing agent takes artificial intelligence a step nearer the goal of systems capable of learning a diversity of challenging tasks from scratch.
+        - button "show all" [ref=e665] [cursor=pointer]
+      - generic [ref=e667]:
+        - heading "Associated content" [level=2] [ref=e668]
+        - generic [ref=e670]:
+          - paragraph [ref=e671]: Collection
+          - heading "The multidisciplinary nature of machine intelligence" [level=3] [ref=e672]:
+            - link "The multidisciplinary nature of machine intelligence" [ref=e673] [cursor=pointer]:
+              - /url: https://www.nature.com/collections/csgqqsrfxh
+        - article [ref=e675]:
+          - generic [ref=e677]:
+            - heading "Learning to see and act" [level=3] [ref=e678]:
+              - link "Learning to see and act" [ref=e679] [cursor=pointer]:
+                - /url: https://www.nature.com/articles/518486a
+            - list [ref=e680]:
+              - listitem [ref=e681]: Bernhard Schölkopf
+            - generic [ref=e682]:
+              - generic [ref=e683]: Nature
+              - generic [ref=e684]: News & Views
+              - time [ref=e685]: 25 Feb 2015
+      - generic [ref=e687]:
+        - tablist [ref=e688]:
+          - tab "Sections" [selected] [ref=e689] [cursor=pointer]
+          - tab "Figures" [ref=e690] [cursor=pointer]
+          - tab "References" [ref=e691] [cursor=pointer]
+        - tabpanel "Sections" [ref=e692]:
+          - list [ref=e694]:
+            - listitem [ref=e695]:
+              - link "Abstract" [ref=e696] [cursor=pointer]:
+                - /url: "#Abs3"
+            - listitem [ref=e697]:
+              - link "References" [ref=e698] [cursor=pointer]:
+                - /url: "#Bib1"
+            - listitem [ref=e699]:
+              - link "Acknowledgements" [ref=e700] [cursor=pointer]:
+                - /url: "#Ack1"
+            - listitem [ref=e701]:
+              - link "Author information" [ref=e702] [cursor=pointer]:
+                - /url: "#author-information"
+            - listitem [ref=e703]:
+              - link "Ethics declarations" [ref=e704] [cursor=pointer]:
+                - /url: "#ethics"
+            - listitem [ref=e705]:
+              - link "Extended data figures and tables" [ref=e706] [cursor=pointer]:
+                - /url: "#Sec11"
+            - listitem [ref=e707]:
+              - link "Supplementary information" [ref=e708] [cursor=pointer]:
+                - /url: "#Sec12"
+            - listitem [ref=e709]:
+              - link "PowerPoint slides" [ref=e710] [cursor=pointer]:
+                - /url: "#Sec13"
+            - listitem [ref=e711]:
+              - link "Rights and permissions" [ref=e712] [cursor=pointer]:
+                - /url: "#rightslink"
+            - listitem [ref=e713]:
+              - link "About this article" [ref=e714] [cursor=pointer]:
+                - /url: "#article-info"
+            - listitem [ref=e715]:
+              - link "This article is cited by" [ref=e716] [cursor=pointer]:
+                - /url: "#further-reading"
+            - listitem [ref=e717]:
+              - link "Comments" [ref=e718] [cursor=pointer]:
+                - /url: "#article-comments"
+          - paragraph [ref=e722]: Advertisement
+  - contentinfo [ref=e723]:
+    - generic [ref=e727]:
+      - paragraph [ref=e728]: Nature (Nature)
+      - paragraph [ref=e729]: ISSN 1476-4687 (online)
+      - paragraph [ref=e730]: ISSN 0028-0836 (print)
+    - generic [ref=e731]:
+      - generic [ref=e732]:
+        - heading "nature.com footer links" [level=2] [ref=e733]
+        - generic [ref=e735]:
+          - generic [ref=e736]:
+            - heading "About Nature Portfolio" [level=3] [ref=e737]
+            - list [ref=e738]:
+              - listitem [ref=e739]:
+                - link "About us" [ref=e740] [cursor=pointer]:
+                  - /url: https://www.nature.com/npg_/company_info/index.html
+              - listitem [ref=e741]:
+                - link "Press releases" [ref=e742] [cursor=pointer]:
+                  - /url: https://www.nature.com/npg_/press_room/press_releases.html
+              - listitem [ref=e743]:
+                - link "Press office" [ref=e744] [cursor=pointer]:
+                  - /url: https://press.nature.com/
+              - listitem [ref=e745]:
+                - link "Contact us" [ref=e746] [cursor=pointer]:
+                  - /url: https://support.nature.com/support/home
+          - generic [ref=e747]:
+            - heading "Discover content" [level=3] [ref=e748]
+            - list [ref=e749]:
+              - listitem [ref=e750]:
+                - link "Journals A-Z" [ref=e751] [cursor=pointer]:
+                  - /url: https://www.nature.com/siteindex
+              - listitem [ref=e752]:
+                - link "Articles by subject" [ref=e753] [cursor=pointer]:
+                  - /url: https://www.nature.com/subjects
+              - listitem [ref=e754]:
+                - link "protocols.io" [ref=e755] [cursor=pointer]:
+                  - /url: https://www.protocols.io/
+              - listitem [ref=e756]:
+                - link "Nature Index" [ref=e757] [cursor=pointer]:
+                  - /url: https://www.natureindex.com/
+          - generic [ref=e758]:
+            - heading "Publishing policies" [level=3] [ref=e759]
+            - list [ref=e760]:
+              - listitem [ref=e761]:
+                - link "Nature portfolio policies" [ref=e762] [cursor=pointer]:
+                  - /url: https://www.nature.com/authors/editorial_policies
+              - listitem [ref=e763]:
+                - link "Open access" [ref=e764] [cursor=pointer]:
+                  - /url: https://www.nature.com/nature-research/open-access
+          - generic [ref=e765]:
+            - heading "Author & Researcher services" [level=3] [ref=e766]
+            - list [ref=e767]:
+              - listitem [ref=e768]:
+                - link "Reprints & permissions" [ref=e769] [cursor=pointer]:
+                  - /url: https://www.nature.com/reprints
+              - listitem [ref=e770]:
+                - link "Research data" [ref=e771] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/authors/research-data
+              - listitem [ref=e772]:
+                - link "Language editing" [ref=e773] [cursor=pointer]:
+                  - /url: https://authorservices.springernature.com/language-editing/
+              - listitem [ref=e774]:
+                - link "Scientific editing" [ref=e775] [cursor=pointer]:
+                  - /url: https://authorservices.springernature.com/scientific-editing/
+              - listitem [ref=e776]:
+                - link "Nature Masterclasses" [ref=e777] [cursor=pointer]:
+                  - /url: https://masterclasses.nature.com/
+              - listitem [ref=e778]:
+                - link "Research Solutions" [ref=e779] [cursor=pointer]:
+                  - /url: https://solutions.springernature.com/
+          - generic [ref=e780]:
+            - heading "Libraries & institutions" [level=3] [ref=e781]
+            - list [ref=e782]:
+              - listitem [ref=e783]:
+                - link "Librarian service & tools" [ref=e784] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/tools-services
+              - listitem [ref=e785]:
+                - link "Librarian portal" [ref=e786] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/manage-your-account/librarianportal
+              - listitem [ref=e787]:
+                - link "Open research" [ref=e788] [cursor=pointer]:
+                  - /url: https://www.nature.com/openresearch/about-open-access/information-for-institutions
+              - listitem [ref=e789]:
+                - link "Recommend to library" [ref=e790] [cursor=pointer]:
+                  - /url: https://www.springernature.com/gp/librarians/recommend-to-your-library
+          - generic [ref=e791]:
+            - heading "Advertising & partnerships" [level=3] [ref=e792]
+            - list [ref=e793]:
+              - listitem [ref=e794]:
+                - link "Advertising" [ref=e795] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/product/digital-advertising/
+              - listitem [ref=e796]:
+                - link "Partnerships & Services" [ref=e797] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/
+              - listitem [ref=e798]:
+                - link "Media kits" [ref=e799] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/media-kits/
+              - listitem [ref=e800]:
+                - link "Branded content" [ref=e801] [cursor=pointer]:
+                  - /url: https://partnerships.nature.com/product/branded-content-native-advertising/
+          - generic [ref=e802]:
+            - heading "Professional development" [level=3] [ref=e803]
+            - list [ref=e804]:
+              - listitem [ref=e805]:
+                - link "Nature Awards" [ref=e806] [cursor=pointer]:
+                  - /url: https://www.nature.com/immersive/natureawards/index.html
+              - listitem [ref=e807]:
+                - link "Nature Careers" [ref=e808] [cursor=pointer]:
+                  - /url: https://www.nature.com/naturecareers/
+              - listitem [ref=e809]:
+                - link "Nature Conferences" [ref=e810] [cursor=pointer]:
+                  - /url: https://conferences.nature.com
+                  - text: Nature
+                  - text: Conferences
+          - generic [ref=e812]:
+            - heading "Regional websites" [level=3] [ref=e813]
+            - list [ref=e814]:
+              - listitem [ref=e815]:
+                - link "Nature Africa" [ref=e816] [cursor=pointer]:
+                  - /url: https://www.nature.com/natafrica
+              - listitem [ref=e817]:
+                - link "Nature China" [ref=e818] [cursor=pointer]:
+                  - /url: http://www.naturechina.com
+              - listitem [ref=e819]:
+                - link "Nature India" [ref=e820] [cursor=pointer]:
+                  - /url: https://www.nature.com/nindia
+              - listitem [ref=e821]:
+                - link "Nature Japan" [ref=e822] [cursor=pointer]:
+                  - /url: https://www.natureasia.com/ja-jp
+              - listitem [ref=e823]:
+                - link "Nature Middle East" [ref=e824] [cursor=pointer]:
+                  - /url: https://www.nature.com/nmiddleeast
+        - list [ref=e826]:
+          - listitem [ref=e827]:
+            - link "Privacy Policy" [ref=e828] [cursor=pointer]:
+              - /url: https://www.nature.com/info/privacy
+          - listitem [ref=e829]:
+            - link "Use of cookies" [ref=e830] [cursor=pointer]:
+              - /url: https://www.nature.com/info/cookies
+          - listitem [ref=e831]:
+            - button "Your privacy choices/Manage cookies" [ref=e832] [cursor=pointer]
+          - listitem [ref=e833]:
+            - link "Legal notice" [ref=e834] [cursor=pointer]:
+              - /url: https://www.nature.com/info/legal-notice
+          - listitem [ref=e835]:
+            - link "Accessibility statement" [ref=e836] [cursor=pointer]:
+              - /url: https://www.nature.com/info/accessibility-statement
+          - listitem [ref=e837]:
+            - link "Terms & Conditions" [ref=e838] [cursor=pointer]:
+              - /url: https://www.nature.com/info/terms-and-conditions
+          - listitem [ref=e839]:
+            - link "Your US state privacy rights" [ref=e840] [cursor=pointer]:
+              - /url: https://www.springernature.com/ccpa
+      - generic [ref=e841]:
+        - link "Springer Nature" [ref=e842] [cursor=pointer]:
+          - /url: https://www.springernature.com/
+          - img "Springer Nature" [ref=e843]
+        - paragraph [ref=e844]: © 2026 Springer Nature Limited
+    - img [ref=e846]

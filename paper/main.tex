@@ -436,7 +436,7 @@ DQfD 预训练步数           & 40\,000 \\
 
 在线交互开始后，总损失增加 TD 项：$\mathcal{L}=\mathcal{L}_{\mathrm{TD}}+\mathcal{L}_{\mathrm{margin}}+\mathcal{L}_{\mathrm{CE}}$。其中 $\mathcal{L}_{\mathrm{margin}}$ 与 $\mathcal{L}_{\mathrm{CE}}$ 仅对小批量中的演示样本计算，防止在线经验覆盖已习得的专家知识。
 
-\textit{专家演示生成。} 演示由基于 Dijkstra 目标距离图（第~\ref{sec:reward}~节）的贪心策略产生：对每个离散动作执行固定步数的恒定动作 rollout，以自行车运动学模型向前仿真 $H=15$ 步，选取 rollout 末端目标距离最小且全程无碰撞的动作。仿真采用与训练环境相同的运动学模型与碰撞检测。仅保留成功到达目标的回合作为演示，存入回放缓冲区并在在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
+\textit{专家演示生成。} 示教轨迹通过基于运动学模型逐步生成：每一步对 35 个离散动作分别以恒定控制输入向前仿真 $H=15$ 步，从全程无碰撞的候选动作中选取末端目标距离最小者执行，重复至回合结束。仅保留成功到达目标的回合作为演示，存入回放缓冲区并在在线训练期间始终保留~\cite{hester2018deep}。算法~\ref{alg:training}~给出完整训练流程。
 
 \begin{algorithm}[!htbp]
 \caption{MD-DDQN 训练流程}

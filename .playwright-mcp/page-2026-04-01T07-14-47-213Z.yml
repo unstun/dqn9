@@ -1,0 +1,1824 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - region "Official website of the United States government" [ref=e3]:
+    - generic [ref=e6]:
+      - img [ref=e8]
+      - paragraph [ref=e10]: An official website of the United States government
+      - button "Here's how you know" [ref=e11] [cursor=pointer]
+  - banner [ref=e12]:
+    - generic [ref=e14]:
+      - link "NCBI home page" [ref=e15] [cursor=pointer]:
+        - /url: https://www.ncbi.nlm.nih.gov/
+        - img "NCBI home page" [ref=e16]
+      - generic [ref=e17]:
+        - button "Show search overlay" [ref=e18] [cursor=pointer]:
+          - img
+          - text: Search
+        - button "Show login menu" [ref=e20] [cursor=pointer]:
+          - img
+          - generic [ref=e21]: Log in
+    - navigation "Primary navigation" [ref=e22]:
+      - paragraph [ref=e23]: Primary site navigation
+  - region "PMC Header with search box" [ref=e24]:
+    - generic [ref=e25]:
+      - link "PMC Home" [ref=e28] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e29]:
+        - search [ref=e30]:
+          - generic [ref=e31]: Search PMC Full-Text Archive
+          - combobox "Search PMC Full-Text Archive" [ref=e33]:
+            - listbox "Suggestions"
+          - button "Search in PMC" [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: Search in PMC
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - link "Journal List" [ref=e39] [cursor=pointer]:
+              - /url: /journals/
+            - text: "|"
+          - listitem [ref=e40]:
+            - link "User Guide" [ref=e41] [cursor=pointer]:
+              - /url: /about/userguide/
+  - generic [ref=e44]:
+    - generic [ref=e46]:
+      - complementary "Disclaimer note" [ref=e49]:
+        - text: As a library, NLM provides access to scientific literature. Inclusion in an NLM database does not imply endorsement of, or agreement with, the contents by NLM or the National Institutes of Health.
+        - text: "Learn more:"
+        - link "PMC Disclaimer" [ref=e50] [cursor=pointer]:
+          - /url: /about/disclaimer/
+        - text: "|"
+        - link "PMC Copyright Notice" [ref=e51] [cursor=pointer]:
+          - /url: /about/copyright/
+      - main [ref=e53]:
+        - region "Journal banner" [ref=e54]:
+          - img "Frontiers in Neurorobotics logo" [ref=e55]
+          - generic:
+            - link "Link to Frontiers in Neurorobotics":
+              - /url: http://frontiersin.org/neurorobotics/
+        - article [ref=e56]:
+          - region "Article citation and metadata" [ref=e57]:
+            - generic [ref=e59]:
+              - button "▸ Front Neurorobot" [ref=e61] [cursor=pointer]
+              - text: ". 2025 Feb 13;19:1512953. doi:"
+              - link "External, opens in a new tab. 10.3389/fnbot.2025.1512953" [ref=e62] [cursor=pointer]:
+                - /url: https://doi.org/10.3389/fnbot.2025.1512953
+            - generic [ref=e64]:
+              - heading "Path planning of mobile robot based on improved double deep Q-network algorithm" [level=1] [ref=e66]
+              - generic [ref=e67]:
+                - link "Zhenggang Wang" [ref=e68] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/?term="Wang%20Z"[Author]
+                - superscript [ref=e69]: 1,
+                - superscript [ref=e70]: "*"
+                - text: ","
+                - link "Shuhong Song" [ref=e71] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/?term="Song%20S"[Author]
+                - superscript [ref=e72]: "1"
+                - text: ","
+                - link "Shenghui Cheng" [ref=e73] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/?term="Cheng%20S"[Author]
+                - superscript [ref=e74]: "1"
+              - list [ref=e75]:
+                - listitem [ref=e76]:
+                  - button "▸ Author information" [ref=e77] [cursor=pointer]
+                - listitem [ref=e78]:
+                  - button "▸ Article notes" [ref=e79] [cursor=pointer]
+                - listitem [ref=e80]:
+                  - button "▸ Copyright and License information" [ref=e81] [cursor=pointer]
+              - generic [ref=e82]:
+                - text: "PMCID: PMC11865209 PMID:"
+                - link "40018324" [ref=e83] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/40018324/
+          - region "Article content" [ref=e84]:
+            - generic [ref=e85]:
+              - generic [ref=e86]:
+                - heading "Abstract" [level=2] [ref=e87]: Abstract
+                - paragraph [ref=e88]: Aiming at the problems of slow network convergence, poor reward convergence stability, and low path planning efficiency of traditional deep reinforcement learning algorithms, this paper proposes a BiLSTM-D3QN (Bidirectional Long and Short-Term Memory Dueling Double Deep Q-Network) path planning algorithm based on the DDQN (Double Deep Q-Network) decision model. Firstly, a Bidirectional Long Short-Term Memory network (BiLSTM) is introduced to make the network have memory, increase the stability of decision making and make the reward converge more stably; secondly, Dueling Network is introduced to further solve the problem of overestimating the Q-value of the neural network, which makes the network able to be updated quickly; Adaptive reprioritization based on the frequency penalty function is proposed. Experience Playback, which extracts important and fresh data from the experience pool to accelerate the convergence of the neural network; finally, an adaptive action selection mechanism is introduced to further optimize the action exploration. Simulation experiments show that the BiLSTM-D3QN path planning algorithm outperforms the traditional Deep Reinforcement Learning algorithm in terms of network convergence speed, planning efficiency, stability of reward convergence, and success rate in simple environments; in complex environments, the path length of BiLSTM-D3QN is 20 m shorter than that of the improved ERDDQN (Experience Replay Double Deep Q-Network) algorithm, the number of turning points is 7 fewer, the planning time is 0.54 s shorter, and the success rate is 10.4% higher. The superiority of the BiLSTM-D3QN algorithm in terms of network convergence speed and path planning performance is demonstrated.
+                - paragraph [ref=e90]:
+                  - strong [ref=e91]: "Keywords:"
+                  - text: deep reinforcement learning, mobile robot, path planning, BiLSTM, Dueling Network
+              - generic [ref=e92]:
+                - heading "1. Introduction" [level=2] [ref=e93]: 1. Introduction
+                - paragraph [ref=e94]:
+                  - text: In recent years, there has been a notable increase in the utilization of mobile robots in a variety of fields, including the military and industry, for the performance of essential unmanned tasks (
+                  - link "Deguale et al., 2024" [ref=e95] [cursor=pointer]:
+                    - /url: "#ref4"
+                  - text: ). As the complexity of use scenarios and the level of safety standards continue to evolve, the challenge of efficiently and accurately planning driving paths has become a significant research topic (
+                  - link "Meng et al., 2023" [ref=e96] [cursor=pointer]:
+                    - /url: "#ref14"
+                  - text: ). The planning of robot paths has consistently been a topic of significant interest within the field of robotics. It enhances the autonomy and operational efficiency of robots in diverse environments, offering substantial benefits for applications across various sectors of modern society (
+                  - link "Kong et al., 2024" [ref=e97] [cursor=pointer]:
+                    - /url: "#ref9"
+                  - text: ). The fundamental objective of path planning is to identify the optimal route from the initial position to the intended destination of the robot, which typically necessitates a comprehensive assessment of factors such as distance, time, energy consumption, and the safety of the path (
+                  - link "Guo et al., 2020" [ref=e98] [cursor=pointer]:
+                    - /url: "#ref5"
+                  - text: ). An optimal path should be free of obstacles, minimize detours, and facilitate efficient navigation (
+                  - link "Junli et al., 2020" [ref=e99] [cursor=pointer]:
+                    - /url: "#ref8"
+                  - text: ). Mobile robots frequently operate in environments with diverse obstacles and unknown variables, underscoring the importance of path planning algorithms that can effectively avoid obstacles and operate in real-time with high reliability (
+                  - link "Sha et al., 2023" [ref=e100] [cursor=pointer]:
+                    - /url: "#ref15"
+                  - text: ).
+                - paragraph [ref=e101]:
+                  - text: "The existing body of literature on path planning algorithms can be divided into two main categories: traditional algorithms and those based on machine learning ("
+                  - link "Yuwan et al., 2022" [ref=e102] [cursor=pointer]:
+                    - /url: "#ref22"
+                  - text: ). The traditional path planning algorithms include Ant Colony Optimization (
+                  - link "Lei et al., 2023" [ref=e103] [cursor=pointer]:
+                    - /url: "#ref10"
+                  - text: ), A* algorithm (
+                  - link "Yu et al., 2024" [ref=e104] [cursor=pointer]:
+                    - /url: "#ref20"
+                  - text: ), Particle Swarm Optimization (
+                  - link "Meetu et al., 2022" [ref=e105] [cursor=pointer]:
+                    - /url: "#ref13"
+                  - text: ), Dijkstra algorithm (
+                  - link "Zhou et al., 2023" [ref=e106] [cursor=pointer]:
+                    - /url: "#ref25"
+                  - text: ), Genetic Algorithm (
+                  - link "Debnath et al., 2024" [ref=e107] [cursor=pointer]:
+                    - /url: "#ref3"
+                  - text: ), Dynamic Window Approach (
+                  - link "Chuanbo et al., 2023" [ref=e108] [cursor=pointer]:
+                    - /url: "#ref2"
+                  - text: ), and Artificial Potential Field algorithm (
+                  - link "Zhang et al., 2023" [ref=e109] [cursor=pointer]:
+                    - /url: "#ref23"
+                  - text: ), among others. While these algorithms are widely used, they also have corresponding shortcomings, including low planning efficiency, poor search ability, and the tendency to fall into local optima. In recent years, the application of Deep Reinforcement Learning (DRL) algorithms in the field of path planning has been significantly advanced by the progress of hardware technology. DRL integrates the robust feature extraction capabilities of Deep Learning (DL) with the decision optimization abilities of Reinforcement Learning (RL), thereby offering a novel approach to address the limitations of traditional path planning algorithms (
+                  - link "Chen et al., 2024" [ref=e110] [cursor=pointer]:
+                    - /url: "#ref1"
+                  - text: ). The DRL algorithm most widely used in path planning is the Deep Q Network (DQN) algorithm proposed by the DeepMind team (
+                  - link "Lin and Wen, 2023" [ref=e111] [cursor=pointer]:
+                    - /url: "#ref12"
+                  - text: ). The DQN effectively addresses the “curse of dimensionality” problem faced by Q-value tables in complex environments by utilizing a neural network to replace the Q-value table in the Q-Learning algorithm. However, the traditional DQN algorithm exhibits shortcomings such as overestimation of Q-values and slow network convergence.
+                - paragraph [ref=e112]:
+                  - text: In light of the shortcomings of the DQN algorithm,
+                  - link "Huiyan et al. (2023)" [ref=e113] [cursor=pointer]:
+                    - /url: "#ref6"
+                  - text: put forth an augmented DDQN (double DQN) approach to path planning, which enhances the efficacy of algorithmic training and the precision of optimal path generation.
+                  - link "Jinduo et al. (2022)" [ref=e114] [cursor=pointer]:
+                    - /url: "#ref7"
+                  - text: put forth a double DQN-state splitting Q network (DDQNSSQN) algorithm that integrates state splitting with optimal states. This method employs a multi-dimensional state classification and storage system, coupled with targeted training to obtain optimal path information.
+                  - link "Yan et al. (2023)" [ref=e115] [cursor=pointer]:
+                    - /url: "#ref19"
+                  - text: put forth an end-to-end local path planner n-step dueling double DQN with reward-based
+                  - emphasis [ref=e116]: ϵ
+                  - text: "-greedy (RND3QN) based on a deep reinforcement learning framework, which acquires environmental data from LiDAR as input and uses a neural network to fit Q-values to output the corresponding discrete actions. The problem of unstable mobile robot action selection due to sparse rewards is effectively solved."
+                  - link "Shen and Zhao (2023)" [ref=e117] [cursor=pointer]:
+                    - /url: "#ref16"
+                  - text: put forth a DDQN-based path planning framework for UAVs to traverse unknown terrain, which effectively mitigates the issue of overestimation of Q values.
+                  - link "Wang et al. (2024)" [ref=e118] [cursor=pointer]:
+                    - /url: "#ref18"
+                  - text: put forth an extended double deep Q network (DDQN) model that incorporates a radio prediction network to generate a UAV trajectory and anticipate the accumulated reward value resulting from action selection. This approach enhances the network’s learning efficiency. In a further development of the field,
+                  - link "Li and Geng (2023)" [ref=e119] [cursor=pointer]:
+                    - /url: "#ref11"
+                  - text: proposed a probabilistic state exploration ERDDQN algorithm. This has the effect of reducing the number of times the robot enters a repeated state during training, thus allowing it to explore new states more effectively, improve the speed of network convergence, and optimize the path planning effect.
+                  - link "Tang et al. (2024)" [ref=e120] [cursor=pointer]:
+                    - /url: "#ref17"
+                  - text: put forth a competitive architecture dueling-deep Q network (D3QN) for UAV path planning, which further optimizes the calculation of Q value and facilitates more precise updates to network parameters.
+                  - link "Yuan et al. (2023)" [ref=e121] [cursor=pointer]:
+                    - /url: "#ref21"
+                  - text: proposed the D3QN-PER path planning algorithm, which employs the Prioritized Experience Replay (PER) mechanism to enhance the utilization rate of crucial samples and accelerate the convergence of the neural network.
+                - paragraph [ref=e122]: The aforementioned research has enhanced the functionality of the DQN algorithm to a certain degree; nevertheless, there are still significant issues that require attention, including low sample utilization, slow network convergence, and unstable reward convergence. To address this issue, this paper proposes a BiLSTM-D3QN path planning algorithm based on the DDQN algorithm. First, a BILSTM network is introduced to render the neural network memory-based, thereby increasing the stability of decision-making and thus facilitating more stable reward convergence. Secondly, a competitive network is introduced to further address the issue of overestimation of the neural network’s Q-value, thereby enabling the network to update more rapidly. The proposal of adaptive reprioritization of experience replay based on frequency penalty function is intended to facilitate the extraction of crucial and recent data from the experience pool, thus accelerating the convergence of the neural network. Finally, an adaptive action selection mechanism is introduced with the objective of further optimizing action exploration.
+              - generic [ref=e123]:
+                - heading "2. Related work" [level=2] [ref=e124]: 2. Related work
+                - generic [ref=e125]:
+                  - heading "2.1. Q-Learning algorithm" [level=3] [ref=e126]
+                  - paragraph [ref=e127]:
+                    - text: Reinforcement Learning is an important branch of machine learning that aims to learn how to take the best action in a given situation by interacting with the environment in order to maximize cumulative rewards. Reinforcement learning differs from supervised learning and unsupervised learning in that it emphasizes trial and error in interacting with the environment for feedback, constantly adjusting strategies to achieve the best results. The basic framework of reinforcement learning is shown in
+                    - link "Figure 1" [ref=e128] [cursor=pointer]:
+                      - /url: "#fig1"
+                    - text: . The agent chooses action
+                    - text: based on current state
+                    - text: . The environment provides reward
+                    - text: for the current action and state
+                    - text: for the next moment based on the action. After continuous interaction, the agent’s decision is improved and updated to obtain a higher reward
+                    - text: .
+                  - figure "Basic reinforcement learning architecture." [ref=e129]:
+                    - heading "Figure 1." [level=4] [ref=e130]
+                    - paragraph [ref=e131]:
+                      - img "Figure 1" [ref=e132]
+                    - link "Open in a new tab" [ref=e134] [cursor=pointer]:
+                      - /url: figure/fig1/
+                    - paragraph [ref=e136]: Basic reinforcement learning architecture.
+                  - paragraph [ref=e137]:
+                    - text: The Q-Learning algorithm is a model-free reinforcement learning method based on a value function. It selects the optimal strategy by updating the action value function Q. The update of Q value is shown in
+                    - link "Equation 1" [ref=e138] [cursor=pointer]:
+                      - /url: "#EQ1"
+                    - text: ":"
+                  - table [ref=e139]:
+                    - rowgroup [ref=e140]:
+                      - row "(1)" [ref=e141]:
+                        - cell [ref=e142]
+                        - cell "(1)" [ref=e143]
+                  - paragraph [ref=e144]:
+                    - text: Where
+                    - text: denotes the Q-value of the intelligent body for selecting action
+                    - text: in the current state
+                    - text: ;
+                    - text: denotes the learning rate;
+                    - text: denotes the discount factor;
+                    - text: denotes the reward value obtained after executing action
+                    - text: ", and"
+                    - text: denotes the maximum Q-value for the next state.
+                - generic [ref=e145]:
+                  - heading "2.2. DQN algorithm" [level=3] [ref=e146]
+                  - paragraph [ref=e147]:
+                    - text: The traditional DQN algorithm, as proposed by the DeepMind team, is based on the Q-Learning algorithm. The introduction of a neural network as the carrier of the value function allows for the nonlinear approximation of the state value function through the use of a neural network with parameters
+                    - text: and an activation function. This approach enhances the efficiency of path planning. In contrast to the Q-Learning algorithm Q-value table, the DQN employs a neural network to address the dimensional explosion problem that arises in complex environments (
+                    - link "Chen et al., 2024" [ref=e148] [cursor=pointer]:
+                      - /url: "#ref1"
+                    - text: ). However, the conventional DQN approach selects the action with the maximum Q-value when searching for the optimal action, which is susceptible to overestimation of the Q-value during network updates.
+                    - link "Figure 2" [ref=e149] [cursor=pointer]:
+                      - /url: "#fig2"
+                    - text: illustrates the structure of the DQN algorithm.
+                  - figure "Schematic diagram of DQN structure." [ref=e150]:
+                    - heading "Figure 2." [level=4] [ref=e151]
+                    - paragraph [ref=e152]:
+                      - link "Figure 2 🔍" [ref=e153] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g002.jpg
+                        - img "Figure 2" [ref=e154]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e156] [cursor=pointer]:
+                      - /url: figure/fig2/
+                    - paragraph [ref=e158]: Schematic diagram of DQN structure.
+                  - paragraph [ref=e159]:
+                    - text: "The DQN neural network comprises two networks with identical structures: the current network ("
+                    - text: ) and the target network (
+                    - text: ). The algorithm employs the current network to calculate an estimated value for a given state and utilizes the output value of the target network in conjunction with a sequential difference method to perform gradient descent, thereby updating the current network. Once the current network has undergone a specified number of updates, the target network is updated by copying the parameters C of the current network. During the training phase, a random and uniform sample is selected from the experience replay pool and provided to the two neural networks for the purpose of gradient descent with respect to the loss function. The calculation formula is presented in
+                    - link "Equations 2" [ref=e160] [cursor=pointer]:
+                      - /url: "#EQ2"
+                    - text: ","
+                    - link "3" [ref=e161] [cursor=pointer]:
+                      - /url: "#EQ3"
+                    - text: .
+                  - table [ref=e162]:
+                    - rowgroup [ref=e163]:
+                      - row "(2)" [ref=e164]:
+                        - cell [ref=e165]
+                        - cell "(2)" [ref=e166]
+                  - table [ref=e167]:
+                    - rowgroup [ref=e168]:
+                      - row "(3)" [ref=e169]:
+                        - cell [ref=e170]
+                        - cell "(3)" [ref=e171]
+                  - paragraph [ref=e172]:
+                    - text: Where
+                    - text: is the current network parameter and
+                    - text: is the target network parameter;
+                    - text: is the discount factor;
+                    - text: is the current network output value; and
+                    - text: is the maximum action value of the target network at state
+                    - text: .
+                  - paragraph [ref=e173]:
+                    - text: Following the calculation of the loss value, the DQN updates the network parameter
+                    - text: through the application of the gradient descent method. The gradient descent formula is presented in
+                    - link "Equation 4" [ref=e174] [cursor=pointer]:
+                      - /url: "#EQ4"
+                    - text: .
+                  - table [ref=e175]:
+                    - rowgroup [ref=e176]:
+                      - row "(4)" [ref=e177]:
+                        - cell [ref=e178]
+                        - cell "(4)" [ref=e179]
+                - generic [ref=e180]:
+                  - heading "2.3. DDQN algorithm" [level=3] [ref=e181]
+                  - paragraph [ref=e182]:
+                    - text: In response to the issue of overestimation of the Q value in the DQN algorithm, the DeepMind team put forth the DDQN algorithm as a potential solution. In comparison to the DQN algorithm, the DDQN algorithm modifies the manner in which the Q value is calculated within the target network. This involves the decomposition of the maximization operation within the target network into the utilization of distinct networks for the purposes of action selection and action evaluation. In contrast to the conventional approach of selecting the maximum Q value, the DDQN algorithm initially identifies the action
+                    - text: that corresponds to the maximum Q value in state
+                    - text: through the current network. The target network then calculates the Q value based on action
+                    - text: and the current state
+                    - text: . This process effectively mitigates the issue of overestimation of Q values (
+                    - link "Yuan et al., 2023" [ref=e183] [cursor=pointer]:
+                      - /url: "#ref21"
+                    - text: ), leading to more precise Q value estimation. The structural diagram of the DDQN network is illustrated in
+                    - link "Figure 3" [ref=e184] [cursor=pointer]:
+                      - /url: "#fig3"
+                    - text: .
+                  - figure "Schematic diagram of DDQN structure." [ref=e185]:
+                    - heading "Figure 3." [level=4] [ref=e186]
+                    - paragraph [ref=e187]:
+                      - link "Figure 3 🔍" [ref=e188] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g003.jpg
+                        - img "Figure 3" [ref=e189]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e191] [cursor=pointer]:
+                      - /url: figure/fig3/
+                    - paragraph [ref=e193]: Schematic diagram of DDQN structure.
+                  - paragraph [ref=e194]:
+                    - text: The Target Value in the DDQN algorithm is calculated as shown in
+                    - link "Equation 5" [ref=e195] [cursor=pointer]:
+                      - /url: "#EQ5"
+                    - text: ":"
+                  - table [ref=e196]:
+                    - rowgroup [ref=e197]:
+                      - row "(5)" [ref=e198]:
+                        - cell [ref=e199]
+                        - cell "(5)" [ref=e200]
+                  - paragraph [ref=e201]:
+                    - text: where
+                    - text: represents the set of all possible actions in the next state
+                    - text: ; and
+                    - text: represents the action with the largest Q value selected by the current Q network in
+                    - text: .
+              - generic [ref=e202]:
+                - heading "3. BiLSTM-D3QN path planning algorithm" [level=2] [ref=e203]: 3. BiLSTM-D3QN path planning algorithm
+                - paragraph [ref=e204]:
+                  - text: While DDQN addresses the issue of overestimation of Q-values to a degree, it nevertheless exhibits certain shortcomings and constraints. In the DDQN algorithm, the value of
+                  - emphasis [ref=e205]: ε
+                  - text: is a constant. In the latter stages of path planning, the robot may fail to identify the optimal path due to the random selection of actions. While the experience replay buffer addresses the issue of data correlation, it also presents a challenge in efficiently sampling representative experiences from the experience pool to accelerate network convergence. Furthermore, when the robot encounters the same obstacle, it may execute disparate actions, which impedes the value function from attaining convergence. This ultimately results in an unstable decision-making process. In light of these considerations, this paper puts forth a BiLSTM-D3QN path planning algorithm founded upon the DDQN decision-making model.
+                - generic [ref=e206]:
+                  - heading "3.1. Design of reward function" [level=3] [ref=e207]
+                  - paragraph [ref=e208]:
+                    - text: In the context of mobile robot path planning, the term “state” is defined as the position coordinates of the robot, as illustrated in
+                    - link "Equation 6" [ref=e209] [cursor=pointer]:
+                      - /url: "#EQ6"
+                    - text: ":"
+                  - table [ref=e210]:
+                    - rowgroup [ref=e211]:
+                      - row "(6)" [ref=e212]:
+                        - cell [ref=e213]
+                        - cell "(6)" [ref=e214]
+                  - paragraph [ref=e215]:
+                    - text: Its action space is shown in
+                    - link "Figure 4" [ref=e216] [cursor=pointer]:
+                      - /url: "#fig4"
+                    - text: .
+                  - figure "Schematic diagram of the action space." [ref=e217]:
+                    - heading "Figure 4." [level=4] [ref=e218]
+                    - paragraph [ref=e219]:
+                      - img "Figure 4" [ref=e220]
+                    - link "Open in a new tab" [ref=e222] [cursor=pointer]:
+                      - /url: figure/fig4/
+                    - paragraph [ref=e224]: Schematic diagram of the action space.
+                  - paragraph [ref=e225]:
+                    - text: "The area in which the robot is permitted to move is divided into a grid, and the robot is therefore able to move freely to any of the eight surrounding grids. The digits 0 through 7 are used to represent the eight directions: front, back, left, right, top left, top right, bottom left, and bottom right, respectively. The action set is illustrated in"
+                    - link "Equation 7" [ref=e226] [cursor=pointer]:
+                      - /url: "#EQ7"
+                    - text: ":"
+                  - table [ref=e227]:
+                    - rowgroup [ref=e228]:
+                      - row "(7)" [ref=e229]:
+                        - cell [ref=e230]
+                        - cell "(7)" [ref=e231]
+                  - paragraph [ref=e232]:
+                    - text: Reward functions are a key component of research in the field of RL on path planning. Classical DRL algorithms typically employ sparse reward functions, as discussed in
+                    - link "Zhao et al. (2024)" [ref=e233] [cursor=pointer]:
+                      - /url: "#ref24"
+                    - text: . The classical DRL algorithm is designed with arrival rewards and collision rewards, with a positive reward of 20 given for arrival at the target point and-20 for collision, and the reward function is shown in
+                    - link "Equation 8" [ref=e234] [cursor=pointer]:
+                      - /url: "#EQ8"
+                    - text: ":"
+                  - table [ref=e235]:
+                    - rowgroup [ref=e236]:
+                      - row "(8)" [ref=e237]:
+                        - cell [ref=e238]
+                        - cell "(8)" [ref=e239]
+                  - paragraph [ref=e240]: Since only the arrival and collision rewards are set during the training process, it results in a sparse reward signal. When the mobile robot acts, ineffective actions often occur. In general, terms, when the robot completes the action, if the reward value is 0 at this time, the robot can not judge what to do next based on the current state, and it is not clear how to reach the target position. Due to the difficulty of pre-exploration, the robot needs to go through a longer trial-and-error process to find the correct path. During this process, the robot is mainly guided by the negative rewards from collisions and lacks the guidance of positive rewards, so it is difficult to update a better strategy during strategy evaluation.
+                  - paragraph [ref=e241]:
+                    - text: One solution to the reward sparsity problem is to add auxiliary rewards, and in this paper, we introduce a dynamic reward function. Distance and direction rewards are added to the environment as auxiliary rewards, and the reward values are dynamically presented with the change of robot position. The closer the mobile robot is to the target point, the greater the reward is. The reward function is shown in
+                    - link "Equation 9" [ref=e242] [cursor=pointer]:
+                      - /url: "#EQ9"
+                    - text: ":"
+                  - table [ref=e243]:
+                    - rowgroup [ref=e244]:
+                      - row "(9)" [ref=e245]:
+                        - cell [ref=e246]
+                        - cell "(9)" [ref=e247]
+                  - paragraph [ref=e248]:
+                    - text: To ensure safety in the path planning process, the simulation environment is given to the obstacle expansion. When the distance between robot and the obstacle is less than 0.1 m it is considered to have collision, and the distance between the robot and the target point is less than 0.1 m it is considered to have reached the target point, and the distance between the mobile robot and the target point is calculated as shown in
+                    - link "Equation 10" [ref=e249] [cursor=pointer]:
+                      - /url: "#EQ10"
+                    - text: ":"
+                  - table [ref=e250]:
+                    - rowgroup [ref=e251]:
+                      - row "(10)" [ref=e252]:
+                        - cell [ref=e253]
+                        - cell "(10)" [ref=e254]
+                  - paragraph [ref=e255]:
+                    - text: where
+                    - text: is the Euclidean distance between the robot and the target position at time
+                    - text: ;
+                    - text: is the distance-assisted reward constant, which is used to adjust the scale of the reward;
+                    - text: is the current position of the mobile robot and
+                    - text: is the target point position.
+                  - paragraph [ref=e256]:
+                    - text: The improved dynamic reward function in this paper is shown in
+                    - link "Equation 11" [ref=e257] [cursor=pointer]:
+                      - /url: "#EQ11"
+                    - text: ":"
+                  - table [ref=e258]:
+                    - rowgroup [ref=e259]:
+                      - row "(11)" [ref=e260]:
+                        - cell [ref=e261]
+                        - cell "(11)" [ref=e262]
+                  - paragraph [ref=e263]:
+                    - text: In the gradient update of the neural network value function, the error term is shown in
+                    - link "Equation 12" [ref=e264] [cursor=pointer]:
+                      - /url: "#EQ12"
+                    - text: ":"
+                  - table [ref=e265]:
+                    - rowgroup [ref=e266]:
+                      - row "(12)" [ref=e267]:
+                        - cell [ref=e268]
+                        - cell "(12)" [ref=e269]
+                  - paragraph [ref=e270]:
+                    - text: When the reward
+                    - text: is sparse, the change of
+                    - text: is drastic and has high variance, which affects the convergence. By introducing a smooth reward function, the variance of the gradient update term and the gradient update formula are shown in
+                    - link "Equations 13" [ref=e271] [cursor=pointer]:
+                      - /url: "#EQ13"
+                    - text: and
+                    - link "14" [ref=e272] [cursor=pointer]:
+                      - /url: "#EQ14"
+                    - text: ":"
+                  - table [ref=e273]:
+                    - rowgroup [ref=e274]:
+                      - row "(13)" [ref=e275]:
+                        - cell [ref=e276]
+                        - cell "(13)" [ref=e277]
+                  - table [ref=e278]:
+                    - rowgroup [ref=e279]:
+                      - row "(14)" [ref=e280]:
+                        - cell [ref=e281]
+                        - cell "(14)" [ref=e282]
+                  - paragraph [ref=e283]: "Sparse rewards can lead to the following problems:"
+                  - list [ref=e284]:
+                    - listitem [ref=e285]:
+                      - paragraph [ref=e286]:
+                        - text: The target value
+                        - text: "is discontinuous: when the rewards are sparse,"
+                        - text: is zero in most time steps, resulting in an unsmooth change in the value of
+                        - text: ;
+                    - listitem [ref=e287]:
+                      - paragraph [ref=e288]:
+                        - text: "Invalid gradient: When"
+                        - text: is mostly zero, the update signal (
+                        - text: ) of the gradient becomes sparse and has high variance, leading to difficulty in optimization. By introducing a smooth reward function with continuous non-zero values, the problem of sparse reward where most of
+                        - text: is zero is eliminated. The continuity of
+                        - text: makes the distribution of the objective value
+                        - text: more continuous, which directly reduces the variance of
+                        - text: . Convergence is improved.
+                  - paragraph [ref=e289]:
+                    - text: The visualization of the signal distribution for the traditional and dynamic reward functions is shown in
+                    - link "Figure 5" [ref=e290] [cursor=pointer]:
+                      - /url: "#fig5"
+                    - text: . Assuming that the target point location of the mobile robot is (0.50, 0.50), the highlighted reward peaks at 20 when the Euclidean distance
+                    - text: between the robot and the target location is a minimum value of 0.1. The traditional reward function reward signal on the left side is only activated in a small area (with a radius of about 0.1) of the target point, and the other regions are almost unrewarded. The reward signal is very sparse, leading to inefficient training of the reinforcement learning algorithm. The right dynamic reward function reward signal gradually increases as the distance between the mobile robot and the target point decreases, and the color gradually changes from bright (high reward value) to dark (low reward value), forming a smooth gradient field. The dynamic reward function can alleviate the sparse reward problem by extending the reward coverage and establishing a gradient reward field, thus significantly improving the algorithm’s performance. This gradient reward design can effectively guide the mobile robot towards the target direction.
+                  - figure "Visualization of signal distributions with traditional and dynamic reward functions." [ref=e291]:
+                    - heading "Figure 5." [level=4] [ref=e292]
+                    - paragraph [ref=e293]:
+                      - link "Figure 5 🔍" [ref=e294] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g005.jpg
+                        - img "Figure 5" [ref=e295]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e297] [cursor=pointer]:
+                      - /url: figure/fig5/
+                    - paragraph [ref=e299]: Visualization of signal distributions with traditional and dynamic reward functions.
+                - generic [ref=e300]:
+                  - heading "3.2. Adaptive action selection mechanism" [level=3] [ref=e301]
+                  - paragraph [ref=e302]:
+                    - text: In the traditional action selection strategy,
+                    - emphasis [ref=e303]: ε
+                    - text: in the ε-greedy strategy is a fixed value. First, this may lead to insufficient exploration in the early stage of the system, which is easy to fall into the local optimal solution and unable to find the global optimal solution. In addition, there is too much exploration in the later stage, which can lead to slower convergence and the inability to effectively utilize the currently learned optimal policy, affecting the final performance. To avoid falling into a local optimum, the ε-greedy policy is improved so that the value of ε is no longer a fixed value and decreases linearly as planning progresses. The action selection mechanism in the early stage of planning selects actions more randomly by probability, and in the later stage it is more likely to select actions with large reward values. The action selection function is shown in
+                    - link "Equation 15" [ref=e304] [cursor=pointer]:
+                      - /url: "#EQ15"
+                    - text: ":"
+                  - table [ref=e305]:
+                    - rowgroup [ref=e306]:
+                      - row "(15)" [ref=e307]:
+                        - cell [ref=e308]
+                        - cell "(15)" [ref=e309]
+                  - paragraph [ref=e310]:
+                    - text: where
+                    - text: is a random number between 0 and 1; the exploration factor
+                    - text: represents the degree of random exploration of the environment; and the set of all actions is denoted
+                    - text: .
+                  - paragraph [ref=e311]:
+                    - text: At each time step
+                    - text: ", the selection of action"
+                    - text: "is divided into two cases:"
+                  - list [ref=e312]:
+                    - listitem [ref=e313]:
+                      - paragraph [ref=e314]:
+                        - text: When
+                        - text: is greater than
+                        - text: ", the action"
+                        - text: that maximizes
+                        - text: in the current state
+                        - text: is selected. This means that in this case the algorithm prefers to select the action with the highest reward in the current estimation, i.e., it utilizes the best-known action.
+                    - listitem [ref=e315]:
+                      - paragraph [ref=e316]:
+                        - text: When
+                        - text: is less than
+                        - text: ", choose a random action from the set of all possible actions"
+                        - text: . This means that in this case, the algorithm prefers to randomly explore new actions to discover potentially better strategies.
+                  - paragraph [ref=e317]:
+                    - text: dynamic adjustment is shown in
+                    - link "Equation 16" [ref=e318] [cursor=pointer]:
+                      - /url: "#EQ16"
+                    - text: ":"
+                  - table [ref=e319]:
+                    - rowgroup [ref=e320]:
+                      - row "(16)" [ref=e321]:
+                        - cell [ref=e322]
+                        - cell "(16)" [ref=e323]
+                  - paragraph [ref=e324]:
+                    - text: where
+                    - text: is the current number of cycles;
+                    - text: is the total number of cycles;
+                    - text: is the maximum exploration rate; and
+                    - text: is the minimum exploration rate.
+                  - paragraph [ref=e325]:
+                    - text: To achieve a smooth transition of
+                    - text: ", the most commonly used method is linear decay. As the number of cycles of"
+                    - text: increases, the value of
+                    - text: gradually decreases, and the exploration rate
+                    - text: gradually decreases from the maximum value
+                    - text: to the minimum value
+                    - text: . When
+                    - text: is equal to 0,
+                    - text: is equal to
+                    - text: ", which means that in the initial stage, the exploration factor is at the maximum value, and the algorithm prefers random exploration. When"
+                    - text: is greater than 0 and less than
+                    - text: ", the exploration factor gradually finds a balance between exploration and utilization. When"
+                    - text: is equal to
+                    - text: ","
+                    - text: is equal to
+                    - text: ", which means that in the final stage, the exploration factor is at its minimum value and the algorithm prefers to utilize the best-known action. This satisfies the exploration degree in the early stage and avoids missing the optimal path in the later stage, while retaining the possibility of randomly selecting actions with lower probability."
+                - generic [ref=e326]:
+                  - heading "3.3. Adaptive reprioritization of experience replay based on frequency penalty function" [level=3] [ref=e327]
+                  - paragraph [ref=e328]:
+                    - text: In traditional DQN algorithms, experience playback is usually done by sampling uniformly from the experience pool, which is less efficient. Therefore, academics have proposed a prioritized experience replay (PER) based on temporal difference error (TD Error), where experiences with large TD Error usually indicate higher learning value. However, there are places where PER can be optimized. In this paper, we propose adaptive reprioritization of experience replay based on frequency penalty function, whose core concept is to reflect the change in importance of experience by combining the TD Error and the frequency with which the experience is used. The frequency-of-use-based penalty function reduces the probability of being sampled again by dynamically adjusting the priority of those experiences that have been sampled multiple times. The penalization function using the frequency and the prioritization of experience are shown in
+                    - link "Equations 17" [ref=e329] [cursor=pointer]:
+                      - /url: "#EQ17"
+                    - text: and
+                    - link "18" [ref=e330] [cursor=pointer]:
+                      - /url: "#EQ18"
+                    - text: ":"
+                  - table [ref=e331]:
+                    - rowgroup [ref=e332]:
+                      - row "(17)" [ref=e333]:
+                        - cell [ref=e334]
+                        - cell "(17)" [ref=e335]
+                  - table [ref=e336]:
+                    - rowgroup [ref=e337]:
+                      - row "(18)" [ref=e338]:
+                        - cell [ref=e339]
+                        - cell "(18)" [ref=e340]
+                  - paragraph [ref=e341]:
+                    - text: where
+                    - text: is the priority of data
+                    - text: ;
+                    - text: is the TD Error; the parameter
+                    - text: is set to avoid
+                    - text: being 0;
+                    - text: is a parameter controlling the degree of amplification of the priority;
+                    - text: is the penalization function using the frequency;
+                    - text: is the number of times the experience
+                    - text: has been sampled; and
+                    - text: is the penalty rate constant.
+                  - paragraph [ref=e342]:
+                    - text: The probability of each piece of data being drawn is shown in
+                    - link "Equation 19" [ref=e343] [cursor=pointer]:
+                      - /url: "#EQ19"
+                    - text: ":"
+                  - table [ref=e344]:
+                    - rowgroup [ref=e345]:
+                      - row "(19)" [ref=e346]:
+                        - cell [ref=e347]
+                        - cell "(19)" [ref=e348]
+                  - paragraph [ref=e349]:
+                    - text: where the denominator is the sum of all data priorities;
+                    - text: is the number of data in the experience pool.
+                  - paragraph [ref=e350]:
+                    - text: The preference for playing back experiences with high TD error leads to the problem that the neural network training process is prone to oscillations or even divergence. Therefore the importance of sampling weight
+                    - text: is introduced to solve this problem. As shown in
+                    - link "Equation 20" [ref=e351] [cursor=pointer]:
+                      - /url: "#EQ20"
+                    - text: ":"
+                  - table [ref=e352]:
+                    - rowgroup [ref=e353]:
+                      - row "(20)" [ref=e354]:
+                        - cell [ref=e355]
+                        - cell "(20)" [ref=e356]
+                  - paragraph [ref=e357]:
+                    - text: where
+                    - text: is the number of data in the experience pool; parameter
+                    - text: controls the influence of importance sampling weights in the learning process.
+                - generic [ref=e358]:
+                  - heading "3.4. Dueling Network" [level=3] [ref=e359]
+                  - paragraph [ref=e360]:
+                    - text: This paper introduces a competitive network into the neural network structure of the DDQN algorithm. The competitive network introduces a dual layer with two branches between the hidden layer and the output layer of the DDQN network, which are, respectively, the advantage function layer
+                    - text: and the state value function layer
+                    - text: . The advantage function layer calculates the advantage of each action relative to the average, and the state function layer calculates the state value of the object in its current state. The advantage value of each action is summed with the state value to obtain the Q-value of each action. The problem of overestimation of the Q-value by the neural network can be further solved. The structure of the competition network is shown in
+                    - link "Figure 6" [ref=e361] [cursor=pointer]:
+                      - /url: "#fig6"
+                    - text: .
+                  - figure "Schematic diagram of the Dueling Network architecture." [ref=e362]:
+                    - heading "Figure 6." [level=4] [ref=e363]
+                    - paragraph [ref=e364]:
+                      - link "Figure 6 🔍" [ref=e365] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g006.jpg
+                        - img "Figure 6" [ref=e366]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e368] [cursor=pointer]:
+                      - /url: figure/fig6/
+                    - paragraph [ref=e370]: Schematic diagram of the Dueling Network architecture.
+                  - paragraph [ref=e371]:
+                    - text: The Q value calculation for the Dueling DQN is shown in
+                    - link "Equation 21" [ref=e372] [cursor=pointer]:
+                      - /url: "#EQ21"
+                    - text: ":"
+                  - table [ref=e373]:
+                    - rowgroup [ref=e374]:
+                      - row "(21)" [ref=e375]:
+                        - cell [ref=e376]
+                        - cell "(21)" [ref=e377]
+                  - paragraph [ref=e378]:
+                    - text: where
+                    - text: is the dominant value function in state
+                    - text: ;
+                    - text: is the state value function in state
+                    - text: ;
+                    - text: and
+                    - text: are the network parameters of the dominant and state value functions, respectively;
+                    - text: is the size of the action space; and
+                    - text: is the average of all action values obtained from the dominant value function layer.
+                  - paragraph [ref=e379]: This is precisely because in a competitive network, the Q value of network Q is calculated by summing up the Value Function and the Advantage Function. The existence of the Value Function allows the Algorithmic Network to evaluate the state value that is not affected by actions, thereby improving the accuracy of the Q value calculation and the algorithm’s efficiency.
+                - generic [ref=e380]:
+                  - heading "3.5. Bidirectional long short-term memory network" [level=3] [ref=e381]
+                  - paragraph [ref=e382]: In this paper, a Bidirectional Long Short-Term Memory Network (BiLSTM) is introduced to solve the problem of poor decision-making due to partial observability based on the DDQN decision model. By adding BiLSTM, the action selection is correlated before and after. The decision-making is more stable when facing the same obstacle, and the reward converges more stably in path planning.
+                  - generic [ref=e383]:
+                    - heading "3.5.1. Long short-term memory network" [level=4] [ref=e384]
+                    - paragraph [ref=e385]:
+                      - text: Long Short-Term Memory (LSTM) is an improvement of Recurrent Neural Network (RNN), which solves the problem of “vanishing gradient” in model training by adding memory units. The basic units of the LSTM network include forgetting gates, input gates, and output gates. Therefore, LSTM can effectively retain and update long-term memory and process complex time series data. The network structure is shown in
+                      - link "Figure 7" [ref=e386] [cursor=pointer]:
+                        - /url: "#fig7"
+                      - text: .
+                    - figure "Schematic diagram of the LSTM structure." [ref=e387]:
+                      - heading "Figure 7." [level=5] [ref=e388]
+                      - paragraph [ref=e389]:
+                        - link "Figure 7 🔍" [ref=e390] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g007.jpg
+                          - img "Figure 7" [ref=e391]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e393] [cursor=pointer]:
+                        - /url: figure/fig7/
+                      - paragraph [ref=e395]: Schematic diagram of the LSTM structure.
+                    - paragraph [ref=e396]:
+                      - text: is the output of the forgetting gate at the moment t;
+                      - text: is the output of the input gate at the moment t;
+                      - text: is the output of the output gate at the moment t;
+                      - text: is the cellular state of the memory cell LSTM at the current moment;
+                      - text: is the cellular state of the memory cell LSTM at the previous moment;
+                      - text: is the input vector at the current moment;
+                      - text: is the output vector at the current moment;
+                      - text: is the activation function; and
+                      - text: is the output at the previous moment.
+                    - paragraph [ref=e397]:
+                      - text: The core of LSTM is the forgetting gate, which is responsible for preserving long-term memory and is used to decide the data to be preserved in the historical information and to select the memorized information for the Sigmoid nonlinear transformation. Its formula is shown in
+                      - link "Equation 22" [ref=e398] [cursor=pointer]:
+                        - /url: "#EQ22"
+                      - text: ":"
+                    - table [ref=e399]:
+                      - rowgroup [ref=e400]:
+                        - row "(22)" [ref=e401]:
+                          - cell [ref=e402]
+                          - cell "(22)" [ref=e403]
+                    - paragraph [ref=e404]:
+                      - text: where
+                      - text: and
+                      - text: are the weight parameters of the forgetting gate;
+                      - text: is the bias parameter of the forgetting gate.
+                    - paragraph [ref=e405]:
+                      - text: The input gate is used to control the size of the data flowing into the memory cell, and the information in the memory cell can be updated using
+                      - link "Equation 23" [ref=e406] [cursor=pointer]:
+                        - /url: "#EQ23"
+                      - text: and
+                      - link "Equation 24" [ref=e407] [cursor=pointer]:
+                        - /url: "#EQ24"
+                      - text: ":"
+                    - table [ref=e408]:
+                      - rowgroup [ref=e409]:
+                        - row "(23)" [ref=e410]:
+                          - cell [ref=e411]
+                          - cell "(23)" [ref=e412]
+                    - table [ref=e413]:
+                      - rowgroup [ref=e414]:
+                        - row "(24)" [ref=e415]:
+                          - cell [ref=e416]
+                          - cell "(24)" [ref=e417]
+                    - paragraph [ref=e418]:
+                      - text: where
+                      - text: and
+                      - text: are the weight matrices of the input gates;
+                      - text: is the bias vector of the input gates;
+                      - text: is the temporary variable used to compute
+                      - text: ;
+                      - text: is the neural network parameter; and
+                      - text: is the deviation vector.
+                    - paragraph [ref=e419]:
+                      - text: The effect of the previous moment memory cell on the current moment memory cell can be expressed by
+                      - link "Equation 25" [ref=e420] [cursor=pointer]:
+                        - /url: "#EQ25"
+                      - text: ":"
+                    - table [ref=e421]:
+                      - rowgroup [ref=e422]:
+                        - row "(25)" [ref=e423]:
+                          - cell [ref=e424]
+                          - cell "(25)" [ref=e425]
+                    - paragraph [ref=e426]: where ⊙ stands for the Hadamard product operation.
+                    - paragraph [ref=e427]:
+                      - text: The output gate is used to determine the output value of the LSTM network and the current input features and the previous moment output are passed to the activation function to compute the output at the current moment. The computational formula is shown in
+                      - link "Equation 26" [ref=e428] [cursor=pointer]:
+                        - /url: "#EQ26"
+                      - text: and
+                      - link "Equation 27" [ref=e429] [cursor=pointer]:
+                        - /url: "#EQ27"
+                      - text: ":"
+                    - table [ref=e430]:
+                      - rowgroup [ref=e431]:
+                        - row "(26)" [ref=e432]:
+                          - cell [ref=e433]
+                          - cell "(26)" [ref=e434]
+                    - table [ref=e435]:
+                      - rowgroup [ref=e436]:
+                        - row "(27)" [ref=e437]:
+                          - cell [ref=e438]
+                          - cell "(27)" [ref=e439]
+                    - paragraph [ref=e440]:
+                      - text: where
+                      - text: and
+                      - text: are the weight parameters of the output gate;
+                      - text: is the bias parameter of the input gate.
+                  - generic [ref=e441]:
+                    - heading "3.5.2. Bidirectional long short-term memory network" [level=4] [ref=e442]
+                    - paragraph [ref=e443]:
+                      - text: BiLSTM Network is an improved LSTM network that considers both past and future information while processing sample data. The model combines a forward-backward LSTM layer and a backward-forward LSTM layer on top of a unidirectional LSTM network. This allows for more comprehensive use of information from the sample data in training, improved accuracy in the sequence labeling task, and a reduction in information loss, which increases the stability of decision-making. The structure is shown in
+                      - link "Figure 8" [ref=e444] [cursor=pointer]:
+                        - /url: "#fig8"
+                      - text: .
+                    - figure "Schematic diagram of the BiLSTM structure." [ref=e445]:
+                      - heading "Figure 8." [level=5] [ref=e446]
+                      - paragraph [ref=e447]:
+                        - img "Figure 8" [ref=e448]
+                      - link "Open in a new tab" [ref=e450] [cursor=pointer]:
+                        - /url: figure/fig8/
+                      - paragraph [ref=e452]: Schematic diagram of the BiLSTM structure.
+                    - paragraph [ref=e453]:
+                      - text: BiLSTM network is the original signal from the input layer into the network layer after the forward LSTM calculation to get an output value, the value will affect the learning rate and the output function, etc.; at the same time, after the reverse LSTM calculation to get the output value, which will determine the connection weights of the input nodes in the BiLSTM, to form a new set of output values. The calculation process is shown in
+                      - link "Equations 28, 29" [ref=e454] [cursor=pointer]:
+                        - /url: "#EQ28"
+                      - text: ":"
+                    - table [ref=e455]:
+                      - rowgroup [ref=e456]:
+                        - row "(28)" [ref=e457]:
+                          - cell [ref=e458]
+                          - cell "(28)" [ref=e459]
+                    - table [ref=e460]:
+                      - rowgroup [ref=e461]:
+                        - row "(29)" [ref=e462]:
+                          - cell [ref=e463]
+                          - cell "(29)" [ref=e464]
+                    - paragraph [ref=e465]:
+                      - text: where
+                      - text: is the input at moment t,
+                      - text: is the output of the forward implicit layer at each moment, and
+                      - text: is the output of the backward implicit layer at each moment.
+                    - paragraph [ref=e466]:
+                      - text: The outputs of the forward LSTM and the backward LSTM are merged at each time step, usually by splicing. The calculation formula is shown in
+                      - link "Equation 30" [ref=e467] [cursor=pointer]:
+                        - /url: "#EQ30"
+                      - text: ":"
+                    - table [ref=e468]:
+                      - rowgroup [ref=e469]:
+                        - row "(30)" [ref=e470]:
+                          - cell [ref=e471]
+                          - cell "(30)" [ref=e472]
+                    - paragraph [ref=e473]: where || denotes vector concatenation.
+                - generic [ref=e474]:
+                  - heading "3.6. BiLSTM-D3QN algorithm path planning overall process" [level=3] [ref=e475]
+                  - paragraph [ref=e476]:
+                    - text: The framework of the BiLSTM-D3QN model is shown in
+                    - link "Figure 9" [ref=e477] [cursor=pointer]:
+                      - /url: "#fig9"
+                    - text: . The BiLSTM-D3QN model adopts a dual network structure, which inputs the current state
+                    - text: from the experience pool to the current network
+                    - text: based on the priority, and then selects the action
+                    - text: under the state
+                    - text: according to the adaptive action and obtains the Q-value of the current network. The state
+                    - text: is input to the target network
+                    - text: . At the same time, the action
+                    - text: corresponding to the maximum Q value in state
+                    - text: is selected in the current network, and then
+                    - text: is used to find the Q value in the target network. The current network updates the network parameters
+                    - text: by backpropagation of the loss function and periodically copies the parameters to the target network parameters
+                    - text: . In the inner layer of the two network structures, the state information is extracted through the memory unit module and input into the two-layer BiLSTM network. After passing through the four fully connected layers, the advantage function layer
+                    - text: and the state value function layer
+                    - text: output the Q value. This makes the mobile robot memorable and more stable in decision-making when encountering the same obstacles. The robot’s ability to find target points and avoid obstacles becomes stronger, which also makes the converged reward curve less volatile thus planning a better path. Path planning pseudocode of mobile robot based on BiLSTM-D3QN is shown in
+                    - link "Algorithm 1" [ref=e478] [cursor=pointer]:
+                      - /url: "#sec15"
+                    - text: .
+                  - figure "Overall framework of BiLSTM-D3QN algorithm." [ref=e479]:
+                    - heading "Figure 9." [level=4] [ref=e480]
+                    - paragraph [ref=e481]:
+                      - link "Figure 9 🔍" [ref=e482] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g009.jpg
+                        - img "Figure 9" [ref=e483]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e485] [cursor=pointer]:
+                      - /url: figure/fig9/
+                    - paragraph [ref=e487]: Overall framework of BiLSTM-D3QN algorithm.
+                  - generic [ref=e488]:
+                    - heading "ALGORITHM 1. Main program of BiLSTM-D3QN (Path planning pseudocode of mobile robot based on BiLSTM-D3QN)" [level=4] [ref=e489]
+                    - paragraph [ref=e490]: 1. Initialize an experience pool M with capacity N
+                    - paragraph [ref=e491]: 2. Initialize learning rate, discount factor
+                    - paragraph [ref=e492]:
+                      - text: 3. The same parameters initialize the BiLSTM-current network
+                      - text: and the BiLSTM-target network
+                    - paragraph [ref=e493]:
+                      - text: "4."
+                      - strong [ref=e494]: for
+                      - text: episode =1 to T
+                      - strong [ref=e495]: do
+                    - paragraph [ref=e496]: 5.Initialize the environment
+                    - paragraph [ref=e497]: 6.Initialize done = False
+                    - paragraph [ref=e498]: 7.Initialize step counter = 0
+                    - paragraph [ref=e499]: 8.Initialize accumulate reward = 0
+                    - paragraph [ref=e500]:
+                      - text: "9."
+                      - strong [ref=e501]: while not
+                      - text: done
+                      - strong [ref=e502]: and
+                      - text: step counter
+                      - text: max episode step
+                      - strong [ref=e503]: do
+                    - paragraph [ref=e504]: 10.Determine mobile robot state
+                    - paragraph [ref=e505]:
+                      - text: "11."
+                      - strong [ref=e506]: if
+                      - text: mobile robots in an accessible state
+                      - strong [ref=e507]: then
+                    - paragraph [ref=e508]:
+                      - text: 12.Selection of action
+                      - text: based on probability
+                    - paragraph [ref=e509]:
+                      - text: "13."
+                      - strong [ref=e510]: otherwise
+                      - text: use a greedy strategy to select an action
+                    - paragraph [ref=e511]:
+                      - text: "14."
+                      - strong [ref=e512]: end if
+                    - paragraph [ref=e513]:
+                      - text: 15. Perform action
+                      - text: ", get reward"
+                      - text: ", and new state"
+                    - paragraph [ref=e514]: 16. Accumulate reward +=
+                    - paragraph [ref=e515]:
+                      - text: 17. Store the experience data
+                      - text: in the experience pool M
+                    - paragraph [ref=e516]:
+                      - text: 18. Randomly select batch data samples
+                      - text: from M
+                    - paragraph [ref=e517]:
+                      - text: "19."
+                      - strong [ref=e518]: if
+                      - text: end of the episode
+                      - strong [ref=e519]: then
+                    - paragraph [ref=e520]: 20.Set
+                    - paragraph [ref=e521]:
+                      - text: "21."
+                      - strong [ref=e522]: else
+                    - paragraph [ref=e523]: 22.Set
+                    - paragraph [ref=e524]:
+                      - text: "23."
+                      - strong [ref=e525]: end if
+                    - paragraph [ref=e526]:
+                      - text: 24. Perform gradient descent for network parameter
+                      - text: in
+                    - paragraph [ref=e527]: 25. Determine mobile robot state
+                    - paragraph [ref=e528]:
+                      - text: "26."
+                      - strong [ref=e529]: if
+                      - text: mobile robot in an obstructed state
+                      - strong [ref=e530]: then
+                    - paragraph [ref=e531]: 27.Set done = False
+                    - paragraph [ref=e532]: 28.Finish the episode
+                    - paragraph [ref=e533]:
+                      - text: "29."
+                      - strong [ref=e534]: else
+                    - paragraph [ref=e535]:
+                      - text: "30."
+                      - strong [ref=e536]: continue
+                    - paragraph [ref=e537]:
+                      - text: "31."
+                      - strong [ref=e538]: end if
+                    - paragraph [ref=e539]: 32.Step counter + = 1
+                    - paragraph [ref=e540]:
+                      - text: "33."
+                      - strong [ref=e541]: end while
+                    - paragraph [ref=e542]:
+                      - text: "34."
+                      - strong [ref=e543]: end for
+              - generic [ref=e544]:
+                - heading "4. Experimental results and analysis" [level=2] [ref=e545]: 4. Experimental results and analysis
+                - generic [ref=e546]:
+                  - heading "4.1. Environment setup and parameter configuration" [level=3] [ref=e547]
+                  - paragraph [ref=e548]:
+                    - text: "A simulation comparison experiment was set up to verify the algorithm’s effectiveness proposed in this paper. Experimental environment: CPU model i7-13700H, GPU model RTX4070, Python 3.8, Pytorch 2.2.2, Tensorflow 2.13, Cuda 11.8. In this experiment, two raster environments were created. Environment 1 is a simple environment with a raster map size of 16 × 16; environment 2 is a complex environment with a raster map size of 25 × 25. In both environments, the black rectangular blocks represent obstacles, and the white parts are free-movement areas. The red square in the bottom left corner represents the starting point of the mobile robot; the red square in the top right corner represents the endpoint of the mobile robot. The starting point of Environment 1 is (10, 0) and the endpoint is (150, 160); the starting point of Environment 2 is (10, 0) and the endpoint is (240, 250). The robot can move on the map in eight directions: up, down, left, right, top left, top right, bottom left, and bottom right. Each movement is 10 m long. The episode ends when the robot hits an obstacle, exceeds the maximum number of steps, or reaches the end. The map of the simulation environment is shown in"
+                    - link "Figure 10" [ref=e549] [cursor=pointer]:
+                      - /url: "#fig10"
+                    - text: .
+                  - figure "Map of the simulation environment. (a) Environment 1 is a simple environment. (b) Environment 2 is a complex environment." [ref=e550]:
+                    - heading "Figure 10." [level=4] [ref=e551]
+                    - paragraph [ref=e552]:
+                      - link "Figure 10 🔍" [ref=e553] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g010.jpg
+                        - img "Figure 10" [ref=e554]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e556] [cursor=pointer]:
+                      - /url: figure/fig10/
+                    - paragraph [ref=e558]:
+                      - text: Map of the simulation environment.
+                      - strong [ref=e559]: (a)
+                      - text: Environment 1 is a simple environment.
+                      - strong [ref=e560]: (b)
+                      - text: Environment 2 is a complex environment.
+                  - list [ref=e561]:
+                    - listitem [ref=e562]:
+                      - paragraph [ref=e563]:
+                        - text: Comparison with traditional DRL algorithms in a simple environment. The experimental environment is shown in environment 1 in
+                        - link "Figure 10A" [ref=e564] [cursor=pointer]:
+                          - /url: "#fig10"
+                        - text: . In Environment 1, the path planning of the Q-learning, DQN, DDQN, and the proposed BiLSTM-D3QN algorithm with the same parameters are performed, respectively. The superiority of the proposed algorithm over traditional DRL path planning algorithms in a simple environment is verified.
+                    - listitem [ref=e565]:
+                      - paragraph [ref=e566]:
+                        - text: Comparison of the algorithm with improved algorithms in complex environments. The experimental environment is shown in environment 2 in
+                        - link "Figure 10B" [ref=e567] [cursor=pointer]:
+                          - /url: "#fig10"
+                        - text: . Q-learning, DQN, DDQN, and ERDDQN (
+                        - link "Wang et al., 2024" [ref=e568] [cursor=pointer]:
+                          - /url: "#ref18"
+                        - text: ) with the same parameters are made to perform path planning with the BiLSTM-D3QN algorithm proposed in this paper, under Environment 2. Environment 2 is more complex than environment 1, and path planning is more difficult, which can better verify the effectiveness and robustness of the algorithm in this paper.
+                  - paragraph [ref=e569]:
+                    - text: In both environments, 250 rounds of path planning are performed. The activation function used by the neural network is ReLU, the optimizer is Adam, and the network parameters are saved every 5 updates. The hyperparameter settings are shown in
+                    - link "Table 1" [ref=e570] [cursor=pointer]:
+                      - /url: "#tab1"
+                    - text: .
+                  - generic [ref=e571]:
+                    - heading "Table 1." [level=4] [ref=e572]
+                    - paragraph [ref=e574]: The hyperparameter settings.
+                    - table [ref=e576]:
+                      - rowgroup [ref=e577]:
+                        - row "Parameters Meaning Value" [ref=e578]:
+                          - columnheader "Parameters" [ref=e579]
+                          - columnheader "Meaning" [ref=e580]
+                          - columnheader "Value" [ref=e581]
+                      - rowgroup [ref=e582]:
+                        - row "Learning rate 0.001" [ref=e583]:
+                          - cell [ref=e584]
+                          - cell "Learning rate" [ref=e585]
+                          - cell "0.001" [ref=e586]
+                        - row "Discount factor 0.99" [ref=e587]:
+                          - cell [ref=e588]
+                          - cell "Discount factor" [ref=e589]
+                          - cell "0.99" [ref=e590]
+                        - row "Maximum exploration rate 0.6" [ref=e591]:
+                          - cell [ref=e592]
+                          - cell "Maximum exploration rate" [ref=e593]
+                          - cell "0.6" [ref=e594]
+                        - row "Minimum exploration rate 0.1" [ref=e595]:
+                          - cell [ref=e596]
+                          - cell "Minimum exploration rate" [ref=e597]
+                          - cell "0.1" [ref=e598]
+                        - row "Replay memory capacity 100,000" [ref=e599]:
+                          - cell [ref=e600]
+                          - cell "Replay memory capacity" [ref=e601]
+                          - cell "100,000" [ref=e602]
+                        - row "Batch size 128" [ref=e603]:
+                          - cell [ref=e604]
+                          - cell "Batch size" [ref=e605]
+                          - cell "128" [ref=e606]
+                        - row "Update network at fixed interval 5" [ref=e607]:
+                          - cell [ref=e608]
+                          - cell "Update network at fixed interval" [ref=e609]
+                          - cell "5" [ref=e610]
+                        - row "Step Maximum steps 10,000" [ref=e611]:
+                          - cell "Step" [ref=e612]
+                          - cell "Maximum steps" [ref=e613]
+                          - cell "10,000" [ref=e614]
+                        - row "Priority exponent 0.6" [ref=e615]:
+                          - cell [ref=e616]
+                          - cell "Priority exponent" [ref=e617]
+                          - cell "0.6" [ref=e618]
+                        - row "Importance sampling weight 0.4" [ref=e619]:
+                          - cell [ref=e620]
+                          - cell "Importance sampling weight" [ref=e621]
+                          - cell "0.4" [ref=e622]
+                        - row "Penalty rate constant 0.01" [ref=e623]:
+                          - cell [ref=e624]
+                          - cell "Penalty rate constant" [ref=e625]
+                          - cell "0.01" [ref=e626]
+                        - row "Distance reward constant 0.1" [ref=e627]:
+                          - cell [ref=e628]
+                          - cell "Distance reward constant" [ref=e629]
+                          - cell "0.1" [ref=e630]
+                    - link "Open in a new tab" [ref=e632] [cursor=pointer]:
+                      - /url: table/tab1/
+                - generic [ref=e633]:
+                  - heading "4.2. Analysis of training results" [level=3] [ref=e634]
+                  - generic [ref=e635]:
+                    - heading "4.2.1. Comparison with traditional DRL algorithms in simple environment" [level=4] [ref=e636]
+                    - paragraph [ref=e637]:
+                      - text: To verify the effectiveness of the proposed algorithm, it is compared with the Q-learning, DQN, and DDQN path planning algorithms in environment 1.
+                      - link "Figure 11" [ref=e638] [cursor=pointer]:
+                        - /url: "#fig11"
+                      - text: shows the path-planning route maps of the four algorithms, and
+                      - link "Figure 12" [ref=e639] [cursor=pointer]:
+                        - /url: "#fig12"
+                      - text: compares the metrics of the four algorithms in environment 1, including the planned path length, the number of planned path turning points, and the time required for path planning. As can be seen from
+                      - link "Figures 11" [ref=e640] [cursor=pointer]:
+                        - /url: "#fig11"
+                      - text: ","
+                      - link "12" [ref=e641] [cursor=pointer]:
+                        - /url: "#fig12"
+                      - text: ", the BiLSTM-D3QN algorithm plans an optimal path. Although the BiLSTM-D3QN algorithm and the DQN and DDQN algorithms both plan a path length of 200 m, the number of path turning points for the BiLSTM-D3QN algorithm is 8, which is lower than the 13 for the DQN algorithm and the 10 for the DDQN algorithm. The time required for path planning is 1.02 s, which is lower than the 2.32 s for the DQN algorithm and the 1.54 s for the DDQN algorithm. Of the four algorithms compared, the worst performer was the Q-learning algorithm. The path planned by the Q-learning algorithm was 230 m long, with 15 turning points and a planning time of 3.55 s. It can be seen that the BiLSTM-D3QN algorithm proposed in this paper is superior to the traditional Q-learning, DQN, and DDQN algorithms in terms of path planning."
+                    - figure "Comparison of the planned routes of the four algorithms in env 1. (a) Q-Learning algorithm; (b) DQN algorithm; (c) DDQN algorithm; (d) BilSTM-D3QN algorithm." [ref=e642]:
+                      - heading "Figure 11." [level=5] [ref=e643]
+                      - paragraph [ref=e644]:
+                        - link "Figure 11 🔍" [ref=e645] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g011.jpg
+                          - img "Figure 11" [ref=e646]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e648] [cursor=pointer]:
+                        - /url: figure/fig11/
+                      - paragraph [ref=e650]:
+                        - text: Comparison of the planned routes of the four algorithms in env 1.
+                        - strong [ref=e651]: (a)
+                        - text: Q-Learning algorithm;
+                        - strong [ref=e652]: (b)
+                        - text: DQN algorithm;
+                        - strong [ref=e653]: (c)
+                        - text: DDQN algorithm; (d) BilSTM-D3QN algorithm.
+                    - figure "Comparison of the four algorithm indicators in env 1. (a) Path lengths; (b) Number of turning points; (c) Times." [ref=e654]:
+                      - heading "Figure 12." [level=5] [ref=e655]
+                      - paragraph [ref=e656]:
+                        - link "Figure 12 🔍" [ref=e657] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g012.jpg
+                          - img "Figure 12" [ref=e658]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e660] [cursor=pointer]:
+                        - /url: figure/fig12/
+                      - paragraph [ref=e662]:
+                        - text: Comparison of the four algorithm indicators in env 1.
+                        - strong [ref=e663]: (a)
+                        - text: Path lengths;
+                        - strong [ref=e664]: (b)
+                        - text: Number of turning points;
+                        - strong [ref=e665]: (c)
+                        - text: Times.
+                    - paragraph [ref=e666]:
+                      - text: From
+                      - link "Table 2" [ref=e667] [cursor=pointer]:
+                        - /url: "#tab2"
+                      - text: ", it can be seen that in 250 training episodes, the algorithm with the highest overall success rate is the BiLSTM-D3QN algorithm proposed in this paper, which reaches 97.6%; followed by the DDQN algorithm 93.2% and the DQN algorithm 88.4%; while the overall success rate of the ordinary Q-learning algorithm is 80.4%. The BiLSTM-D3QN path planning algorithm has a greater advantage in the overall success rate. Meanwhile, from the point of view of the growth rate of the cumulative number of successes per 50 rounds, the average growth rate of the algorithm proposed in this paper is 0.995, which is higher than that of other algorithms, indicating that the neural network has the fastest convergence speed. Combined with the above analysis, the superiority of BiLSTM-D3QN is reflected in its faster growth rate of successful episodes and higher final success rate."
+                    - generic [ref=e668]:
+                      - heading "Table 2." [level=5] [ref=e669]
+                      - paragraph [ref=e671]: Cumulative number of successes in env 1.
+                      - table [ref=e673]:
+                        - rowgroup [ref=e674]:
+                          - row "Episode Q-learning DQN DDQN BiLSTM-D3QN" [ref=e675]:
+                            - columnheader "Episode" [ref=e676]
+                            - columnheader "Q-learning" [ref=e677]
+                            - columnheader "DQN" [ref=e678]
+                            - columnheader "DDQN" [ref=e679]
+                            - columnheader "BiLSTM-D3QN" [ref=e680]
+                        - rowgroup [ref=e681]:
+                          - row "50 34 36 41 45" [ref=e682]:
+                            - cell "50" [ref=e683]
+                            - cell "34" [ref=e684]
+                            - cell "36" [ref=e685]
+                            - cell "41" [ref=e686]
+                            - cell "45" [ref=e687]
+                          - row "100 71 77 86 94" [ref=e688]:
+                            - cell "100" [ref=e689]
+                            - cell "71" [ref=e690]
+                            - cell "77" [ref=e691]
+                            - cell "86" [ref=e692]
+                            - cell "94" [ref=e693]
+                          - row "150 113 123 134 144" [ref=e694]:
+                            - cell "150" [ref=e695]
+                            - cell "113" [ref=e696]
+                            - cell "123" [ref=e697]
+                            - cell "134" [ref=e698]
+                            - cell "144" [ref=e699]
+                          - row "200 159 171 183 194" [ref=e700]:
+                            - cell "200" [ref=e701]
+                            - cell "159" [ref=e702]
+                            - cell "171" [ref=e703]
+                            - cell "183" [ref=e704]
+                            - cell "194" [ref=e705]
+                          - row "250 208 221 233 244" [ref=e706]:
+                            - cell "250" [ref=e707]
+                            - cell "208" [ref=e708]
+                            - cell "221" [ref=e709]
+                            - cell "233" [ref=e710]
+                            - cell "244" [ref=e711]
+                          - row "Success rate 83.20% 88.40% 93.20% 97.60%" [ref=e712]:
+                            - cell "Success rate" [ref=e713]
+                            - cell "83.20%" [ref=e714]
+                            - cell "88.40%" [ref=e715]
+                            - cell "93.20%" [ref=e716]
+                            - cell "97.60%" [ref=e717]
+                      - link "Open in a new tab" [ref=e719] [cursor=pointer]:
+                        - /url: table/tab2/
+                    - paragraph [ref=e720]:
+                      - link "Figure 13" [ref=e721] [cursor=pointer]:
+                        - /url: "#fig13"
+                      - text: shows a comparison of the cumulative reward and number of steps for each episode of path planning by the robot in Environment 1 for Q-learning, DQN, DDQN, and the proposed BiLSTM-D3QN algorithm. Green represents Q-learning, yellow represents DQN, blue represents DDQN, and red represents BiLSTM-D3QN. After 250 episodes of path planning in the same environment, all four algorithms were able to complete the robot’s path-planning task to the goal point, and the reward and step curves converged and eventually became similar. However, there were significant differences in the speed and stability of convergence. The Q-learning algorithm gradually converged after 120 episodes, and the curve fluctuated greatly after convergence. This indicates that during the later training process, although the mobile robot reaches the target point, it makes unstable decisions, causing the reward value to fluctuate greatly. The DQN and DDQN algorithms are actively explored during the first 40 training episodes. The reward curve and the step curve show fluctuations, and the DDQN algorithm is superior to the DQN algorithm in terms of accumulated reward value and number of steps in each episode. This is because the DDQN algorithm changes the way the Q-value of the target network is calculated, alleviating the problem of overestimating the Q-value in the DQN algorithm and making the network converge more stably. The BiLSTM-D3QN algorithm proposed in this paper converges rapidly after 10 episodes of exploration. After 30 episodes, the reward and step curves tend to stabilize and reach an optimal value, which is significantly faster than the other algorithms compared. This shows that the frequency penalty function of the algorithm in this paper reprioritizes the experience replay mechanism, which improves the use of important data and thus accelerates the convergence of the neural network. The final reward value exceeds that of DQN and DDQN, which is attributed to the fact that the competitive network in BiLSTM-D3QN has a separate data flow structure that can approximate the Q function more effectively and accurately. The algorithm in this paper has less variation in reward value in the later stages of training. The BiLSTM memory network relates the previous and subsequent actions so that the robot’s decisions are stable and the robot achieves a more stable cumulative reward during path planning. In summary, the BiLSTM-D3QN algorithm outperforms other algorithms during path planning training in terms of convergence speed, cumulative reward, and overall stability.
+                    - figure "Comparison of rewards and steps accumulated per episode in env 1. (a) Accumulated rewards for each episode of path planning; (b) Taken steps for each episode of path planning." [ref=e722]:
+                      - heading "Figure 13." [level=5] [ref=e723]
+                      - paragraph [ref=e724]:
+                        - link "Figure 13 🔍" [ref=e725] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g013.jpg
+                          - img "Figure 13" [ref=e726]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e728] [cursor=pointer]:
+                        - /url: figure/fig13/
+                      - paragraph [ref=e730]:
+                        - text: Comparison of rewards and steps accumulated per episode in env 1.
+                        - strong [ref=e731]: (a)
+                        - text: Accumulated rewards for each episode of path planning;
+                        - strong [ref=e732]: (b)
+                        - text: Taken steps for each episode of path planning.
+                  - generic [ref=e733]:
+                    - heading "4.2.2. Comparison with improved deep reinforcement learning algorithms in complex environment" [level=4] [ref=e734]
+                    - paragraph [ref=e735]:
+                      - text: Q-learning, DQN, DDQN, and ERDDQN are made to compare with the BiLSTM-D3QN algorithm proposed in this paper under environment 2.
+                      - link "Figure 14" [ref=e736] [cursor=pointer]:
+                        - /url: "#fig14"
+                      - text: shows the path planning line diagrams of the five algorithms, and
+                      - link "Figure 15" [ref=e737] [cursor=pointer]:
+                        - /url: "#fig15"
+                      - text: shows the comparison of the five algorithms in environment 2 in terms of various metrics, including the length of the planned path, the number of inflection points of the planned path, and the time required for path planning. From
+                      - link "Figure 14" [ref=e738] [cursor=pointer]:
+                        - /url: "#fig14"
+                      - text: ", it can be seen that the BiLSTM-D3QN algorithm plans better paths. The worst performance of the five algorithms in the comparison is the Q-learning algorithm, the Q-learning algorithm plans a path length of 330 m, the number of turning points is 19, and the planning time is 4.59 s. The Q-learning has the most turning points, which indicates that its path planning is more unstable, there are more unnecessary path adjustments the computational complexity is higher and the optimization performance is poor. DQN and DDQN algorithms plan path lengths of 330 m and 290 m, the number of turning points is 16 and 14, and the planning time is 3.29 s and 2.48 s, respectively. The planned path length of BiLSTM-D3QN algorithm is 250 m, which is 20 m shorter than that of ERDDQN algorithm; the number of inflection points in the path of the ERDDQN algorithm is 11, which is a lot of inflection points, whereas the number of inflection points in the path of this paper’s algorithm is only 4; and this paper’s algorithm takes a shorter time for path planning, which is only 1.61 s shorter than that of the ERDDQN algorithm. Only 1.61 s is lower than the 2.15 s of ERDDQN algorithm. It shows that it is the most computationally efficient, and can converge more quickly in environmental decision making. In summary, the BiLSTM-D3QN algorithm proposed in this paper outperforms the traditional DRL algorithms and the ERDDQN algorithm in the performance of path planning."
+                    - figure "Comparison of the five algorithms for planning paths in env 2. (a) Q-Learning algorithm; (b) DQN algorithm; (c) DDQN algorithm; (d) ERDDQN algorithm; (e) BilSTM-D3QN algorithm." [ref=e739]:
+                      - heading "Figure 14." [level=5] [ref=e740]
+                      - paragraph [ref=e741]:
+                        - link "Figure 14 🔍" [ref=e742] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g014.jpg
+                          - img "Figure 14" [ref=e743]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e745] [cursor=pointer]:
+                        - /url: figure/fig14/
+                      - paragraph [ref=e747]:
+                        - text: Comparison of the five algorithms for planning paths in env 2.
+                        - strong [ref=e748]: (a)
+                        - text: Q-Learning algorithm;
+                        - strong [ref=e749]: (b)
+                        - text: DQN algorithm;
+                        - strong [ref=e750]: (c)
+                        - text: DDQN algorithm; (d) ERDDQN algorithm;
+                        - strong [ref=e751]: (e)
+                        - text: BilSTM-D3QN algorithm.
+                    - figure "Comparison of the five algorithms indicators in env 2. (a) Path lengths; (b) Number of turning points; (c) Times." [ref=e752]:
+                      - heading "Figure 15." [level=5] [ref=e753]
+                      - paragraph [ref=e754]:
+                        - link "Figure 15 🔍" [ref=e755] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g015.jpg
+                          - img "Figure 15" [ref=e756]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e758] [cursor=pointer]:
+                        - /url: figure/fig15/
+                      - paragraph [ref=e760]:
+                        - text: Comparison of the five algorithms indicators in env 2.
+                        - strong [ref=e761]: (a)
+                        - text: Path lengths;
+                        - strong [ref=e762]: (b)
+                        - text: Number of turning points;
+                        - strong [ref=e763]: (c)
+                        - text: Times.
+                    - paragraph [ref=e764]:
+                      - link "Table 3" [ref=e765] [cursor=pointer]:
+                        - /url: "#tab3"
+                      - text: shows that in the more complex environment 2, the algorithm with the highest overall success rate is still the BiLSTM-D3QN algorithm proposed in this paper, which reaches 94.0%; followed by the ERDDQN algorithm at 83.6%, the DDQN algorithm at 79.2%, and the DQN algorithm at 75.2%; the overall success rate of the ordinary Q-learning algorithm is 72.8%, reflecting its poor adaptability to complex environments. Its poor ability to adapt to complex environments. BiLSTM-D3QN combines the BiLSTM network, which can not only memorize the past state but also consider the future state. It also processes the environment information more comprehensively, so it performs the best in the path planning task. In terms of growth, BiLSTM-D3QN consistently leads in the development of cumulative successes per 50 episodes, followed by ERDDQN, indicating that these two algorithms are the most capable of learning. BiLSTM-D3QN and ERDDQN have the most stable growth rates while Q-learning and DQN show more fluctuating performance. In the last episode (200–250 rounds), the growth rate of BiLSTM-D3QN increases significantly, indicating that it has a stronger ability to adapt to complex environments at a later stage. BiLSTM-D3QN not only grows the most in each episode but also grows at a relatively smooth rate, showing superior learning performance and adaptability to the environment.
+                    - generic [ref=e766]:
+                      - heading "Table 3." [level=5] [ref=e767]
+                      - paragraph [ref=e769]: Cumulative number of successes in env 2.
+                      - table [ref=e771]:
+                        - rowgroup [ref=e772]:
+                          - row "Episode Q-learning DQN DDQN ERDDQN BiLSTM-D3QN" [ref=e773]:
+                            - columnheader "Episode" [ref=e774]
+                            - columnheader "Q-learning" [ref=e775]
+                            - columnheader "DQN" [ref=e776]
+                            - columnheader "DDQN" [ref=e777]
+                            - columnheader "ERDDQN" [ref=e778]
+                            - columnheader "BiLSTM-D3QN" [ref=e779]
+                        - rowgroup [ref=e780]:
+                          - row "50 25 32 33 37 43" [ref=e781]:
+                            - cell "50" [ref=e782]
+                            - cell "25" [ref=e783]
+                            - cell "32" [ref=e784]
+                            - cell "33" [ref=e785]
+                            - cell "37" [ref=e786]
+                            - cell "43" [ref=e787]
+                          - row "100 55 69 74 79 90" [ref=e788]:
+                            - cell "100" [ref=e789]
+                            - cell "55" [ref=e790]
+                            - cell "69" [ref=e791]
+                            - cell "74" [ref=e792]
+                            - cell "79" [ref=e793]
+                            - cell "90" [ref=e794]
+                          - row "150 99 107 113 120 139" [ref=e795]:
+                            - cell "150" [ref=e796]
+                            - cell "99" [ref=e797]
+                            - cell "107" [ref=e798]
+                            - cell "113" [ref=e799]
+                            - cell "120" [ref=e800]
+                            - cell "139" [ref=e801]
+                          - row "200 140 146 150 163 185" [ref=e802]:
+                            - cell "200" [ref=e803]
+                            - cell "140" [ref=e804]
+                            - cell "146" [ref=e805]
+                            - cell "150" [ref=e806]
+                            - cell "163" [ref=e807]
+                            - cell "185" [ref=e808]
+                          - row "250 182 188 198 209 235" [ref=e809]:
+                            - cell "250" [ref=e810]
+                            - cell "182" [ref=e811]
+                            - cell "188" [ref=e812]
+                            - cell "198" [ref=e813]
+                            - cell "209" [ref=e814]
+                            - cell "235" [ref=e815]
+                          - row "Success rate 72.80% 75.20% 79.20% 83.60% 94.00%" [ref=e816]:
+                            - cell "Success rate" [ref=e817]
+                            - cell "72.80%" [ref=e818]
+                            - cell "75.20%" [ref=e819]
+                            - cell "79.20%" [ref=e820]
+                            - cell "83.60%" [ref=e821]
+                            - cell "94.00%" [ref=e822]
+                      - link "Open in a new tab" [ref=e824] [cursor=pointer]:
+                        - /url: table/tab3/
+                    - paragraph [ref=e825]:
+                      - link "Figure 16" [ref=e826] [cursor=pointer]:
+                        - /url: "#fig16"
+                      - text: compares the accumulated rewards and steps per round of path planning performed by the robot using Q-learning, DQN, DDQN, and ERDDQN with the BiLSTM-D3QN algorithm proposed in this paper under Environment 2, where green is Q-learning, yellow is DQN, blue is DDQN, cyan is ERDDQN, and red is BiLSTM-D3QN. After 250 rounds of path planning under the same environment, all five algorithms are able to complete the robot’s path planning task of reaching the target point, but there is a big difference in the convergence speed and stability of the ERDDQN algorithm. The convergence speed and stability are very different. The Q-learning algorithm converges more slowly, and in the first 100 episodes of training, the reward value fluctuates dramatically and is still in the stage of substantial exploration. The DQN algorithm converges better than Q-learning and gradually stabilizes after about 150 episodes. DQN shows strong exploratory behavior with large fluctuations in reward values in the first 50 episodes, and the fluctuations are relatively small after convergence. However, there are still some ups and downs. The ERDDQN algorithm gradually converges after 50 episodes of active exploration in the early stage of training and reaches the maximum value of around 120 episodes. However, the reward curve and step curve show fluctuation after convergence, which indicates that in the later stage of training, although the mobile robot arrives at the goal point, the mobile robot makes unstable decisions, resulting in the fluctuation of the reward value larger. The BiLSTM-D3QN algorithm proposed in this paper converges quickly after 40 exploration episodes, and the average reward value and the number of steps are better than the ERDDQN algorithm in the process of convergence, and the degree of fluctuation of the reward curve and the number of steps curve is smaller, which is attributed to the fact that the competitive network in BiLSTM-D3QN has a separated data flow structure, which can approximate the Q function more effectively and accurately; BiLSTM-D3QN reaches its maximum value at around 100 rounds, which is faster than the comparative ERDDQN algorithm, suggesting that the reprioritised empirical replay mechanism of this paper’s algorithm, based on the frequency penalty function, improves the use of important data and thus speeds up the convergence of the neural network; BiLSTM-D3QN has very little fluctuation in the reward value function after 100 training rounds, while the ERDDQN algorithm curve shows a small fluctuation, which is due to the fact that the BiLSTM memory network in the algorithmic structure of this paper makes the front and back actions relevant, so the robot’s decision is stable and a more stable cumulative reward is achieved during path planning. In summary, the BiLSTM-D3QN algorithm outperforms the ERDDQN algorithm in terms of convergence speed, cumulative reward, and overall stability during path planning training.
+                    - figure "Comparison of rewards and steps accumulated per episode in env 2. (a) Accumulated rewards for four algorithms; (b) Taken steps for four algorithms; (c) Accumulated rewards for two algorithms; (d) Taken steps for two algorithms." [ref=e827]:
+                      - heading "Figure 16." [level=5] [ref=e828]
+                      - paragraph [ref=e829]:
+                        - link "Figure 16 🔍" [ref=e830] [cursor=pointer]:
+                          - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g016.jpg
+                          - img "Figure 16" [ref=e831]
+                          - text: 🔍
+                      - link "Open in a new tab" [ref=e833] [cursor=pointer]:
+                        - /url: figure/fig16/
+                      - paragraph [ref=e835]:
+                        - text: Comparison of rewards and steps accumulated per episode in env 2.
+                        - strong [ref=e836]: (a)
+                        - text: Accumulated rewards for four algorithms;
+                        - strong [ref=e837]: (b)
+                        - text: Taken steps for four algorithms;
+                        - strong [ref=e838]: (c)
+                        - text: Accumulated rewards for two algorithms;
+                        - strong [ref=e839]: (d)
+                        - text: Taken steps for two algorithms.
+                - generic [ref=e840]:
+                  - heading "4.3. Analysis of ROS simulation results" [level=3] [ref=e841]
+                  - paragraph [ref=e842]:
+                    - text: To verify the feasibility of the improved algorithm in real robots, this section implements mobile robot path planning under the ROS Gazebo simulator. A small four-wheeled all-terrain robot of Jackal UGV is used in this experiment, and the robot autonomously builds a map of the environment by LiDAR, and the blue line is the LiDAR scanning line, as shown in
+                    - link "Figure 17" [ref=e843] [cursor=pointer]:
+                      - /url: "#fig17"
+                    - text: . The first view of the mobile robot during the planning process is shown in
+                    - link "Figure 18" [ref=e844] [cursor=pointer]:
+                      - /url: "#fig18"
+                    - text: . The ERDDQN algorithm and the BiLSTM-D3QN algorithm proposed in this paper are applied to this environment, and the actual environment path planning results obtained are shown in
+                    - link "Figure 19" [ref=e845] [cursor=pointer]:
+                      - /url: "#fig19"
+                    - text: . As can be seen from
+                    - link "Figure 19" [ref=e846] [cursor=pointer]:
+                      - /url: "#fig19"
+                    - text: ", both algorithms can generate a global path in this environment. The ERDDQN algorithm is compared with the BiLSTM-D3QN algorithm proposed in this paper, and the experimental results are shown in"
+                    - link "Table 4" [ref=e847] [cursor=pointer]:
+                      - /url: "#tab4"
+                    - text: .
+                  - figure "Simulation environment infographic." [ref=e848]:
+                    - heading "Figure 17." [level=4] [ref=e849]
+                    - paragraph [ref=e850]:
+                      - link "Figure 17 🔍" [ref=e851] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g017.jpg
+                        - img "Figure 17" [ref=e852]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e854] [cursor=pointer]:
+                      - /url: figure/fig17/
+                    - paragraph [ref=e856]: Simulation environment infographic.
+                  - figure "First view of a mobile robot." [ref=e857]:
+                    - heading "Figure 18." [level=4] [ref=e858]
+                    - paragraph [ref=e859]:
+                      - img "Figure 18" [ref=e860]
+                    - link "Open in a new tab" [ref=e862] [cursor=pointer]:
+                      - /url: figure/fig18/
+                    - paragraph [ref=e864]: First view of a mobile robot.
+                  - figure "Comparison of planning paths for simulation environments. (a) ERDDQN algorithm; (b) BilSTM-D3QN algorithm." [ref=e865]:
+                    - heading "Figure 19." [level=4] [ref=e866]
+                    - paragraph [ref=e867]:
+                      - link "Figure 19 🔍" [ref=e868] [cursor=pointer]:
+                        - /url: https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=11865209_fnbot-19-1512953-g019.jpg
+                        - img "Figure 19" [ref=e869]
+                        - text: 🔍
+                    - link "Open in a new tab" [ref=e871] [cursor=pointer]:
+                      - /url: figure/fig19/
+                    - paragraph [ref=e873]:
+                      - text: Comparison of planning paths for simulation environments.
+                      - strong [ref=e874]: (a)
+                      - text: ERDDQN algorithm;
+                      - strong [ref=e875]: (b)
+                      - text: BilSTM-D3QN algorithm.
+                  - generic [ref=e876]:
+                    - heading "Table 4." [level=4] [ref=e877]
+                    - paragraph [ref=e879]: Path planning method results comparison.
+                    - table [ref=e881]:
+                      - rowgroup [ref=e882]:
+                        - row "Algorithm Target reached Path length (m) Planning time (s)" [ref=e883]:
+                          - columnheader "Algorithm" [ref=e884]
+                          - columnheader "Target reached" [ref=e885]
+                          - columnheader "Path length (m)" [ref=e886]
+                          - columnheader "Planning time (s)" [ref=e887]
+                      - rowgroup [ref=e888]:
+                        - row "ERDDQN Yes 30.1 4.37" [ref=e889]:
+                          - cell "ERDDQN" [ref=e890]
+                          - cell "Yes" [ref=e891]
+                          - cell "30.1" [ref=e892]
+                          - cell "4.37" [ref=e893]
+                        - row "BiLSTM-D3QN Yes 28.3 3.19" [ref=e894]:
+                          - cell "BiLSTM-D3QN" [ref=e895]
+                          - cell "Yes" [ref=e896]
+                          - cell "28.3" [ref=e897]
+                          - cell "3.19" [ref=e898]
+                    - link "Open in a new tab" [ref=e900] [cursor=pointer]:
+                      - /url: table/tab4/
+                  - paragraph [ref=e901]:
+                    - text: As shown in
+                    - link "Table 4" [ref=e902] [cursor=pointer]:
+                      - /url: "#tab4"
+                    - text: ", the path length of the BiLSTM-D3QN algorithm proposed in this paper is 28.3 m and the path planning time is 3.19 s. Compared with the ERDDQN algorithm, the robot path length and path planning time are reduced by 5.98 and 27%, respectively, which fully verifies that in real complex environments, the BiLSTM network and the improved prioritized experience replay mechanism enable the robot to improve the collision avoidance and goal point finding ability, and reduces the robot path length and plans a better path."
+              - generic [ref=e903]:
+                - heading "5. Conclusion" [level=2] [ref=e904]: 5. Conclusion
+                - paragraph [ref=e905]: This paper proposes the BiLSTM-D3QN path planning algorithm to improve the traditional DDQN algorithm for the path planning problem of mobile robots. On the one hand, this paper introduces a frequency penalty function, which makes the real-time important data in the experience pool fully utilized to improve the convergence rate of the neural network; on the other hand, this paper adds a competitive network architecture with separate data streams, which can approximate the Q function more effectively and accurately, and further solves the problem of overestimation of the Q-value function; The bidirectional long and short-term memory network is added to the network structure so that the model has the function of extracting and remembering the obstacle information, which improves the stability of the mobile robot’s decision making and makes the reward convergence more stable; and this paper introduces an adaptive action selection mechanism to further optimize the action exploration. Finally, simulation comparison experiments are set up in both simple and complex environments, and the experimental results show that the BiLSTM-D3QN path planning algorithm is better than the traditional deep reinforcement learning algorithm in terms of network convergence speed, planning efficiency, stability of reward convergence and success rate in simple environments; in complex environments, the path length of BiLSTM-D3QN is 20 m shorter and the number of turning points is 7% less than that of the ERDDQN algorithm. 20 m, 7 fewer turning points, 0.54 s less planning time, and a 10.4% higher success rate than the ERDDQN algorithm. The algorithm is ported to a ROS robot, and mobile robot path planning experiments are designed under the ROS Gazebo simulator, which verifies that the improved algorithm is feasible in the real world. However, since this paper only studies static obstacle avoidance and does not consider the presence of dynamic obstacles, the direction of future research is to add dynamic obstacles in the environment so that it can still obtain a better path in a more complex environment.
+              - generic [ref=e906]:
+                - heading "Funding Statement" [level=2] [ref=e907]: Funding Statement
+                - paragraph [ref=e908]: The author(s) declare that financial support was received for the research, authorship, and/or publication of this article. This work was supported by the Natural Science Research Project of Anhui Province Universities (Grant No. 2022AH050977).
+              - generic [ref=e909]:
+                - heading "Data availability statement" [level=2] [ref=e910]: Data availability statement
+                - paragraph [ref=e911]: The raw data supporting the conclusions of this article will be made available by the authors, without undue reservation.
+              - generic [ref=e912]:
+                - heading "Author contributions" [level=2] [ref=e913]: Author contributions
+                - paragraph [ref=e914]: "ZW: Funding acquisition, Resources, Supervision, Writing – review & editing. SS: Investigation, Methodology, Software, Writing – original draft. SC: Data curation, Validation, Writing – review & editing."
+              - generic [ref=e915]:
+                - heading "Conflict of interest" [level=2] [ref=e916]: Conflict of interest
+                - paragraph [ref=e917]: The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
+              - generic [ref=e918]:
+                - heading "Generative AI statement" [level=2] [ref=e919]: Generative AI statement
+                - paragraph [ref=e920]: The authors declare that no Gen AI was used in the creation of this manuscript.
+              - generic [ref=e921]:
+                - heading "Publisher’s note" [level=2] [ref=e922]: Publisher’s note
+                - paragraph [ref=e923]: All claims expressed in this article are solely those of the authors and do not necessarily represent those of their affiliated organizations, or those of the publisher, the editors and the reviewers. Any product that may be evaluated in this article, or claim that may be made by its manufacturer, is not guaranteed or endorsed by the publisher.
+              - generic [ref=e924]:
+                - heading "References" [level=2] [ref=e925]: References
+                - list [ref=e927]:
+                  - listitem [ref=e928]:
+                    - text: "Chen L., Wang Q., Deng C., Xie B., Tuo X., Jiang G. (2024). Improved double deep Q-network algorithm applied to multi-dimensional environment path planning of hexapod robots. Sensors 24:2061. doi: 10.3390/s24072061, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e929] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s24072061
+                    - text: "] ["
+                    - link "PMC free article" [ref=e930] [cursor=pointer]:
+                      - /url: /articles/PMC11013983/
+                    - text: "] ["
+                    - link "PubMed" [ref=e931] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/38610271/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e932] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors&title=Improved%20double%20deep%20Q-network%20algorithm%20applied%20to%20multi-dimensional%20environment%20path%20planning%20of%20hexapod%20robots&author=L.%20Chen&author=Q.%20Wang&author=C.%20Deng&author=B.%20Xie&author=X.%20Tuo&volume=24&publication_year=2024&pages=2061&pmid=38610271&doi=10.3390/s24072061&
+                    - text: "]"
+                  - listitem [ref=e933]:
+                    - text: "Chuanbo W., Wangneng Y., Guangze L., Weiqiang L. (2023). Deep reinforcement learning with dynamic window approach based collision avoidance path planning for maritime autonomous surface ships. Ocean Eng. 284:115208. doi: 10.1016/j.oceaneng.2023.115208, PMID: 39854647 ["
+                    - link "External, opens in a new tab. DOI" [ref=e934] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.oceaneng.2023.115208
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e935] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Ocean%20Eng.&title=Deep%20reinforcement%20learning%20with%20dynamic%20window%20approach%20based%20collision%20avoidance%20path%20planning%20for%20maritime%20autonomous%20surface%20ships&author=W.%20Chuanbo&author=Y.%20Wangneng&author=L.%20Guangze&author=L.%20Weiqiang&volume=284&publication_year=2023&pages=115208&doi=10.1016/j.oceaneng.2023.115208&
+                    - text: "]"
+                  - listitem [ref=e936]:
+                    - text: "Debnath D., Vanegas F., Boiteau S., Gonzalez F. (2024). An integrated geometric obstacle avoidance and genetic algorithm TSP model for UAV path planning. Drones 8:302. doi: 10.3390/drones8070302 ["
+                    - link "External, opens in a new tab. DOI" [ref=e937] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/drones8070302
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e938] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Drones&title=An%20integrated%20geometric%20obstacle%20avoidance%20and%20genetic%20algorithm%20TSP%20model%20for%20UAV%20path%20planning&author=D.%20Debnath&author=F.%20Vanegas&author=S.%20Boiteau&author=F.%20Gonzalez&volume=8&publication_year=2024&pages=302&doi=10.3390/drones8070302&
+                    - text: "]"
+                  - listitem [ref=e939]:
+                    - text: "Deguale A. D., Yu L., Sinishaw L. M., Li K. (2024). Enhancing stability and performance in Mobile robot path planning with PMR-dueling DQN algorithm. Sensors 24:1523. doi: 10.3390/s24051523, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e940] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s24051523
+                    - text: "] ["
+                    - link "PMC free article" [ref=e941] [cursor=pointer]:
+                      - /url: /articles/PMC10934465/
+                    - text: "] ["
+                    - link "PubMed" [ref=e942] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/38475059/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e943] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors&title=Enhancing%20stability%20and%20performance%20in%20Mobile%20robot%20path%20planning%20with%20PMR-dueling%20DQN%20algorithm&author=A.%20D.%20Deguale&author=L.%20Yu&author=L.%20M.%20Sinishaw&author=K.%20Li&volume=24&publication_year=2024&pages=1523&pmid=38475059&doi=10.3390/s24051523&
+                    - text: "]"
+                  - listitem [ref=e944]:
+                    - text: "Guo S., Zhang X., Zheng Y., du Y. (2020). An autonomous path planning model for unmanned ships based on deep reinforcement learning. Sensors 20:426. doi: 10.3390/s20020426, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e945] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s20020426
+                    - text: "] ["
+                    - link "PMC free article" [ref=e946] [cursor=pointer]:
+                      - /url: /articles/PMC7013856/
+                    - text: "] ["
+                    - link "PubMed" [ref=e947] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31940855/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e948] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors&title=An%20autonomous%20path%20planning%20model%20for%20unmanned%20ships%20based%20on%20deep%20reinforcement%20learning&author=S.%20Guo&author=X.%20Zhang&author=Y.%20Zheng&author=Y.%20du&volume=20&publication_year=2020&pages=426&pmid=31940855&doi=10.3390/s20020426&
+                    - text: "]"
+                  - listitem [ref=e949]:
+                    - text: "Huiyan H., Jiaqi W., Liqun K., Xie H., Hongxin X. (2023). Improved robot path planning method based on deep reinforcement learning. Sensors (Basel, Switzerland) 23. doi: 10.3390/s23125622 ["
+                    - link "External, opens in a new tab. DOI" [ref=e950] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s23125622
+                    - text: "] ["
+                    - link "PMC free article" [ref=e951] [cursor=pointer]:
+                      - /url: /articles/PMC10304367/
+                    - text: "] ["
+                    - link "PubMed" [ref=e952] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/37420785/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e953] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors%20(Basel,%20Switzerland)&title=Improved%20robot%20path%20planning%20method%20based%20on%20deep%20reinforcement%20learning&author=H.%20Huiyan&author=W.%20Jiaqi&author=K.%20Liqun&author=H.%20Xie&author=X.%20Hongxin&volume=23&publication_year=2023&pmid=37420785&doi=10.3390/s23125622&
+                    - text: "]"
+                  - listitem [ref=e954]:
+                    - text: "Jinduo Z., Zhigao G., Jiakai L., Chao W., Keqiang Y., Wenjun L. (2022). Path planning research of a UAV Base station searching for disaster victims’ location information based on deep reinforcement learning. Entropy 24:1767. doi: 10.3390/e24121767, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e955] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/e24121767
+                    - text: "] ["
+                    - link "PMC free article" [ref=e956] [cursor=pointer]:
+                      - /url: /articles/PMC9778616/
+                    - text: "] ["
+                    - link "PubMed" [ref=e957] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/36554172/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e958] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Entropy&title=Path%20planning%20research%20of%20a%20UAV%20Base%20station%20searching%20for%20disaster%20victims%E2%80%99%20location%20information%20based%20on%20deep%20reinforcement%20learning&author=Z.%20Jinduo&author=G.%20Zhigao&author=L.%20Jiakai&author=W.%20Chao&author=Y.%20Keqiang&volume=24&publication_year=2022&pages=1767&pmid=36554172&doi=10.3390/e24121767&
+                    - text: "]"
+                  - listitem [ref=e959]:
+                    - text: "Junli G., Weijie Y., Jing G., Zhongjuan L. (2020). Deep reinforcement learning for indoor Mobile robot path planning. Sensors (Basel, Switzerland) 20:5493. doi: 10.3390/s20195493, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e960] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s20195493
+                    - text: "] ["
+                    - link "PMC free article" [ref=e961] [cursor=pointer]:
+                      - /url: /articles/PMC7582363/
+                    - text: "] ["
+                    - link "PubMed" [ref=e962] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/32992750/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e963] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors%20(Basel,%20Switzerland)&title=Deep%20reinforcement%20learning%20for%20indoor%20Mobile%20robot%20path%20planning&author=G.%20Junli&author=Y.%20Weijie&author=G.%20Jing&author=L.%20Zhongjuan&volume=20&publication_year=2020&pages=5493&pmid=32992750&doi=10.3390/s20195493&
+                    - text: "]"
+                  - listitem [ref=e964]:
+                    - text: "Kong X., Zhou Y., Li Z., Wang S. (2024). Multi-UAV simultaneous target assignment and path planning based on deep reinforcement learning in dynamic multiple obstacles environments. Front. Neurorobot. 17:171302898. doi: 10.3389/fnbot.2023.1302898, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e965] [cursor=pointer]:
+                      - /url: https://doi.org/10.3389/fnbot.2023.1302898
+                    - text: "] ["
+                    - link "PMC free article" [ref=e966] [cursor=pointer]:
+                      - /url: /articles/PMC10839049/
+                    - text: "] ["
+                    - link "PubMed" [ref=e967] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/38318422/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e968] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Front.%20Neurorobot.&title=Multi-UAV%20simultaneous%20target%20assignment%20and%20path%20planning%20based%20on%20deep%20reinforcement%20learning%20in%20dynamic%20multiple%20obstacles%20environments&author=X.%20Kong&author=Y.%20Zhou&author=Z.%20Li&author=S.%20Wang&volume=17&publication_year=2024&pages=171302898&pmid=38318422&doi=10.3389/fnbot.2023.1302898&
+                    - text: "]"
+                  - listitem [ref=e969]:
+                    - text: "Lei W., Xiaodong H., Junguo C., Chao L., Wensheng X. (2023). Modified adaptive ant colony optimization algorithm and its application for solving path planning of mobile robot. Expert Syst. Appl. 215:119410. doi: 10.1016/j.eswa.2022.119410, PMID: 39854647 ["
+                    - link "External, opens in a new tab. DOI" [ref=e970] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.eswa.2022.119410
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e971] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Expert%20Syst.%20Appl.&title=Modified%20adaptive%20ant%20colony%20optimization%20algorithm%20and%20its%20application%20for%20solving%20path%20planning%20of%20mobile%20robot&author=W.%20Lei&author=H.%20Xiaodong&author=C.%20Junguo&author=L.%20Chao&author=X%20Wensheng&volume=215&publication_year=2023&pages=119410&doi=10.1016/j.eswa.2022.119410&
+                    - text: "]"
+                  - listitem [ref=e972]:
+                    - text: "Li Q., Geng X. (2023). Robot path planning based on improved DQN algorithm. Comput. Eng. 49, 111–120. doi: 10.19678/j.issn.1000-3428.0066348 ["
+                    - link "External, opens in a new tab. DOI" [ref=e973] [cursor=pointer]:
+                      - /url: https://doi.org/10.19678/j.issn.1000-3428.0066348
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e974] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Comput.%20Eng.&title=Robot%20path%20planning%20based%20on%20improved%20DQN%20algorithm&author=Q.%20Li&author=X.%20Geng&volume=49&publication_year=2023&pages=111-120&doi=10.19678/j.issn.1000-3428.0066348&
+                    - text: "]"
+                  - listitem [ref=e975]:
+                    - text: "Lin Y., Wen J. (2023). Improved duelling deep Q-networks based path planning for intelligent agents. Int. J. Veh. Des. 91, 232–247. doi: 10.1504/IJVD.2023.131056, PMID: 35009967 ["
+                    - link "External, opens in a new tab. DOI" [ref=e976] [cursor=pointer]:
+                      - /url: https://doi.org/10.1504/IJVD.2023.131056
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e977] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Int.%20J.%20Veh.%20Des.&title=Improved%20duelling%20deep%20Q-networks%20based%20path%20planning%20for%20intelligent%20agents&author=Y.%20Lin&author=J.%20Wen&volume=91&publication_year=2023&pages=232-247&doi=10.1504/IJVD.2023.131056&
+                    - text: "]"
+                  - listitem [ref=e978]:
+                    - text: "Meetu J., Vibha S., Narinder S., Satya Bir S. (2022). An overview of variants and advancements of PSO algorithm. Appl. Sci. 12:8392. doi: 10.3390/app12178392, PMID: 39838284 ["
+                    - link "External, opens in a new tab. DOI" [ref=e979] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/app12178392
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e980] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Appl.%20Sci.&title=An%20overview%20of%20variants%20and%20advancements%20of%20PSO%20algorithm&author=J.%20Meetu&author=S.%20Vibha&author=S.%20Narinder&author=S.%20Satya%20Bir&volume=12&publication_year=2022&pages=8392&doi=10.3390/app12178392&
+                    - text: "]"
+                  - listitem [ref=e981]:
+                    - text: "Meng X., Jiachen Y., Jiabao W., Zhengjian L., Wen L., Xinbo G. (2023). An information-assisted deep reinforcement learning path planning scheme for dynamic and unknown underwater environment. IEEE Trans. Neural Netw. Learn. Syst. 36, 842–853. doi: 10.1109/TNNLS.2023.3332172 ["
+                    - link "External, opens in a new tab. DOI" [ref=e982] [cursor=pointer]:
+                      - /url: https://doi.org/10.1109/TNNLS.2023.3332172
+                    - text: "] ["
+                    - link "PubMed" [ref=e983] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/37988205/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e984] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=IEEE%20Trans.%20Neural%20Netw.%20Learn.%20Syst.&title=An%20information-assisted%20deep%20reinforcement%20learning%20path%20planning%20scheme%20for%20dynamic%20and%20unknown%20underwater%20environment&author=X.%20Meng&author=Y.%20Jiachen&author=W.%20Jiabao&author=L.%20Zhengjian&author=L.%20Wen&volume=36&publication_year=2023&pages=842-853&pmid=37988205&doi=10.1109/TNNLS.2023.3332172&
+                    - text: "]"
+                  - listitem [ref=e985]:
+                    - text: "Sha L., Mingyue Z., Yongbo Z., Cheng M., Qingdang L. (2023). A survey of path planning of industrial robots based on rapidly exploring random trees. Front. Neurorobot. 17:171268447. doi: 10.3389/fnbot.2023.1268447 ["
+                    - link "External, opens in a new tab. DOI" [ref=e986] [cursor=pointer]:
+                      - /url: https://doi.org/10.3389/fnbot.2023.1268447
+                    - text: "] ["
+                    - link "PMC free article" [ref=e987] [cursor=pointer]:
+                      - /url: /articles/PMC10654791/
+                    - text: "] ["
+                    - link "PubMed" [ref=e988] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/38023457/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e989] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Front.%20Neurorobot.&title=A%20survey%20of%20path%20planning%20of%20industrial%20robots%20based%20on%20rapidly%20exploring%20random%20trees&author=L.%20Sha&author=Z.%20Mingyue&author=Z.%20Yongbo&author=M.%20Cheng&author=L.%20Qingdang&volume=17&publication_year=2023&pages=171268447&pmid=38023457&doi=10.3389/fnbot.2023.1268447&
+                    - text: "]"
+                  - listitem [ref=e990]:
+                    - text: "Shen X., Zhao T. (2023). UAV regional coverage path planning strategy based on DDQN. Electron. Meas. Technol. 46, 30–36. doi: 10.19651/j.cnki.emt.2211675 ["
+                    - link "External, opens in a new tab. DOI" [ref=e991] [cursor=pointer]:
+                      - /url: https://doi.org/10.19651/j.cnki.emt.2211675
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e992] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Electron.%20Meas.%20Technol.&title=UAV%20regional%20coverage%20path%20planning%20strategy%20based%20on%20DDQN&author=X.%20Shen&author=T.%20Zhao&volume=46&publication_year=2023&pages=30-36&doi=10.19651/j.cnki.emt.2211675&
+                    - text: "]"
+                  - listitem [ref=e993]:
+                    - text: "Tang J., Liang Y., Li K. (2024). Dynamic scene path planning of UAVs based on deep reinforcement learning. Drones 8:60. doi: 10.3390/drones8020060 ["
+                    - link "External, opens in a new tab. DOI" [ref=e994] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/drones8020060
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e995] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Drones&title=Dynamic%20scene%20path%20planning%20of%20UAVs%20based%20on%20deep%20reinforcement%20learning&author=J.%20Tang&author=Y.%20Liang&author=K.%20Li&volume=8&publication_year=2024&pages=60&doi=10.3390/drones8020060&
+                    - text: "]"
+                  - listitem [ref=e996]:
+                    - text: "Wang X., Zhong W., Wang J., Xiao L., Zhu Q. (2024). UAV path and radio mapping based on deep reinforcement learning. J. Appl. Sci. 42, 200–210. doi: 10.3969/j.issn.0255-8297.2024.02.002 ["
+                    - link "External, opens in a new tab. DOI" [ref=e997] [cursor=pointer]:
+                      - /url: https://doi.org/10.3969/j.issn.0255-8297.2024.02.002
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e998] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J.%20Appl.%20Sci.&title=UAV%20path%20and%20radio%20mapping%20based%20on%20deep%20reinforcement%20learning&author=X.%20Wang&author=W.%20Zhong&author=J.%20Wang&author=L.%20Xiao&author=Q%20Zhu&volume=42&publication_year=2024&pages=200-210&doi=10.3969/j.issn.0255-8297.2024.02.002&
+                    - text: "]"
+                  - listitem [ref=e999]:
+                    - text: "Yan Y., Zhiyu C., Gang L., Jianwei G. (2023). A Mapless local path planning approach using deep reinforcement learning framework. Sensors 23:2036. doi: 10.3390/s23042036, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e1000] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s23042036
+                    - text: "] ["
+                    - link "PMC free article" [ref=e1001] [cursor=pointer]:
+                      - /url: /articles/PMC9958619/
+                    - text: "] ["
+                    - link "PubMed" [ref=e1002] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/36850635/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1003] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors&title=A%20Mapless%20local%20path%20planning%20approach%20using%20deep%20reinforcement%20learning%20framework&author=Y.%20Yan&author=C.%20Zhiyu&author=L.%20Gang&author=G.%20Jianwei&volume=23&publication_year=2023&pages=2036&pmid=36850635&doi=10.3390/s23042036&
+                    - text: "]"
+                  - listitem [ref=e1004]:
+                    - text: "Yu X., Yang L., Yubo T., et al. (2024). A* algorithm based on adaptive expansion convolution for unmanned aerial vehicle path planning. Intell. Serv. Robot. 17:521. doi: 10.1007/s11370-024-00536-3 ["
+                    - link "External, opens in a new tab. DOI" [ref=e1005] [cursor=pointer]:
+                      - /url: https://doi.org/10.1007/s11370-024-00536-3
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1006] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Intell.%20Serv.%20Robot.&title=A*%20algorithm%20based%20on%20adaptive%20expansion%20convolution%20for%20unmanned%20aerial%20vehicle%20path%20planning&author=X.%20Yu&author=L.%20Yang&author=T.%20Yubo&volume=17&publication_year=2024&pages=521&doi=10.1007/s11370-024-00536-3&
+                    - text: "]"
+                  - listitem [ref=e1007]:
+                    - text: "Yuan S., Zhang L., Gu Q., Zhang F., Lv J. (2023). Research on D3QN path planning method of Mobile robot priority sampling. J. Chin. Comput. Syst. 44, 923–929. doi: 10.20009/j.cnki.21-1106/TP.2021-0713 ["
+                    - link "External, opens in a new tab. DOI" [ref=e1008] [cursor=pointer]:
+                      - /url: https://doi.org/10.20009/j.cnki.21-1106/TP.2021-0713
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1009] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J.%20Chin.%20Comput.%20Syst.&title=Research%20on%20D3QN%20path%20planning%20method%20of%20Mobile%20robot%20priority%20sampling&author=S.%20Yuan&author=L.%20Zhang&author=Q.%20Gu&author=F.%20Zhang&author=J.%20Lv&volume=44&publication_year=2023&pages=923-929&doi=10.20009/j.cnki.21-1106/TP.2021-0713&
+                    - text: "]"
+                  - listitem [ref=e1010]:
+                    - text: "Yuwan G., Zhitao Z., Jidong L., Lin S., Zhenjie H., Shoukun X. (2022). DM-DQN: dueling Munchausen deep Q network for robot path planning. Complex Intell. Syst. 9, 4287–4300. doi: 10.1007/S40747-022-00948-7 ["
+                    - link "External, opens in a new tab. DOI" [ref=e1011] [cursor=pointer]:
+                      - /url: https://doi.org/10.1007/S40747-022-00948-7
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1012] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Complex%20Intell.%20Syst.&title=DM-DQN:%20dueling%20Munchausen%20deep%20Q%20network%20for%20robot%20path%20planning&author=G.%20Yuwan&author=Z.%20Zhitao&author=L.%20Jidong&author=S.%20Lin&author=H.%20Zhenjie&volume=9&publication_year=2022&pages=4287-4300&doi=10.1007/S40747-022-00948-7&
+                    - text: "]"
+                  - listitem [ref=e1013]:
+                    - text: "Zhang Y., Liu K., Gao F., Zhao F. (2023). Research on path planning and path tracking control of autonomous vehicles based on improved APF and SMC. Sensors 23:7918. doi: 10.3390/s23187918, PMID: ["
+                    - link "External, opens in a new tab. DOI" [ref=e1014] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s23187918
+                    - text: "] ["
+                    - link "PMC free article" [ref=e1015] [cursor=pointer]:
+                      - /url: /articles/PMC10535914/
+                    - text: "] ["
+                    - link "PubMed" [ref=e1016] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/37765974/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1017] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Sensors&title=Research%20on%20path%20planning%20and%20path%20tracking%20control%20of%20autonomous%20vehicles%20based%20on%20improved%20APF%20and%20SMC&author=Y.%20Zhang&author=K.%20Liu&author=F.%20Gao&author=F.%20Zhao&volume=23&publication_year=2023&pages=7918&pmid=37765974&doi=10.3390/s23187918&
+                    - text: "]"
+                  - listitem [ref=e1018]:
+                    - text: "Zhao W., Zhang Y., Xie Z. (2024). EPPE: an efficient progressive policy enhancement framework of deep reinforcement learning in path planning. Neurocomputing 596:127958. doi: 10.1016/j.neucom.2024.127958, PMID: 39854647 ["
+                    - link "External, opens in a new tab. DOI" [ref=e1019] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.neucom.2024.127958
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1020] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Neurocomputing&title=EPPE:%20an%20efficient%20progressive%20policy%20enhancement%20framework%20of%20deep%20reinforcement%20learning%20in%20path%20planning&author=W.%20Zhao&author=Y.%20Zhang&author=Z.%20Xie&volume=596&publication_year=2024&pages=127958&doi=10.1016/j.neucom.2024.127958&
+                    - text: "]"
+                  - listitem [ref=e1021]:
+                    - text: "Zhou X., Yan J., Yan M., Mao K., Yang R., Liu W. (2023). Path planning of rail-mounted logistics robots based on the improved Dijkstra algorithm. Appl. Sci. 13:9955. doi: 10.3390/app13179955 ["
+                    - link "External, opens in a new tab. DOI" [ref=e1022] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/app13179955
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=e1023] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Appl.%20Sci.&title=Path%20planning%20of%20rail-mounted%20logistics%20robots%20based%20on%20the%20improved%20Dijkstra%20algorithm&author=X.%20Zhou&author=J.%20Yan&author=M.%20Yan&author=K.%20Mao&author=R.%20Yang&volume=13&publication_year=2023&pages=9955&doi=10.3390/app13179955&
+                    - text: "]"
+              - generic [ref=e1024]:
+                - heading "Associated Data" [level=2] [ref=e1025]: Associated Data
+                - paragraph [ref=e1026]:
+                  - emphasis [ref=e1027]: This section collects any data citations, data availability statements, or supplementary materials included in this article.
+                - generic [ref=e1028]:
+                  - heading "Data Availability Statement" [level=3] [ref=e1029]
+                  - paragraph [ref=e1030]: The raw data supporting the conclusions of this article will be made available by the authors, without undue reservation.
+            - generic [ref=e1031]:
+              - separator [ref=e1032]
+              - paragraph [ref=e1033]:
+                - text: Articles from Frontiers in Neurorobotics are provided here courtesy of
+                - strong [ref=e1034]: Frontiers Media SA
+    - region "Article resources and navigation" [ref=e1036]:
+      - generic [ref=e1038]:
+        - heading "ACTIONS" [level=2] [ref=e1039]
+        - list [ref=e1040]:
+          - listitem [ref=e1041]:
+            - link "View on publisher site icon View on publisher site" [ref=e1042] [cursor=pointer]:
+              - /url: https://doi.org/10.3389/fnbot.2025.1512953
+              - img "View on publisher site icon"
+              - generic [ref=e1043]: View on publisher site
+          - listitem [ref=e1044]:
+            - link "Download PDF icon PDF (14.0 MB)" [ref=e1045] [cursor=pointer]:
+              - /url: pdf/fnbot-19-1512953.pdf
+              - img "Download PDF icon"
+              - generic [ref=e1046]: PDF (14.0 MB)
+          - listitem [ref=e1047]:
+            - button "Open dialog with citation text in different styles" [ref=e1048] [cursor=pointer]:
+              - img "Cite icon"
+              - generic [ref=e1049]: Cite
+          - listitem [ref=e1050]:
+            - button "Save article in MyNCBI collections." [ref=e1051] [cursor=pointer]:
+              - img "Collections icon"
+              - generic [ref=e1052]: Collections
+          - listitem [ref=e1053]:
+            - button "Show article permalink" [ref=e1054] [cursor=pointer]:
+              - img "Permalink icon"
+              - generic [ref=e1055]: Permalink
+      - generic [ref=e1056]:
+        - heading "RESOURCES" [level=2] [ref=e1057]
+        - generic [ref=e1058]:
+          - heading "Similar articles" [level=3] [ref=e1059]:
+            - button "Similar articles" [ref=e1060] [cursor=pointer]
+          - heading "Cited by other articles" [level=3] [ref=e1061]:
+            - button "Cited by other articles" [ref=e1062] [cursor=pointer]
+          - heading "Links to NCBI Databases" [level=3] [ref=e1063]:
+            - button "Links to NCBI Databases" [ref=e1064] [cursor=pointer]
+      - navigation "On this page" [ref=e1066]:
+        - heading "On this page" [level=2] [ref=e1067]
+        - list [ref=e1068]:
+          - listitem [ref=e1069]:
+            - link "Abstract" [ref=e1070] [cursor=pointer]:
+              - /url: "#abstract1"
+          - listitem [ref=e1071]:
+            - link "1. Introduction" [ref=e1072] [cursor=pointer]:
+              - /url: "#sec1"
+          - listitem [ref=e1073]:
+            - link "2. Related work" [ref=e1074] [cursor=pointer]:
+              - /url: "#sec2"
+          - listitem [ref=e1075]:
+            - link "3. BiLSTM-D3QN path planning algorithm" [ref=e1076] [cursor=pointer]:
+              - /url: "#sec6"
+          - listitem [ref=e1077]:
+            - link "4. Experimental results and analysis" [ref=e1078] [cursor=pointer]:
+              - /url: "#sec16"
+          - listitem [ref=e1079]:
+            - link "5. Conclusion" [ref=e1080] [cursor=pointer]:
+              - /url: "#sec22"
+          - listitem [ref=e1081]:
+            - link "Funding Statement" [ref=e1082] [cursor=pointer]:
+              - /url: "#funding-statement1"
+          - listitem [ref=e1083]:
+            - link "Data availability statement" [ref=e1084] [cursor=pointer]:
+              - /url: "#sec23"
+          - listitem [ref=e1085]:
+            - link "Author contributions" [ref=e1086] [cursor=pointer]:
+              - /url: "#sec24"
+          - listitem [ref=e1087]:
+            - link "Conflict of interest" [ref=e1088] [cursor=pointer]:
+              - /url: "#sec26"
+          - listitem [ref=e1089]:
+            - link "Generative AI statement" [ref=e1090] [cursor=pointer]:
+              - /url: "#sec27"
+          - listitem [ref=e1091]:
+            - link "Publisher’s note" [ref=e1092] [cursor=pointer]:
+              - /url: "#sec28"
+          - listitem [ref=e1093]:
+            - link "References" [ref=e1094] [cursor=pointer]:
+              - /url: "#ref-list1"
+          - listitem [ref=e1095]:
+            - link "Associated Data" [ref=e1096] [cursor=pointer]:
+              - /url: "#_ad93_"
+  - contentinfo [ref=e1097]:
+    - generic [ref=e1098]:
+      - generic [ref=e1099]: Follow NCBI
+      - generic [ref=e1100]:
+        - link "NCBI on X (formerly known as Twitter)" [ref=e1101] [cursor=pointer]:
+          - /url: https://twitter.com/ncbi
+          - img [ref=e1102]
+          - generic [ref=e1103]: NCBI on X (formerly known as Twitter)
+        - link "NCBI on Facebook" [ref=e1104] [cursor=pointer]:
+          - /url: https://www.facebook.com/ncbi.nlm
+          - img [ref=e1105]
+          - generic [ref=e1106]: NCBI on Facebook
+        - link "NCBI on LinkedIn" [ref=e1107] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/ncbinlm
+          - img [ref=e1108]
+          - generic [ref=e1109]: NCBI on LinkedIn
+        - link "NCBI on GitHub" [ref=e1110] [cursor=pointer]:
+          - /url: https://github.com/ncbi
+          - img [ref=e1111]
+          - generic [ref=e1112]: NCBI on GitHub
+        - link "NCBI RSS feed" [ref=e1113] [cursor=pointer]:
+          - /url: https://ncbiinsights.ncbi.nlm.nih.gov/
+          - img [ref=e1114]
+          - generic [ref=e1115]: NCBI RSS feed
+    - generic [ref=e1116]:
+      - generic [ref=e1117]:
+        - generic [ref=e1118]:
+          - paragraph [ref=e1119]: Connect with NLM
+          - generic [ref=e1120]:
+            - link "NLM on X (formerly known as Twitter)" [ref=e1121] [cursor=pointer]:
+              - /url: https://twitter.com/nlm_nih
+              - img [ref=e1122]
+              - generic [ref=e1123]: NLM on X (formerly known as Twitter)
+            - link "NLM on Facebook" [ref=e1124] [cursor=pointer]:
+              - /url: https://www.facebook.com/nationallibraryofmedicine
+              - img [ref=e1125]
+              - generic [ref=e1126]: NLM on Facebook
+            - link "NLM on YouTube" [ref=e1127] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/NLMNIH
+              - img [ref=e1128]
+              - generic [ref=e1130]: NLM on YouTube
+        - paragraph [ref=e1132]:
+          - link "External, opens in a new tab. National Library of Medicine 8600 Rockville Pike Bethesda, MD 20894" [ref=e1133] [cursor=pointer]:
+            - /url: "https://www.google.com/maps/place/8600+Rockville+Pike,+Bethesda,+MD+20894/%4038.9959508,\n            -77.101021,17z/data%3D!3m1!4b1!4m5!3m4!1s0x89b7c95e25765ddb%3A0x19156f88b27635b8!8m2!3d38.9959508!\n            4d-77.0988323"
+            - text: External, opens in a new tab. National Library of Medicine
+            - text: 8600 Rockville Pike
+            - text: Bethesda, MD 20894
+        - list [ref=e1134]:
+          - listitem [ref=e1135]:
+            - link "Web Policies" [ref=e1136] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/web_policies.html
+          - listitem [ref=e1137]:
+            - link "FOIA" [ref=e1138] [cursor=pointer]:
+              - /url: https://www.nih.gov/institutes-nih/nih-office-director/office-communications-public-liaison/freedom-information-act-office
+          - listitem [ref=e1139]:
+            - link "External, opens in a new tab. HHS Vulnerability Disclosure" [ref=e1140] [cursor=pointer]:
+              - /url: https://www.hhs.gov/vulnerability-disclosure-policy/index.html
+        - list [ref=e1141]:
+          - listitem [ref=e1142]:
+            - link "Help" [ref=e1143] [cursor=pointer]:
+              - /url: https://support.nlm.nih.gov/?pagename=cloudpmc-viewer%3Apmc%3Aarticle%3Ajournal
+          - listitem [ref=e1144]:
+            - link "Accessibility" [ref=e1145] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/accessibility.html
+          - listitem [ref=e1146]:
+            - link "Careers" [ref=e1147] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/careers/careers.html
+      - list [ref=e1149]:
+        - listitem [ref=e1150]:
+          - link "NLM" [ref=e1151] [cursor=pointer]:
+            - /url: https://www.nlm.nih.gov/
+        - listitem [ref=e1152]:
+          - link "NIH" [ref=e1153] [cursor=pointer]:
+            - /url: https://www.nih.gov/
+        - listitem [ref=e1154]:
+          - link "External, opens in a new tab. HHS" [ref=e1155] [cursor=pointer]:
+            - /url: https://www.hhs.gov/
+        - listitem [ref=e1156]:
+          - link "External, opens in a new tab. USA.gov" [ref=e1157] [cursor=pointer]:
+            - /url: https://www.usa.gov/

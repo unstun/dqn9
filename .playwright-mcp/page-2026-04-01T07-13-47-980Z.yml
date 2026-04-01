@@ -1,0 +1,1328 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Back to arXiv" [ref=e4] [cursor=pointer]:
+      - /url: https://arxiv.org/
+      - generic [ref=e5]: Back to arXiv
+    - banner [ref=e6]:
+      - paragraph [ref=e7]:
+        - text: This is
+        - strong [ref=e8]: experimental HTML
+        - text: to improve accessibility. We invite you to report rendering errors.
+        - generic [ref=e9]: Use Alt+Y to toggle on accessible reporting links and Alt+Shift+Y to toggle off.
+        - text: Learn more
+        - link "about this project" [ref=e10] [cursor=pointer]:
+          - /url: https://info.arxiv.org/about/accessible_HTML.html
+        - text: and
+        - link "help improve conversions" [ref=e11] [cursor=pointer]:
+          - /url: https://info.arxiv.org/help/submit_latex_best_practices.html
+        - text: .
+    - navigation [ref=e12]:
+      - link "Why HTML?" [ref=e13] [cursor=pointer]:
+        - /url: https://info.arxiv.org/about/accessible_HTML.html
+      - link "Report Issue" [ref=e14] [cursor=pointer]:
+        - /url: "#myForm"
+      - link "Back to Abstract" [ref=e15] [cursor=pointer]:
+        - /url: https://arxiv.org/abs/2510.26646v1
+      - link "Download PDF" [ref=e16] [cursor=pointer]:
+        - /url: https://arxiv.org/pdf/2510.26646v1
+      - link "Toggle dark/light mode" [ref=e17] [cursor=pointer]:
+        - /url: javascript:toggleColorScheme()
+        - generic "Switch to light mode" [ref=e18]:
+          - img [ref=e19]
+  - generic [ref=e21]:
+    - navigation "Table of Contents" [ref=e22]:
+      - generic [ref=e23] [cursor=pointer]:
+        - img
+      - list [ref=e24]:
+        - listitem [ref=e25]:
+          - link "Abstract" [ref=e26] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#abstract
+            - generic [ref=e27]: Abstract
+        - listitem [ref=e28]:
+          - link "I INTRODUCTION" [ref=e29] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S1
+            - generic [ref=e30]:
+              - generic [ref=e31]: I
+              - text: INTRODUCTION
+        - listitem [ref=e32]:
+          - link "II RELATED WORK" [ref=e33] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S2
+            - generic [ref=e34]:
+              - generic [ref=e35]: II
+              - text: RELATED WORK
+        - listitem [ref=e36]:
+          - link "III Methodology Sketch" [ref=e37] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S3
+            - generic [ref=e38]:
+              - generic [ref=e39]: III
+              - text: Methodology Sketch
+        - listitem [ref=e40]:
+          - link "IV EXPERIMENT" [ref=e41] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S4
+            - generic [ref=e42]:
+              - generic [ref=e43]: IV
+              - text: EXPERIMENT
+        - listitem [ref=e44]:
+          - link "V Results & Discussion" [ref=e45] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S5
+            - generic [ref=e46]:
+              - generic [ref=e47]: V
+              - text: Results & Discussion
+        - listitem [ref=e48]:
+          - link "VI Conclusion" [ref=e49] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#S6
+            - generic [ref=e50]:
+              - generic [ref=e51]: VI
+              - text: Conclusion
+        - listitem [ref=e52]:
+          - link "References" [ref=e53] [cursor=pointer]:
+            - /url: https://arxiv.org/html/2510.26646v1#bib
+            - generic [ref=e54]: References
+    - generic [ref=e55]:
+      - generic [ref=e56]:
+        - 'link "License: arXiv.org perpetual non-exclusive license" [ref=e57] [cursor=pointer]':
+          - /url: https://info.arxiv.org/help/license/index.html#licenses-available
+        - generic [ref=e58]: arXiv:2510.26646v1 [cs.RO] 30 Oct 2025
+      - article [ref=e59]:
+        - heading "Hybrid DQN-TD3 Reinforcement Learning for Autonomous Navigation in Dynamic Environments" [level=1] [ref=e60]
+        - generic [ref=e63]: Xiaoyi He, Danggui Chen, Zhenshuo Zhang, Zimeng Bai
+        - generic [ref=e64]: (October 30, 2025)
+        - generic [ref=e65]:
+          - heading "Abstract" [level=6] [ref=e66]
+          - paragraph [ref=e67]: This paper proposes a hierarchical path planning and control framework that integrates the strategic decision-making capability of Deep Q-Network (DQN) for discrete subgoal selection with the precise continuous control execution of Twin Delayed Deep Deterministic Policy Gradient (TD3). By leveraging DQN’s strength in high-level discrete decision-making and TD3’s sample efficiency and stability in continuous motion domains, the proposed approach achieves robust policy generalization and enhanced adaptive performance in dynamic and uncertain environments, effectively overcoming limitations of conventional single-algorithm solutions in complex robotic applications.
+        - generic [ref=e68]:
+          - heading "I INTRODUCTION" [level=2] [ref=e69]:
+            - generic [ref=e70]: I
+            - text: INTRODUCTION
+          - paragraph [ref=e72]:
+            - text: Traditional path planning algorithms, such as A* and Dijkstra, are predicated on prior environmental modeling (i.e. pre-constructed maps or graph structures). While they demonstrate efficacy in static environments, they exhibit inherent limitations in dynamic and unstructured scenarios. In such contexts, frequent global path replanning is necessitated, resulting in exponential degradation of computational efficiency
+            - generic [ref=e73]:
+              - text: "["
+              - link "1" [ref=e74] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#bib.bib1
+              - text: "]"
+            - text: ", coupled with non-negligible latency and performance overhead."
+          - paragraph [ref=e76]:
+            - text: On the other hand, single reinforcement learning methods have their own limitations. Deep Q-Network (DQN) excels at making discrete decisions such as direction or path selection, but lacks the ability to handle fine-grained continuous control. Twin Delayed Deep Deterministic Policy Gradient (TD3) performs well in continuous action spaces, offering stable and efficient control, but is less effective in handling high-level, discrete navigation strategies.
+            - generic [ref=e77]:
+              - text: "["
+              - link "2" [ref=e78] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#bib.bib2
+              - text: "]"
+            - text: .
+          - paragraph [ref=e80]: This research aims to develop a hybrid reinforcement learning architecture that combines DQN for high-level decision-making and TD3 for continuous control. The framework is designed to enhance navigation accuracy and obstacle avoidance in dynamic environments, ultimately achieving an adaptive and efficient autonomous navigation system.
+          - paragraph [ref=e82]:
+            - text: This work draws inspiration from hierarchical reinforcement learning (HRL) literature, where high-level and low-level policies often share a unified reward structure for consistent optimization
+            - generic [ref=e83]:
+              - text: "["
+              - link "3" [ref=e84] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#bib.bib3
+              - text: "]"
+            - text: . Our proposed DQN-TD3 hybrid control framework employs a unified reward mechanism to simultaneously drive high-level strategic decision-making and low-level continuous motion control. Additionally, prior research in deep RL-based navigation, such as Tai et al.
+            - generic [ref=e85]:
+              - text: "["
+              - link "4" [ref=e86] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#bib.bib4
+              - text: "]"
+            - text: and Pfeiffer et al.
+            - generic [ref=e87]:
+              - text: "["
+              - link "5" [ref=e88] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#bib.bib5
+              - text: "]"
+            - text: ", has demonstrated the effectiveness of multi-objective reward designs encompassing goal achievement, safety, and control smoothness, which further informs our reward."
+          - generic [ref=e89]:
+            - heading "I-A Practical Implication" [level=3] [ref=e90]:
+              - generic [ref=e91]: I-A
+              - text: Practical Implication
+            - paragraph [ref=e93]: In real-world applications, mobile robots are widely used in warehouse logistics, indoor service, security patrol, and search-and-rescue tasks. These environments are often highly dynamic, featuring moving obstacles (e.g., humans or other robots), incomplete or constantly changing map information, and conditions where GPS signals are weak or entirely unavailable.
+            - paragraph [ref=e95]: Traditional path planning methods such as A* and Dijkstra rely on static map s and deterministic graph structures, making them poorly suited for fast adaptation in changing environments. However, real-world scenarios demand that robots possess the ability to perceive, decide, and act autonomously in real time, even in unknown or partially observable environments.
+            - paragraph [ref=e97]: Therefore, developing an adaptive navigation method based on reinforcement learning not only enhances the robot’s robustness and environmental adaptability but also addresses key limitations of classical planners, such as map dependency and limited reactivity. This is crucial for enabling reliable and intelligent robotic systems in complex, dynamic, and uncertain real-world settings.
+          - generic [ref=e98]:
+            - heading "I-B Current solutions and gaps" [level=3] [ref=e99]:
+              - generic [ref=e100]: I-B
+              - text: Current solutions and gaps
+            - paragraph [ref=e102]:
+              - text: Traditional planners provide deterministic solutions but lack adaptability. To improve the performance of automatic navigation in dynamic and complex environments, prior works have applied deep reinforcement learning (DRL), particularly single algorithms such as DQN or TD3
+              - generic [ref=e103]:
+                - text: "["
+                - link "2" [ref=e104] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib2
+                - text: "]"
+              - text: ". Existing RL-based methods improve adaptability and efficiency but have inherent limitations: DQN cannot directly output continuous control commands, while TD3 requires careful tuning and strategy development, especially in tasks involving dynamic environments."
+              - generic [ref=e105]:
+                - text: "["
+                - link "6" [ref=e106] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib6
+                - text: "]"
+              - text: .
+        - generic [ref=e107]:
+          - heading "II RELATED WORK" [level=2] [ref=e108]:
+            - generic [ref=e109]: II
+            - text: RELATED WORK
+          - paragraph [ref=e111]: With growing awareness, mobile robot automatic navigation has emerged as a significant research area of robotics, and DRL methods for continuous control have gained substantial attention in recent years. This section provides an overview of relevant literature and highlights important contributions as well as gaps in the field.
+          - generic [ref=e112]:
+            - heading "II-A Prior Work" [level=3] [ref=e113]:
+              - generic [ref=e114]: II-A
+              - text: Prior Work
+            - paragraph [ref=e116]:
+              - text: For a long time, path planning has attracted extensive attention in the field of artificial intelligence. Many classical algorithms such as Dijkstra algorithm, A* algorithm, Simulated Annealing (SA) and Ant Colony Optimization (ACO) have appealed. With elevated criteria for a complex and dynamic environment, RL is required in path planning. Dynamic programming, Q-learning, SARSA and other reinforcement algorithms have been proposed, but these tabular reinforcement learning methods have obvious limitations in the size of state space and action space
+              - generic [ref=e117]:
+                - text: "["
+                - link "7" [ref=e118] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib7
+                - text: "]"
+              - text: .
+            - paragraph [ref=e120]:
+              - text: Researchers then applied DRL, particularly DQN, which effectively utilizes a neural network
+              - generic [ref=e121]:
+                - text: "["
+                - link "8" [ref=e122] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib8
+                - text: "]"
+              - text: . Enhancements based on DQN, such as the dueling network structure and Double DQN (DDQN)
+              - generic [ref=e123]:
+                - text: "["
+                - link "9" [ref=e124] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib9
+                - text: "]"
+              - text: ", addressed critical issues like Q-value overestimation and improved the stability of DQN. PPO also has great potential in path planning, advancing policy gradient methods"
+              - generic [ref=e125]:
+                - text: "["
+                - link "10" [ref=e126] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib10
+                - text: ","
+                - link "11" [ref=e127] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib11
+                - text: "]"
+              - text: . Meanwhile, TD3 demonstrates superior performance in continuous control tasks.
+              - generic [ref=e128]:
+                - text: "["
+                - link "6" [ref=e129] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib6
+                - text: "]"
+          - generic [ref=e130]:
+            - heading "II-B Missing Part in Mobile Robot Navigation" [level=3] [ref=e131]:
+              - generic [ref=e132]: II-B
+              - text: Missing Part in Mobile Robot Navigation
+            - paragraph [ref=e134]:
+              - text: Single-RL methods (DQN and TD3) have achieved success in constrained or structured environments.
+              - generic [ref=e135]:
+                - text: "["
+                - link "12" [ref=e136] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib12
+                - text: "]"
+              - generic [ref=e137]:
+                - text: "["
+                - link "6" [ref=e138] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib6
+                - text: "]"
+              - text: Despite recent progress, the integration of DQN and PPO is not entirely uncharted
+              - generic [ref=e139]:
+                - text: "["
+                - link "2" [ref=e140] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib2
+                - text: "]"
+              - text: ", but exploration in the integration of two RL algorithms (e.g. DQN and TD3) holds novel potential in automatic navigation. This combined approach receives little attention in research, which is expected to achieve superior performance and mitigate constraints imposed by a single algorithm."
+          - generic [ref=e141]:
+            - heading "II-C Novelty and Advantages of the Proposed Framework" [level=3] [ref=e142]:
+              - generic [ref=e143]: II-C
+              - text: Novelty and Advantages of the Proposed Framework
+            - paragraph [ref=e145]: This paper integrates DQN’s capacity for discrete topological decision-making with TD3’s proficiency in fine-grained continuous control, aiming to achieve robust policy generalization and enhanced adaptive performance in dynamic and partially observable environments.
+        - generic [ref=e146]:
+          - heading "III Methodology Sketch" [level=2] [ref=e147]:
+            - generic [ref=e148]: III
+            - text: Methodology Sketch
+          - generic [ref=e149]:
+            - heading "III-A Pipeline Diagram Description" [level=3] [ref=e150]:
+              - generic [ref=e151]: III-A
+              - text: Pipeline Diagram Description
+            - 'figure "Figure 1: This is the pipeline diagram description." [ref=e152]':
+              - img "Refer to caption" [ref=e153]
+              - generic [ref=e154]:
+                - generic [ref=e155]: "Figure 1:"
+                - text: This is the pipeline diagram description.
+            - paragraph [ref=e157]:
+              - text: As illustrated in Figure
+              - link "1" [ref=e158] [cursor=pointer]:
+                - /url: https://arxiv.org/html/2510.26646v1#S3.F1
+              - text: ", this research is dedicated to developing a hybrid policy model combining DQN and TD3. We implement the algorithm in a PyBullet"
+              - generic [ref=e159]:
+                - text: "["
+                - link "13" [ref=e160] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib13
+                - text: "]"
+              - text: simulated robot and evaluate its performance on metrics (like path optimality, collision rate, and re-planning efficiency) with comparative baselines.
+          - generic [ref=e161]:
+            - heading "III-B Algorithm Modules" [level=3] [ref=e162]:
+              - generic [ref=e163]: III-B
+              - text: Algorithm Modules
+            - paragraph [ref=e165]:
+              - text: Inspired by hierarchical reinforcement learning (HRL), we bridge the gap between high-level strategic decision-making and low-level continuous control by designing a unified reward mechanism that is compatible with both value-based methods (DQN) and policy-gradient algorithms (TD3). Our design draws from prior works that emphasize multiple objectives in autonomous navigation, including goal achievement, safety, and motion efficiency
+              - generic [ref=e166]:
+                - text: "["
+                - link "4" [ref=e167] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib4
+                - text: ","
+                - link "5" [ref=e168] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib5
+                - text: ","
+                - link "14" [ref=e169] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib14
+                - text: "]"
+              - text: .
+            - paragraph [ref=e171]: "We define the high-level agent reward function as:"
+            - table [ref=e173]:
+              - rowgroup [ref=e174]:
+                - row "(1)" [ref=e175]:
+                  - cell [ref=e176]
+                  - cell [ref=e177]:
+                    - math [ref=e178]:
+                      - generic [ref=e180]:
+                        - generic [ref=e181]: R
+                        - generic [ref=e182]:
+                          - generic [ref=e183]: h
+                          - generic [ref=e184]: i
+                          - generic [ref=e185]: g
+                          - generic [ref=e186]: h
+                  - cell [ref=e187]:
+                    - math [ref=e188]:
+                      - generic [ref=e190]:
+                        - generic [ref=e191]: =
+                        - generic [ref=e192]:
+                          - generic [ref=e193]:
+                            - generic [ref=e194]:
+                              - generic [ref=e195]: w
+                              - generic [ref=e196]: "1"
+                            - generic [ref=e197]: ⋅
+                            - generic [ref=e198]:
+                              - generic [ref=e199]: R
+                              - generic [ref=e200]:
+                                - generic [ref=e201]: d
+                                - generic [ref=e202]: i
+                                - generic [ref=e203]: r
+                          - generic [ref=e204]: +
+                          - generic [ref=e205]:
+                            - generic [ref=e206]:
+                              - generic [ref=e207]: w
+                              - generic [ref=e208]: "2"
+                            - generic [ref=e209]: ⋅
+                            - generic [ref=e210]:
+                              - generic [ref=e211]: R
+                              - generic [ref=e212]:
+                                - generic [ref=e213]: d
+                                - generic [ref=e214]: i
+                                - generic [ref=e215]: s
+                                - generic [ref=e216]: t
+                          - generic [ref=e217]: +
+                          - generic [ref=e218]:
+                            - generic [ref=e219]:
+                              - generic [ref=e220]: w
+                              - generic [ref=e221]: "3"
+                            - generic [ref=e222]: ⋅
+                            - generic [ref=e223]:
+                              - generic [ref=e224]: R
+                              - generic [ref=e225]:
+                                - generic [ref=e226]: a
+                                - generic [ref=e227]: v
+                                - generic [ref=e228]: o
+                                - generic [ref=e229]: i
+                                - generic [ref=e230]: d
+                  - cell [ref=e231]
+                  - cell "(1)" [ref=e232]:
+                    - generic [ref=e233]: (1)
+                - row [ref=e234]:
+                  - cell [ref=e235]
+                  - cell [ref=e236]
+                  - cell [ref=e237]:
+                    - math [ref=e238]:
+                      - generic [ref=e240]:
+                        - generic [ref=e241]:
+                          - generic [ref=e242]: +
+                          - generic [ref=e243]:
+                            - generic [ref=e244]:
+                              - generic [ref=e245]: w
+                              - generic [ref=e246]: "4"
+                            - generic [ref=e247]: ⋅
+                            - generic [ref=e248]:
+                              - generic [ref=e249]: R
+                              - generic [ref=e250]:
+                                - generic [ref=e251]: s
+                                - generic [ref=e252]: m
+                                - generic [ref=e253]: o
+                                - generic [ref=e254]: o
+                                - generic [ref=e255]: t
+                                - generic [ref=e256]: h
+                        - generic [ref=e257]: −
+                        - generic [ref=e258]:
+                          - generic [ref=e259]: P
+                          - generic [ref=e260]:
+                            - generic [ref=e261]: c
+                            - generic [ref=e262]: o
+                            - generic [ref=e263]: l
+                            - generic [ref=e264]: l
+                            - generic [ref=e265]: i
+                            - generic [ref=e266]: s
+                            - generic [ref=e267]: i
+                            - generic [ref=e268]: o
+                            - generic [ref=e269]: "n"
+                        - generic [ref=e270]: −
+                        - generic [ref=e271]:
+                          - generic [ref=e272]: P
+                          - generic [ref=e273]:
+                            - generic [ref=e274]: t
+                            - generic [ref=e275]: i
+                            - generic [ref=e276]: m
+                            - generic [ref=e277]: e
+                  - cell [ref=e278]
+            - paragraph [ref=e280]: "Where:"
+            - list [ref=e282]:
+              - listitem [ref=e283]:
+                - text: •
+                - generic [ref=e284]:
+                  - paragraph [ref=e285]: "Direction reward:"
+                  - table [ref=e286]:
+                    - rowgroup [ref=e287]:
+                      - row "(2)" [ref=e288]:
+                        - cell [ref=e289]
+                        - cell [ref=e290]:
+                          - math [ref=e291]:
+                            - generic [ref=e293]:
+                              - generic [ref=e294]:
+                                - generic [ref=e295]: R
+                                - generic [ref=e296]:
+                                  - generic [ref=e297]: d
+                                  - generic [ref=e298]: i
+                                  - generic [ref=e299]: r
+                              - generic [ref=e300]: =
+                              - generic [ref=e301]:
+                                - generic [ref=e302]: "1"
+                                - generic [ref=e303]: −
+                                - generic [ref=e304]:
+                                  - generic [ref=e305]:
+                                    - generic [ref=e306]: "|"
+                                    - generic [ref=e307]:
+                                      - generic [ref=e308]: θ
+                                      - generic [ref=e309]:
+                                        - generic [ref=e310]: d
+                                        - generic [ref=e311]: i
+                                        - generic [ref=e312]: f
+                                        - generic [ref=e313]: f
+                                    - generic [ref=e314]: "|"
+                                  - generic [ref=e315]: "180"
+                        - cell [ref=e316]
+                        - cell "(2)" [ref=e317]:
+                          - generic [ref=e318]: (2)
+                  - paragraph [ref=e319]:
+                    - text: encourages the agent to move towards the target direction. Here,
+                    - math [ref=e320]:
+                      - generic [ref=e322]:
+                        - generic [ref=e323]: θ
+                        - generic [ref=e324]:
+                          - generic [ref=e325]: d
+                          - generic [ref=e326]: i
+                          - generic [ref=e327]: f
+                          - generic [ref=e328]: f
+                    - text: is the angle difference between the actual direction and the target direction.
+              - listitem [ref=e329]:
+                - text: •
+                - generic [ref=e330]:
+                  - paragraph [ref=e331]: "Distance reward:"
+                  - table [ref=e332]:
+                    - rowgroup [ref=e333]:
+                      - row "(3)" [ref=e334]:
+                        - cell [ref=e335]
+                        - cell [ref=e336]:
+                          - math [ref=e337]:
+                            - generic [ref=e339]:
+                              - generic [ref=e340]:
+                                - generic [ref=e341]: R
+                                - generic [ref=e342]:
+                                  - generic [ref=e343]: d
+                                  - generic [ref=e344]: i
+                                  - generic [ref=e345]: s
+                                  - generic [ref=e346]: t
+                              - generic [ref=e347]: =
+                              - generic [ref=e348]:
+                                - generic [ref=e349]: "1"
+                                - generic [ref=e350]: −
+                                - generic [ref=e351]:
+                                  - generic [ref=e352]: min
+                                  - generic: ⁡
+                                  - generic [ref=e353]:
+                                    - generic [ref=e354]: (
+                                    - generic [ref=e355]:
+                                      - generic [ref=e356]:
+                                        - generic [ref=e357]: "|"
+                                        - generic [ref=e358]:
+                                          - generic [ref=e359]:
+                                            - generic [ref=e360]: d
+                                            - generic [ref=e361]:
+                                              - generic [ref=e362]: a
+                                              - generic [ref=e363]: c
+                                              - generic [ref=e364]: t
+                                              - generic [ref=e365]: u
+                                              - generic [ref=e366]: a
+                                              - generic [ref=e367]: l
+                                          - generic [ref=e368]: −
+                                          - generic [ref=e369]:
+                                            - generic [ref=e370]: d
+                                            - generic [ref=e371]:
+                                              - generic [ref=e372]: t
+                                              - generic [ref=e373]: a
+                                              - generic [ref=e374]: r
+                                              - generic [ref=e375]: g
+                                              - generic [ref=e376]: e
+                                              - generic [ref=e377]: t
+                                        - generic [ref=e378]: "|"
+                                      - generic [ref=e379]:
+                                        - generic [ref=e380]: d
+                                        - generic [ref=e381]:
+                                          - generic [ref=e382]: t
+                                          - generic [ref=e383]: a
+                                          - generic [ref=e384]: r
+                                          - generic [ref=e385]: g
+                                          - generic [ref=e386]: e
+                                          - generic [ref=e387]: t
+                                    - generic [ref=e388]: ","
+                                    - generic [ref=e389]: "1"
+                                    - generic [ref=e390]: )
+                        - cell [ref=e391]
+                        - cell "(3)" [ref=e392]:
+                          - generic [ref=e393]: (3)
+                  - paragraph [ref=e394]:
+                    - text: encourages the agent to approach the target location.
+                    - math [ref=e395]:
+                      - generic [ref=e397]:
+                        - generic [ref=e398]: d
+                        - generic [ref=e399]:
+                          - generic [ref=e400]: a
+                          - generic [ref=e401]: c
+                          - generic [ref=e402]: t
+                          - generic [ref=e403]: u
+                          - generic [ref=e404]: a
+                          - generic [ref=e405]: l
+                    - text: is the actual distance moved by the agent, and
+                    - math [ref=e406]:
+                      - generic [ref=e408]:
+                        - generic [ref=e409]: d
+                        - generic [ref=e410]:
+                          - generic [ref=e411]: t
+                          - generic [ref=e412]: a
+                          - generic [ref=e413]: r
+                          - generic [ref=e414]: g
+                          - generic [ref=e415]: e
+                          - generic [ref=e416]: t
+                    - text: is the target distance.
+              - listitem [ref=e417]:
+                - text: •
+                - generic [ref=e418]:
+                  - paragraph [ref=e419]: "Obstacle Avoidance reward:"
+                  - table [ref=e420]:
+                    - rowgroup [ref=e421]:
+                      - row "(4)" [ref=e422]:
+                        - cell [ref=e423]
+                        - cell [ref=e424]:
+                          - math [ref=e425]:
+                            - generic [ref=e427]:
+                              - generic [ref=e428]:
+                                - generic [ref=e429]: R
+                                - generic [ref=e430]:
+                                  - generic [ref=e431]: a
+                                  - generic [ref=e432]: v
+                                  - generic [ref=e433]: o
+                                  - generic [ref=e434]: i
+                                  - generic [ref=e435]: d
+                              - generic [ref=e436]: =
+                              - generic [ref=e437]:
+                                - generic [ref=e438]: "{"
+                                - generic [ref=e439]:
+                                  - generic [ref=e440]:
+                                    - generic [ref=e442]:
+                                      - generic [ref=e443]: +
+                                      - generic [ref=e444]:
+                                        - generic [ref=e445]: r
+                                        - generic [ref=e446]: avoidance
+                                    - generic [ref=e448]: if there is no obstacle ahead
+                                  - generic [ref=e449]:
+                                    - generic [ref=e451]: "0"
+                                    - generic [ref=e453]: otherwise
+                        - cell [ref=e454]
+                        - cell "(4)" [ref=e455]:
+                          - generic [ref=e456]: (4)
+                  - paragraph [ref=e457]: encourages the agent to avoid obstacles.
+              - listitem [ref=e458]:
+                - text: •
+                - generic [ref=e459]:
+                  - paragraph [ref=e460]: "Path Smoothness reward:"
+                  - table [ref=e461]:
+                    - rowgroup [ref=e462]:
+                      - row "(5)" [ref=e463]:
+                        - cell [ref=e464]
+                        - cell [ref=e465]:
+                          - math [ref=e466]:
+                            - generic [ref=e468]:
+                              - generic [ref=e469]:
+                                - generic [ref=e470]: R
+                                - generic [ref=e471]:
+                                  - generic [ref=e472]: s
+                                  - generic [ref=e473]: m
+                                  - generic [ref=e474]: o
+                                  - generic [ref=e475]: o
+                                  - generic [ref=e476]: t
+                                  - generic [ref=e477]: h
+                              - generic [ref=e478]: =
+                              - generic [ref=e479]:
+                                - generic [ref=e480]: "0.1"
+                                - generic [ref=e481]: ⋅
+                                - generic [ref=e482]:
+                                  - generic [ref=e483]: (
+                                  - generic [ref=e484]:
+                                    - generic [ref=e485]: "1"
+                                    - generic [ref=e486]: −
+                                    - generic [ref=e487]:
+                                      - generic [ref=e488]: min
+                                      - generic: ⁡
+                                      - generic [ref=e489]:
+                                        - generic [ref=e490]: (
+                                        - generic [ref=e491]:
+                                          - generic [ref=e492]:
+                                            - generic [ref=e493]: "|"
+                                            - generic [ref=e494]:
+                                              - generic [ref=e495]: Δ
+                                              - generic [ref=e496]: θ
+                                            - generic [ref=e497]: "|"
+                                          - generic [ref=e498]: "90"
+                                        - generic [ref=e499]: ","
+                                        - generic [ref=e500]: "1"
+                                        - generic [ref=e501]: )
+                                  - generic [ref=e502]: )
+                        - cell [ref=e503]
+                        - cell "(5)" [ref=e504]:
+                          - generic [ref=e505]: (5)
+                  - paragraph [ref=e506]:
+                    - text: encourages the agent to minimize directional changes between actions.
+                    - math [ref=e507]:
+                      - generic [ref=e509]:
+                        - generic [ref=e510]: Δ
+                        - generic [ref=e511]: θ
+                    - text: is the change in direction between consecutive actions.
+              - listitem [ref=e512]:
+                - text: •
+                - generic [ref=e513]:
+                  - paragraph [ref=e514]: "Collision penalty:"
+                  - table [ref=e515]:
+                    - rowgroup [ref=e516]:
+                      - row "(6)" [ref=e517]:
+                        - cell [ref=e518]
+                        - cell [ref=e519]:
+                          - math [ref=e520]:
+                            - generic [ref=e522]:
+                              - generic [ref=e523]:
+                                - generic [ref=e524]: P
+                                - generic [ref=e525]: collision
+                              - generic [ref=e526]: =
+                              - generic [ref=e527]:
+                                - generic [ref=e528]: "{"
+                                - generic [ref=e529]:
+                                  - generic [ref=e530]:
+                                    - generic [ref=e532]:
+                                      - generic [ref=e533]:
+                                        - generic [ref=e534]: +
+                                        - generic [ref=e535]:
+                                          - generic [ref=e536]: p
+                                          - generic [ref=e537]: collision
+                                      - generic [ref=e538]: ","
+                                    - generic [ref=e540]: if a collision occurs
+                                  - generic [ref=e541]:
+                                    - generic [ref=e543]:
+                                      - generic [ref=e544]: "0"
+                                      - generic [ref=e545]: ","
+                                    - generic [ref=e547]: otherwise
+                        - cell [ref=e548]
+                        - cell "(6)" [ref=e549]:
+                          - generic [ref=e550]: (6)
+                  - paragraph [ref=e551]: penalizes the agent for collisions.
+              - listitem [ref=e552]:
+                - text: •
+                - generic [ref=e553]:
+                  - paragraph [ref=e554]: "Time Penalty:"
+                  - table [ref=e555]:
+                    - rowgroup [ref=e556]:
+                      - row "(7)" [ref=e557]:
+                        - cell [ref=e558]
+                        - cell [ref=e559]:
+                          - math [ref=e560]:
+                            - generic [ref=e562]:
+                              - generic [ref=e563]:
+                                - generic [ref=e564]: P
+                                - generic [ref=e565]:
+                                  - generic [ref=e566]: t
+                                  - generic [ref=e567]: i
+                                  - generic [ref=e568]: m
+                                  - generic [ref=e569]: e
+                              - generic [ref=e570]: =
+                              - generic [ref=e571]:
+                                - generic [ref=e572]: p
+                                - generic [ref=e573]: time
+                        - cell [ref=e574]
+                        - cell "(7)" [ref=e575]:
+                          - generic [ref=e576]: (7)
+                  - paragraph [ref=e577]: encourages the agent to reduce task completion time.
+            - generic [ref=e578]:
+              - paragraph [ref=e579]: "The weights for each component in the code are:"
+              - table [ref=e580]:
+                - rowgroup [ref=e581]:
+                  - row "(8)" [ref=e582]:
+                    - cell [ref=e583]
+                    - cell [ref=e584]:
+                      - math [ref=e585]:
+                        - generic [ref=e587]:
+                          - generic [ref=e588]:
+                            - generic [ref=e589]:
+                              - generic [ref=e590]: w
+                              - generic [ref=e591]: "1"
+                            - generic [ref=e592]: =
+                            - generic [ref=e593]: "0.4"
+                          - generic [ref=e594]: ","
+                          - generic [ref=e595]:
+                            - generic [ref=e596]:
+                              - generic [ref=e597]:
+                                - generic [ref=e598]: w
+                                - generic [ref=e599]: "2"
+                              - generic [ref=e600]: =
+                              - generic [ref=e601]: "0.4"
+                            - generic [ref=e602]: ","
+                            - generic [ref=e603]:
+                              - generic [ref=e604]:
+                                - generic [ref=e605]:
+                                  - generic [ref=e606]: w
+                                  - generic [ref=e607]: "3"
+                                - generic [ref=e608]: =
+                                - generic [ref=e609]: "0.1"
+                              - generic [ref=e610]: ","
+                              - generic [ref=e611]:
+                                - generic [ref=e612]:
+                                  - generic [ref=e613]: w
+                                  - generic [ref=e614]: "4"
+                                - generic [ref=e615]: =
+                                - generic [ref=e616]: "0.1"
+                    - cell [ref=e617]
+                    - cell "(8)" [ref=e618]:
+                      - generic [ref=e619]: (8)
+              - table [ref=e620]:
+                - rowgroup [ref=e621]:
+                  - row "(9)" [ref=e622]:
+                    - cell [ref=e623]
+                    - cell [ref=e624]:
+                      - math [ref=e625]:
+                        - generic [ref=e627]:
+                          - generic [ref=e628]:
+                            - generic [ref=e629]:
+                              - generic [ref=e630]: r
+                              - generic [ref=e631]: avoidance
+                            - generic [ref=e632]: =
+                            - generic [ref=e633]: "0.2"
+                          - generic [ref=e634]: ","
+                          - generic [ref=e635]:
+                            - generic [ref=e636]:
+                              - generic [ref=e637]:
+                                - generic [ref=e638]: p
+                                - generic [ref=e639]: collision
+                              - generic [ref=e640]: =
+                              - generic [ref=e641]: "1.0"
+                            - generic [ref=e642]: ","
+                            - generic [ref=e643]:
+                              - generic [ref=e644]:
+                                - generic [ref=e645]: p
+                                - generic [ref=e646]:
+                                  - generic [ref=e647]: t
+                                  - generic [ref=e648]: i
+                                  - generic [ref=e649]: m
+                                  - generic [ref=e650]: e
+                              - generic [ref=e651]: =
+                              - generic [ref=e652]: "0.01"
+                    - cell [ref=e653]
+                    - cell "(9)" [ref=e654]:
+                      - generic [ref=e655]: (9)
+            - paragraph [ref=e657]: "The reward function for the low-level agent can be expressed as:"
+            - table [ref=e659]:
+              - rowgroup [ref=e660]:
+                - row "(10)" [ref=e661]:
+                  - cell [ref=e662]
+                  - cell [ref=e663]:
+                    - math [ref=e664]:
+                      - generic [ref=e666]:
+                        - generic [ref=e667]:
+                          - generic [ref=e668]: R
+                          - generic [ref=e669]:
+                            - generic [ref=e670]: l
+                            - generic [ref=e671]: o
+                            - generic [ref=e672]: w
+                        - generic [ref=e673]: =
+                        - generic [ref=e674]:
+                          - generic [ref=e675]:
+                            - generic [ref=e676]:
+                              - generic [ref=e677]: R
+                              - generic [ref=e678]:
+                                - generic [ref=e679]: e
+                                - generic [ref=e680]: "n"
+                                - generic [ref=e681]: v
+                            - generic [ref=e682]: +
+                            - generic [ref=e683]:
+                              - generic [ref=e684]:
+                                - generic [ref=e685]: w
+                                - generic [ref=e686]: "7"
+                              - generic [ref=e687]: ⋅
+                              - generic [ref=e688]:
+                                - generic [ref=e689]: (
+                                - generic [ref=e690]:
+                                  - generic [ref=e691]:
+                                    - generic [ref=e692]: R
+                                    - generic [ref=e693]:
+                                      - generic [ref=e694]: d
+                                      - generic [ref=e695]: i
+                                      - generic [ref=e696]: r
+                                  - generic [ref=e697]: +
+                                  - generic [ref=e698]:
+                                    - generic [ref=e699]: R
+                                    - generic [ref=e700]:
+                                      - generic [ref=e701]: d
+                                      - generic [ref=e702]: i
+                                      - generic [ref=e703]: s
+                                      - generic [ref=e704]: t
+                                - generic [ref=e705]: )
+                          - generic [ref=e706]: −
+                          - generic [ref=e707]:
+                            - generic [ref=e708]:
+                              - generic [ref=e709]: w
+                              - generic [ref=e710]: "8"
+                            - generic [ref=e711]: ⋅
+                            - generic [ref=e712]:
+                              - generic [ref=e713]: P
+                              - generic [ref=e714]:
+                                - generic [ref=e715]: c
+                                - generic [ref=e716]: o
+                                - generic [ref=e717]: l
+                                - generic [ref=e718]: l
+                                - generic [ref=e719]: i
+                                - generic [ref=e720]: s
+                                - generic [ref=e721]: i
+                                - generic [ref=e722]: o
+                                - generic [ref=e723]: "n"
+                  - cell [ref=e724]
+                  - cell "(10)" [ref=e725]:
+                    - generic [ref=e726]: (10)
+            - generic [ref=e727]:
+              - paragraph [ref=e728]: "Where:"
+              - list [ref=e729]:
+                - listitem [ref=e730]:
+                  - text: •
+                  - generic [ref=e731]:
+                    - paragraph [ref=e732]: "Environment reward:"
+                    - table [ref=e733]:
+                      - rowgroup [ref=e734]:
+                        - row "(11)" [ref=e735]:
+                          - cell [ref=e736]
+                          - cell [ref=e737]:
+                            - math [ref=e738]:
+                              - generic [ref=e740]:
+                                - generic [ref=e741]:
+                                  - generic [ref=e742]: R
+                                  - generic [ref=e743]:
+                                    - generic [ref=e744]: e
+                                    - generic [ref=e745]: "n"
+                                    - generic [ref=e746]: v
+                                - generic [ref=e747]: =
+                                - generic [ref=e748]:
+                                  - generic [ref=e749]: "{"
+                                  - generic [ref=e750]:
+                                    - generic [ref=e751]:
+                                      - generic [ref=e753]:
+                                        - generic [ref=e754]: "100.0"
+                                        - generic [ref=e755]: ","
+                                      - generic [ref=e757]: if reached target
+                                    - generic [ref=e758]:
+                                      - generic [ref=e760]:
+                                        - generic [ref=e761]:
+                                          - generic [ref=e762]: −
+                                          - generic [ref=e763]: "100.0"
+                                        - generic [ref=e764]: ","
+                                      - generic [ref=e766]: if collision occurs
+                                    - generic [ref=e767]:
+                                      - generic [ref=e769]:
+                                        - generic [ref=e770]:
+                                          - generic [ref=e772]:
+                                            - generic [ref=e773]:
+                                              - generic [ref=e774]: a
+                                              - generic [ref=e775]:
+                                                - generic [ref=e776]: l
+                                                - generic [ref=e777]: i
+                                                - generic [ref=e778]: "n"
+                                            - generic [ref=e779]: "2"
+                                          - generic [ref=e780]: −
+                                          - generic [ref=e782]:
+                                            - generic [ref=e783]:
+                                              - generic [ref=e784]: "|"
+                                              - generic [ref=e785]:
+                                                - generic [ref=e786]: a
+                                                - generic [ref=e787]:
+                                                  - generic [ref=e788]: a
+                                                  - generic [ref=e789]: "n"
+                                                  - generic [ref=e790]: g
+                                              - generic [ref=e791]: "|"
+                                            - generic [ref=e792]: "2"
+                                          - generic [ref=e793]: −
+                                          - generic [ref=e795]:
+                                            - generic [ref=e796]:
+                                              - generic [ref=e797]: r
+                                              - generic [ref=e798]:
+                                                - generic [ref=e799]: (
+                                                - generic [ref=e800]:
+                                                  - generic [ref=e801]: d
+                                                  - generic [ref=e802]:
+                                                    - generic [ref=e803]: m
+                                                    - generic [ref=e804]: i
+                                                    - generic [ref=e805]: "n"
+                                                - generic [ref=e806]: )
+                                            - generic [ref=e807]: "2"
+                                        - generic [ref=e808]: ","
+                                      - generic [ref=e810]: otherwise
+                          - cell [ref=e811]
+                          - cell "(11)" [ref=e812]:
+                            - generic [ref=e813]: (11)
+                    - paragraph [ref=e814]: encourages the agent to approach the target location. Where
+                  - paragraph [ref=e816]:
+                    - math [ref=e817]:
+                      - generic [ref=e819]:
+                        - generic [ref=e820]: a
+                        - generic [ref=e821]:
+                          - generic [ref=e822]: l
+                          - generic [ref=e823]: i
+                          - generic [ref=e824]: "n"
+                    - text: ": The robot’s current linear velocity"
+                  - paragraph [ref=e826]:
+                    - math [ref=e827]:
+                      - generic [ref=e829]:
+                        - generic [ref=e830]: a
+                        - generic [ref=e831]:
+                          - generic [ref=e832]: a
+                          - generic [ref=e833]: "n"
+                          - generic [ref=e834]: g
+                    - text: ": The robot’s current angular velocity"
+                  - paragraph [ref=e836]:
+                    - math [ref=e837]:
+                      - generic [ref=e839]:
+                        - generic [ref=e840]: d
+                        - generic [ref=e841]:
+                          - generic [ref=e842]: m
+                          - generic [ref=e843]: i
+                          - generic [ref=e844]: "n"
+                    - text: ": The distance from the robot to the nearest obstacle"
+                  - paragraph [ref=e846]:
+                    - math [ref=e847]:
+                      - generic [ref=e849]:
+                        - generic [ref=e850]:
+                          - generic [ref=e851]: r
+                          - generic [ref=e852]:
+                            - generic [ref=e853]: (
+                            - generic [ref=e854]: x
+                            - generic [ref=e855]: )
+                        - generic [ref=e856]: =
+                        - generic [ref=e857]:
+                          - generic [ref=e858]: "{"
+                          - generic [ref=e859]:
+                            - generic [ref=e860]:
+                              - generic [ref=e862]:
+                                - generic [ref=e863]:
+                                  - generic [ref=e864]: "1"
+                                  - generic [ref=e865]: −
+                                  - generic [ref=e866]: x
+                                - generic [ref=e867]: ","
+                              - generic [ref=e869]:
+                                - generic [ref=e870]: x
+                                - generic [ref=e871]: <
+                                - generic [ref=e872]: "1"
+                            - generic [ref=e873]:
+                              - generic [ref=e875]:
+                                - generic [ref=e876]: "0"
+                                - generic [ref=e877]: ","
+                              - generic [ref=e879]:
+                                - generic [ref=e880]: x
+                                - generic [ref=e881]: ≥
+                                - generic [ref=e882]: "1"
+                - listitem [ref=e883]:
+                  - text: •
+                  - generic [ref=e884]:
+                    - paragraph [ref=e885]: "Subgoal completion reward:"
+                    - table [ref=e886]:
+                      - rowgroup [ref=e887]:
+                        - row "(12)" [ref=e888]:
+                          - cell [ref=e889]
+                          - cell [ref=e890]:
+                            - math [ref=e891]:
+                              - generic [ref=e893]:
+                                - generic [ref=e894]:
+                                  - generic [ref=e895]: R
+                                  - generic [ref=e896]:
+                                    - generic [ref=e897]: d
+                                    - generic [ref=e898]: i
+                                    - generic [ref=e899]: r
+                                - generic [ref=e900]: +
+                                - generic [ref=e901]:
+                                  - generic [ref=e902]: R
+                                  - generic [ref=e903]:
+                                    - generic [ref=e904]: d
+                                    - generic [ref=e905]: i
+                                    - generic [ref=e906]: s
+                                    - generic [ref=e907]: t
+                          - cell [ref=e908]
+                          - cell "(12)" [ref=e909]:
+                            - generic [ref=e910]: (12)
+                    - paragraph [ref=e911]: encourages the low-level agent to complete subgoals set by the high-level agent.
+                - listitem [ref=e912]:
+                  - text: •
+                  - generic [ref=e913]:
+                    - paragraph [ref=e914]: "Collision penalty:"
+                    - table [ref=e915]:
+                      - rowgroup [ref=e916]:
+                        - row "(13)" [ref=e917]:
+                          - cell [ref=e918]
+                          - cell [ref=e919]:
+                            - math [ref=e920]:
+                              - generic [ref=e922]:
+                                - generic [ref=e923]: P
+                                - generic [ref=e924]:
+                                  - generic [ref=e925]: c
+                                  - generic [ref=e926]: o
+                                  - generic [ref=e927]: l
+                                  - generic [ref=e928]: l
+                                  - generic [ref=e929]: i
+                                  - generic [ref=e930]: s
+                                  - generic [ref=e931]: i
+                                  - generic [ref=e932]: o
+                                  - generic [ref=e933]: "n"
+                          - cell [ref=e934]
+                          - cell "(13)" [ref=e935]:
+                            - generic [ref=e936]: (13)
+                    - paragraph [ref=e937]: additionally penalizes the low-level agent for collisions.
+            - paragraph [ref=e939]: This hierarchical framework facilitates the integration of long-term strategic planning (e.g., selecting optimal waypoints) and short-term reactive control (e.g., dynamic obstacle avoidance). The high-level DQN planner leverages reward signals for state-action value estimation, while the low-level TD3 controller utilizes reward gradients for precise policy optimization in continuous motion tasks.
+          - generic [ref=e940]:
+            - heading "III-C Environments" [level=3] [ref=e941]:
+              - generic [ref=e942]: III-C
+              - text: Environments
+            - paragraph [ref=e944]:
+              - text: In this project, we primarily utilize the Gazebo environment with ROS1 while integrating selected analyzer functionalities from PathBench
+              - generic [ref=e945]:
+                - text: "["
+                - link "15" [ref=e946] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib15
+                - text: "]"
+              - text: for evaluation purposes. Additional resources include the OpenAI Gymnasium (Gym)
+              - generic [ref=e947]:
+                - text: "["
+                - link "16" [ref=e948] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib16
+                - text: "]"
+              - text: interface.
+            - paragraph [ref=e950]: Gazebo serves as a powerful 3D robotics simulation environment, offering high-fidelity physics and sensor modeling. Integrated with ROS1 Noetic, it enables seamless development, testing, and deployment of robotic algorithms within realistic and complex environments. Additionally, Rviz is utilized for real-time visualization of robot states and sensor data, supporting advanced experimentation for reinforcement learning and motion planning.
+            - paragraph [ref=e952]:
+              - text: We build upon DRL-robot-navigation
+              - generic [ref=e953]:
+                - text: "["
+                - link "17" [ref=e954] [cursor=pointer]:
+                  - /url: https://arxiv.org/html/2510.26646v1#bib.bib17
+                - text: "]"
+              - text: ", a repository for mobile robot navigation in the Gazebo simulator. The framework provides pre-configured robot models, Gazebo environment setups, and essential utilities including map construction and graph-based path planning algorithms, streamlining the development of our environment. Training is performed in the ROS Gazebo simulator with PyTorch, ROS Noetic on Ubuntu. Our primary implementation task involves creating a custom Gym interface for Gazebo environment to facilitate DRL algorithm training within this physical simulation environment."
+            - paragraph [ref=e956]: OpenAI Gym establishes the API standard for reinforcement learning, offering a versatile interface that can be easily implemented across various Python environments while being capable of representing general RL problems. Since Stable-baselines3’s DRL algorithms require Gym environments for training, our implementation ensures full compatibility with this standard, defining appropriate observation spaces, action spaces, and reward structures for the motion planning task.
+          - generic [ref=e957]:
+            - heading "III-D Benchmarks" [level=3] [ref=e958]:
+              - generic [ref=e959]: III-D
+              - text: Benchmarks
+            - paragraph [ref=e961]: To rigorously evaluate the performance of our hierarchical reinforcement learning (HRL) framework, we employ a comprehensive set of benchmarking metrics tailored for motion planning in autonomous robotic systems. Key evaluation criteria include path optimality, computational efficiency, success rate, and smoothness of the generated trajectories. In our HRL architecture, the high-level planner utilizes the DQN algorithm for strategic decision-making, while the low-level controller employs the TD3 algorithm for precise motion execution. In our implementation, we adopt a TD3 implementation based on Stable-baselines3 as the baseline method, with all experimental evaluations conducted within the ROS-GAZEBO simulation platform.
+        - generic [ref=e962]:
+          - heading "IV EXPERIMENT" [level=2] [ref=e963]:
+            - generic [ref=e964]: IV
+            - text: EXPERIMENT
+          - generic [ref=e965]:
+            - heading "IV-A Experiment Setup" [level=3] [ref=e966]:
+              - generic [ref=e967]: IV-A
+              - text: Experiment Setup
+            - paragraph [ref=e969]: Simulation Environment and Hardware
+            - paragraph [ref=e971]: We test the capabilities of hybrid DRL (DQN and TD3) with the ROS-GAZEBO simulation environment, leveraging pytorch and tensorboard. All training and simulation experiments were conducted in the Gazebo simulator, with ROS1 Noetic and RViz for visualization. We use Docker as a containerization platform. Note that this project does not mainly rely on GPU acceleration due to high environment I/O overhead, which limits GPU utilization efficiency.
+            - paragraph [ref=e973]: "In our experiment, training is conducted for approximately 10,000 episodes (5 million timesteps). Each training episode was terminated under one of three conditions: the robot successfully reached the goal, a collision occurred, or a maximum of 500 time steps was consumed."
+            - paragraph [ref=e975]: The maximum linear and angular velocities of the robot were set to [0, 1] m/s and [-1, 1] rad/s, respectively. The neural network parameters are updated every 100 timesteps for both high-level and low-level agents to ensure training stability.
+            - paragraph [ref=e977]: Evaluation Metrics
+            - paragraph [ref=e979]: 1) Success rate (goal reached).
+            - paragraph [ref=e981]: We will ensure that a valid path exists in the current map. When a path exists, this metric measures the probability of successfully reaching the goal point within the maximum time limit.
+            - paragraph [ref=e983]: 2) Collision rate.
+            - paragraph [ref=e985]: With realistic velocity conditions in the simulation environment, DRL models may still collide with obstacles. We aim to minimize the collision rate through adjustments to the reward function.
+            - paragraph [ref=e987]: 3) Time cost to goal point.
+            - paragraph [ref=e989]: For cases where the goal is successfully reached, we will measure the time cost across different algorithms, including time spent on path planning, time to reach the goal, and other relevant factors.
+            - paragraph [ref=e991]: 4) Path efficiency (distance/optimal).
+            - paragraph [ref=e993]: We will use the Euclidean distance as a reference and compare it with the efficiency of paths planned by the models.
+            - paragraph [ref=e995]: 5) Trajectory Smoothness.
+            - paragraph [ref=e997]: This metric evaluates the smoothness of the trajectory, reflecting the overall path quality.
+        - generic [ref=e998]:
+          - heading "V Results & Discussion" [level=2] [ref=e999]:
+            - generic [ref=e1000]: V
+            - text: Results & Discussion
+          - generic [ref=e1001]:
+            - heading "V-A TD3 Training (Quantitative & Qualitative)" [level=3] [ref=e1002]:
+              - generic [ref=e1003]: V-A
+              - text: TD3 Training (Quantitative & Qualitative)
+            - 'figure "Figure 2: The RViz interface of the TD3 training process." [ref=e1004]':
+              - img "Refer to caption" [ref=e1005]
+              - generic [ref=e1006]:
+                - generic [ref=e1007]: "Figure 2:"
+                - text: The RViz interface of the TD3 training process.
+            - generic [ref=e1008]:
+              - paragraph [ref=e1009]: "Reward Curve:"
+              - list [ref=e1010]:
+                - listitem [ref=e1011]:
+                  - 'figure "Figure 3: TD3 reward curve analysis." [ref=e1013]':
+                    - img "Refer to caption" [ref=e1014]
+                    - generic [ref=e1015]:
+                      - generic [ref=e1016]: "Figure 3:"
+                      - text: TD3 reward curve analysis.
+                - listitem [ref=e1017]:
+                  - text: •
+                  - paragraph [ref=e1019]: "Initial stage (Episodes 1–100): Reward rapidly rises from negative to positive values, indicating that the agent begins learning effective strategies."
+                - listitem [ref=e1020]:
+                  - text: •
+                  - paragraph [ref=e1022]: "Mid stage (Episodes 100–2700): Fluctuates within 40–120, showing a balance between exploration and exploitation."
+                - listitem [ref=e1023]:
+                  - text: •
+                  - paragraph [ref=e1025]: "Late stage (Episodes 2700–10000): Fluctuations decrease and stabilize around 80–110, strategy becomes mature."
+                  - 'figure "Figure 4: TD3 loss curve analysis." [ref=e1026]':
+                    - img "Refer to caption" [ref=e1027]
+                    - generic [ref=e1028]:
+                      - generic [ref=e1029]: "Figure 4:"
+                      - text: TD3 loss curve analysis.
+              - paragraph [ref=e1030]: "Loss Curve:"
+              - list [ref=e1031]:
+                - listitem [ref=e1032]:
+                  - text: •
+                  - paragraph [ref=e1034]:
+                    - text: "Initial rapid decline (Episodes 1–110): Loss drops from"
+                    - math [ref=e1035]:
+                      - generic [ref=e1037]: ∼
+                    - text: 0.7–0.9 to 0.1–0.3, indicating rapid optimization of model parameters.
+                - listitem [ref=e1038]:
+                  - text: •
+                  - paragraph [ref=e1040]: "Mid-term minor fluctuations (Episodes 110–2400): Loss fluctuates within 0.05–0.35, indicating continuous adjustment."
+                - listitem [ref=e1041]:
+                  - text: •
+                  - paragraph [ref=e1043]: "Late-stage stable convergence (Episodes 2400–10000): Loss approaches zero (0.01–0.03), training stabilizes."
+            - paragraph [ref=e1045]: "Overall: TD3 converges effectively but relatively slowly; curves smooth out after 3000 episodes."
+          - generic [ref=e1046]:
+            - heading "V-B DQN+TD3 Experiment (Qualitative Observation)" [level=3] [ref=e1047]:
+              - generic [ref=e1048]: V-B
+              - text: DQN+TD3 Experiment (Qualitative Observation)
+            - 'figure "Figure 5: The RViz interface of the DQN and TD3 training process." [ref=e1049]':
+              - img "Refer to caption" [ref=e1050]
+              - generic [ref=e1051]:
+                - generic [ref=e1052]: "Figure 5:"
+                - text: The RViz interface of the DQN and TD3 training process.
+            - paragraph [ref=e1054]: High-level DQN generates subgoal markers in RViz, but the agent often rotates in place at the beginning of episodes. Training often terminates early or fails to converge, preventing meaningful quantitative comparison with TD3.
+          - generic [ref=e1055]:
+            - heading "V-C Preliminary Analysis of DQN+TD3 Instability" [level=3] [ref=e1056]:
+              - generic [ref=e1057]: V-C
+              - text: Preliminary Analysis of DQN+TD3 Instability
+            - list [ref=e1059]:
+              - listitem [ref=e1060]:
+                - text: •
+                - paragraph [ref=e1062]: "Multi-level non-stationarity: High-level and low-level policies update simultaneously, altering each other’s targets."
+              - listitem [ref=e1063]:
+                - text: •
+                - paragraph [ref=e1065]: "Reward misalignment: Unified reward may produce conflicting gradients or incorrect layer attribution if not properly decomposed."
+              - listitem [ref=e1066]:
+                - text: •
+                - paragraph [ref=e1068]: "Hyperparameter/scheduling mismatch: DQN and TD3 learning rates, update frequency, or replay buffer settings may be inconsistent."
+              - listitem [ref=e1069]:
+                - text: •
+                - paragraph [ref=e1071]: "Environment/configuration sensitivity: High-level action discretization and environment parameters may hinder subgoal learning."
+              - listitem [ref=e1072]:
+                - text: •
+                - paragraph [ref=e1074]: "Reward function parameter tuning: Current reward weights may not sufficiently balance high-level and low-level objectives."
+          - generic [ref=e1075]:
+            - heading "V-D Limitations" [level=3] [ref=e1076]:
+              - generic [ref=e1077]: V-D
+              - text: Limitations
+            - list [ref=e1079]:
+              - listitem [ref=e1080]:
+                - text: •
+                - paragraph [ref=e1082]: "Validation scope: Only TD3 baseline has stable and repeatable quantitative results. DQN+TD3 hierarchical configuration is currently unstable."
+              - listitem [ref=e1083]:
+                - text: •
+                - paragraph [ref=e1085]: "Training overhead: TD3 requires thousands of episodes to achieve stable behavior."
+              - listitem [ref=e1086]:
+                - text: •
+                - paragraph [ref=e1088]: "Limited hyperparameter search: Only a small set of hyperparameters and schedules have been tried; broader automated search has not been conducted."
+          - generic [ref=e1089]:
+            - heading "V-E Future Work" [level=3] [ref=e1090]:
+              - generic [ref=e1091]: V-E
+              - text: Future Work
+            - paragraph [ref=e1093]: "Our Next Steps: Stabilize DQN+TD3 through systematic tuning of reward function, hyperparameters, and high-low layer interaction. Once stable, perform quantitative comparison with TD3 (success rate, collision rate, path efficiency, time cost) and statistical significance tests."
+            - paragraph [ref=e1095]: "Future Research Directions: Building upon its hierarchical structure and inherent scalability, the framework is well-suited for extension to multi-robot coordination and complex navigation tasks. It holds strong potential for applications in logistics, surveillance, and search-and-rescue in high-dimensional and 3D environments."
+        - generic [ref=e1096]:
+          - heading "VI Conclusion" [level=2] [ref=e1097]:
+            - generic [ref=e1098]: VI
+            - text: Conclusion
+          - paragraph [ref=e1100]: This study evaluated the performance of the TD3 algorithm and the hierarchical DQN+TD3 framework in a ROS+Gazebo navigation simulation. TD3 alone demonstrated stable learning, effective convergence, and reliable navigation behavior. Although the DQN+TD3 hierarchical framework showed qualitative potential, it currently remains unstable and requires further tuning before meaningful quantitative evaluation. Future work will focus on stabilizing the DQN+TD3 framework and extending hierarchical reinforcement learning to multi-agent coordination and real-world deployment scenarios.
+        - generic [ref=e1101]:
+          - heading "References" [level=2] [ref=e1102]
+          - list [ref=e1103]:
+            - listitem [ref=e1104]:
+              - generic [ref=e1105]:
+                - text: "[1]"
+                - button "Back to the article" [ref=e1106] [cursor=pointer]: ↑
+              - generic [ref=e1107]: Zhanying Zhang and Ziping Zhao.
+              - generic [ref=e1108]: A multiple mobile robots path planning algorithm based on a-star and dijkstra algorithm.
+              - generic [ref=e1109]: International Journal of Smart Home, 8(3):75–86, 2014.
+            - listitem [ref=e1110]:
+              - generic [ref=e1111]:
+                - text: "[2]"
+                - button "Back to the article" [ref=e1112] [cursor=pointer]: ↑
+              - generic [ref=e1113]: Matthew Hausknecht and Peter Stone.
+              - generic [ref=e1114]: "Parametrized deep q-networks learning: Reinforcement learning with discrete-continuous hybrid action space."
+              - generic [ref=e1115]: arXiv preprint arXiv:1810.06394, 2018.
+            - listitem [ref=e1116]:
+              - generic [ref=e1117]:
+                - text: "[3]"
+                - button "Back to the article" [ref=e1118] [cursor=pointer]: ↑
+              - generic [ref=e1119]: Zhou Fan, Rui Su, Weinan Zhang, and Yong Yu.
+              - generic [ref=e1120]: Hybrid actor-critic reinforcement learning in parameterized action space.
+              - generic [ref=e1121]: arXiv preprint arXiv:1903.01344, 2019.
+            - listitem [ref=e1122]:
+              - generic [ref=e1123]:
+                - text: "[4]"
+                - button "Back to the article" [ref=e1124] [cursor=pointer]: ↑
+              - generic [ref=e1125]: Lei Tai, Görner Paolo, and Ming Liu.
+              - generic [ref=e1126]: "Virtual-to-real deep reinforcement learning: Continuous control of mobile robots for mapless navigation."
+              - generic [ref=e1127]: In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), pages 31–36. IEEE, 2017.
+            - listitem [ref=e1128]:
+              - generic [ref=e1129]:
+                - text: "[5]"
+                - button "Back to the article" [ref=e1130] [cursor=pointer]: ↑
+              - generic [ref=e1131]: Mark Pfeiffer, Michael Schaeuble, Juan Nieto, Roland Siegwart, and Cesar Cadena.
+              - generic [ref=e1132]: Perception-aware navigation using deep reinforcement learning.
+              - generic [ref=e1133]: In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), pages 1–8. IEEE, 2017.
+            - listitem [ref=e1134]:
+              - generic [ref=e1135]:
+                - text: "[6]"
+                - button "Back to the article" [ref=e1136] [cursor=pointer]: ↑
+              - generic [ref=e1137]: Scott Fujimoto, Herke Van Hoof, and David Meger.
+              - generic [ref=e1138]: Addressing function approximation error in actor-critic methods.
+              - generic [ref=e1139]: arXiv preprint arXiv:1802.09477, 2018.
+            - listitem [ref=e1140]:
+              - generic [ref=e1141]:
+                - text: "[7]"
+                - button "Back to the article" [ref=e1142] [cursor=pointer]: ↑
+              - generic [ref=e1143]: Liangheng Lv, Sunjie Zhang, Derui Ding, and Yongxiong Wang.
+              - generic [ref=e1144]: Path planning via an improved dqn-based learning policy.
+              - generic [ref=e1145]: IEEE Access, 7:67319–67330, 2019.
+            - listitem [ref=e1146]:
+              - generic [ref=e1147]:
+                - text: "[8]"
+                - button "Back to the article" [ref=e1148] [cursor=pointer]: ↑
+              - generic [ref=e1149]: Letian Xu, Hao Liu, Haopeng Zhao, Tianyao Zheng, Tongzhou Jiang, and Lipeng Liu.
+              - generic [ref=e1150]: Autonomous navigation of unmanned vehicle through deep reinforcement learning.
+              - generic [ref=e1151]: In Proceedings of the 5th International Conference on Artificial Intelligence and Computer Engineering, ICAICE ’24, page 480–484, New York, NY, USA, 2025. Association for Computing Machinery.
+            - listitem [ref=e1152]:
+              - generic [ref=e1153]:
+                - text: "[9]"
+                - button "Back to the article" [ref=e1154] [cursor=pointer]: ↑
+              - generic [ref=e1155]: Ziyu Wang, Tom Schaul, Matteo Hessel, Hado van Hasselt, Marc Lanctot, and Nando de Freitas.
+              - generic [ref=e1156]: Dueling network architectures for deep reinforcement learning.
+              - generic [ref=e1157]: In Proceedings of the 33rd International Conference on Machine Learning (ICML), pages 1995–2003. PMLR, 2016.
+            - listitem [ref=e1158]:
+              - generic [ref=e1159]:
+                - text: "[10]"
+                - button "Back to the article" [ref=e1160] [cursor=pointer]: ↑
+              - generic [ref=e1161]: Hamid Taheri, Seyed Rasoul Hosseini, and Mohammad Ali Nekoui.
+              - generic [ref=e1162]: Deep reinforcement learning with enhanced ppo for safe mobile robot navigation.
+              - generic [ref=e1163]: arXiv preprint arXiv:2405.16266, 2024.
+            - listitem [ref=e1164]:
+              - generic [ref=e1165]:
+                - text: "[11]"
+                - button "Back to the article" [ref=e1166] [cursor=pointer]: ↑
+              - generic [ref=e1167]: Abraham Kojo Yalley, Yang Chen, and Hao Fu.
+              - generic [ref=e1168]: "Exploring ppo in g2rl: A reinforcement learning-based path planning approach to dynamic environments."
+              - generic [ref=e1169]: In 2025 3rd International Conference on Control and Robot Technology (ICCRT), pages 58–64. IEEE, 2025.
+            - listitem [ref=e1170]:
+              - generic [ref=e1171]:
+                - text: "[12]"
+                - button "Back to the article" [ref=e1172] [cursor=pointer]: ↑
+              - generic [ref=e1173]: Volodymyr Mnih, Koray Kavukcuoglu, David Silver, et al.
+              - generic [ref=e1174]: Human-level control through deep reinforcement learning.
+              - generic [ref=e1175]: Nature, 518:529–533, 2015.
+            - listitem [ref=e1176]:
+              - generic [ref=e1177]:
+                - text: "[13]"
+                - button "Back to the article" [ref=e1178] [cursor=pointer]: ↑
+              - generic [ref=e1179]: Erwin Coumans and Yunfei Bai.
+              - generic [ref=e1180]: Pybullet, a python module for physics simulation for games, robotics and machine learning.
+              - generic [ref=e1181]: http://pybullet.org, 2016–2021.
+            - listitem [ref=e1182]:
+              - generic [ref=e1183]:
+                - text: "[14]"
+                - button "Back to the article" [ref=e1184] [cursor=pointer]: ↑
+              - generic [ref=e1185]: Yu Chen, Michael Liu, Michael Everett, and Jonathan P How.
+              - generic [ref=e1186]: Decentralized non-communicating multiagent collision avoidance with deep reinforcement learning.
+              - generic [ref=e1187]: In 2017 IEEE International Conference on Robotics and Automation (ICRA), pages 285–292. IEEE, 2017.
+            - listitem [ref=e1188]:
+              - generic [ref=e1189]:
+                - text: "[15]"
+                - button "Back to the article" [ref=e1190] [cursor=pointer]: ↑
+              - generic [ref=e1191]: Alexandru-Iosif Toma, Hao-Ya Hsueh, Hussein Ali Jaafar, Riku Murai, Paul H. J. Kelly, and Sajad Saeedi.
+              - generic [ref=e1192]: "Pathbench: A benchmarking platform for classical and learned path planning algorithms, 2021."
+            - listitem [ref=e1193]:
+              - generic [ref=e1194]:
+                - text: "[16]"
+                - button "Back to the article" [ref=e1195] [cursor=pointer]: ↑
+              - generic [ref=e1196]: Mark Towers, Ariel Kwiatkowski, Jordan Terry, John U Balis, Gianluca De Cola, Tristan Deleu, Manuel Goulão, Andreas Kallinteris, Markus Krimmel, Arjun KG, et al.
+              - generic [ref=e1197]: "Gymnasium: A standard interface for reinforcement learning environments."
+              - generic [ref=e1198]: arXiv preprint arXiv:2407.17032, 2024.
+            - listitem [ref=e1199]:
+              - generic [ref=e1200]:
+                - text: "[17]"
+                - button "Back to the article" [ref=e1201] [cursor=pointer]: ↑
+              - generic [ref=e1202]: Reinis Cimurs, Il Hong Suh, and Jin Han Lee.
+              - generic [ref=e1203]: Goal-driven autonomous exploration through deep reinforcement learning.
+              - generic [ref=e1204]: IEEE Robotics and Automation Letters, 7(2):730–737, 2022.
+  - button "Report Issue" [ref=e1205] [cursor=pointer]
+  - button "Report Issue for Selection" [ref=e1206] [cursor=pointer]
+  - generic [ref=e1208]:
+    - text: Generated by
+    - link "L A T E xml [LOGO]" [ref=e1209] [cursor=pointer]:
+      - /url: https://math.nist.gov/~BMiller/LaTeXML/
+      - generic [ref=e1210]: L A T E
+      - text: xml
+      - img "[LOGO]" [ref=e1211]
+  - contentinfo [ref=e1212]:
+    - generic [ref=e1213]:
+      - heading "Instructions for reporting errors" [level=2] [ref=e1214]
+      - paragraph [ref=e1215]: "We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:"
+      - list [ref=e1216]:
+        - listitem [ref=e1217]: Click the "Report Issue" button.
+        - listitem [ref=e1218]:
+          - text: Open a report feedback form via keyboard, use "
+          - strong [ref=e1219]: Ctrl + ?
+          - text: "\"."
+        - listitem [ref=e1220]: Make a text selection and click the "Report Issue for Selection" button near your cursor.
+        - listitem [ref=e1221]: You can use Alt+Y to toggle on and Alt+Shift+Y to toggle off accessible reporting links at each section.
+      - paragraph [ref=e1222]:
+        - text: Our team has already identified
+        - link "the following issues" [ref=e1223] [cursor=pointer]:
+          - /url: https://github.com/arXiv/html_feedback/issues
+        - text: . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+      - paragraph [ref=e1224]:
+        - text: Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+        - link "list of packages that need conversion" [ref=e1225] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/wiki/Porting-LaTeX-packages-for-LaTeXML
+        - text: ", and welcome"
+        - link "developer contributions" [ref=e1226] [cursor=pointer]:
+          - /url: https://github.com/brucemiller/LaTeXML/issues
+        - text: .
+  - text: beta
