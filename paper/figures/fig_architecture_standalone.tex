@@ -84,9 +84,45 @@
 \node[font=\footnotesize\bfseries, text=white] at (c3) {64};
 \node[dlb, below=6pt] at (c3-b) {Conv$_3$\\$3{\times}3,\;s{=}2$};
 %
-\cub{mha}{9.2}{\mainY}{1.1}{0.50}{1.5}{Cmha}
-\node[font=\footnotesize\bfseries, text=white] at (mha) {MHA};
-\node[dlb, below=6pt] at (mha-b) {Spatial\\[-1pt]4-head};
+% ---- Spatial MHA: 4-head（圆角矩形模块，区别于 Conv cuboid）----
+%
+% 容器
+\node[draw=Cmha!60, rounded corners=5pt, fill=Cmha!5, thick,
+      minimum width=2.2cm, minimum height=1.8cm, inner sep=0pt]
+    (mha-box) at (9.2, \mainY) {};
+%
+% 4 个注意力头（并行色块）
+\foreach \idx/\dx in {1/-0.52, 2/-0.17, 3/0.17, 4/0.52} {
+    \fill[Cmha!70, rounded corners=1.5pt]
+        ({9.2+\dx-0.12}, {\mainY+0.10})
+        rectangle ++(0.24, 0.50);
+    \node[font=\tiny\bfseries, text=white]
+        at ({9.2+\dx}, {\mainY+0.35}) {$h_{\idx}$};
+}
+%
+% 头 → Concat 下箭头
+\foreach \dx in {-0.52, -0.17, 0.17, 0.52} {
+    \draw[->, very thin, Cmha!50]
+        ({9.2+\dx}, {\mainY+0.10}) -- ({9.2+\dx}, {\mainY-0.12});
+}
+%
+% Concat 横条
+\fill[Cmha!40, rounded corners=1.5pt]
+    ({9.2-0.65}, {\mainY-0.52})
+    rectangle ({9.2+0.65}, {\mainY-0.12});
+\node[font=\tiny\bfseries, text=white]
+    at (9.2, {\mainY-0.32}) {Concat};
+%
+% 兼容原有箭头 / 背景分组的锚点
+\coordinate (mha)    at (mha-box.center);
+\coordinate (mha-l)  at (mha-box.west);
+\coordinate (mha-r)  at (mha-box.east);
+\coordinate (mha-b)  at (mha-box.south);
+\coordinate (mha-t)  at (mha-box.north);
+\coordinate (mha-bl) at (mha-box.south west);
+\coordinate (mha-tr) at (mha-box.north east);
+%
+\node[dlb, below=4pt] at (mha-b) {Spatial MHA\\[-1pt]4-head};
 %
 \node[font=\tiny, text=black!40, above=2pt] at (c1-t)  {$12^2$};
 \node[font=\tiny, text=black!40, above=2pt] at (c2-t)  {$6^2$};
