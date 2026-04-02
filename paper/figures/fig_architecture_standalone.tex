@@ -1,25 +1,24 @@
-% fig_architecture.tex  --  MD-DDQN Q-network architecture (v2)
-% Usage: \input{figures/fig_architecture.tex}
-% Requires: \usepackage{tikz}
-%           \usetikzlibrary{positioning, arrows.meta, fit, calc, backgrounds}
+\documentclass[border=5mm]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit, calc, backgrounds}
+\usepackage{amsmath,amssymb}
 
-\begin{figure*}[!htbp]
-\centering
+\begin{document}
 %
 % ---- Colour palette ----
-\definecolor{Cconv}{HTML}{4A90D9}   % CNN conv layers
-\definecolor{Cmha}{HTML}{26A69A}    % spatial attention
-\definecolor{Cfc}{HTML}{66BB6A}     % fully connected
-\definecolor{Ccat}{HTML}{FFD54F}    % concatenation
-\definecolor{Cval}{HTML}{EF5350}    % value stream
-\definecolor{Cadv}{HTML}{43A047}    % advantage stream
-\definecolor{Cqagg}{HTML}{FF9800}   % Q aggregation
-\definecolor{Cmask}{HTML}{C62828}   % action mask
-\definecolor{Cout}{HTML}{7E57C2}    % output
-\definecolor{Cocc}{HTML}{78909C}    % occupancy channel
-\definecolor{Cgdf}{HTML}{FFB74D}    % goal-distance channel
+\definecolor{Cconv}{HTML}{4A90D9}
+\definecolor{Cmha}{HTML}{26A69A}
+\definecolor{Cfc}{HTML}{66BB6A}
+\definecolor{Ccat}{HTML}{FFD54F}
+\definecolor{Cval}{HTML}{EF5350}
+\definecolor{Cadv}{HTML}{43A047}
+\definecolor{Cqagg}{HTML}{FF9800}
+\definecolor{Cmask}{HTML}{C62828}
+\definecolor{Cout}{HTML}{7E57C2}
+\definecolor{Cocc}{HTML}{78909C}
+\definecolor{Cgdf}{HTML}{FFB74D}
 %
-\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
     >=Stealth,
     arr/.style  = {->, thick, black!65},
@@ -28,30 +27,23 @@
 ]
 %
 % ==================== 3-D CUBOID MACRO ====================
-%   \cub{name}{x}{y}{height}{front-width}{depth}{colour}
-%   height  -> spatial dimension (shrinks through layers)
-%   depth   -> channel count     (grows through layers)
 \def\cub#1#2#3#4#5#6#7{%
     \pgfmathsetmacro{\cubH}{(#4)/2}%
     \pgfmathsetmacro{\cubW}{(#5)/2}%
     \pgfmathsetmacro{\cubDx}{(#6)*0.28}%
     \pgfmathsetmacro{\cubDy}{(#6)*0.16}%
-    % --- right face ---
     \fill[#7!55!black, draw=black!30, line width=0.3pt]
         ({#2+\cubW},{#3-\cubH})
         -- ({#2+\cubW+\cubDx},{#3-\cubH+\cubDy})
         -- ({#2+\cubW+\cubDx},{#3+\cubH+\cubDy})
         -- ({#2+\cubW},{#3+\cubH}) -- cycle;
-    % --- top face ---
     \fill[#7!15!white, draw=black!30, line width=0.3pt]
         ({#2-\cubW},{#3+\cubH})
         -- ({#2-\cubW+\cubDx},{#3+\cubH+\cubDy})
         -- ({#2+\cubW+\cubDx},{#3+\cubH+\cubDy})
         -- ({#2+\cubW},{#3+\cubH}) -- cycle;
-    % --- front face ---
     \fill[#7!85, draw=black!30, line width=0.3pt]
         ({#2-\cubW},{#3-\cubH}) rectangle ({#2+\cubW},{#3+\cubH});
-    % --- anchors ---
     \coordinate (#1)    at (#2, #3);
     \coordinate (#1-l)  at ({#2-\cubW},          {#3});
     \coordinate (#1-r)  at ({#2+\cubW+\cubDx},   {#3+\cubDy/2});
@@ -62,54 +54,44 @@
 }
 %
 % ==================== LAYOUT ====================
-\def\mainY{0}       % main horizontal flow
-\def\valY{1.5}      % value stream
-\def\advY{-1.5}     % advantage stream
+\def\mainY{0}
+\def\valY{1.5}
+\def\advY{-1.5}
 %
 % ==================== INPUT: 2 MAP CHANNELS ===============
 \cub{occ}{0}{\mainY}{2.8}{0.18}{0.20}{Cocc}
 \cub{gdf}{0.50}{\mainY}{2.8}{0.18}{0.20}{Cgdf}
-%
 \node[dlb, above=2pt] at (occ-t) {$\mathbf{O}$};
 \node[dlb, above=2pt] at (gdf-t) {$\mathbf{G}$};
-\node[dlb, below=6pt] at (0.25, {\mainY-1.4})
-    {$2{\times}12{\times}12$};
+\node[dlb, below=6pt] at (0.25, {\mainY-1.4}) {$2{\times}12{\times}12$};
 %
 % ==================== INPUT: SCALARS ======================
 \node[draw, rounded corners=3pt, fill=gray!8, thick,
       minimum width=1.4cm, minimum height=0.55cm,
       align=center, font=\footnotesize]
-    (sca) at (12.2, -2.2)
-    {Scalars\\[-2pt]{\scriptsize 11-d}};
+    (sca) at (12.2, -2.2) {Scalars\\[-2pt]{\scriptsize 11-d}};
 %
 % ==================== CNN BACKBONE ========================
-%
-% Conv1: 2->32, 3x3, s=1, 32x12x12
 \cub{c1}{2.5}{\mainY}{2.8}{0.50}{1.0}{Cconv}
 \node[font=\footnotesize\bfseries, text=white] at (c1) {32};
 \node[dlb, below=6pt] at (c1-b) {Conv$_1$\\$3{\times}3$};
 %
-% Conv2: 32->64, 3x3, s=2, 64x6x6
 \cub{c2}{5.0}{\mainY}{1.8}{0.50}{1.5}{Cconv}
 \node[font=\footnotesize\bfseries, text=white] at (c2) {64};
 \node[dlb, below=6pt] at (c2-b) {Conv$_2$\\$3{\times}3,\;s{=}2$};
 %
-% Conv3: 64->64, 3x3, s=2, 64x3x3
 \cub{c3}{7.2}{\mainY}{1.1}{0.50}{1.5}{Cconv}
 \node[font=\footnotesize\bfseries, text=white] at (c3) {64};
 \node[dlb, below=6pt] at (c3-b) {Conv$_3$\\$3{\times}3,\;s{=}2$};
 %
-% Spatial MHA: 4 heads
 \cub{mha}{9.2}{\mainY}{1.1}{0.50}{1.5}{Cmha}
 \node[font=\footnotesize\bfseries, text=white] at (mha) {MHA};
 \node[dlb, below=6pt] at (mha-b) {Spatial\\[-1pt]4-head};
 %
-% ---- dimension annotations ----
 \node[font=\tiny, text=black!40, above=2pt] at (c1-t)  {$12^2$};
 \node[font=\tiny, text=black!40, above=2pt] at (c2-t)  {$6^2$};
 \node[font=\tiny, text=black!40, above=2pt] at (c3-t)  {$3^2$};
 %
-% ---- CNN arrows ----
 \draw[arr] (gdf-r)  -- (c1-l);
 \draw[arr] (c1-r)   -- (c2-l);
 \draw[arr] (c2-r)   -- (c3-l);
@@ -127,7 +109,6 @@
       minimum size=0.65cm, inner sep=0pt, font=\normalsize]
     (cat) at (12.2, \mainY) {$\oplus$};
 \node[dlb, above=3pt] at (cat.north) {587};
-%
 \draw[arr] (flat.east)  -- (cat.west);
 \draw[arr] (sca.north)  -- (cat.south);
 %
@@ -135,28 +116,24 @@
 \node[draw, rounded corners=3pt, fill=Cfc!18, thick,
       minimum height=0.65cm, minimum width=1.5cm,
       font=\footnotesize, align=center]
-    (sfc) at (14.0, \mainY)
-    {FC(256)+ReLU};
+    (sfc) at (14.0, \mainY) {FC(256)+ReLU};
 \draw[arr] (cat) -- (sfc);
 %
 % ==================== DUELING HEAD ========================
 \coordinate (fork) at ($(sfc.east)+(0.3,0)$);
 %
-% ---- Value stream ----
 \node[draw, rounded corners=3pt, fill=Cval!18, thick,
       minimum width=2.0cm, minimum height=0.70cm,
       font=\footnotesize, align=center]
     (val) at (16.8, \valY)
     {Value\\[-2pt]{\scriptsize $V(s)\!\to\!\mathbb{R}^1$}};
 %
-% ---- Advantage stream ----
 \node[draw, rounded corners=3pt, fill=Cadv!18, thick,
       minimum width=2.0cm, minimum height=0.70cm,
       font=\footnotesize, align=center]
     (adv) at (16.8, \advY)
     {Advantage\\[-2pt]{\scriptsize $A(s,a)\!\to\!\mathbb{R}^{35}$}};
 %
-% ---- Y-fork ----
 \draw[arr, rounded corners=5pt] (sfc.east) -- (fork) |- (val.west);
 \draw[arr, rounded corners=5pt] (fork) |- (adv.west);
 %
@@ -173,11 +150,10 @@
     (adv.east) -- ++(0.3,0) |- ($(qagg.west)+(0,-0.10)$);
 %
 % ==================== ACTION MASK (7x5 GRID) ==============
-\def\gX{22.0}          % grid left x
-\def\gY{-1.33}         % grid bottom y (centred at mainY)
-\def\gS{0.38}          % cell size
+\def\gX{22.0}
+\def\gY{-1.33}
+\def\gS{0.38}
 %
-% ---- valid cells ----
 \foreach \r in {0,...,6}{
     \foreach \c in {0,...,4}{
         \fill[Cadv!15, draw=black!20, line width=0.3pt]
@@ -185,8 +161,6 @@
             rectangle ++({\gS-0.02}, {\gS-0.02});
     }
 }
-%
-% ---- masked cells ----
 \foreach \r/\c in {0/0,0/1,0/3,0/4, 1/0,1/4, 5/0,5/4, 6/0,6/1,6/3,6/4}{
     \fill[Cmask!15, draw=black!20, line width=0.3pt]
         ({\gX+\c*\gS}, {\gY+\r*\gS})
@@ -198,13 +172,9 @@
         ({\gX+\c*\gS+\gS-0.08}, {\gY+\r*\gS+0.06})
         -- ++({-\gS+0.14}, {\gS-0.14});
 }
-%
-% ---- grid labels ----
 \node[dlb, below=5pt] at ({\gX+2.5*\gS}, \gY) {$5\;a$};
-\node[dlb, rotate=90]  at ({\gX-0.20}, {\gY+3.5*\gS})
-    {$7\;\dot{\delta}$};
+\node[dlb, rotate=90]  at ({\gX-0.20}, {\gY+3.5*\gS}) {$7\;\dot{\delta}$};
 %
-% ---- kinematic mask ----
 \node[draw, rounded corners=3pt, fill=Cmask!8, thick,
       minimum width=1.0cm, minimum height=0.45cm,
       font=\scriptsize, align=center]
@@ -212,7 +182,6 @@
     {Kin.\ Mask\\[-2pt]{\tiny bool\;35-d}};
 \draw[arr] (kin) -- ({\gX+2.5*\gS}, {\gY-0.02});
 %
-% ---- Q -> grid ----
 \draw[arr] (qagg.east) -- ({\gX-0.05}, {\gY+3.5*\gS});
 %
 % ==================== OUTPUT ==============================
@@ -228,41 +197,21 @@
 %
 % ==================== BACKGROUND GROUPS ===================
 \begin{scope}[on background layer]
-    %
-    % CNN Feature Extractor
     \node[draw=Cconv!40, dashed, rounded corners=6pt,
           inner sep=6pt, fill=Cconv!3,
           fit=(c1-bl)(c1-tr)(mha-tr)(flat),
           label={[glb, Cconv!60]above:CNN Feature Extractor}] {};
-    %
-    % Dueling Head
     \node[draw=Cqagg!50, dashed, rounded corners=6pt,
           inner sep=6pt, fill=Cqagg!3,
           fit=(val)(adv)(qagg),
           label={[glb, Cqagg!70]above:Dueling Head}] {};
-    %
-    % Action Masking
     \coordinate (mask-bl) at ({\gX-0.12}, {\gY-0.12});
     \coordinate (mask-tr) at ({\gX+5*\gS+0.10}, {\gY+7*\gS+0.10});
     \node[draw=Cmask!35, dashed, rounded corners=6pt,
           inner sep=6pt, fill=Cmask!2,
           fit=(mask-bl)(mask-tr)(kin)(out),
           label={[glb, Cmask!50]above:Action Masking}] {};
-    %
 \end{scope}
 %
-\end{tikzpicture}%
-}% end resizebox
-%
-\caption{%
-MD-DDQN Q 网络架构。
-卷积分支从两个 $12{\times}12$ 地图通道（占据栅格~$\mathbf{O}$、目标距离图~$\mathbf{G}$）中提取空间特征，
-依次经过三层卷积（含ReLU激活）与空间多头自注意力（MHA，4头），
-输出576维特征向量。
-该向量与11维标量状态（位姿、速度、前轮转角、目标方位角）拼接后，
-经共享全连接层分为价值流~$V(s)$与优势流~$A(s,a)$（对决架构），
-产生35个联合Q值（$7$种转向速率$\times$$5$种加速度）。
-运动学可行性掩码将不可行动作的Q值置零，
-最终通过argmax提取最优动作。}
-\label{fig:architecture}
-\end{figure*}
+\end{tikzpicture}
+\end{document}

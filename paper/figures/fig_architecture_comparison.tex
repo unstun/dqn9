@@ -1,0 +1,68 @@
+\documentclass[a3paper,landscape]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% ===== PAGE 1: 4 references in 2x2 grid =====
+\begin{center}
+{\LARGE\bfseries Reference Architecture Figures}
+\end{center}
+\vspace{2mm}
+
+% Row 1
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\large\bfseries (a) Wang 2016 --- Dueling DQN}\\
+{\scriptsize Y-fork V/A streams reference}\\[2pt]
+\fbox{\includegraphics[width=\textwidth, height=0.35\textheight, keepaspectratio, page=1]{ref_wang2016_dueling.pdf}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\large\bfseries (b) Mnih 2015 --- Nature DQN}\\
+{\scriptsize CNN pipeline with feature maps (p.530)}\\[2pt]
+\fbox{\includegraphics[width=\textwidth, height=0.35\textheight, keepaspectratio, page=2]{ref_mnih2015_nature_dqn.pdf}}
+\end{minipage}
+
+\vspace{5mm}
+
+% Row 2
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\large\bfseries (c) AG-DQN 2025 --- Scientific Reports}\\
+{\scriptsize Multi-component colour regions (Fig.\ 3)}\\[2pt]
+\fbox{\includegraphics[width=\textwidth, height=0.35\textheight, keepaspectratio, page=8]{ref_agile_dqn_2025.pdf}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\large\bfseries (d) MHA-DQN 2026 --- Electronics}\\
+{\scriptsize Pipeline flow + 4 MHA heads (Fig.\ 2)}\\[2pt]
+\fbox{\includegraphics[width=\textwidth, height=0.35\textheight, keepaspectratio, page=10]{ref_mha_dqn_uav_2025.pdf}}
+\end{minipage}
+
+\newpage
+
+% ===== PAGE 2: OLD vs NEW =====
+\begin{center}
+{\LARGE\bfseries Old (v1) vs.\ New (v2)}
+\end{center}
+\vspace{6mm}
+
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\Large\bfseries\color{red} OLD (v1)}\\[6pt]
+\fbox{\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{fig_architecture_preview.pdf}}\\[6pt]
+{\footnotesize Cuboids paper-thin $\cdot$ grid invisible $\cdot$ left-heavy $\cdot$ V/A too far apart}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+{\Large\bfseries\color{OliveGreen} NEW (v2)}\\[6pt]
+\fbox{\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{fig_architecture_standalone.pdf}}\\[6pt]
+{\footnotesize Bigger cuboids $\cdot$ visible grid $\cdot$ balanced layout $\cdot$ compact dueling fork}
+\end{minipage}
+
+\end{document}
