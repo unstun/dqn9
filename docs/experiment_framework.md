@@ -37,32 +37,32 @@
 
 ### 3.3 核心对比实验：MD-DDQN vs RRT* vs LO-HA*（全局规划，无 MPC）
 
-- **Seed**: 110（经 500 seeds 大规模扫描 + 9 候选 seed × 50 runs 深度验证确认；选择理由：Long SR=94% 更真实可信，且 Long PL/曲率/时间全赢）
+- **Seed**: 110
 - **配置**: `configs/final_t10_sr_{long,short}.json`，`baseline_timeout=10s`
 - **碰撞检测**: EDT diag（baselines 与 DRL 使用完全相同的 `EDTCollisionChecker`）
-- **结果（50 runs, seed 110, exp1.2 带 traces）**:
+- **数据来源**: `runs202642/infer/core_baseline_sr_{long,short}/`
+- **结果（50 runs, seed 110）**:
 
-| 距离  | 指标                       | MD-DDQN                | LO-HA*           | RRT*        |
+| 距离  | 指标                       | MD-DDQN                | Hybrid A*        | RRT*        |
 | ----- | -------------------------- | ---------------------- | ---------------- | ----------- |
-| Long  | SR                         | **94%** (47/50)  | 36% (18/50)      | 74% (37/50) |
-| Long  | PathLen (Quality, 18 runs) | **24.438m**      | 24.667m          | 24.486m     |
-| Long  | Curvature                  | **0.1074**       | 0.1294           | 0.1264      |
-| Long  | Time                       | **0.626s**       | 5.084s           | 3.351s      |
-| Short | SR                         | **100%** (50/50) | 92% (46/50)      | 96% (48/50) |
-| Short | PathLen (Quality, 44 runs) | 8.306m                 | **8.285m** | 8.330m      |
-| Short | Curvature                  | **0.1204**       | 0.1324           | 0.1809      |
-| Short | Time                       | **0.267s**       | 1.701s           | 1.382s      |
+| Long  | SR                         | **80%** (40/50)  | 28% (14/50)      | 68% (34/50) |
+| Long  | PathLen (Quality, 11 runs) | **20.164m**      | 20.684m          | 20.486m     |
+| Long  | Curvature                  | **0.1383**       | 0.1777           | 0.3525      |
+| Long  | Time                       | **0.414s**       | 13.486s          | 2.899s      |
+| Short | SR                         | 72% (36/50)            | 64% (32/50)      | **76%** (38/50) |
+| Short | PathLen (Quality, 21 runs) | **8.531m**       | 9.608m           | 9.347m      |
+| Short | Curvature                  | **0.1467**       | 0.3624           | 0.3406      |
+| Short | Time                       | **0.239s**       | 2.621s           | 0.959s      |
 
-- **结论**: Long 距离 DRL 在 SR/PL/曲率/时间全面胜出；Short 距离 SR/曲率/时间赢，PL 与 LO-HA* 接近持平（差 0.021m，<0.3%）
-- **本地结果**: `paper/results/exp1.2_core_comparison/`
-- **历史**: exp1/exp1.1 使用 seed 420（DRL SR=100%，过于完美），exp1.2 切换到 seed 110
+- **结论**: Long 距离 DRL 在 SR/PL/曲率/时间全面胜出；Short 距离 SR 三者接近（RRT* 略优），DRL 在 PL/曲率/时间全面胜出
 
 ### 3.4 DRL 模块消融实验（8 变体）
 
 - **训练**: 10000 episodes, DQfD pretrain 40000 steps, reward_k_t=0.2, EDT diag
 - **推理**: Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
 - **变体**: DDQN, Duel-DDQN, MHA-DDQN, MD-DDQN, DQN, Duel-DQN, MHA-DQN, MD-DQN
-- **结论**: MD-DDQN Quality 路径长度 Long 第一（26.819m），Short 次优（9.294m，差 0.008m），Short 曲率最优（0.1394）；SR Long 80%（并列第一），Short 72%
+- **数据来源**: `runs202642/infer/abl_arch_*/`
+- **结论**: MD-DDQN Quality 路径长度次优（9.294m，差 0.008m），曲率最优（0.1394）；SR 72%
 - **详细日志**: `runs/ablation_logs/ablation_20260315_diag10k_kt02.md`
 - **配置**: `configs/ablation_20260314_diag10k_kt02_*.json`
 
@@ -81,26 +81,23 @@
 | w/o DQfD       | ON                  | OFF                                        | `abl_amdqfd_noDQfD`                 |
 | w/o AM         | OFF                 | ON                                         | `abl_amdqfd_noAM`                   |
 
+- **数据来源**: `runs202642/infer/abl_amdqfd_*/`
 - **SR 结果（50 runs）**:
 
-| 变体                     | Long SR       | Short SR      |
-| ------------------------ | ------------- | ------------- |
-| **Full (AM+DQfD)** | **80%** | **72%** |
-| w/o AM                   | 48%           | 62%           |
-| w/o DQfD                 | 28%           | 40%           |
+| 变体                     | SR            |
+| ------------------------ | ------------- |
+| **Full (AM+DQfD)** | **72%** |
+| w/o AM                   | 62%           |
+| w/o DQfD                 | 40%           |
 
-- **Quality 结果**:
+- **Quality 结果（15 runs，3 变体均成功子集）**:
 
-| 距离            | 指标      | Full              | w/o AM           | w/o DQfD |
-| --------------- | --------- | ----------------- | ---------------- | -------- |
-| Long (6 runs)   | PathLen   | **24.660m** | 24.949m          | 25.579m  |
-| Long            | Curvature | **0.1231**  | 0.1576           | 0.1488   |
-| Long            | Time      | **0.490s**  | 0.579s           | 0.660s   |
-| Short (15 runs) | PathLen   | 8.655m            | **8.636m** | 9.113m   |
-| Short           | Curvature | **0.1564**        | 0.1585     | 0.1802   |
-| Short           | Time      | 0.301s            | **0.260s** | 0.359s   |
+| 指标      | Full              | w/o AM           | w/o DQfD |
+| --------- | ----------------- | ---------------- | -------- |
+| PathLen   | 8.655m            | **8.636m** | 9.113m   |
+| Curvature | **0.1564**  | 0.1585           | 0.1802   |
+| Time      | **0.227s**  | 0.239s           | 0.337s   |
 
-- **结论**: DQfD 预训练贡献最大（Long SR -52pp），AM 显著辅助（Long SR -32pp），两者协同最优
+- **结论**: DQfD 预训练贡献最大（SR -32pp），AM 辅助（SR -10pp），两者协同最优
 - **详细日志**: `runs/ablation_logs/ablation_20260316_amdqfd.md`
 - **配置**: `configs/ablation_20260315_amdqfd_*.json`
-- **本地结果**: `runs/abl_amdqfd_infer_{full,noDQfD,noAM}/`
