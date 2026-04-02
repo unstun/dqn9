@@ -517,8 +517,8 @@ MD-DDQN 与两种经典规划器对比：基于图搜索的 Improved Hybrid A*~\
 
 \begin{figure*}[!htbp]
 \centering
-\includegraphics[width=0.62\textwidth]{fig_trajectory.pdf}
-\caption{真实林地地图 realmap\_a 上的代表性路径轨迹。蓝色实线为 MD-DDQN，红色虚线为 Improved Hybrid A*，绿色点线为 Spline-based RRT*，三者使用相同的起终点对。DRL 地面无人车在穿越狭窄通道时生成了更平滑、更直接的路径。}
+\includegraphics[width=0.95\textwidth]{fig_43_trajectory.pdf}
+\caption{真实林地地图上的代表性路径轨迹对比：(a)~远距离任务，(b)~近距离任务。蓝色实线为 MD-DDQN，橙色虚线为 Improved Hybrid A*，绿色点划线为 Spline-based RRT*。}
 \label{fig:trajectory}
 \end{figure*}
 
@@ -542,12 +542,6 @@ MD-DDQN 在远距离和近距离任务上分别达到 94\% 和 100\% 的成功�
 
 MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需横穿整张地图的极长距离任务中——车辆在起点附近即陷入局部障碍物包围，未能找到正确的出发方向。这一现象与降采样观测的信息损失有关。
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.85\columnwidth]{fig_sr_comparison.pdf}
-\caption{MD-DDQN 与经典规划器在远距离和近距离任务上的成功率对比（50次运行）。}
-\label{fig:sr_comparison}
-\end{figure}
 
 \subsubsection{路径质量结果}
 
@@ -578,17 +572,10 @@ MD-DDQN 远距离任务的 3 次失败均发生在起点位于地图边缘且需
 
 \begin{figure*}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_quality_comparison.pdf}
-\caption{路径质量对比：(a) 路径长度，(b) 平均曲率，(c) 计算时间。数据来自三算法质量子集。}
-\label{fig:quality_comparison}
+\includegraphics[width=0.85\textwidth]{fig_43_bar.pdf}
+\caption{基线对比实验四项指标柱状图：(a)~成功率，(b)~路径长度，(c)~平均曲率，(d)~计算时间。深色为远距离，斜线为近距离。}
+\label{fig:core_bar}
 \end{figure*}
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.7\columnwidth]{fig_radar_comparison.pdf}
-\caption{MD-DDQN、Improved Hybrid A* 和 Spline-based RRT* 在远距离任务上四项归一化指标的雷达图对比。各轴均归一化为$[0,1]$，外围表示最优性能。}
-\label{fig:radar}
-\end{figure}
 
 \FloatBarrier
 \subsection{DRL 模块消融实验}\label{ssec:abl_module}
@@ -621,9 +608,9 @@ MHA-DDQN        & 66\% & 66\% \\
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\columnwidth]{fig_ablation_sr.pdf}
-\caption{8种 DRL 变体在远距离和近距离任务上的成功率。MD-DDQN（高亮显示）在成功率与路径质量之间取得了最佳平衡。}
-\label{fig:ablation_sr}
+\includegraphics[width=0.95\columnwidth]{fig_44_td_loss.pdf}
+\caption{8种 DRL 变体的训练 TD Loss 曲线（对数坐标）。MD-DDQN 以蓝色粗线标出。MD 变体初期 loss 较高，但在训练中后期均收敛至稳定水平。}
+\label{fig:arch_td_loss}
 \end{figure}
 
 \subsubsection{路径质量结果}
@@ -654,7 +641,7 @@ DDQN            & 26.982 & 0.1553 & 0.542 & 9.359 & 0.1533 & 0.326 \\
 
 \begin{figure*}[!htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{fig_ablation_heatmap.pdf}
+\includegraphics[width=0.92\textwidth]{fig_44_heatmap.pdf}
 \caption{8种 DRL 变体在六项指标上的归一化性能热力图。每列独立缩放至$[0,1]$，深绿色表示更优性能。变体按平均归一化得分降序排列，MD-DDQN 行以蓝色边框高亮。}
 \label{fig:ablation_heatmap}
 \end{figure*}
@@ -698,12 +685,12 @@ DDQN            & 26.982 & 0.1553 & 0.542 & 9.359 & 0.1533 & 0.326 \\
 \end{tabular}
 \end{table}
 
-训练评估曲线进一步佐证了这一结论（图~\ref{fig:training_curve}）。完整版在约 500 回合后即达到接近 100\% 的评估成功率，路径长度稳定在约 $\SI{11}{m}$，虽然训练中后期出现若干短暂波动，但整体趋势保持稳定。去除 DQfD 的变体在前 3\,000 回合中几乎无法完成任务，约 6\,000 回合后才逐渐收敛，且训练末期路径长度（$\SI{12}{m}$--$\SI{15}{m}$）仍长于完整版。两者的差异表明 DQfD 预训练使策略从训练起即具备基本导航能力，避免了前期的无效探索。
+训练 TD Loss 曲线（图~\ref{fig:training_curve}）进一步佐证了上述结论。完整版的初期 TD Loss 显著高于另两组变体，源于 DQfD 预训练阶段对 Q 网络施加的专家演示约束——预训练的 Q 值与在线训练初期的自举目标之间存在较大偏差，产生了更高的时序差分误差。训练至约 4\,000 回合后，完整版的 TD Loss 收敛至与其他变体相当的水平。去除 DQfD 和去除 AM 的变体初期 TD Loss 虽低，但成功率的大幅退化（表~\ref{tab:abl_amdqfd_sr}）表明训练损失的绝对值与导航性能无直接对应——DQfD 预训练以更高的初始损失为代价，使策略在训练初期即具备基本导航能力，避免了纯随机探索阶段。
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\columnwidth]{fig_training_curve.pdf}
-\caption{完整版与去除 DQfD 变体的训练评估曲线对比：(a)~评估成功率，(b)~评估路径长度（仅成功回合）。实线为滑动平均（窗口1\,000回合），散点为原始评估值。}
+\includegraphics[width=0.95\columnwidth]{fig_45_td_loss.pdf}
+\caption{三组变体的训练 TD Loss 曲线（对数坐标）。完整版（蓝色）初期 loss 较高，源于 DQfD 专家演示的 margin loss 贡献，但在训练中后期收敛至与其他变体相当的水平。}
 \label{fig:training_curve}
 \end{figure}
 
@@ -734,10 +721,18 @@ DDQN            & 26.982 & 0.1553 & 0.542 & 9.359 & 0.1533 & 0.326 \\
 
 \begin{figure*}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_amdqfd_ablation.pdf}
-\caption{AM $\times$ DQfD 组件消融实验：(a) 成功率及性能下降标注，(b) 远距离路径质量与曲率叠加展示。}
-\label{fig:amdqfd_ablation}
+\includegraphics[width=0.85\textwidth]{fig_45_bar.pdf}
+\caption{AM $\times$ DQfD 组件消融实验四项指标柱状图：(a)~成功率，(b)~路径长度，(c)~平均曲率，(d)~计算时间。深色为远距离，斜线为近距离。}
+\label{fig:amdqfd_bar}
 \end{figure*}
+
+% NOTE: fig_45_trajectory.pdf 待远端推理数据导出后启用
+%\begin{figure*}[!htbp]
+%\centering
+%\includegraphics[width=0.95\textwidth]{fig_45_trajectory.pdf}
+%\caption{AM $\times$ DQfD 组件消融实验轨迹对比：(a)~远距离任务，(b)~近距离任务。}
+%\label{fig:amdqfd_trajectory}
+%\end{figure*}
 
 \FloatBarrier
 \subsection{讨论}\label{ssec:discussion}
