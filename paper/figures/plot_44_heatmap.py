@@ -1,14 +1,12 @@
-"""4.4 节 热力图: 8 种 CNN-DRL 架构变体 x 4 项指标归一化对比。
+"""4.4 节 热力图: 4 种 DQN 架构变体 x 5 项指标归一化对比。
 
-行按平均归一化得分降序排列, MD-DDQN 行外加蓝色边框高亮。
+行按平均归一化得分降序排列, MD-DQN 行外加蓝色边框高亮。
 
-数据源: runs202642/infer/abl_arch_*/*/table2_kpis_mean.csv  (SR)
-         runs202642/infer/abl_arch_*/*/table2_kpis.csv       (Quality 过滤)
+数据源: runs202643/infer/abl_minloss_cnn_*  (Short SR + Quality)
+         runs202643/infer/abl_minloss_cnn_*_long  (Long SR + Quality)
 """
 
 from __future__ import annotations
-
-from collections import defaultdict
 
 import matplotlib
 matplotlib.use("Agg")
@@ -18,91 +16,100 @@ import matplotlib.patches as mpatches
 import numpy as np
 import pandas as pd
 
-from style import apply_style, save_fig, RUNS2, ARCH_DIR_TO_LABEL
+from style import apply_style, save_fig, RUNS3
 
 apply_style()
 
-# ── 数据读取 ─────────────────────────────────────────────────────────
-INFER_DIR = RUNS2 / "infer"
+# ── 变体与目录映射 ──────────────────────────────────────────────────────
+VARIANTS = ["MD-DQN", "Duel-DQN", "MHA-DQN", "DQN"]
 
-# 目录名前缀 -> 显示名
-DIR_PREFIX_TO_LABEL = {f"abl_arch_{k}": v for k, v in ARCH_DIR_TO_LABEL.items()}
+SHORT_DIRS = {
+    "MD-DQN":   "abl_minloss_cnn_dqn_md",
+    "Duel-DQN": "abl_minloss_cnn_dqn_duel",
+    "MHA-DQN":  "abl_minloss_cnn_dqn_mha",
+    "DQN":      "abl_minloss_cnn_dqn",
+}
+LONG_DIRS = {k: v + "_long" for k, v in SHORT_DIRS.items()}
 
-# 读取 SR (from mean CSV)
-sr_data = {}
-for exp_dir in sorted(INFER_DIR.iterdir()):
-    name = exp_dir.name
-    if name not in DIR_PREFIX_TO_LABEL:
-        continue
-    label = DIR_PREFIX_TO_LABEL[name]
-    csv_files = sorted(exp_dir.glob("*/table2_kpis_mean.csv"))
-    if not csv_files:
-        continue
-    df = pd.read_csv(csv_files[-1])
-    sr_data[label] = df["Success rate"].iloc[0] * 100  # %
+INFER_DIR = RUNS3 / "infer"
 
-# 读取 per-run 数据 (for quality filter)
-all_variant_runs = {}
-for exp_dir in sorted(INFER_DIR.iterdir()):
-    name = exp_dir.name
-    if name not in DIR_PREFIX_TO_LABEL:
-        continue
-    label = DIR_PREFIX_TO_LABEL[name]
-    csv_files = sorted(exp_dir.glob("*/table2_kpis.csv"))
-    if not csv_files:
-        continue
-    df = pd.read_csv(csv_files[-1])
-    run_data = {}
-    for _, row in df.iterrows():
-        rid = int(row["Run index"])
-        sr = float(row["Success rate"])
-        run_data[rid] = {
+
+def read_sr(dir_name: str) -> float:
+    d = INFER_DIR / dir_name
+    csvs = sorted(d.glob("*/table2_kpis_mean.csv"))
+    if not csvs:
+        raise FileNotFoundError(f"No mean CSV in {d}")
+    df = pd.read_csv(csvs[-1])
+    return df["Success rate"].iloc[0] * 100
+
+
+def read_runs(dir_name: str) -> dict:
+    d = INFER_DIR / dir_name
+    csvs = sorted(d.glob("*/table2_kpis.csv"))
+    if not csvs:
+        return {}
+    df = pd.read_csv(csvs[-1])
+    runs = {}
+    for _, r in df.iterrows():
+        rid = int(r["Run index"])
+        sr = float(r["Success rate"])
+        runs[rid] = {
             "sr": sr,
-            "pl": float(row["Average path length (m)"]) if sr == 1.0 else None,
-            "curv": float(row["Average curvature (1/m)"]) if sr == 1.0 else None,
-            "time": float(row["Compute time (s)"]) if sr == 1.0 else None,
+            "pl": float(r["Average path length (m)"]) if sr == 1.0 else None,
+            "curv": float(r["Average curvature (1/m)"]) if sr == 1.0 else None,
+            "time": float(r["Compute time (s)"]) if sr == 1.0 else None,
         }
-    all_variant_runs[label] = run_data
+    return runs
 
-# 8-variant filter for quality
-variant_labels = sorted(all_variant_runs.keys())
-all_runs = set()
-for d in all_variant_runs.values():
-    all_runs.update(d.keys())
 
-filtered_runs = [
-    rid for rid in sorted(all_runs)
-    if all(rid in all_variant_runs[v] and all_variant_runs[v][rid]["sr"] == 1.0
-           for v in variant_labels)
+# ── 读取 SR ──────────────────────────────────────────────────────────
+sr_short = {v: read_sr(SHORT_DIRS[v]) for v in VARIANTS}
+sr_long = {v: read_sr(LONG_DIRS[v]) for v in VARIANTS}
+
+# ── 读取 per-run 并计算质量子集 (Long, N=?) ──────────────────────────
+long_runs = {v: read_runs(LONG_DIRS[v]) for v in VARIANTS}
+
+all_rids = set()
+for d in long_runs.values():
+    all_rids.update(d.keys())
+
+filtered = [
+    rid for rid in sorted(all_rids)
+    if all(rid in long_runs[v] and long_runs[v][rid]["sr"] == 1.0
+           for v in VARIANTS)
 ]
-N = len(filtered_runs)
-print(f"Quality filter: N={N}")
+N = len(filtered)
+print(f"Quality filter (Long): N={N}")
 
-quality_data = {}
-for v in variant_labels:
-    d = all_variant_runs[v]
-    pls = [d[i]["pl"] for i in filtered_runs]
-    curvs = [d[i]["curv"] for i in filtered_runs]
-    times = [d[i]["time"] for i in filtered_runs]
-    quality_data[v] = {
-        "pl": sum(pls) / len(pls),
-        "curv": sum(curvs) / len(curvs),
-        "time": sum(times) / len(times),
+quality = {}
+for v in VARIANTS:
+    d = long_runs[v]
+    quality[v] = {
+        "pl": np.mean([d[i]["pl"] for i in filtered]),
+        "curv": np.mean([d[i]["curv"] for i in filtered]),
+        "time": np.mean([d[i]["time"] for i in filtered]),
     }
 
-# ── 组装矩阵 (8 行 x 4 列) ──────────────────────────────────────────
-COL_NAMES = ["SR", "PL", "Curv", "Time"]
-COL_DISPLAY = [f"SR (%)", f"PL (m)\n(N={N})", f"Curv (1/m)\n(N={N})", f"Time (s)\n(N={N})"]
+# ── 组装矩阵 (4 行 x 5 列) ──────────────────────────────────────────
+COL_NAMES = ["SR_S", "SR_L", "PL", "Curv", "Time"]
+COL_DISPLAY = [
+    "Short\nSR (%)",
+    "Long\nSR (%)",
+    f"PL (m)\n(N={N})",
+    f"Curv\n(N={N})",
+    f"Time (s)\n(N={N})",
+]
 
-raw_vals = np.zeros((len(variant_labels), 4))
-for i, v in enumerate(variant_labels):
-    raw_vals[i, 0] = sr_data[v]
-    raw_vals[i, 1] = quality_data[v]["pl"]
-    raw_vals[i, 2] = quality_data[v]["curv"]
-    raw_vals[i, 3] = quality_data[v]["time"]
+raw_vals = np.zeros((len(VARIANTS), 5))
+for i, v in enumerate(VARIANTS):
+    raw_vals[i, 0] = sr_short[v]
+    raw_vals[i, 1] = sr_long[v]
+    raw_vals[i, 2] = quality[v]["pl"]
+    raw_vals[i, 3] = quality[v]["curv"]
+    raw_vals[i, 4] = quality[v]["time"]
 
 # ── 归一化: [0, 1], 1 = best ──────────────────────────────────────────
-HIGHER_BETTER = {0}  # SR: higher is better; PL, Curv, Time: lower is better
+HIGHER_BETTER = {0, 1}  # SR: higher is better
 
 norm_vals = np.zeros_like(raw_vals)
 for j in range(raw_vals.shape[1]):
@@ -120,10 +127,10 @@ sort_idx = np.argsort(-avg_scores)
 
 raw_vals = raw_vals[sort_idx]
 norm_vals = norm_vals[sort_idx]
-labels_sorted = np.array(variant_labels)[sort_idx]
+labels_sorted = np.array(VARIANTS)[sort_idx]
 
 # ── 绘图 ───────────────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(7, 5))
+fig, ax = plt.subplots(figsize=(7, 3))
 
 im = ax.imshow(norm_vals, cmap="RdYlGn", vmin=0, vmax=1, aspect="auto")
 
@@ -142,7 +149,7 @@ for i in range(norm_vals.shape[0]):
         rv = raw_vals[i, j]
         col = COL_NAMES[j]
 
-        if col == "SR":
+        if col in ("SR_S", "SR_L"):
             txt = f"{int(rv)}%"
         elif col == "PL":
             txt = f"{rv:.3f}"
@@ -154,8 +161,8 @@ for i in range(norm_vals.shape[0]):
         tc = "white" if nv < 0.3 else "black"
         ax.text(j, i, txt, ha="center", va="center", fontsize=9, color=tc)
 
-# ── MD-DDQN 行蓝色高亮框 ──────────────────────────────────────────────
-md_row = int(np.where(labels_sorted == "MD-DDQN")[0][0])
+# ── MD-DQN 行蓝色高亮框 ──────────────────────────────────────────────
+md_row = int(np.where(labels_sorted == "MD-DQN")[0][0])
 rect = mpatches.FancyBboxPatch(
     (-0.5, md_row - 0.5),
     len(COL_NAMES),

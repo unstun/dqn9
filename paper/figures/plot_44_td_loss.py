@@ -1,9 +1,9 @@
-"""4.4 节 TD Loss 训练曲线: 8 种 DRL 架构变体对比。
+"""4.4 节 TD Loss 训练曲线: 4 种 DQN 架构变体对比。
 
-8 条滚动均值曲线叠加, MD-DDQN 加粗置顶。
+4 条滚动均值曲线叠加, MD-DQN 加粗置顶。
 TD loss 跨数个量级, 采用对数纵轴。
 
-数据源: runs202642/train/abl_arch_*/training_diagnostics.csv
+数据源: runs202643/train/abl_arch_cnn_dqn*/training_diagnostics.csv
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from style import apply_style, save_fig, RUNS2, rolling_mean, ARCH_COLORS, ARCH_DIR_TO_LABEL
+from style import apply_style, save_fig, RUNS3, rolling_mean, ARCH_COLORS, ARCH_DIR_TO_LABEL
 
 ROLLING_W = 500
 
@@ -23,7 +23,7 @@ apply_style()
 # ── 读取数据 ────────────────────────────────────────────────────────────
 curves: dict[str, pd.DataFrame] = {}
 for dir_suffix, label in ARCH_DIR_TO_LABEL.items():
-    csv_path = RUNS2 / "train" / f"abl_arch_{dir_suffix}" / "training_diagnostics.csv"
+    csv_path = RUNS3 / "train" / f"abl_arch_{dir_suffix}" / "training_diagnostics.csv"
     if not csv_path.exists():
         print(f"[WARN] Missing: {csv_path}")
         continue
@@ -44,20 +44,18 @@ for label in sorted_labels:
     df = curves[label]
     color = ARCH_COLORS[label]
 
-    # 样式: MD-DDQN 加粗置顶; DDQN 系列实线; DQN 系列虚线
-    if label == "MD-DDQN":
-        lw, ls, zorder = 2.5, "-", 10
-    elif "DDQN" in label:
-        lw, ls, zorder = 1.5, "-", 5
+    # MD-DQN 加粗置顶
+    if label == "MD-DQN":
+        lw, zorder = 2.5, 10
     else:
-        lw, ls, zorder = 1.2, "--", 4
+        lw, zorder = 1.5, 5
 
     ax.plot(
         df["episode"],
         df["td_loss_smooth"],
         color=color,
         linewidth=lw,
-        linestyle=ls,
+        linestyle="-",
         zorder=zorder,
         label=label,
     )

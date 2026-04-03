@@ -56,48 +56,81 @@
 
 - **结论**: Long 距离 DRL 在 SR/PL/曲率/时间全面胜出；Short 距离 SR 三者接近（RRT* 略优），DRL 在 PL/曲率/时间全面胜出
 
-### 3.4 DRL 模块消融实验（8 变体）
+### 3.4 DRL 模块消融实验（4 DQN 变体，MinTD）
 
 - **训练**: 10000 episodes, DQfD pretrain 40000 steps, reward_k_t=0.2, EDT diag
-- **推理**: Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
-- **变体**: DDQN, Duel-DDQN, MHA-DDQN, MD-DDQN, DQN, Duel-DQN, MHA-DQN, MD-DQN
-- **数据来源**: `runs202642/infer/abl_arch_*/`
-- **结论**: MD-DDQN Quality 路径长度次优（9.294m，差 0.008m），曲率最优（0.1394）；SR 72%
+- **推理**: MinTD 检查点，Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
+- **变体**: DQN, Duel-DQN, MHA-DQN, MD-DQN
+- **数据来源**: `runs202643/infer/abl_minloss_cnn_dqn*/`，`runs202643/train/abl_arch_cnn_dqn*/`
+- **SR 结果（50 runs）**:
+
+| 变体     | Short SR | Long SR      |
+| -------- | -------- | ------------ |
+| MD-DQN   | 70%      | **86%** |
+| Duel-DQN | 72%      | 84%          |
+| MHA-DQN  | **74%** | 80%          |
+| DQN      | 64%      | 74%          |
+
+- **Quality Long（N=30，4 变体均成功子集）**:
+
+| 指标      | MD-DQN          | Duel-DQN | MHA-DQN | DQN             |
+| --------- | --------------- | -------- | ------- | --------------- |
+| PathLen   | **24.176m** | 24.231m  | 24.236m | 24.277m         |
+| Curvature | **0.1588** | 0.1601   | 0.1703  | 0.1613          |
+| Time      | 0.462s          | 0.349s   | 0.436s  | **0.329s** |
+
+- **Quality Short（N=20，4 变体均成功子集）**:
+
+| 指标      | MD-DQN | Duel-DQN        | MHA-DQN | DQN    |
+| --------- | ------ | --------------- | ------- | ------ |
+| PathLen   | 9.565m | **9.539m** | 9.552m  | 9.629m |
+| Curvature | 0.1687 | **0.1634** | 0.1638  | 0.1973 |
+| Time      | 0.232s | **0.183s** | 0.215s  | 0.219s |
+
+- **结论**: MD-DQN 远距离 SR 最高（86%）、路径最短（24.176m）、曲率最优（0.1588），综合选为核心算法
 - **详细日志**: `runs/ablation_logs/ablation_20260315_diag10k_kt02.md`
-- **配置**: `configs/ablation_20260314_diag10k_kt02_*.json`
+- **配置**: `configs/ablation_20260314_diag10k_kt02_*.json`，MinTD 推理配置 `configs/ablation_20260402_*.json`
 
-### 3.5 AM × DQfD 组件消融实验（3 变体）
+### 3.5 AM × DQfD 组件消融实验（3 变体，MinTD）
 
-- **基底**: MD-DDQN (reward_k_t=0.2, EDT diag)
+- **基底**: MD-DQN (reward_k_t=0.2, EDT diag)
 - **训练**: 10000 episodes, seed=0
-- **推理**: Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
+- **推理**: MinTD 检查点，Seed 110，50 runs/variant/distance（goal_tolerance=0.3m）
 - **设计**: 训练时消融，推理统一带 mask（隔离训练时贡献）
 - **代码改动**: `ugv_dqn/cli/train.py` 4 处条件化 `forest_action_shield`（expert exploration fallback、TD target mask、demo prefill mask ×2）
 - **变体**:
 
 | 变体           | AM (shield+TD mask) | DQfD (prefill+pretrain+expert_exploration) | 训练来源                              |
 | -------------- | ------------------- | ------------------------------------------ | ------------------------------------- |
-| Full (AM+DQfD) | ON                  | ON                                         | 复用 `abl_diag10k_kt02_cnn_ddqn_md` |
-| w/o DQfD       | ON                  | OFF                                        | `abl_amdqfd_noDQfD`                 |
-| w/o AM         | OFF                 | ON                                         | `abl_amdqfd_noAM`                   |
+| Full (AM+DQfD) | ON                  | ON                                         | 复用 `abl_arch_cnn_dqn_md`          |
+| w/o DQfD       | ON                  | OFF                                        | `abl_amdqfd_dqn_noDQfD`             |
+| w/o AM         | OFF                 | ON                                         | `abl_amdqfd_dqn_noAM`               |
 
-- **数据来源**: `runs202642/infer/abl_amdqfd_*/`
+- **数据来源**: `runs202643/infer/abl_minloss_cnn_dqn_md*`（Full），`runs202643/infer/abl_minloss_amdqfd_dqn_noAM*`（w/o AM），`runs202643/infer/abl_amdqfd_dqn_infer_noDQfD*`（w/o DQfD）
 - **SR 结果（50 runs）**:
 
-| 变体                     | SR            |
-| ------------------------ | ------------- |
-| **Full (AM+DQfD)** | **72%** |
-| w/o AM                   | 62%           |
-| w/o DQfD                 | 40%           |
+| 变体                | Short SR     | Long SR      |
+| ------------------- | ------------ | ------------ |
+| **Full (AM+DQfD)** | **70%** | **86%** |
+| w/o AM              | 62%          | 56%          |
+| w/o DQfD            | 42%          | 28%          |
 
-- **Quality 结果（15 runs，3 变体均成功子集）**:
+- **Quality Long（N=11，3 变体均成功子集）**:
 
-| 指标      | Full              | w/o AM           | w/o DQfD |
-| --------- | ----------------- | ---------------- | -------- |
-| PathLen   | 8.655m            | **8.636m** | 9.113m   |
-| Curvature | **0.1564**  | 0.1585           | 0.1802   |
-| Time      | **0.227s**  | 0.239s           | 0.337s   |
+| 指标      | Full              | w/o AM  | w/o DQfD |
+| --------- | ----------------- | ------- | -------- |
+| PathLen   | **26.217m** | 27.220m | 27.220m  |
+| Curvature | **0.1512**  | 0.1923  | 0.1950   |
+| Time      | **0.495s**  | 0.664s  | 0.733s   |
 
-- **结论**: DQfD 预训练贡献最大（SR -32pp），AM 辅助（SR -10pp），两者协同最优
+- **Quality Short（N=17，3 变体均成功子集）**:
+
+| 指标      | Full             | w/o AM | w/o DQfD |
+| --------- | ---------------- | ------ | -------- |
+| PathLen   | **8.883m** | 9.077m | 9.537m   |
+| Curvature | **0.1560** | 0.1742 | 0.1982   |
+| Time      | **0.231s** | 0.232s | 0.341s   |
+
+- **结论**: DQfD 预训练贡献最大（远距离 SR -58pp），AM 辅助（远距离 SR -30pp），远距离影响远大于近距离
 - **详细日志**: `runs/ablation_logs/ablation_20260316_amdqfd.md`
-- **配置**: `configs/ablation_20260315_amdqfd_*.json`
+- **配置**: `configs/ablation_20260402_amdqfd_dqn_*.json`

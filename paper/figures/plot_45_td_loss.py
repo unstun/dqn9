@@ -3,9 +3,9 @@
 Full (AM+DQfD) / w/o AM / w/o DQfD 叠加显示，
 散点 (alpha=0.08) 背景 + 滚动均值实线。
 
-数据源: runs202642/train/abl_arch_cnn_ddqn_md/training_diagnostics.csv  (Full)
-         runs202642/train/abl_amdqfd_noAM/training_diagnostics.csv
-         runs202642/train/abl_amdqfd_noDQfD/training_diagnostics.csv
+数据源: runs202643/train/abl_arch_cnn_dqn_md/training_diagnostics.csv  (Full)
+         runs202643/train/abl_amdqfd_dqn_noAM/training_diagnostics.csv
+         runs202643/train/abl_amdqfd_dqn_noDQfD/training_diagnostics.csv
 """
 
 from __future__ import annotations
@@ -16,17 +16,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from style import apply_style, save_fig, RUNS2, rolling_mean, C_FULL, C_NOAM, C_NODQFD
+from style import apply_style, save_fig, RUNS3, rolling_mean, C_FULL, C_NOAM, C_NODQFD
 
 apply_style()
 
 # ── 数据路径 ────────────────────────────────────────────────────────────
 CSV_PATHS = {
-    "Full (AM+DQfD)": RUNS2 / "train" / "abl_arch_cnn_ddqn_md"
+    "Full (AM+DQfD)": RUNS3 / "train" / "abl_arch_cnn_dqn_md"
                              / "training_diagnostics.csv",
-    "w/o AM":         RUNS2 / "train" / "abl_amdqfd_noAM"
+    "w/o AM":         RUNS3 / "train" / "abl_amdqfd_dqn_noAM"
                              / "training_diagnostics.csv",
-    "w/o DQfD":       RUNS2 / "train" / "abl_amdqfd_noDQfD"
+    "w/o DQfD":       RUNS3 / "train" / "abl_amdqfd_dqn_noDQfD"
                              / "training_diagnostics.csv",
 }
 

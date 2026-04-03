@@ -15,6 +15,7 @@ PROJ = Path(__file__).resolve().parents[2]
 FIG_DIR = Path(__file__).resolve().parent
 RUNS = PROJ / "runs"
 RUNS2 = PROJ / "runs202642"
+RUNS3 = PROJ / "runs202643"
 RESULTS = PROJ / "paper" / "results"
 
 # ── 统一 rcParams ────────────────────────────────────────────────────
@@ -50,40 +51,28 @@ C_FULL = "#2196F3"
 C_NOAM = "#FF9800"
 C_NODQFD = "#F44336"
 
-# 4.4 架构消融 (8 变体)
+# 4.4 架构消融 (4 DQN 变体, MinTD)
 ARCH_COLORS = {
-    "MD-DDQN":   "#1f77b4",
-    "DDQN":      "#aec7e8",
-    "Duel-DDQN": "#ff7f0e",
-    "MHA-DDQN":  "#ffbb78",
-    "MD-DQN":    "#2ca02c",
-    "DQN":       "#98df8a",
-    "Duel-DQN":  "#d62728",
-    "MHA-DQN":   "#ff9896",
+    "MD-DQN":    "#1f77b4",
+    "Duel-DQN":  "#ff7f0e",
+    "MHA-DQN":   "#2ca02c",
+    "DQN":       "#d62728",
 }
 
-# 目录名 → 显示名
+# 训练目录后缀 → 显示名
 ARCH_DIR_TO_LABEL = {
-    "cnn_ddqn_md":   "MD-DDQN",
-    "cnn_ddqn":      "DDQN",
-    "cnn_ddqn_duel": "Duel-DDQN",
-    "cnn_ddqn_mha":  "MHA-DDQN",
     "cnn_dqn_md":    "MD-DQN",
-    "cnn_dqn":       "DQN",
     "cnn_dqn_duel":  "Duel-DQN",
     "cnn_dqn_mha":   "MHA-DQN",
+    "cnn_dqn":       "DQN",
 }
 
-# CSV Variant 名 → 显示名 (热力图用, 只取 8 个 CNN 变体)
+# CSV Variant 名 → 显示名
 ARCH_CSV_TO_LABEL = {
-    "CNN-DDQN+MD":   "MD-DDQN",
-    "CNN-DDQN":      "DDQN",
-    "CNN-DDQN+Duel": "Duel-DDQN",
-    "CNN-DDQN+MHA":  "MHA-DDQN",
     "CNN-DQN+MD":    "MD-DQN",
-    "CNN-DQN":       "DQN",
     "CNN-DQN+Duel":  "Duel-DQN",
     "CNN-DQN+MHA":   "MHA-DQN",
+    "CNN-DQN":       "DQN",
 }
 
 

@@ -580,28 +580,24 @@ MD-DDQN 远距离任务的 10 次失败集中在起点位于地图边缘且需�
 \FloatBarrier
 \subsection{DRL 模块消融实验}\label{ssec:abl_module}
 
-为探究网络架构对规划性能的影响，本文对 8 种 DRL 变体进行消融实验。所有变体共享相同的 CNN 骨干网络与训练配置（$10\,000$ 回合），区别在于价值函数更新策略（DQN 与 DDQN）和架构配置（标准、Dueling、MHA、MD）的组合。推理阶段使用随机种子 110，共 50 次运行。
+为探究网络架构对规划性能的影响，本文对 4 种 DQN 架构变体进行消融实验。所有变体共享相同的 CNN 骨干网络与训练配置（$10\,000$ 回合），区别在于架构配置（标准、Dueling、MHA、MD）。推理阶段采用最小平滑 TD Loss 检查点（MinTD），使用随机种子 110，近距离和远距离各 50 次运行。
 
 \subsubsection{成功率结果}
 
-8 种变体的成功率在 60\%--84\% 之间（表~\ref{tab:abl_module_sr}）。架构差异对成功率有一定影响，但远小于训练组件（动作掩码与 DQfD 预训练）的作用——这一假设将在第~\ref{ssec:abl_amdqfd}~节得到验证。
+4 种变体的近距离成功率在 64\%--74\% 之间，远距离在 74\%--86\% 之间（表~\ref{tab:abl_module_sr}）。MD-DQN 在远距离任务上以 86\% 的成功率领先，而近距离各变体差距较小。架构差异对成功率有一定影响，但远小于训练组件（动作掩码与 DQfD 预训练）的作用——这一假设将在第~\ref{ssec:abl_amdqfd}~节得到验证。
 
 \begin{table}[!htbp]
 \centering
-\caption{DRL 模块消融实验：成功率（50次运行）}
+\caption{DRL 模块消融实验：成功率（50次运行，MinTD 检查点）}
 \label{tab:abl_module_sr}
-\begin{tabular}{lc}
+\begin{tabular}{lcc}
 \toprule
-变体 & 成功率 \\
+变体 & 近距离（$\SI{6}{m}$--$\SI{14}{m}$） & 远距离（$\geq\SI{18}{m}$） \\
 \midrule
-MD-DQN          & \textbf{84\%} \\
-Duel-DQN        & 80\% \\
-Duel-DDQN       & 74\% \\
-MD-DDQN         & 72\% \\
-MHA-DQN         & 70\% \\
-DQN             & 68\% \\
-MHA-DDQN        & 66\% \\
-DDQN            & 60\% \\
+MD-DQN          & 70\% & \textbf{86\%} \\
+Duel-DQN        & 72\% & 84\% \\
+MHA-DQN         & \textbf{74\%} & 80\% \\
+DQN             & 64\% & 74\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -609,30 +605,31 @@ DDQN            & 60\% \\
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{fig_44_td_loss.pdf}
-\caption{8种 DRL 变体的训练 TD Loss 曲线（对数坐标）。MD-DDQN 以蓝色粗线标出。MD 变体初期 loss 较高，但在训练中后期均收敛至稳定水平。}
+\caption{4种 DQN 架构变体的训练 TD Loss 曲线（对数坐标）。MD-DQN 以蓝色粗线标出。4 种变体均在训练中后期收敛至稳定水平。}
 \label{fig:arch_td_loss}
 \end{figure}
 
 \subsubsection{路径质量结果}
 
-路径质量的差异更能区分各架构的优劣（表~\ref{tab:abl_module_quality}）。在 8 变体均成功的质量子集（$N=14$）中，MD-DDQN 路径长度次优（$\SI{9.294}{m}$，仅差 $\SI{0.008}{m}$），曲率最优（0.1394）。以成功率 60\% 的 DDQN 为参照，其路径长度（$\SI{9.359}{m}$）和曲率（0.1533）均逊于 MD-DDQN，说明 MHA 与 Dueling 的组合虽增加了少量推理开销，但生成了更短、更平滑的路径。综合考量成功率与路径质量，本文选择 MD-DDQN 作为核心算法。
+远距离质量子集（$N=30$）中，MD-DQN 路径最短（$\SI{24.176}{m}$）、曲率最优（0.1588），在更具挑战性的远距离场景下全面领先（表~\ref{tab:abl_module_quality}）。近距离质量子集（$N=20$）中，Duel-DQN 在路径长度（$\SI{9.539}{m}$）和曲率（0.1634）上略优，但各变体差距极小。综合远距离成功率与路径质量的优势，本文选择 MD-DQN 作为核心算法。
 
 \begin{table}[!htbp]
 \centering
-\caption{DRL 模块消融实验：路径质量（8 变体均成功子集，$N=14$）}
+\caption{DRL 模块消融实验：路径质量（4 变体均成功子集）}
 \label{tab:abl_module_quality}
-\begin{tabular}{lccc}
+\begin{tabular}{llcccc}
 \toprule
-变体 & 路径长度 / m & 平均曲率 & 时间 / s \\
+距离 & 指标 & MD-DQN & Duel-DQN & MHA-DQN & DQN \\
 \midrule
-MD-DDQN         & 9.294 & \textbf{0.1394} & 0.242 \\
-MHA-DQN         & 9.327 & 0.1554 & 0.236 \\
-Duel-DDQN       & 9.319 & 0.1438 & 0.193 \\
-MHA-DDQN        & 9.354 & 0.1689 & 0.233 \\
-MD-DQN          & 9.405 & 0.1626 & 0.245 \\
-Duel-DQN        & 9.309 & 0.1488 & 0.198 \\
-DQN             & \textbf{9.286} & 0.1790 & \textbf{0.184} \\
-DDQN            & 9.359 & 0.1533 & 0.187 \\
+\multirow{3}{*}{\shortstack[l]{远距离\\（$N=30$）}}
+  & 路径长度 / m  & \textbf{24.176} & 24.231 & 24.236 & 24.277 \\
+  & 平均曲率      & \textbf{0.1588} & 0.1601 & 0.1703 & 0.1613 \\
+  & 计算时间 / s  & 0.462 & 0.349 & 0.436 & \textbf{0.329} \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{近距离\\（$N=20$）}}
+  & 路径长度 / m  & 9.565 & \textbf{9.539} & 9.552 & 9.629 \\
+  & 平均曲率      & 0.1687 & \textbf{0.1634} & 0.1638 & 0.1973 \\
+  & 计算时间 / s  & 0.232 & \textbf{0.183} & 0.215 & 0.219 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -640,14 +637,14 @@ DDQN            & 9.359 & 0.1533 & 0.187 \\
 \begin{figure*}[!htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_44_heatmap.pdf}
-\caption{8种 DRL 变体在四项指标上的归一化性能热力图。每列独立缩放至$[0,1]$，深绿色表示更优性能。变体按平均归一化得分降序排列，MD-DDQN 行以蓝色边框高亮。}
+\caption{4种 DQN 架构变体在五项指标上的归一化性能热力图。每列独立缩放至$[0,1]$，深绿色表示更优性能。变体按平均归一化得分降序排列，MD-DQN 行以蓝色边框高亮。}
 \label{fig:ablation_heatmap}
 \end{figure*}
 
 \FloatBarrier
 \subsection{动作掩码与 DQfD 组件消融实验}\label{ssec:abl_amdqfd}
 
-为量化动作掩码（AM）和 DQfD 预训练各自的贡献，设计三组对照实验（表~\ref{tab:abl_amdqfd_design}）。以 MD-DDQN 为基础架构，每组在训练时分别移除 AM 或 DQfD，推理时统一启用动作掩码，从而隔离各组件在训练阶段的作用。实验使用随机种子 110，共 50 次运行。
+为量化动作掩码（AM）和 DQfD 预训练各自的贡献，设计三组对照实验（表~\ref{tab:abl_amdqfd_design}）。以 MD-DQN 为基础架构，每组在训练时分别移除 AM 或 DQfD，推理时统一启用动作掩码，从而隔离各组件在训练阶段的作用。实验使用随机种子 110，近距离和远距离各 50 次运行。
 
 \begin{table}[!htbp]
 \centering
@@ -666,47 +663,53 @@ DDQN            & 9.359 & 0.1533 & 0.187 \\
 
 \subsubsection{成功率结果}
 
-去除 DQfD 后成功率从 72\% 骤降至 40\%（表~\ref{tab:abl_amdqfd_sr}），降幅达 32 个百分点，说明专家预训练为策略提供的初始引导不可或缺——纯随机探索在稠密障碍物中难以发现有效路径。去除 AM 后成功率降至 62\%（降 10 个百分点），说明训练时的动作空间约束同样有助于策略收敛。这一结果验证了第~\ref{ssec:abl_module}~节的假设：成功率主要由训练组件而非网络架构决定。
+去除 DQfD 后，近距离成功率从 70\% 降至 42\%，远距离从 86\% 骤降至 28\%（表~\ref{tab:abl_amdqfd_sr}），远距离降幅达 58 个百分点，说明专家预训练为策略提供的初始引导不可或缺——纯随机探索在稠密障碍物中难以发现有效路径。去除 AM 后，近距离成功率降至 62\%（降 8 个百分点），远距离降至 56\%（降 30 个百分点）。两种训练组件的缺失对远距离任务的影响尤为显著。这一结果验证了第~\ref{ssec:abl_module}~节的假设：成功率主要由训练组件而非网络架构决定。
 
 \begin{table}[!htbp]
 \centering
-\caption{AM $\times$ DQfD 组件消融实验：成功率（50次运行）}
+\caption{AM $\times$ DQfD 组件消融实验：成功率（50次运行，MinTD 检查点）}
 \label{tab:abl_amdqfd_sr}
-\begin{tabular}{lc}
+\begin{tabular}{lcc}
 \toprule
-变体 & 成功率 \\
+变体 & 近距离（$\SI{6}{m}$--$\SI{14}{m}$） & 远距离（$\geq\SI{18}{m}$） \\
 \midrule
-完整版（AM + DQfD） & \textbf{72\%} \\
-去除 AM            & 62\% \\
-去除 DQfD          & 40\% \\
+完整版（AM + DQfD） & \textbf{70\%} & \textbf{86\%} \\
+去除 AM            & 62\% & 56\% \\
+去除 DQfD          & 42\% & 28\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-训练 TD Loss 曲线（图~\ref{fig:training_curve}）进一步佐证了上述结论。完整版的初期 TD Loss 显著高于另两组变体，源于 DQfD 预训练阶段对 Q 网络施加的专家演示约束——预训练的 Q 值与在线训练初期的自举目标之间存在较大偏差，产生了更高的时序差分误差。训练至约 4\,000 回合后，完整版的 TD Loss 收敛至与其他变体相当的水平。去除 DQfD 和去除 AM 的变体初期 TD Loss 虽低，但成功率的大幅退化（表~\ref{tab:abl_amdqfd_sr}）表明训练损失的绝对值与导航性能无直接对应——DQfD 预训练以更高的初始损失为代价，使策略在训练初期即具备基本导航能力，避免了纯随机探索阶段。
+训练 TD Loss 曲线（图~\ref{fig:training_curve}）进一步佐证了上述结论。完整版在训练初期经历短暂的高 loss 阶段后迅速收敛至最低水平，表明 DQfD 预训练赋予的初始策略有助于 Q 网络快速稳定。去除 AM 的变体 TD Loss 在整个训练过程中持续偏高，说明缺少动作掩码约束使 Q 网络需要评估大量无效动作，增加了学习负担。去除 DQfD 的变体 loss 居中但波动较大，反映了纯随机探索导致的学习不稳定性。值得注意的是，成功率的退化幅度远大于 TD Loss 的差异（表~\ref{tab:abl_amdqfd_sr}），说明训练损失的绝对值与导航性能无直接对应。
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{fig_45_td_loss.pdf}
-\caption{三组变体的训练 TD Loss 曲线（对数坐标）。完整版（蓝色）初期 loss 较高，源于 DQfD 专家演示的 margin loss 贡献，但在训练中后期收敛至与其他变体相当的水平。}
+\caption{三组变体的训练 TD Loss 曲线。完整版（蓝色）经短暂高 loss 过渡后迅速收敛至最低水平；去除 AM 的变体（橙色）loss 持续偏高；去除 DQfD 的变体（红色）loss 居中。}
 \label{fig:training_curve}
 \end{figure}
 
 \subsubsection{路径质量结果}
 
-质量子集（$N=15$）中，去除 AM 的变体在路径长度（$\SI{8.636}{m}$ 对 $\SI{8.655}{m}$）上略优于完整版（表~\ref{tab:abl_amdqfd_quality}），一种可能的解释是训练时移除掩码约束使策略探索了更多路径模式，但路径长度差异仅 $\SI{0.019}{m}$（约 0.22\%），在统计上可能不显著。完整版在曲率（0.1564 对 0.1585）上更优。加之去除 AM 的变体成功率降低 10 个百分点，微小的路径长度优势缺乏实际意义。
+远距离质量子集（$N=11$）中，完整版在路径长度（$\SI{26.217}{m}$）、曲率（0.1512）和计算时间（$\SI{0.495}{s}$）上均优于两组消融变体（表~\ref{tab:abl_amdqfd_quality}）。去除 AM 和去除 DQfD 的变体路径长度均为 $\SI{27.220}{m}$，较完整版长约 $\SI{1}{m}$。近距离质量子集（$N=17$）呈现相同趋势：完整版路径最短（$\SI{8.883}{m}$）、曲率最优（0.1560）。去除 DQfD 的变体在两个距离上路径质量均最差，进一步证实专家预训练不仅提高成功率，还改善了成功路径的质量。
 
 \begin{table}[!htbp]
 \centering
-\caption{AM $\times$ DQfD 组件消融实验：路径质量（3 变体均成功子集，$N=15$）}
+\caption{AM $\times$ DQfD 组件消融实验：路径质量（3 变体均成功子集）}
 \label{tab:abl_amdqfd_quality}
-\begin{tabular}{lccc}
+\begin{tabular}{llccc}
 \toprule
-指标 & 完整版 & 去除 AM & 去除 DQfD \\
+距离 & 指标 & 完整版 & 去除 AM & 去除 DQfD \\
 \midrule
-路径长度 / m      & 8.655           & \textbf{8.636} & 9.113  \\
-平均曲率          & \textbf{0.1564} & 0.1585 & 0.1802 \\
-计算时间 / s      & \textbf{0.227}  & 0.239  & 0.337  \\
+\multirow{3}{*}{\shortstack[l]{远距离\\（$N=11$）}}
+  & 路径长度 / m  & \textbf{26.217} & 27.220 & 27.220 \\
+  & 平均曲率      & \textbf{0.1512} & 0.1923 & 0.1950 \\
+  & 计算时间 / s  & \textbf{0.495}  & 0.664  & 0.733  \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{近距离\\（$N=17$）}}
+  & 路径长度 / m  & \textbf{8.883}  & 9.077  & 9.537  \\
+  & 平均曲率      & \textbf{0.1560} & 0.1742 & 0.1982 \\
+  & 计算时间 / s  & \textbf{0.231}  & 0.232  & 0.341  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -714,7 +717,7 @@ DDQN            & 9.359 & 0.1533 & 0.187 \\
 \begin{figure*}[!htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{fig_45_bar.pdf}
-\caption{AM $\times$ DQfD 组件消融实验四项指标柱状图：(a)~成功率，(b)~路径长度，(c)~平均曲率，(d)~计算时间。}
+\caption{AM $\times$ DQfD 组件消融实验四项指标柱状图：(a)~成功率，(b)~路径长度，(c)~平均曲率，(d)~计算时间。深色为远距离，斜线为近距离。}
 \label{fig:amdqfd_bar}
 \end{figure*}
 
@@ -731,7 +734,7 @@ DDQN            & 9.359 & 0.1533 & 0.187 \\
 
 基线对比实验中 DRL 的优势源于推理机制的差异。经典规划器的搜索开销随障碍物密度超线性增长，而 DRL 每步决策仅需一次前向传播，与环境复杂度无关。远距离任务中经典规划器的超时失败集中在障碍物最稠密的区域，Yin 等人~\cite{yin2023efficient}和 Jiang 等人~\cite{jiang2022r2rrt}在越野环境中也观察到了类似的计算瓶颈。
 
-模块消融实验中，8 种变体的成功率波动范围（60\%--84\%）远小于组件消融中的降幅（去除 DQfD 后降 32 个百分点），而路径质量差异更为显著，说明架构选择主要影响路径质量而非成功率。MD 架构中，MHA 对卷积特征图的各空间位置施加自注意力；Dueling~\cite{wang2016dueling}在输出层将 Q 函数分离为 $V(s)$ 与 $A(s,a)$，在 35 维动作空间中实现跨动作的价值共享。两者分别位于网络的不同阶段，优势可以叠加。
+模块消融实验中，4 种变体的成功率波动范围（近距离 64\%--74\%，远距离 74\%--86\%）远小于组件消融中的降幅（去除 DQfD 后远距离降 58 个百分点），而路径质量差异更为显著，说明架构选择主要影响路径质量而非成功率。MD 架构中，MHA 对卷积特征图的各空间位置施加自注意力；Dueling~\cite{wang2016dueling}在输出层将 Q 函数分离为 $V(s)$ 与 $A(s,a)$，在 35 维动作空间中实现跨动作的价值共享。两者分别位于网络的不同阶段，优势可以叠加。
 
 组件消融实验揭示了动作掩码与 DQfD 预训练的互补性。DQfD 解决"朝哪走"的问题——为策略提供初始导航能力，使训练从起步即绕过纯随机探索阶段；动作掩码解决"哪些不能走"的问题——约束探索边界，屏蔽运动学不可行的动作。完整版的性能优于任一单组件版本，说明两者的贡献不可互相替代。Huang 和 Onta\~{n}\'on~\cite{huang2022closer}在组合博弈中验证了无效动作掩码的有效性，本文将该机制扩展到运动学受约束的导航任务，并验证了其与演示学习的协同效果。
 
