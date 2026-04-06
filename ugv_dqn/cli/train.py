@@ -333,6 +333,11 @@ def train_one(
     pretrain_q: dict[str, torch.Tensor] | None = None
     pretrain_q_target: dict[str, torch.Tensor] | None = None
     pretrain_train_steps: int = 0
+    # MinTD：追踪训练过程中 TD loss 最小的 checkpoint
+    min_td_loss_val: float = float("inf")
+    min_td_q: dict[str, torch.Tensor] | None = None
+    min_td_q_target: dict[str, torch.Tensor] | None = None
+    min_td_train_steps: int = 0
     explore_rng = np.random.default_rng(seed + 777)
 
     def episode_score(*, reached: bool, collision: bool, steps: int, ret: float) -> tuple[int, int, int]:
@@ -741,6 +746,15 @@ def train_one(
             for k in ("loss", "td_loss", "margin_loss", "ce_loss"):
                 vals = [d[k] for d in ep_losses if k in d]
                 ep_diag[k] = float(np.mean(vals)) if vals else 0.0
+            # MinTD：记录 TD loss 最小时的 checkpoint（跳过 learning_starts 前的不稳定期）
+            td_vals = [d["td_loss"] for d in ep_losses if "td_loss" in d]
+            if td_vals and global_step >= int(learning_starts):
+                mean_td = float(np.mean(td_vals))
+                if mean_td < min_td_loss_val:
+                    min_td_loss_val = mean_td
+                    min_td_q = clone_state_dict(agent.q.state_dict())
+                    min_td_q_target = clone_state_dict(agent.q_target.state_dict())
+                    min_td_train_steps = int(agent._train_steps)
         # Q 值分布：对当前观测做前向传播（廉价，单样本）
         with torch.no_grad():
             obs_diag = agent._prep_obs(obs)
@@ -882,12 +896,31 @@ def train_one(
             best_greedy_score = candidate_score
             chosen_q, chosen_q_target, chosen_train_steps = pretrain_q, pretrain_q_target, pretrain_train_steps
 
+    if min_td_q is not None and min_td_q_target is not None:
+        candidate_score = eval_greedy(min_td_q, min_td_q_target)
+        if candidate_score > best_greedy_score:
+            best_greedy_score = candidate_score
+            chosen_q, chosen_q_target, chosen_train_steps = min_td_q, min_td_q_target, min_td_train_steps
+
     agent.q.load_state_dict(chosen_q)
     agent.q_target.load_state_dict(chosen_q_target)
     agent._train_steps = int(chosen_train_steps)
 
     model_path = out_dir / "models" / env.map_spec.name / f"{agent.algo}.pt"
     agent.save(model_path)
+
+    # 额外保存 MinTD checkpoint（TD loss 最小时的模型），供推理对比使用
+    if min_td_q is not None and min_td_q_target is not None:
+        agent.q.load_state_dict(min_td_q)
+        agent.q_target.load_state_dict(min_td_q_target)
+        agent._train_steps = int(min_td_train_steps)
+        mintd_path = out_dir / "models" / env.map_spec.name / f"{agent.algo}_mintd.pt"
+        agent.save(mintd_path)
+        # 恢复最终选定的模型
+        agent.q.load_state_dict(chosen_q)
+        agent.q_target.load_state_dict(chosen_q_target)
+        agent._train_steps = int(chosen_train_steps)
+
     return agent, returns, eval_history, diag_history
 
 

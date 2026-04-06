@@ -38,6 +38,7 @@
     ],
     "cnn_drop_edt": true,
     "noisy": true,
+    "noisy_reset_interval": 1,
     "dueling": true,
     "out": "abl_8var_cnn_ddqn_noisy_duel"
   }

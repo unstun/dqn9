@@ -575,7 +575,6 @@ class DQNFamilyAgent:
                     v_next = q_tgt_next_m.max(dim=1, keepdim=True)[0]
                     logsum_next = torch.logsumexp((q_tgt_next_m - v_next) / m_tau, dim=1, keepdim=True)
                     tau_log_pi_next = q_tgt_next_m - v_next - m_tau * logsum_next
-                    tau_log_pi_next = tau_log_pi_next.clamp(m_lo, 0.0)
                     pi_next = torch.softmax(q_tgt_next_m / m_tau, dim=1)
                     soft_v_next = (pi_next * (q_tgt_next_m - tau_log_pi_next)).sum(dim=1)
                     soft_v_next = torch.where(torch.isfinite(soft_v_next), soft_v_next, torch.zeros_like(soft_v_next))
