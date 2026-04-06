@@ -215,9 +215,10 @@ class CNNQNetwork(nn.Module):
 
         # ---------- IQN 头部 ----------
         self.iqn_head: IQNHead | None = None
+        self.iqn_value_head: IQNHead | None = None
+        self.iqn_advantage_head: IQNHead | None = None
         if self.use_iqn:
             # 特征提取主干（无最终 Q 层 — 由 IQN 负责）
-            # NoisyNet：仅 IQN 输出层添加噪声，主干保持普通 Linear
             trunk: list[nn.Module] = []
             trunk.append(_make_linear(fc_in_dim, int(hidden_dim), noisy=False))
             trunk.append(nn.ReLU())
@@ -225,14 +226,20 @@ class CNNQNetwork(nn.Module):
                 trunk.append(_make_linear(int(hidden_dim), int(hidden_dim), noisy=False))
                 trunk.append(nn.ReLU())
             self.trunk = nn.Sequential(*trunk)
-            self.iqn_head = IQNHead(int(hidden_dim), int(output_dim), n_cos=iqn_cos, n_quantiles=iqn_quantiles)
+
+            if self.dueling:
+                # IQN + Dueling：Value 和 Advantage 各用独立 IQN 头
+                self.iqn_value_head = IQNHead(int(hidden_dim), 1, n_cos=iqn_cos, n_quantiles=iqn_quantiles)
+                self.iqn_advantage_head = IQNHead(int(hidden_dim), int(output_dim), n_cos=iqn_cos, n_quantiles=iqn_quantiles)
+            else:
+                self.iqn_head = IQNHead(int(hidden_dim), int(output_dim), n_cos=iqn_cos, n_quantiles=iqn_quantiles)
             self.head = None  # type: ignore[assignment]
-            return  # IQN 模式：跳过 Dueling/标准头部构建
+            # 不 return — 下方 elif/else 靠条件跳过
 
         # ---------- Dueling / 标准全连接头部 ----------
         # NoisyNet 优化：仅在输出头部添加噪声，共享主干不加
         # （与原论文一致 — 探索噪声仅在决策层）
-        if self.dueling:
+        elif self.dueling:
             shared: list[nn.Module] = []
             shared.append(_make_linear(fc_in_dim, int(hidden_dim), noisy=False))
             shared.append(nn.ReLU())
@@ -262,6 +269,30 @@ class CNNQNetwork(nn.Module):
             layers.append(_make_linear(int(hidden_dim), int(output_dim), noisy=noisy))
             self.head = nn.Sequential(*layers)
 
+    def forward_quantiles(self, x: torch.Tensor, tau: torch.Tensor) -> torch.Tensor:
+        """返回逐分位数 Q 值 (B, K, n_actions)。仅 IQN 模式可用。"""
+        if not self.use_iqn:
+            raise RuntimeError("forward_quantiles requires iqn=True")
+        if x.dim() == 1:
+            x = x.unsqueeze(0)
+        scalars = x[:, : self.scalar_dim]
+        maps_flat = x[:, self.scalar_dim :]
+        maps = maps_flat.reshape(x.shape[0], self.map_channels, self.map_size, self.map_size)
+        conv = self.conv(maps)
+        if self.spatial_mha is not None:
+            conv = self.spatial_mha(conv)
+        if self.coord_attn is not None:
+            conv = self.coord_attn(conv)
+        feats = torch.cat([scalars, conv.flatten(start_dim=1)], dim=1)
+        trunk_out = self.trunk(feats)
+
+        if self.dueling and self.iqn_value_head is not None and self.iqn_advantage_head is not None:
+            v_q = self.iqn_value_head.forward_quantiles(trunk_out, tau)       # (B, K, 1)
+            a_q = self.iqn_advantage_head.forward_quantiles(trunk_out, tau)   # (B, K, n_actions)
+            return v_q + a_q - a_q.mean(dim=2, keepdim=True)                 # (B, K, n_actions)
+        assert self.iqn_head is not None
+        return self.iqn_head.forward_quantiles(trunk_out, tau)                # (B, K, n_actions)
+
     def reset_noise(self) -> None:
         """重置所有 NoisyLinear 层的噪声。"""
         for m in self.modules():
@@ -289,8 +320,13 @@ class CNNQNetwork(nn.Module):
         conv_flat = conv.flatten(start_dim=1)
         feats = torch.cat([scalars, conv_flat], dim=1)
 
-        if self.use_iqn and self.iqn_head is not None:
+        if self.use_iqn:
             trunk_out = self.trunk(feats)
+            if self.dueling and self.iqn_value_head is not None and self.iqn_advantage_head is not None:
+                v = self.iqn_value_head(trunk_out)          # (B, 1)
+                a = self.iqn_advantage_head(trunk_out)      # (B, n_actions)
+                return v + a - a.mean(dim=1, keepdim=True)
+            assert self.iqn_head is not None
             return self.iqn_head(trunk_out)
 
         if self.dueling:

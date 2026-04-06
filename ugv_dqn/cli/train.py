@@ -1152,6 +1152,11 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--mha-heads", type=int, default=4, help="Number of heads for Spatial MHA (default: 4).")
     ap.add_argument("--coord-attn", action="store_true", default=False, help="Enable Coordinate Attention (CVPR 2021).")
     ap.add_argument("--noisy", action="store_true", default=False, help="Enable NoisyNet linear layers (ICLR 2018).")
+    ap.add_argument("--noisy-reset-interval", type=int, default=4, help="NoisyNet: resample noise every N update steps (default: 4).")
+    ap.add_argument("--munchausen", action="store_true", default=False, help="Enable Munchausen DQN (Vieillard et al., NeurIPS 2020).")
+    ap.add_argument("--m-alpha", type=float, default=0.9, help="Munchausen scaling coefficient (default: 0.9).")
+    ap.add_argument("--m-tau", type=float, default=0.03, help="Munchausen entropy temperature (default: 0.03).")
+    ap.add_argument("--m-lo", type=float, default=-1.0, help="Munchausen log-policy clamp lower bound (default: -1.0).")
     ap.add_argument("--fadc", action="store_true", default=False, help="Enable FADC conv layer (CVPR 2024).")
     ap.add_argument("--deform", action="store_true", default=False, help="Enable Deformable Conv v2 (torchvision).")
     ap.add_argument("--iqn", action="store_true", default=False, help="Enable IQN distributional head (ICML 2018).")
@@ -1330,6 +1335,16 @@ def main(argv: list[str] | None = None) -> int:
         agent_kw["coord_attn"] = True
     if args.noisy:
         agent_kw["noisy"] = True
+    if args.noisy_reset_interval != 4:
+        agent_kw["noisy_reset_interval"] = int(args.noisy_reset_interval)
+    if args.munchausen:
+        agent_kw["munchausen"] = True
+    if args.m_alpha != 0.9:
+        agent_kw["m_alpha"] = float(args.m_alpha)
+    if args.m_tau != 0.03:
+        agent_kw["m_tau"] = float(args.m_tau)
+    if args.m_lo != -1.0:
+        agent_kw["m_lo"] = float(args.m_lo)
     if args.fadc:
         agent_kw["fadc"] = True
     if args.deform:

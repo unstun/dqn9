@@ -267,9 +267,10 @@ class IQNHead(nn.Module):
         self.n_actions = n_actions
         self.feature_dim = feature_dim
 
-        # 余弦嵌入：τ → cos(i π τ)，i=1..n_cos → 线性层 → feature_dim
+        # 余弦嵌入：τ → cos(i π τ)，i=0..n_cos-1 → 线性层 → feature_dim
         self.cos_embedding = nn.Linear(n_cos, feature_dim)
-        # 最终 Q 值层
+        # 乘积后隐藏层 + Q 值输出层（论文 Eq.4: f = FC+ReLU+FC）
+        self.fc_hidden = nn.Linear(feature_dim, feature_dim)
         self.q_layer = nn.Linear(feature_dim, n_actions)
 
     def forward(self, features: torch.Tensor, n_quantiles: int | None = None) -> torch.Tensor:
@@ -285,21 +286,23 @@ class IQNHead(nn.Module):
             tau = torch.linspace(0.5 / K, 1.0 - 0.5 / K, K, device=features.device, dtype=features.dtype)
             tau = tau.unsqueeze(0).expand(B, -1)
 
-        # 余弦基：(B, K, n_cos)
-        i_pi = math.pi * torch.arange(1, self.n_cos + 1, device=features.device, dtype=features.dtype)
+        # 余弦基：(B, K, n_cos)，i=0..n_cos-1（论文 Eq.4，含 cos(0)=1 常数基）
+        i_pi = math.pi * torch.arange(0, self.n_cos, device=features.device, dtype=features.dtype)
         cos_features = torch.cos(tau.unsqueeze(-1) * i_pi.unsqueeze(0).unsqueeze(0))  # (B, K, n_cos)
         tau_embed = F.relu(self.cos_embedding(cos_features))  # (B, K, feature_dim)
 
-        # 逐元素相乘：(B, 1, feature_dim) * (B, K, feature_dim) → (B, K, feature_dim)
+        # 逐元素相乘 + 隐藏层（论文: Z_τ = f(ψ(x) ⊙ φ(τ)), f = FC+ReLU+FC）
         combined = features.unsqueeze(1) * tau_embed  # (B, K, feature_dim)
-        q_quantiles = self.q_layer(combined)  # (B, K, n_actions)
+        hidden = F.relu(self.fc_hidden(combined))      # (B, K, feature_dim)
+        q_quantiles = self.q_layer(hidden)             # (B, K, n_actions)
 
         return q_quantiles.mean(dim=1)  # (B, n_actions)
 
     def forward_quantiles(self, features: torch.Tensor, tau: torch.Tensor) -> torch.Tensor:
         """给定显式 τ (B, K)，返回分位数 Q 值 (B, K, n_actions)。"""
-        i_pi = math.pi * torch.arange(1, self.n_cos + 1, device=features.device, dtype=features.dtype)
+        i_pi = math.pi * torch.arange(0, self.n_cos, device=features.device, dtype=features.dtype)
         cos_features = torch.cos(tau.unsqueeze(-1) * i_pi.unsqueeze(0).unsqueeze(0))
         tau_embed = F.relu(self.cos_embedding(cos_features))
         combined = features.unsqueeze(1) * tau_embed
-        return self.q_layer(combined)
+        hidden = F.relu(self.fc_hidden(combined))
+        return self.q_layer(hidden)

@@ -70,6 +70,12 @@ class AgentConfig:
     iqn_cos: int = 64           # IQN 余弦嵌入维度
     iqn_quantiles: int = 8      # IQN 分位数采样数量
 
+    # Munchausen DQN (Vieillard et al., NeurIPS 2020)
+    munchausen: bool = False    # 将 scaled log-policy 加到即时奖励上
+    m_alpha: float = 0.9        # Munchausen 缩放系数
+    m_tau: float = 0.03         # 策略 softmax 温度
+    m_lo: float = -1.0          # log-policy 裁剪下界
+
     # 专家 margin 损失（DQfD 风格），用于 forest 环境稳定训练。
     demo_margin: float = 0.8
     demo_lambda: float = 1.0
@@ -488,35 +494,98 @@ class DQNFamilyAgent:
         n_steps = torch.from_numpy(batch.n_steps).to(self.device)
         demos = torch.from_numpy(batch.demos).to(self.device)
 
-        q_all = self.q(obs)
-        q_values = q_all.gather(1, actions.view(-1, 1)).squeeze(1)
+        if self.config.iqn and hasattr(self.q, "forward_quantiles"):
+            # ----- IQN 分位数 Huber 损失 (Dabney et al., ICML 2018) -----
+            K = int(self.config.iqn_quantiles)
+            B = obs.shape[0]
 
-        with torch.no_grad():
-            mask = next_action_masks.to(torch.bool)
-            if self.base_algo == "ddqn":
-                # Double DQN 目标：用在线网络选动作，用目标网络评估。
-                q_next_online = self.q(next_obs)
-                q_next_online = q_next_online.masked_fill(~mask, torch.finfo(q_next_online.dtype).min)
-                next_actions = torch.argmax(q_next_online, dim=1, keepdim=True)
+            # 在线网络：采样 τ_i，获取分位数 Q 值
+            tau_i = torch.rand(B, K, device=self.device)
+            z_theta = self.q.forward_quantiles(obs, tau_i)              # (B, K, n_actions)
+            q_all = z_theta.mean(dim=1)                                 # (B, n_actions)
+            q_values = q_all.gather(1, actions.view(-1, 1)).squeeze(1)
+            z_a = z_theta.gather(2, actions.view(-1, 1, 1).expand(-1, K, 1)).squeeze(2)  # (B, K)
 
-                q_next_target = self.q_target(next_obs)
-                q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
-                next_q = q_next_target.gather(1, next_actions).squeeze(1)
-            else:
-                # 原始 DQN 目标：对目标网络取 max。
-                q_next_target = self.q_target(next_obs)
-                q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
-                next_q = q_next_target.max(dim=1).values
+            with torch.no_grad():
+                mask = next_action_masks.to(torch.bool)
+                # 动作选择（Double DQN 风格：在线网络选动作）
+                if self.base_algo == "ddqn":
+                    q_next_online = self.q(next_obs)
+                    q_next_online = q_next_online.masked_fill(~mask, torch.finfo(q_next_online.dtype).min)
+                    next_actions_iqn = torch.argmax(q_next_online, dim=1)
+                else:
+                    q_next_target_mean = self.q_target(next_obs)
+                    q_next_target_mean = q_next_target_mean.masked_fill(~mask, torch.finfo(q_next_target_mean.dtype).min)
+                    next_actions_iqn = torch.argmax(q_next_target_mean, dim=1)
 
-            # 安全措施：当掩码格式异常时避免传播 NaN/-inf。
-            next_q = torch.where(torch.isfinite(next_q), next_q, torch.zeros_like(next_q))
-            gamma = float(self.config.gamma)
-            gamma_n = torch.pow(torch.tensor(gamma, device=self.device, dtype=torch.float32), n_steps.to(torch.float32))
-            target = rewards + (1.0 - dones) * (gamma_n * next_q)
+                # 目标网络：采样 τ_j，获取目标分位数
+                tau_j = torch.rand(B, K, device=self.device)
+                z_target = self.q_target.forward_quantiles(next_obs, tau_j)  # (B, K, n_actions)
+                z_next = z_target.gather(2, next_actions_iqn.view(-1, 1, 1).expand(-1, K, 1)).squeeze(2)  # (B, K)
+                z_next = torch.where(torch.isfinite(z_next), z_next, torch.zeros_like(z_next))
 
-        td_error = target - q_values
-        losses = self.loss_fn(q_values, target)
-        td_loss = losses.mean()
+                gamma = float(self.config.gamma)
+                gamma_n = torch.pow(torch.tensor(gamma, device=self.device, dtype=torch.float32), n_steps.float())
+                T_z = rewards.unsqueeze(1) + (1.0 - dones.unsqueeze(1)) * (gamma_n.unsqueeze(1) * z_next)  # (B, K)
+
+            # ρ_τ^κ(δ) = |τ - I{δ<0}| · L_κ(δ) / κ,  κ=1
+            delta = T_z.unsqueeze(1) - z_a.unsqueeze(2)             # (B, K_i, K_j)
+            huber = torch.where(delta.abs() <= 1.0, 0.5 * delta.pow(2), delta.abs() - 0.5)
+            rho = (tau_i.unsqueeze(2) - (delta < 0).float()).abs() * huber
+            td_loss = rho.sum(dim=2).mean(dim=1).mean()
+        else:
+            # ----- 标准 TD 损失路径 -----
+            q_all = self.q(obs)
+            q_values = q_all.gather(1, actions.view(-1, 1)).squeeze(1)
+
+            with torch.no_grad():
+                mask = next_action_masks.to(torch.bool)
+                if self.base_algo == "ddqn":
+                    q_next_online = self.q(next_obs)
+                    q_next_online = q_next_online.masked_fill(~mask, torch.finfo(q_next_online.dtype).min)
+                    next_actions = torch.argmax(q_next_online, dim=1, keepdim=True)
+
+                    q_next_target = self.q_target(next_obs)
+                    q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
+                    next_q = q_next_target.gather(1, next_actions).squeeze(1)
+                else:
+                    q_next_target = self.q_target(next_obs)
+                    q_next_target = q_next_target.masked_fill(~mask, torch.finfo(q_next_target.dtype).min)
+                    next_q = q_next_target.max(dim=1).values
+
+                next_q = torch.where(torch.isfinite(next_q), next_q, torch.zeros_like(next_q))
+                gamma = float(self.config.gamma)
+                gamma_n = torch.pow(torch.tensor(gamma, device=self.device, dtype=torch.float32), n_steps.to(torch.float32))
+
+                if self.config.munchausen:
+                    # ----- Munchausen DQN (Vieillard et al., NeurIPS 2020) -----
+                    m_tau = float(self.config.m_tau)
+                    m_alpha = float(self.config.m_alpha)
+                    m_lo = float(self.config.m_lo)
+
+                    q_tgt_curr = self.q_target(obs)
+                    v_curr = q_tgt_curr.max(dim=1, keepdim=True)[0]
+                    logsum_curr = torch.logsumexp((q_tgt_curr - v_curr) / m_tau, dim=1, keepdim=True)
+                    tau_log_pi_curr = q_tgt_curr - v_curr - m_tau * logsum_curr
+                    tau_log_pi_a = tau_log_pi_curr.gather(1, actions.view(-1, 1)).squeeze(1)
+                    tau_log_pi_a = tau_log_pi_a.clamp(m_lo, 0.0)
+
+                    q_tgt_next_raw = self.q_target(next_obs)
+                    q_tgt_next_m = q_tgt_next_raw.masked_fill(~mask, torch.finfo(q_tgt_next_raw.dtype).min)
+                    v_next = q_tgt_next_m.max(dim=1, keepdim=True)[0]
+                    logsum_next = torch.logsumexp((q_tgt_next_m - v_next) / m_tau, dim=1, keepdim=True)
+                    tau_log_pi_next = q_tgt_next_m - v_next - m_tau * logsum_next
+                    tau_log_pi_next = tau_log_pi_next.clamp(m_lo, 0.0)
+                    pi_next = torch.softmax(q_tgt_next_m / m_tau, dim=1)
+                    soft_v_next = (pi_next * (q_tgt_next_m - tau_log_pi_next)).sum(dim=1)
+                    soft_v_next = torch.where(torch.isfinite(soft_v_next), soft_v_next, torch.zeros_like(soft_v_next))
+
+                    target = (rewards + m_alpha * tau_log_pi_a) + (1.0 - dones) * (gamma_n * soft_v_next)
+                else:
+                    target = rewards + (1.0 - dones) * (gamma_n * next_q)
+
+            losses = self.loss_fn(q_values, target)
+            td_loss = losses.mean()
 
         # 专家大 margin 损失（DQfD）。仅应用于 `demo` 转移。
         demo_lambda = float(getattr(self.config, "demo_lambda", 0.0))
