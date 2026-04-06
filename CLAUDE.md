@@ -72,6 +72,52 @@ ls $PROJ/runs/$EXP/train_*/infer/*/table2_kpis.csv 2>/dev/null && echo DONE || e
 
 > 详见 [`docs/experiment_framework.md`](docs/experiment_framework.md)（评估体系、网络架构、叙事约束、核心对比实验 3.3、消融实验 3.4/3.5 的完整数据表与结论）。写论文或分析实验数据时读取该文件。
 
+### 3.1 实验数据结构（必读）
+
+**数据产生链路**：`configs/*.json` → `infer.py --profile <name>` → `runs*/infer/<out>/` 下生成 CSV。
+
+#### 3.1.1 SR 模式 vs Quality 模式（核心区分）
+
+每个实验（核心对比/消融）同时产出两种视角的数据，**用途完全不同，禁止混用**：
+
+- **SR 模式**（成功率模式）：筛选条件为 BK 可达（起终点 Dijkstra 连通），全量 50+ runs，**仅汇报成功率**——失败路径无有效质量指标，所以不报路径质量。对应 `table2_kpis_mean.csv` 的 `Success rate` 列，配置参数 `filter_all_succeed: false`。
+- **Quality 模式**（质量模式）：筛选条件为 **N-算法全成功**——同一起终点对中所有被比较算法均成功才保留，因此 runs 数量较少（Long ~5–12, Short ~17–30），成功率恒为 100%（按定义筛掉了失败的），**仅汇报路径质量**（路径长度、曲率、计算时间）。对应 `table2_kpis_mean_filtered.csv` 的质量列，配置参数 `filter_all_succeed: true`。
+
+Quality 模式的 N-算法全成功筛选：§3.3 核心对比为 3-algo filter（MD-DQN + Improved HA* + SB-RRT* 全成功），§3.4 架构消融为 4-variant filter（DQN + Duel + MHA + MD 全成功），§3.5 组件消融为 3-variant filter（Full + w/o AM + w/o DQfD 全成功）。
+
+#### 3.1.2 算法名称映射
+
+CSV 中 `Algorithm name` 列与论文称呼的对应：`CNN-DQN+Duel` → MD-DQN（本文方法），`Hybrid A*` → Improved HA*（Dang 2022，搜索型规划器），`RRT*` → SB-RRT*（Yoon 2018，采样型规划器）。
+
+#### 3.1.3 CSV 结构
+
+核心对比实验（`core_baseline_*`）config 中 `baselines: ["hybrid_astar", "rrt_star"]`，一次跑 3 个算法 × 50 runs = 150 行，**必须按 `Algorithm name` 列拆分后分别统计**。消融实验（`abl_*`）config 中无 baselines，每个 config 只跑 1 个 RL 变体 × 50 runs = 50 行，跨目录对比不同变体。
+
+CSV 三层输出：`table2_kpis.csv`（原始表，每行 = 一次 episode，`Success rate` 为 0/1 标志）、`table2_kpis_mean.csv`（均值表，SR 模式引用）、`table2_kpis_mean_filtered.csv`（筛选均值表，Quality 模式引用）。
+
+#### 3.1.4 模型复用关系（runs202643）
+
+```text
+train/abl_arch_cnn_dqn_md (MinTD checkpoint)
+  ├─→ infer/abl_minloss_cnn_dqn_md*      (架构消融 §3.4)
+  ├─→ infer/core_baseline_dqn_sr_*        (核心对比 §3.3，同时跑 HA* + RRT*)
+  └─→ infer/abl_minloss_amdqfd_dqn_noAM* (组件消融 §3.5 的 Full 基准)
+
+train/abl_amdqfd_dqn_noDQfD
+  └─→ infer/abl_amdqfd_dqn_infer_noDQfD* (组件消融 §3.5)
+
+train/abl_amdqfd_dqn_noAM
+  └─→ infer/abl_minloss_amdqfd_dqn_noAM* (组件消融 §3.5)
+```
+
+**`minloss` 命名含义**：推理使用该模型训练全程中 TD Loss 最小的 checkpoint（非最新 checkpoint）。
+
+**runs 目录版本**：`runs202643` 是 `runs202642` 的清理精简版，仅保留论文使用的实验数据（6 train + 14 infer）。分析数据时以 `runs202643` 为准。
+
+#### 3.1.5 论文章节 → 数据映射
+
+§3.3 核心对比使用 `core_baseline_dqn_sr_{short,long}`，3 算法在同一 CSV（MD-DQN vs Improved HA* vs SB-RRT*）。§3.4 架构消融使用 `abl_minloss_cnn_dqn{,_duel,_mha,_md}_{,long}`，4 个独立 CSV 跨目录对比。§3.5 组件消融使用 `abl_minloss_cnn_dqn_md*` + `abl_minloss_amdqfd_dqn_noAM*` + `abl_amdqfd_dqn_infer_noDQfD*`，3 个独立 CSV 跨目录对比 Full / w/o AM / w/o DQfD。
+
 ## 5. 远程服务器
 
 | 优先级 | 名称               | Host           | 用户   | 密码             | GPU             | 说明                                    |

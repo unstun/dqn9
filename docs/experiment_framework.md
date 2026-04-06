@@ -35,26 +35,27 @@
 - **核心算法**：MD-DDQN，reward_k_t=0.2（消融实验 2026-03-15 确认 MD 全面优于 Duel）。
 - **若结果不支持叙事**：换 checkpoint 或调训练参数重跑，不可篡改数据。
 
-### 3.3 核心对比实验：MD-DDQN vs RRT* vs LO-HA*（全局规划，无 MPC）
+### 3.3 核心对比实验：MD-DQN (MinTD) vs RRT* vs HA*（全局规划，无 MPC）
 
 - **Seed**: 110
-- **配置**: `configs/final_t10_sr_{long,short}.json`，`baseline_timeout=10s`
+- **配置**: `configs/repro_20260402_core_baseline_dqn_sr_{long,short}.json`，`baseline_timeout=10s`
 - **碰撞检测**: EDT diag（baselines 与 DRL 使用完全相同的 `EDTCollisionChecker`）
-- **数据来源**: `runs202642/infer/core_baseline_sr_{long,short}/`
+- **模型**: `abl_minloss_cnn_dqn_md`（MinTD 检查点，与 Section 3.4/3.5 一致）
+- **数据来源**: `runs202643/infer/core_baseline_dqn_sr_{long,short}/`
 - **结果（50 runs, seed 110）**:
 
-| 距离  | 指标                       | MD-DDQN                | Hybrid A*        | RRT*        |
+| 距离  | 指标                       | MD-DQN                 | Hybrid A*        | RRT*        |
 | ----- | -------------------------- | ---------------------- | ---------------- | ----------- |
-| Long  | SR                         | **80%** (40/50)  | 28% (14/50)      | 68% (34/50) |
-| Long  | PathLen (Quality, 11 runs) | **20.164m**      | 20.684m          | 20.486m     |
-| Long  | Curvature                  | **0.1383**       | 0.1777           | 0.3525      |
-| Long  | Time                       | **0.414s**       | 13.486s          | 2.899s      |
-| Short | SR                         | 72% (36/50)            | 64% (32/50)      | **76%** (38/50) |
-| Short | PathLen (Quality, 21 runs) | **8.531m**       | 9.608m           | 9.347m      |
-| Short | Curvature                  | **0.1467**       | 0.3624           | 0.3406      |
-| Short | Time                       | **0.239s**       | 2.621s           | 0.959s      |
+| Long  | SR                         | **86%** (43/50)  | 28% (14/50)      | 68% (34/50) |
+| Long  | PathLen (Quality, 12 runs) | **20.052m**      | 20.497m          | 20.297m     |
+| Long  | Curvature                  | **0.1594**       | 0.1839           | 0.3491      |
+| Long  | Time                       | **0.410s**       | 13.190s          | 2.674s      |
+| Short | SR                         | 70% (35/50)            | 64% (32/50)      | **76%** (38/50) |
+| Short | PathLen (Quality, 23 runs) | **8.536m**       | 9.599m           | 9.363m      |
+| Short | Curvature                  | **0.1647**       | 0.3912           | 0.3093      |
+| Short | Time                       | **0.237s**       | 3.266s           | 0.928s      |
 
-- **结论**: Long 距离 DRL 在 SR/PL/曲率/时间全面胜出；Short 距离 SR 三者接近（RRT* 略优），DRL 在 PL/曲率/时间全面胜出
+- **结论**: Long 距离 DRL 在 SR/PL/曲率/时间全面胜出（SR 86% 远超 baseline）；Short 距离 SR 三者接近（RRT* 略优），DRL 在 PL/曲率/时间全面胜出
 
 ### 3.4 DRL 模块消融实验（4 DQN 变体，MinTD）
 

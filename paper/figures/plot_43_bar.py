@@ -1,6 +1,6 @@
 """4.3 核心对比 -- 指标柱状图 (2x2): SR / Path Length / Curvature / Compute Time.
 
-数据源: runs202642/infer/core_baseline_sr_{long,short}/*/table2_kpis_mean.csv
+数据源: runs202643/infer/core_baseline_dqn_sr_{long,short}/*/table2_kpis_mean.csv
 输出:   paper/figures/fig_43_bar.{pdf,png}
 """
 
@@ -14,27 +14,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from style import apply_style, save_fig, RUNS2, C_MDDDQN, C_HASTAR, C_RRTSTAR
+from style import apply_style, save_fig, RUNS3, C_MDDDQN, C_HASTAR, C_RRTSTAR
 
 apply_style()
 
 # ── 算法映射 ─────────────────────────────────────────────────────────
-ALGO_ORDER = ["CNN-DDQN+Duel", "Hybrid A*", "RRT*"]
+ALGO_ORDER = ["CNN-DQN+Duel", "Hybrid A*", "RRT*"]
 DISPLAY = {
-    "CNN-DDQN+Duel": "MD-DDQN\n(Ours)",
-    "Hybrid A*":     "Improved\nHA*",
-    "RRT*":          "Spline-\nRRT*",
+    "CNN-DQN+Duel": "MD-DQN\n(Ours)",
+    "Hybrid A*":    "Improved\nHA*",
+    "RRT*":         "Spline-\nRRT*",
 }
 COLORS = {
-    "CNN-DDQN+Duel": C_MDDDQN,
-    "Hybrid A*":     C_HASTAR,
-    "RRT*":          C_RRTSTAR,
+    "CNN-DQN+Duel": C_MDDDQN,
+    "Hybrid A*":    C_HASTAR,
+    "RRT*":         C_RRTSTAR,
 }
 
 
 def load_csv(dist: str) -> pd.DataFrame:
     """读取 table2_kpis_mean.csv 并按 ALGO_ORDER 排序。"""
-    pattern = str(RUNS2 / "infer" / f"core_baseline_sr_{dist}" / "*" / "table2_kpis_mean.csv")
+    pattern = str(RUNS3 / "infer" / f"core_baseline_dqn_sr_{dist}" / "*" / "table2_kpis_mean.csv")
     files = sorted(glob.glob(pattern))
     if not files:
         raise FileNotFoundError(f"No CSV found for {dist}: {pattern}")

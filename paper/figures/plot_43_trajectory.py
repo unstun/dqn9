@@ -1,6 +1,6 @@
 """4.3 核心对比 -- 轨迹对比图 (1x2): Long / Short.
 
-数据源: runs202642/infer/core_baseline_sr_{long,short}/*/paths_all.csv + map_meta.pkl
+数据源: runs202643/infer/core_baseline_dqn_sr_{long,short}/*/paths_all.csv + map_meta.pkl
 输出:   paper/figures/fig_43_trajectory.{pdf,png}
 """
 
@@ -18,30 +18,30 @@ import pandas as pd
 from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 import matplotlib.font_manager as fm
 
-from style import apply_style, save_fig, RUNS2, C_MDDDQN, C_HASTAR, C_RRTSTAR
+from style import apply_style, save_fig, RUNS3, C_MDDDQN, C_HASTAR, C_RRTSTAR
 
 apply_style()
 
 # ── 算法元数据 ────────────────────────────────────────────────────────
-ALGO_NAMES = ["CNN-DDQN+Duel", "Hybrid A*", "RRT*"]
+ALGO_NAMES = ["CNN-DQN+Duel", "Hybrid A*", "RRT*"]
 LABELS = {
-    "CNN-DDQN+Duel": "MD-DDQN (Ours)",
-    "Hybrid A*":     "Improved HA*",
-    "RRT*":          "Spline-RRT*",
+    "CNN-DQN+Duel": "MD-DQN (Ours)",
+    "Hybrid A*":    "Improved HA*",
+    "RRT*":         "Spline-RRT*",
 }
 COLORS = {
-    "CNN-DDQN+Duel": C_MDDDQN,
-    "Hybrid A*":     C_HASTAR,
-    "RRT*":          C_RRTSTAR,
+    "CNN-DQN+Duel": C_MDDDQN,
+    "Hybrid A*":    C_HASTAR,
+    "RRT*":         C_RRTSTAR,
 }
-LW     = {"CNN-DDQN+Duel": 2.5, "Hybrid A*": 1.8, "RRT*": 1.8}
-LS     = {"CNN-DDQN+Duel": "-",  "Hybrid A*": "--", "RRT*": "-."}
-ZORDER = {"CNN-DDQN+Duel": 5,   "Hybrid A*": 4,    "RRT*": 3}
+LW     = {"CNN-DQN+Duel": 2.5, "Hybrid A*": 1.8, "RRT*": 1.8}
+LS     = {"CNN-DQN+Duel": "-",  "Hybrid A*": "--", "RRT*": "-."}
+ZORDER = {"CNN-DQN+Duel": 5,   "Hybrid A*": 4,    "RRT*": 3}
 
 
 def load_data(dist: str):
-    """从 runs202642 加载轨迹 CSV 和地图元数据。"""
-    base = RUNS2 / "infer" / f"core_baseline_sr_{dist}"
+    """从 runs202643 加载轨迹 CSV 和地图元数据。"""
+    base = RUNS3 / "infer" / f"core_baseline_dqn_sr_{dist}"
     subdirs = sorted(base.iterdir())
     subdir = subdirs[-1]  # 取最新时间戳
 
