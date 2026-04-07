@@ -9,6 +9,7 @@ venv/
 
 # Outputs / experiment runs
 runs/
+runs2*/
 paperruns/
 
 # Paper compiled artifacts (source .tex is tracked)
@@ -31,6 +32,7 @@ tmp.md
 .vscode/
 .agents/
 .playwright-cli/
+.playwright-mcp/
 .mcp.json
 
 # AI writing drafts (not part of main paper)
