@@ -174,7 +174,9 @@ def short_sheet_name(variant: str, condition: str, distance: str) -> str:
 # Main
 # ----------------------------------------------------------------------------
 def main():
-    ap = argparse.ArgumentParser(description=__doc__.splitlines()[2])
+    ap = argparse.ArgumentParser(
+        description="Aggregate 24 cnn-dqn inference outputs into xlsx workbooks"
+    )
     ap.add_argument("--runs-root", required=True, type=Path,
                     help="e.g. /home/ubuntu/DQN9/runs20260408_dqn")
     ap.add_argument("--out-dir",   required=True, type=Path,
